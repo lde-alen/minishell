@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/05/25 09:10:46 by asanthos         ###   ########.fr        #
+#    Updated: 2022/05/25 14:11:05 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ CP			=		cp
 
 CFLAGS		+=		-Wall -Wextra -Werror -g3
 
+RFLAGS		+=		-lreadline
+
 INCLUDES	+=		-I./includes/
 
 CC			=		gcc
@@ -39,16 +41,16 @@ CC			=		gcc
 .c.o		:
 					$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
 
-$(LIBFT_C)	:
-					$(MAKE) -C ./Libft
+$(LIBFT_C)	:		$(MAKE) -C ./Libft
 					$(CP) $(LIBFT_DIR)/libft.h ./includes/
 
 $(NAME)		:		$(OBJS)
-					$(CC) $(FLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) $(INCLUDES) -o $(NAME)
+					$(MAKE) -C ./Libft
+					$(CC) $(CFLAGS) $(RFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) $(INCLUDES) -o $(NAME)
 					mkdir -p $(OBJS_DIR_N)
 					mv $(OBJS) $(OBJS_DIR)
 
-all			:		$(LIBFT_C)$(NAME)
+all			:		$(NAME)
 
 clean		:
 					$(MAKE) clean -C $(LIBFT_DIR)
@@ -59,6 +61,7 @@ fclean		:		clean
 					$(MAKE) fclean -C $(LIBFT_DIR)
 					$(RM) $(NAME)
 					$(RM) $(LIBFT_DIR)/$(LIBFT_NAME)
+
 
 re			:		fclean all
 
