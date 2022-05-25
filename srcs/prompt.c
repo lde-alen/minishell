@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/25 09:13:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/25 10:15:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	shell_prompt(void)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		str = readline("minishell% ");
+		str = readline("\e[0;37m|🐼| \e[0;35mminishell\e[0;37m$\e[0m% ");
 		if (!str)
 			exit(0);
 	}
