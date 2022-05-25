@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/05/17 15:30:57 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/05/25 09:10:46 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ LIBFT_DIR	=		./Libft
 
 SRCS_DIR	=		./srcs/
 
-SRCS		=		main.c	\
+SRCS		=		main.c		\
+					prompt.c	\
 
 OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 

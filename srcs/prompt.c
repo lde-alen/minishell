@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/25 09:09:09 by asanthos         ###   ########.fr       */
+/*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
+/*   Updated: 2022/05/25 09:13:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../includes/minishell.h"
 
-/**
- * 	A wise person once said, that knowledge came from books
- * RTFM
- */
-# include "libft.h"
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <string.h>
-# include <errno.h>
-# include <signal.h>
-# include <stdlib.h>
+static void	new_prompt()
+{
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+}
 
-void	shell_prompt(void);
+void	shell_prompt(void)
+{
+	char	*str;
+	int		loop;
 
-#endif
+	signal(SIGINT, new_prompt);
+	signal(SIGQUIT, SIG_IGN);
+	while (1)
+	{
+		str = readline("minishell% ");
+		if (!str)
+			exit(0);
+	}
+}
