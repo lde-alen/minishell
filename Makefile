@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/05/25 14:11:05 by asanthos         ###   ########.fr        #
+#    Updated: 2022/05/26 12:45:32 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,21 @@ LIBFT_DIR	=		./Libft
 
 SRCS_DIR	=		./srcs/
 
+BUILT_DIR	=		builtins/
+
 SRCS		=		main.c		\
 					prompt.c	\
+					execute.c	\
 
-OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
+BUILTINS	=		ft_env.c	\
+					ft_echo.c	\
+					ft_cd.c		\
+					ft_exit.c	\
+					ft_export.c	\
+					ft_pwd.c	\
+					ft_unset.c	\
+
+OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o)) $(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o))
 
 OBJS_DIR_N	=		objs
 
@@ -31,22 +42,22 @@ RM			=		rm -f
 CP			=		cp
 
 CFLAGS		+=		-Wall -Wextra -Werror -g3
-
-RFLAGS		+=		-lreadline
+	
+RFLAGS		+=		-lreadline -I/usr/local/Cellar/readline/8.1/include
 
 INCLUDES	+=		-I./includes/
 
 CC			=		gcc
 
 .c.o		:
-					$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
+					$(CC) $(FLAGS) -I/usr/local/Cellar/readline/8.1/include -c $< -o $(<:.c=.o)
 
 $(LIBFT_C)	:		$(MAKE) -C ./Libft
 					$(CP) $(LIBFT_DIR)/libft.h ./includes/
 
 $(NAME)		:		$(OBJS)
 					$(MAKE) -C ./Libft
-					$(CC) $(CFLAGS) $(RFLAGS) $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) $(INCLUDES) -o $(NAME)
+					$(CC) $(CFLAGS) $(RFLAGS) -L/usr/local/Cellar/readline/8.1/lib  $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) $(INCLUDES) -o $(NAME)
 					mkdir -p $(OBJS_DIR_N)
 					mv $(OBJS) $(OBJS_DIR)
 

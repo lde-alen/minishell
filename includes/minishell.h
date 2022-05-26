@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/25 09:09:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/26 12:10:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@
 # include <stdlib.h>
 
 void	shell_prompt(void);
+void	exec_cmd(char *str);
 
 #endif
