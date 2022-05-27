@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:45:21 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/27 19:57:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/27 20:58:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,5 @@ void	ft_echo(char *str)
 	}
 	ret_node = filter_list(e_nodes);
 	ft_putendl_fd(join_nodes(e_nodes, ret_node), 1);
-	
 	// print_list(e_nodes, ret_node);
 }

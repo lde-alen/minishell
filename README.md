@@ -1,8 +1,6 @@
-# minishell
-############# ALKA #############
+############ ALKA ############
 Done:
-finished exec for echo
-finished flags 
+-
 
 In Progress:
 -
