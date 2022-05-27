@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/05/26 12:45:32 by asanthos         ###   ########.fr        #
+#    Updated: 2022/05/27 19:39:04 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ BUILT_DIR	=		builtins/
 SRCS		=		main.c		\
 					prompt.c	\
 					execute.c	\
+					expand.c	\
 
 BUILTINS	=		ft_env.c	\
 					ft_echo.c	\
@@ -50,7 +51,7 @@ INCLUDES	+=		-I./includes/
 CC			=		gcc
 
 .c.o		:
-					$(CC) $(FLAGS) -I/usr/local/Cellar/readline/8.1/include -c $< -o $(<:.c=.o)
+					$(CC) $(CFLAGS) -I/usr/local/Cellar/readline/8.1/include -c $< -o $(<:.c=.o)
 
 $(LIBFT_C)	:		$(MAKE) -C ./Libft
 					$(CP) $(LIBFT_DIR)/libft.h ./includes/

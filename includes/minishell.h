@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/26 22:11:47 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/05/27 19:49:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,18 @@
 /**
  * Defining your tools and refining them is the key
  */
+typedef struct s_echo
+{
+	char			*args;
+	struct s_echo	*next;
+}	t_echo;
+
 typedef struct s_cmd
 {
+	char			*path;
 	char			*command;
 	char			**argument;
+	int				token;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -60,7 +68,9 @@ typedef struct s_env
 /**
  * Teaching kinds how to manipulate tools
  */
-void	shell_prompt(void);
-void	exec_cmd(char *str);
+void	shell_prompt(char *env[]);
+void	exec_cmd(char *str, char *env[]);
+void	ft_expander(char *str, char *env[]);
+void	ft_echo(char *str);
 
 #endif

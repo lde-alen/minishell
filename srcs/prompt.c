@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/26 12:42:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:30:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	new_prompt(int i)
 	rl_redisplay();
 }
 
-void	shell_prompt(void)
+void	shell_prompt(char *env[])
 {
 	char	*str;
 
@@ -33,7 +33,7 @@ void	shell_prompt(void)
 		if (str)
 		{
 			add_history(str);
-			exec_cmd(str);
+			exec_cmd(str, env);
 		}
 		else
 			exit(0);

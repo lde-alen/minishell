@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/19 22:02:18 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/27 10:09:52 by asanthos         ###   ########.fr       */
+/*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
+/*   Updated: 2022/05/27 11:26:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/minishell.h"
 
-/**
- * @brief Returns a pointer to the first occurrence of the character c in 
- * the string s.
- * 
- * @param s 
- * @param c 
- * @return char* 
- */
-char	*ft_strchr(const char *s, int c)
+void	ft_expander(char *str, char *env[])
 {
-	unsigned char	asc;
-	unsigned int	i;
-	char			*str;
+	int		i;
+	char	*div;
+	char	*sub;
 
-	asc = (unsigned char)c;
 	i = 0;
-	str = (char *) s;
-	while (str[i] && str[i] != asc)
+	while (env[i])
+	{
+		sub = ft_substr(env[i], 0, ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '=')));
+		if (strcmp(sub, ft_strchr(str, str[1])) == 0)
+		{
+			div = ft_strchr(env[i], '=');
+			ft_putendl_fd(ft_strchr(div, div[1]), 1);
+			break ;
+		}
 		i++;
-	if (str[i] == asc)
-		return ((char *)s + i);
-	return (NULL);
+	}
 }
