@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/27 20:21:26 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
+/*   Updated: 2022/05/27 20:21:47 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	minishell(int ac, char **av, char **env)
 {
-	minishell(ac, av, env);
+	shell_prompt();
 	return (0);
 }

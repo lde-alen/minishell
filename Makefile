@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
+#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/05/26 12:45:32 by asanthos         ###   ########.fr        #
+#    Updated: 2022/05/26 23:48:55 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ BUILT_DIR	=		builtins/
 SRCS		=		main.c		\
 					prompt.c	\
 					execute.c	\
+					minishell.c	\
 
 BUILTINS	=		ft_env.c	\
 					ft_echo.c	\
