@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   cmd_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/01 10:45:35 by asanthos         ###   ########.fr       */
+/*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
+/*   Updated: 2022/06/01 15:10:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
-t_env	*push_env(t_env *lst, char *env_name, char *env_value)
+t_env	*push_cmd(t_env *lst, char *env_name, char *env_value)
 {
 	t_env	*new_node;
 	t_env	*temp_node;
@@ -39,37 +39,40 @@ t_env	*push_env(t_env *lst, char *env_name, char *env_value)
 	return (lst);
 }
 
-void	print_list_env(t_env *head)
+//just for teshtazz
+void	print_list_cmd(t_cmd *head)
 {
-	t_env	*tmp;
-
-	tmp = head;
-	while (head->next != tmp)
-	{
-		ft_printf("%s=%s\n", head->name, head->value);
-		head = head->next;
-	}
-	ft_printf("%s=%s\n", head->name, head->value);
-	head = tmp;
-}
-
-t_env	*ft_env(char **env)
-{
-	t_env	*lst;
-	char	*env_name;
-	char	*env_value;
-	char	*div;
 	int		i;
 
 	i = 0;
-	lst = NULL;
-	while (env[i])
+	if (head->argument[i])
 	{
-		env_name = ft_substr(env[i], 0, ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '=')));
-		div = ft_strchr(env[i], '=');
-		env_value = ft_strchr(div, div[1]);
-		lst = push_env(lst, env_name, env_value);
+		while (head->argument[i])
+		{
+			ft_printf("%s\n", head->argument[i]);
+			i++;
+		}
+	}
+	ft_printf("%s\n", head->command);
+}
+
+void	ft_lst_init(char *str)
+{
+	char	**split_cmd;
+	t_cmd   *cmd_lst;
+	int		i;
+
+	cmd_lst = (t_cmd *)malloc(sizeof(t_cmd));
+	split_cmd = ft_split(str, ' ');
+	i = 0;
+	while (split_cmd[i])
+		i++;
+	cmd_lst->command = split_cmd[0];
+	cmd_lst->argument = (char **)ft_calloc(i, sizeof(char *));
+	i = 1;
+	while (split_cmd[i])
+	{
+		cmd_lst->argument[i - 1] = split_cmd[i];
 		i++;
 	}
-	return (lst);
 }

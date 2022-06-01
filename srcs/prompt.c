@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/01 05:54:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:08:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,17 @@ void	shell_prompt(char **env)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		lst = ft_env(env);
 		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
 		if (str)
 		{
-			lst = ft_env(env);
-			add_history(str);
-			exec_cmd(str, lst);
+			if(ft_strlen(str) > 1)
+			{
+				add_history(str);
+				ft_parse(str, lst);
+				// ft_lst_init(str);
+				exec_cmd(str, lst);
+			}
 		}
 		else
 			exit(0);

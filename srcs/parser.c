@@ -6,16 +6,14 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/30 10:51:01 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:58:19 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// void	ft_parse(char *str, char *env[])
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (str[])
-// }
+void	ft_parse(char *str, t_env *lst)
+{
+	(void)lst;
+	ft_lst_init(str);
+}

@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/05/27 20:49:10 by asanthos         ###   ########.fr        #
+#    Updated: 2022/06/01 15:09:00 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,8 @@ SRCS		=		main.c		\
 					execute.c	\
 					expand.c	\
 					minishell.c	\
+					cmd_list.c	\
+					parser.c	\
 
 BUILTINS	=		ft_env.c	\
 					ft_echo.c	\
