@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/30 11:13:08 by asanthos         ###   ########.fr       */
+/*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
+/*   Updated: 2022/05/30 10:51:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int ac, char **av, char **env)
-{
-	minishell(ac, av, env);
-	return (0);
-}
+// void	ft_parse(char *str, char *env[])
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (str[])
+// }

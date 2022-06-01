@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/27 21:02:27 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/06/01 05:27:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 /**
  * Defining your tools and refining them is the key
  */
+
 typedef struct s_echo
 {
 	char			*args;
@@ -50,11 +51,9 @@ typedef struct s_echo
 
 typedef struct s_cmd
 {
-	char			*path;
 	char			*command;
 	char			**argument;
 	struct s_cmd	*next;
-	int				token;
 }	t_cmd;
 
 typedef struct s_env
@@ -65,20 +64,14 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_ms
-{
-	t_env	*env;
-	t_cmd	*cmd;
-	t_echo	*echo;
-}	t_ms;
-
 /**
  * Teaching kinds how to manipulate tools
  */
-void	shell_prompt(char *env[]);
-void	exec_cmd(char *str, char *env[]);
-void	ft_expander(char *str, char *env[]);
-void	ft_echo(char *str);
+void	shell_prompt(char **env);
+void	exec_cmd(char *str, t_env *lst);
 int		minishell(int ac, char **av, char **env);
+void	ft_echo(char *str);
+t_env	*ft_env(char **env);
+void	ft_expander(t_env *lst, char *str);
 
 #endif
