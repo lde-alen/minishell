@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/01 16:54:27 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/01 17:35:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ void    ft_export(t_env *lst, t_cmd *cmd_lst)
 	while (cmd_lst->argument[i])
 	{
 		if (ft_strchr(cmd_lst->argument[i], '=') != NULL)
-		{
-			printf("boop\n");
 			div_env(cmd_lst->argument[i], lst);
-		}
 		i++;
 	}
 }
