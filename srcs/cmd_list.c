@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/01 15:10:14 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:22:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_list_cmd(t_cmd *head)
 	ft_printf("%s\n", head->command);
 }
 
-void	ft_lst_init(char *str)
+t_cmd	*ft_lst_init(char *str)
 {
 	char	**split_cmd;
 	t_cmd   *cmd_lst;
@@ -75,4 +75,5 @@ void	ft_lst_init(char *str)
 		cmd_lst->argument[i - 1] = split_cmd[i];
 		i++;
 	}
+	return (cmd_lst);
 }
