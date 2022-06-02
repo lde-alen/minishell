@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:45:21 by asanthos          #+#    #+#             */
-/*   Updated: 2022/05/27 20:58:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/01 02:10:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 t_echo	*filter_list(t_echo *lst)
 {
-	t_echo	*tmp;
-	int		flag;
 	int		i;
 
 	i = 2;
-	flag = 0;
-	tmp = lst;
 	lst = lst->next;
 	while (lst != NULL)
 	{
@@ -66,7 +62,6 @@ void	push(t_echo *lst, char *new_data)
 	lst = temp_node;
 }
 
-//strjoin the nodes wiht ' '
 char	*join_nodes(t_echo *head, t_echo *ret_node)
 {
 	char	*str;
