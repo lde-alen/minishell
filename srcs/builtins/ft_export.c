@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/02 11:45:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:17:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,52 +28,46 @@ t_env *check_exist(t_env *lst, t_cmd *cmd_lst)
 {
 	int i;
     t_env *tmp;
+	char *env_name;
 
     i = 0;
     tmp = lst;
     while (cmd_lst->argument[i])
     {
+		env_name = ft_substr(cmd_lst->argument[i], 0, ft_strlen(cmd_lst->argument[i]) - ft_strlen(ft_strchr(cmd_lst->argument[i], '=')));
         while (lst->next != tmp)
         {
-            if (strcmp(cmd_lst->argument[i], lst->name) == 0)
-			{
-			    printf("here\n");
+            if (strcmp(env_name, lst->name) == 0)
 				return (lst);
-			}
             lst = lst->next;
         }
-		lst = tmp;
-        if (strcmp(cmd_lst->argument[i], lst->name) == 0)
+        if (strcmp(env_name, lst->name) == 0)
             return (lst);
+		lst = tmp;
         i++;
     }
 	return (NULL);
 }
 
-//can a variable name repeated, data gotta replace existing oneaz
 void    ft_export(t_env *lst, t_cmd *cmd_lst)
 {
 	int i;
-	// char *div;
+	char *div;
+	t_env *check;
 	
     i = 0;
 	while (cmd_lst->argument[i])
 	{
 		if (ft_strchr(cmd_lst->argument[i], '=') != NULL)
 		{
-			// if (check_exist(lst, cmd_lst) != NULL)
-			// {
-			// 	printf("boop\n");
-			// 	div = ft_strchr(cmd_lst->argument[i], '=');
-			// 	lst->value = ft_strchr(div, div[1]);
-			// }
-			// else
-			// {
+			check = check_exist(lst, cmd_lst);
+			if (check != NULL)
+			{
+				div = ft_strchr(cmd_lst->argument[i], '=');
+				check->value = ft_strchr(div, div[1]);
+			}
+			else
 			    div_env(cmd_lst->argument[i], lst);
-			    ft_printf("Lst: %s\n", lst->name);
-			    ft_printf("Prev: %s\n", lst->prev->name);
-			    ft_printf("Next: %s\n", lst->next->name);
-			// }
 		}
 		i++;
 	}
