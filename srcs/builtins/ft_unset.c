@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/01 17:48:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:31:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void ft_unset(t_env *lst, t_cmd *cmd_lst)
 {
     int i;
     t_env *tmp;
+    t_env *tmp2;
 
     i = 0;
     tmp = lst;
@@ -25,19 +26,19 @@ void ft_unset(t_env *lst, t_cmd *cmd_lst)
         {
             if (strcmp(cmd_lst->argument[i], lst->name) == 0)
             {
-                printf("%s %s\n", cmd_lst->argument[i], lst->name);
+                tmp2 = lst;
                 lst->prev->next = lst->next;
                 lst->next->prev = lst->prev;
-                free(lst);
+                free(tmp2);
             }
             lst = lst->next;
         }
         if (strcmp(cmd_lst->argument[i], lst->name) == 0)
         {
-            printf("%s %s\n", cmd_lst->argument[i], lst->name);
+            tmp2 = lst;
             lst->prev->next = lst->next;
             lst->next->prev = lst->prev;
-            free(lst);
+            free(tmp2);
         }
         i++;
     }
