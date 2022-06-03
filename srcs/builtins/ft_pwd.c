@@ -6,24 +6,18 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 09:27:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/03 12:11:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:55:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_pwd(t_env *lst)
+void	ft_pwd()
 {
-	t_env   *tmp;
+	char *buff;
 
-	tmp = lst;
-	while (lst->next != tmp)
-	{
-		if (strcmp("PWD", lst->name) == 0)
-		{
-			ft_putendl_fd(lst->value, 1);
-			break ;
-		}
-		lst = lst->next;
-	}
+    buff = (char *)malloc(100 * sizeof(char));
+    getcwd(buff,100);
+    ft_putendl_fd(buff, 1);
+    free(buff);
 }

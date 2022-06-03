@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:08:50 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/03 12:18:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:47:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 	if (strcmp(cmd_lst->command, "echo") == 0)
 		ft_echo(cmd_lst);
 	if (strcmp(cmd_lst->command, "pwd") == 0)
-		ft_pwd(lst);
+		ft_pwd();
 	if (strcmp(cmd_lst->command, "env") == 0)
 		print_list_env(lst);
 	if (strcmp(cmd_lst->command, "export") == 0)

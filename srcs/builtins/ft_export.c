@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/03 20:18:27 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:55:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	int		i;
 	char	*div;
 	t_env	*check;
-	t_env	*tmp;
 	
 	i = 0;
-	tmp = lst;
 	while (cmd_lst->argument[i])
 	{
 		if (ft_strchr(cmd_lst->argument[i], '=') != NULL)
@@ -77,28 +75,28 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	}
 }
 
-void	lonely_export(t_env *lst)
-{
-	int		i;
-	int		j;
-	t_env	*store;
-	t_env	*tmp;
-	t_env	*tmp2;
+// void	lonely_export(t_env *lst)
+// {
+// 	int		i;
+// 	int		j;
+// 	t_env	*store;
+// 	t_env	*tmp;
+// 	t_env	*tmp2;
 
-	i = 0;
-	store = lst;
-	tmp = lst;
-	tmp2 = lst->next;
-	while (lst->next != tmp)
-	{
-		j = 0;
-		while (store->next->next != tmp2)
-		{
-			if (lst->name[0])
-			j++;
-			store = store->next;
-		}
-		i++;
-		lst = lst->next;
-	}
-}
+// 	i = 0;
+// 	store = lst;
+// 	tmp = lst;
+// 	tmp2 = lst->next;
+// 	while (lst->next != tmp)
+// 	{
+// 		j = 0;
+// 		while (store->next->next != tmp2)
+// 		{
+// 			if (lst->name[0])
+// 			j++;
+// 			store = store->next;
+// 		}
+// 		i++;
+// 		lst = lst->next;
+// 	}
+// }

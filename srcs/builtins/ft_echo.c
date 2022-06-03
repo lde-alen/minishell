@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_echo.c                                          :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/03 18:43:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 14:56:55 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 
 	str = "";
 	store = i;
-	str = (char *)malloc(sizeof(char) * (get_len(cmd_lst, i) + args_len(cmd_lst, i)));
+	str = (char *)malloc(sizeof(char) * (get_len(cmd_lst, i) + args_len(cmd_lst, store)));
 	while (cmd_lst->argument[i])
 	{
 		str = ft_strjoin(str, cmd_lst->argument[i]);
