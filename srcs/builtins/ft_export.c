@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/02 13:17:57 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:02:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,38 @@ void div_env(char *str, t_env *lst)
 	lst = push_env(lst, env_name, env_value);
 }
 
-t_env *check_exist(t_env *lst, t_cmd *cmd_lst)
+t_env	*check_exist(t_env *lst, t_cmd *cmd_lst)
 {
 	int i;
-    t_env *tmp;
+	t_env *tmp;
 	char *env_name;
 
-    i = 0;
-    tmp = lst;
-    while (cmd_lst->argument[i])
-    {
+	i = 0;
+	tmp = lst;
+	while (cmd_lst->argument[i])
+	{
 		env_name = ft_substr(cmd_lst->argument[i], 0, ft_strlen(cmd_lst->argument[i]) - ft_strlen(ft_strchr(cmd_lst->argument[i], '=')));
-        while (lst->next != tmp)
-        {
-            if (strcmp(env_name, lst->name) == 0)
+		while (lst->next != tmp)
+		{
+			if (strcmp(env_name, lst->name) == 0)
 				return (lst);
-            lst = lst->next;
-        }
-        if (strcmp(env_name, lst->name) == 0)
-            return (lst);
+			lst = lst->next;
+		}
+		if (strcmp(env_name, lst->name) == 0)
+			return (lst);
 		lst = tmp;
-        i++;
-    }
+		i++;
+	}
 	return (NULL);
 }
 
-void    ft_export(t_env *lst, t_cmd *cmd_lst)
+void	ft_export(t_env *lst, t_cmd *cmd_lst)
 {
 	int i;
 	char *div;
 	t_env *check;
 	
-    i = 0;
+	i = 0;
 	while (cmd_lst->argument[i])
 	{
 		if (ft_strchr(cmd_lst->argument[i], '=') != NULL)
@@ -67,7 +67,7 @@ void    ft_export(t_env *lst, t_cmd *cmd_lst)
 				check->value = ft_strchr(div, div[1]);
 			}
 			else
-			    div_env(cmd_lst->argument[i], lst);
+				div_env(cmd_lst->argument[i], lst);
 		}
 		i++;
 	}
