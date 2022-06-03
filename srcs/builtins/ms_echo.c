@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/03 18:42:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 18:43:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,6 @@ void	ft_echo(t_cmd *cmd_lst)
 			if (ft_strlen(cmd_lst->argument[i]) != j)
 			{
 				ft_join_echo(cmd_lst, i, flag);
-				// while (cmd_lst->argument[i])
-				// {
-				// 	ft_putendl_fd(cmd_lst->argument[i], 1);
-				// 	i++;
-				// }
 				return ;
 			}
 			else
@@ -90,11 +85,6 @@ void	ft_echo(t_cmd *cmd_lst)
 		}
 		else
 		{
-			// while (cmd_lst->argument[i])
-			// {
-			// 	ft_putendl_fd(cmd_lst->argument[i], 1);
-			// 	i++;
-			// }
 			ft_join_echo(cmd_lst, i, flag);
 			return ;
 		}
