@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/06/02 13:40:02 by asanthos         ###   ########.fr        #
+#    Updated: 2022/06/03 12:34:17 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS		=		main.c		\
 					parser.c	\
 
 BUILTINS	=		ft_env.c	\
-					ft_echo.c	\
+					ms_echo.c	\
 					ft_cd.c		\
 					ft_exit.c	\
 					ft_export.c	\

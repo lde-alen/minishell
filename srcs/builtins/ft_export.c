@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/03 11:08:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 11:34:27 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void div_env(char *str, t_env *lst)
 t_env	*check_exist(t_env *lst, t_cmd *cmd_lst)
 {
 	int i;
+	int	len;
 	t_env *tmp;
 	char *env_name;
 
@@ -34,15 +35,22 @@ t_env	*check_exist(t_env *lst, t_cmd *cmd_lst)
 	tmp = lst;
 	while (cmd_lst->argument[i])
 	{
-		env_name = ft_substr(cmd_lst->argument[i], 0, ft_strlen(cmd_lst->argument[i]) - ft_strlen(ft_strchr(cmd_lst->argument[i], '=')));
+		len = ft_strlen(cmd_lst->argument[i]) - ft_strlen(ft_strchr(cmd_lst->argument[i], '='));
+		env_name = ft_substr(cmd_lst->argument[i], 0, len);
 		while (lst->next != tmp)
 		{
 			if (strcmp(env_name, lst->name) == 0)
+			{
+				printf("Name: %s\n", env_name);
 				return (lst);
+			}
 			lst = lst->next;
 		}
 		if (strcmp(env_name, lst->name) == 0)
+		{
+			printf("Name: %s\n", env_name);
 			return (lst);
+		}
 		lst = tmp;
 		i++;
 	}
@@ -63,6 +71,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 			check = check_exist(lst, cmd_lst);
 			if (check != NULL)
 			{
+				printf("is meee %s\n", cmd_lst->argument[i]);
 				div = ft_strchr(cmd_lst->argument[i], '=');
 				check->value = ft_strchr(div, div[1]);
 			}

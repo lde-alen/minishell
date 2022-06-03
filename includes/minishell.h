@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/06/01 17:29:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:33:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,15 @@ typedef struct s_env
 void	shell_prompt(char **env);
 void	exec_cmd(t_env *lst, t_cmd *cmd_lst);
 int		minishell(int ac, char **av, char **env);
-void	ft_echo(char *str);
+void	ft_echo(t_cmd *cmd_lst);
 t_env	*ft_env(char **env);
 void	print_list_env(t_env *head);
 t_env	*push_env(t_env *lst, char *env_name, char *env_value);
 void	ft_expander(t_env *lst, t_cmd *cmd_lst);
 t_cmd	*ft_lst_init(char *str);
-void    ft_pwd(t_env *lst);
+void	ft_pwd(t_env *lst);
 void	ft_parse(char *str, t_env *lst);
-void    ft_export(t_env *lst, t_cmd *cmd_lst);
-void ft_unset(t_env *lst, t_cmd *cmd_lst);
+void	ft_export(t_env *lst, t_cmd *cmd_lst);
+void	ft_unset(t_env *lst, t_cmd *cmd_lst);
 
 #endif
