@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/06/03 15:47:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/04 04:15:17 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ void	ft_pwd();
 void	ft_parse(char *str, t_env *lst);
 void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	ft_unset(t_env *lst, t_cmd *cmd_lst);
+void ft_cd(t_cmd *cmd_lst);
 
 #endif
