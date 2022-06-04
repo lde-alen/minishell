@@ -6,24 +6,24 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/04 05:14:16 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/04 18:39:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void ft_cd(t_cmd *cmd_lst)
-{
-    int i;
+// void ft_cd(t_cmd *cmd_lst)
+// {
+//     int i;
 
-    i = 0;
-    if (!cmd_lst->argument[0] || cmd_lst->argument[0] == '~')
-    {
-        while (1)
-        {
-            if ()
-        }
-        chdir("Desktop");
-    }
-    chdir(cmd_lst->argument[0]);
-}
+//     i = 0;
+//     if (!cmd_lst->argument[0] || cmd_lst->argument[0] == '~')
+//     {
+//         while (1)
+//         {
+//             if ()
+//         }
+//         chdir("Desktop");
+//     }
+//     chdir(cmd_lst->argument[0]);
+// }

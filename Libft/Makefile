@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/19 09:20:19 by lde-alen          #+#    #+#              #
-#    Updated: 2022/05/17 12:42:11 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/06/04 18:55:02 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS		= 	ft_bzero.c				\
 				ft_strchr.c				\
 				ft_strrchr.c			\
 				ft_strncmp.c			\
+				ft_strcmp.c				\
 				ft_memchr.c				\
 				ft_memcmp.c				\
 				ft_strnstr.c			\
