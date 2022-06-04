@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/06/03 19:51:10 by asanthos         ###   ########.fr        #
+#    Updated: 2022/06/04 19:30:27 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,8 +62,8 @@ $(LIBFT_C)	:		$(MAKE) -C ./Libft
 $(NAME)		:		$(OBJS)
 					$(MAKE) -C ./Libft
 					$(CC) $(CFLAGS) $(RFLAGS) -L/usr/local/Cellar/readline/8.1/lib  $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) $(INCLUDES) -o $(NAME)
-#					mkdir -p $(OBJS_DIR_N)
-#					mv $(OBJS) $(OBJS_DIR)
+					mkdir -p $(OBJS_DIR_N)
+					mv $(OBJS) $(OBJS_DIR)
 
 all			:		$(NAME)
 

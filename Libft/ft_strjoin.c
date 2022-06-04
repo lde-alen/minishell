@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 03:21:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/27 17:15:23 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/04 19:38:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ char	*ft_strjoin(char const *str, char const *buffer)
 	while (buffer[j] != '\0')
 		new[i++] = buffer[j++];
 	new[ft_strlen(str) + ft_strlen(buffer)] = '\0';
-	free ((char *)str);
+	// free ((char *)str);
 	return (new);
 }

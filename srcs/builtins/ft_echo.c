@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/03 14:56:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/04 19:39:10 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,32 @@ size_t	args_len(t_cmd *cmd_lst, int i)
 	return (len);
 }
 
+//chec strjoin free(str)
 void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 {
 	char	*str;
+	char	*store_value;
 	int		store;
 
 	str = "";
+	store_value = "";
 	store = i;
-	str = (char *)malloc(sizeof(char) * (get_len(cmd_lst, i) + args_len(cmd_lst, store)));
+	// str = (char *)malloc(sizeof(char) * (get_len(cmd_lst, i) + args_len(cmd_lst, store)));
 	while (cmd_lst->argument[i])
 	{
-		str = ft_strjoin(str, cmd_lst->argument[i]);
-		str = ft_strjoin(str, " ");
+		store_value = ft_strjoin(str, cmd_lst->argument[i]);
+		str = store_value;
+		free(store_value);
+		store_value = ft_strjoin(str, " ");
+		str = store_value;
+		free(store_value);
 		i++;
 	}
 	if (flag == 0)
 		ft_putendl_fd(str, 1);
 	else
 		ft_putstr_fd(str, 1);
+	// free(str);
 }
 
 void	ft_echo(t_cmd *cmd_lst)
