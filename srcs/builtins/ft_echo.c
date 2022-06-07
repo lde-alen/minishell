@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/05 07:47:10 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/05 07:52:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ size_t	args_len(t_cmd *cmd_lst, int i)
 	return (len);
 }
 
-//chec strjoin free(str)
+//check strjoin free(str)
 void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 {
 	char	*str;
