@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/06/05 07:57:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/13 02:30:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,6 @@
  * Defining your tools and refining them is the key
  */
 
-typedef struct s_echo
-{
-	char			*args;
-	struct s_echo	*next;
-}	t_echo;
-
 typedef struct s_cmd
 {
 	char			*command;
@@ -61,6 +55,7 @@ typedef struct s_env
 {
 	char			*name;
 	char			*value;
+	char			*ascii_val;
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
@@ -69,19 +64,28 @@ typedef struct s_env
  * Teaching kinds how to manipulate tools
  */
 void	shell_prompt(char **env);
+t_env	*push_env(t_env *lst, char *env_name, char *env_value);
+t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
 void	exec_cmd(t_env *lst, t_cmd *cmd_lst);
 int		minishell(int ac, char **av, char **env);
-void	ft_echo(t_cmd *cmd_lst);
+
 t_env	*ft_env(char **env);
-void	print_list_env(t_env *head);
-t_env	*push_env(t_env *lst, char *env_name, char *env_value);
-void	ft_expander(t_env *lst, t_cmd *cmd_lst);
-t_cmd	*ft_lst_init(char *str);
+void	ft_echo(t_cmd *cmd_lst);
 void	ft_pwd();
-void	ft_parse(char *str, t_env *lst);
 void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	ft_unset(t_env *lst, t_cmd *cmd_lst);
-void	ft_cd(t_cmd *cmd_lst);
+void	ft_cd(t_cmd *cmd_lst, t_env *lst);
+
+void	print_list_env(t_env *head);
+void	ft_expander(t_env *lst, t_cmd *cmd_lst);
+t_cmd	*ft_lst_init(char *str);
+char    *get_pwd();
+void	ft_parse(char *str, t_env *lst);
 void    free_split(char **split_cmd);
+// void	div_env(char *str, t_env *lst);
+
+void	lst_free(t_cmd *cmd_lst, t_env *lst);
+void	free_env_lst(t_env *lst);
+void	lonely_export(t_env *lst);
 
 #endif
