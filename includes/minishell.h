@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/06/13 02:30:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/06/13 04:07:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_env
 {
 	char			*name;
 	char			*value;
-	char			*ascii_val;
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
