@@ -15,9 +15,9 @@
 void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 {
 	if (cmd_lst->command[0] == '$')
-		ft_expander(lst, cmd_lst->command, 0);
+		ft_expander(lst, cmd_lst->command);
 	if (strcmp(cmd_lst->command, "echo") == 0)
-		ft_echo(cmd_lst, lst);
+		ft_echo(cmd_lst);
 	if (strcmp(cmd_lst->command, "pwd") == 0)
 		ft_pwd(lst);
 	if (strcmp(cmd_lst->command, "env") == 0)
