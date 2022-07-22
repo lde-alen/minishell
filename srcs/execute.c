@@ -19,7 +19,7 @@ void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 	if (strcmp(cmd_lst->command, "echo") == 0)
 		ft_echo(cmd_lst);
 	if (strcmp(cmd_lst->command, "pwd") == 0)
-		ft_pwd();
+		ft_pwd(lst);
 	if (strcmp(cmd_lst->command, "env") == 0)
 		print_list_env(lst);
 	if (strcmp(cmd_lst->command, "export") == 0 && cmd_lst->argument[0] != NULL)
@@ -30,4 +30,6 @@ void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 		ft_unset(lst, cmd_lst);
 	if (strcmp(cmd_lst->command, "cd") == 0)
 		ft_cd(cmd_lst, lst);
+	if (ft_strncmp(cmd_lst->command, "exit", 4) == 0)
+		exit (0);
 }

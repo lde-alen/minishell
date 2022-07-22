@@ -32,6 +32,9 @@ void ft_cd(t_cmd *cmd_lst, t_env *lst)
 
 	chdir(cmd_lst->argument[0]);
 	buff = get_pwd();
-	(search_pwd(lst))->value = buff;
+	if (strcmp(cmd_lst->argument[0], "//") == 0)
+		search_pwd(lst)->value = "//";
+	else
+		(search_pwd(lst))->value = buff;
 	// free(buff);
 }

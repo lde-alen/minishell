@@ -70,7 +70,7 @@ int		minishell(int ac, char **av, char **env);
 
 t_env	*ft_env(char **env);
 void	ft_echo(t_cmd *cmd_lst);
-void	ft_pwd();
+void	ft_pwd(t_env *lst);
 void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	ft_unset(t_env *lst, t_cmd *cmd_lst);
 void	ft_cd(t_cmd *cmd_lst, t_env *lst);
@@ -79,6 +79,7 @@ void	print_list_env(t_env *head);
 void	ft_expander(t_env *lst, t_cmd *cmd_lst);
 t_cmd	*ft_lst_init(char *str);
 char    *get_pwd();
+t_env   *search_pwd(t_env *lst);
 void	ft_parse(char *str, t_env *lst);
 void    free_split(char **split_cmd);
 // void	div_env(char *str, t_env *lst);

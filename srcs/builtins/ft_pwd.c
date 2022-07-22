@@ -21,11 +21,14 @@ char    *get_pwd()
     return (buff);
 }
 
-void    ft_pwd()
+void    ft_pwd(t_env *lst)
 {
     char    *buff;
 
     buff = get_pwd();
-    ft_putendl_fd(buff, 1);
+    if (strcmp(search_pwd(lst)->value, "//") == 0)
+        ft_putendl_fd("//", 1);
+    else
+        ft_putendl_fd(buff, 1);
     free(buff);
 }
