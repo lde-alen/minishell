@@ -40,7 +40,7 @@ size_t	args_len(t_cmd *cmd_lst, int i)
 }
 
 //check strjoin free(str)
-void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
+void	ft_join_echo(t_cmd *cmd_lst, t_env *lst, int i, int flag)
 {
 	char	*str;
 	char	*store_value;
@@ -61,14 +61,19 @@ void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 		// free(store_value);
 		i++;
 	}
-	if (flag == 0)
-		ft_putendl_fd(str, 1);
+	if (cmd_lst->argument[store][0] == '$')
+		ft_expander(lst, cmd_lst->argument[store], flag);
 	else
-		ft_putstr_fd(str, 1);
+	{
+		if (flag == 0)
+			ft_putendl_fd(str, 1);
+		else
+			ft_putstr_fd(str, 1);
+	}
 	// free(str);
 }
 
-void	ft_echo(t_cmd *cmd_lst)
+void	ft_echo(t_cmd *cmd_lst, t_env *lst)
 {
 	int			i;
 	int			flag;
@@ -86,7 +91,7 @@ void	ft_echo(t_cmd *cmd_lst)
 				j++;
 			if (ft_strlen(cmd_lst->argument[i]) != j)
 			{
-				ft_join_echo(cmd_lst, i, flag);
+				ft_join_echo(cmd_lst, lst, i, flag);
 				return ;
 			}
 			else
@@ -94,7 +99,7 @@ void	ft_echo(t_cmd *cmd_lst)
 		}
 		else
 		{
-			ft_join_echo(cmd_lst, i, flag);
+			ft_join_echo(cmd_lst, lst, i, flag);
 			return ;
 		}
 		i++;
