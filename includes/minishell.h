@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/06/13 04:07:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/23 10:01:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <errno.h>
 # include <signal.h>
 # include <stdlib.h>
+# include <sys/wait.h>
 
 /**
  * Setting your vocabulary makes you wiser
