@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/24 03:07:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/24 03:49:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,17 @@ void div_env(char *str, t_env *lst)
 	char	*env_value;
 	char	*div;
 
-	env_name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
-	div = ft_strchr(str, '=');
-	env_value = ft_strchr(div, div[1]);
+	if (ft_strchr(str, '=') == NULL)
+	{
+		env_name = str;
+		env_value = NULL;
+	}
+	else
+	{
+		env_name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
+		div = ft_strchr(str, '=');
+		env_value = ft_strchr(div, div[1]);
+	}
 	lst = push_env(lst, env_name, env_value);
 	// free(env_name);
 }
@@ -72,9 +80,11 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 			}
 			else
 				div_env(cmd_lst->argument[i], lst);
+			return ;
 		}
 		i++;
 	}
+	div_env(cmd_lst->argument[i], lst);
 }
 
 void	print_lst(t_env *lst)
@@ -82,12 +92,19 @@ void	print_lst(t_env *lst)
 	t_env	*tmp;
 
 	tmp = lst;
+
 	while (lst->next != tmp)
 	{
-		ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
+		if (lst->value != NULL)
+			ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
+		else
+			ft_printf("declare -x %s\n", lst->name);
 		lst = lst->next;
 	}
-	ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
+	if (lst->value != NULL)
+			ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
+		else
+			ft_printf("declare -x %s\n", lst->name);
 }
 
 int	iter_diff(t_env *lst, t_env *new_node)

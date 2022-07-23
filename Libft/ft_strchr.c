@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 22:02:18 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/27 10:09:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/24 03:40:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*ft_strchr(const char *s, int c)
 
 	asc = (unsigned char)c;
 	i = 0;
+	if (!s)
+		return (NULL);
 	str = (char *) s;
 	while (str[i] && str[i] != asc)
 		i++;
