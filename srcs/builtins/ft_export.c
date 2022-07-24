@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/24 03:49:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/24 07:03:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,20 @@ static t_env	*check_exist(t_env *lst, char *str)
 	int		len;
 	t_env	*tmp;
 	char	*env_name;
+	char	*check;
 
 	tmp = lst;
-	len = ft_strlen(str) - ft_strlen(ft_strchr(str, '='));
-	env_name = ft_substr(str, 0, len);
+	if (ft_strchr(str, '=') == NULL)
+		env_name = str;
+	else
+	{
+		check = ft_strchr(str, '+');
+		if (check != NULL && check[1] == '=')
+			len = ft_strlen(str) - ft_strlen(ft_strchr(str, '+'));
+		else
+			len = ft_strlen(str) - ft_strlen(ft_strchr(str, '='));
+		env_name = ft_substr(str, 0, len);
+	}
 	while (lst->next != tmp)
 	{
 		if (strcmp(env_name, lst->name) == 0)
@@ -57,7 +67,7 @@ static t_env	*check_exist(t_env *lst, char *str)
 		return (lst);
 	}
 	lst = tmp;
-	free(env_name);
+	// free(env_name);
 	return (NULL);
 }
 
@@ -65,26 +75,34 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 {
 	int		i;
 	char	*div;
+	char	*len;
 	t_env	*check;
 	
 	i = 0;
 	while (cmd_lst->argument[i])
 	{
-		if (ft_strchr(cmd_lst->argument[i], '=') != NULL)
+		if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
+		{
+			check = check_exist(lst, cmd_lst->argument[i]);
+			if (check == NULL)
+				div_env(cmd_lst->argument[i], lst);
+		}
+		else
 		{
 			check = check_exist(lst, cmd_lst->argument[i]);
 			if (check != NULL)
 			{
+				len = ft_strchr(cmd_lst->argument[i], '+');
 				div = ft_strchr(cmd_lst->argument[i], '=');
 				check->value = ft_strchr(div, div[1]);
+				if (len != NULL && len[1] == '=')
+					check->value = ft_strjoin(check->value, ft_strchr(div, div[1]));
 			}
 			else
 				div_env(cmd_lst->argument[i], lst);
-			return ;
 		}
 		i++;
 	}
-	div_env(cmd_lst->argument[i], lst);
 }
 
 void	print_lst(t_env *lst)
@@ -102,9 +120,9 @@ void	print_lst(t_env *lst)
 		lst = lst->next;
 	}
 	if (lst->value != NULL)
-			ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
-		else
-			ft_printf("declare -x %s\n", lst->name);
+		ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
+	else
+		ft_printf("declare -x %s\n", lst->name);
 }
 
 int	iter_diff(t_env *lst, t_env *new_node)

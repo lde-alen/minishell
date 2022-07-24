@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/24 03:18:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/24 07:08:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,14 @@ void	print_list_env(t_env *head)
 	t_env	*tmp;
 
 	tmp = head;
-	// if ()
 	while (head->next != tmp)
 	{
-		ft_printf("%s=%s\n", head->name, head->value);
+		if (head->value != NULL)
+			ft_printf("%s=%s\n", head->name, head->value);
 		head = head->next;
 	}
-	ft_printf("%s=%s\n", head->name, head->value);
+	if (head->value != NULL)
+		ft_printf("%s=%s\n", head->name, head->value);
 	head = tmp;
 }
 
