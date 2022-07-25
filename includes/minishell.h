@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/23 10:01:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/25 10:58:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,8 @@ void    free_split(char **split_cmd);
 void	lst_free(t_cmd *cmd_lst, t_env *lst);
 void	free_env_lst(t_env *lst);
 void	lonely_export(t_env *lst);
+
+void	check_exec(t_env *lst, t_cmd *cmd_lst);
+void	pipes(t_env *lst, t_cmd *cmd_lst);
 
 #endif
