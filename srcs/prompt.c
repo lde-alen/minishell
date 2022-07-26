@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/11 05:21:15 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:05:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	shell_prompt(char **env)
 
 	signal(SIGINT, new_prompt);
 	signal(SIGQUIT, SIG_IGN);
+	ft_memset(&lst, 0, sizeof(lst));
 	lst = ft_env(env);
 	while (1)
 	{
@@ -41,6 +42,9 @@ void	shell_prompt(char **env)
 			}
 		}
 		else
+		{
+			free_env_lst(lst);
 			exit(0);
+		}
 	}
 }

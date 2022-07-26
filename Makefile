@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/07/25 06:17:38 by asanthos         ###   ########.fr        #
+#    Updated: 2022/07/26 11:48:51 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ SRCS_DIR	=		./srcs/
 
 BUILT_DIR	=		builtins/
 
+TOKEN_DIR	=		tokens/
+
 SRCS		=		main.c		\
 					prompt.c	\
 					execute.c	\
@@ -27,7 +29,8 @@ SRCS		=		main.c		\
 					cmd_list.c	\
 					parser.c	\
 					ft_free.c	\
-					pipes.c		\
+					len.c		\
+					execv.c		\
 
 BUILTINS	=		ft_env.c	\
 					ft_echo.c	\
@@ -37,7 +40,10 @@ BUILTINS	=		ft_env.c	\
 					ft_pwd.c	\
 					ft_unset.c	\
 
-OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o)) $(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o))
+TOKENS		=		pipes.c		\
+					redirect.c	\
+
+OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o)) $(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o)) $(addprefix $(SRCS_DIR)$(TOKEN_DIR),$(TOKENS:.c=.o))
 
 OBJS_DIR_N	=		objs
 
