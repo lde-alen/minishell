@@ -1,6 +1,7 @@
 {
     "files.associations": {
-        "sstream": "c",
-        "typeinfo": "c"
-    }
+		"sstream": "c",
+		"typeinfo": "c",
+		"libft.h": "c"
+	}
 }
