@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/26 15:20:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 04:37:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	free_env_lst(t_env *lst)
 	while (lst->next != tmp)
 	{
 		store = lst->next;
+		free(lst->name);
 		free(lst);
 		lst = store;
 	}
+	free(lst->name);
 	free (lst);
 }
 
