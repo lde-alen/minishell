@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/24 07:03:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 06:12:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void div_env(char *str, t_env *lst)
+char	*div_env(char *str, t_env *lst)
 {
 	char	*env_name;
 	char	*env_value;
@@ -30,7 +30,7 @@ void div_env(char *str, t_env *lst)
 		env_value = ft_strchr(div, div[1]);
 	}
 	lst = push_env(lst, env_name, env_value);
-	// free(env_name);
+	return (env_name);
 }
 
 static t_env	*check_exist(t_env *lst, char *str)
@@ -67,7 +67,7 @@ static t_env	*check_exist(t_env *lst, char *str)
 		return (lst);
 	}
 	lst = tmp;
-	// free(env_name);
+	free(env_name);
 	return (NULL);
 }
 
@@ -76,6 +76,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	int		i;
 	char	*div;
 	char	*len;
+	char	*env_name;
 	t_env	*check;
 	
 	i = 0;
@@ -85,7 +86,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 		{
 			check = check_exist(lst, cmd_lst->argument[i]);
 			if (check == NULL)
-				div_env(cmd_lst->argument[i], lst);
+				env_name = div_env(cmd_lst->argument[i], lst);
 		}
 		else
 		{
@@ -99,8 +100,9 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 					check->value = ft_strjoin(check->value, ft_strchr(div, div[1]));
 			}
 			else
-				div_env(cmd_lst->argument[i], lst);
+				env_name = div_env(cmd_lst->argument[i], lst);
 		}
+		free(env_name);
 		i++;
 	}
 }

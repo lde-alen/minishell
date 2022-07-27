@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/26 09:06:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 09:47:17 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <limits.h>
 
 /**
  * Setting your vocabulary makes you wiser
@@ -81,7 +82,7 @@ void	ft_expander(t_env *lst, char *str);
 t_cmd	*ft_lst_init(char *str);
 char    *get_pwd();
 t_env   *search_pwd(t_env *lst);
-void	ft_parse(char *str, t_env *lst);
+void	ft_parse(t_env *lst, t_cmd *cmd_lst);
 void    free_split(char **split_cmd);
 // void	div_env(char *str, t_env *lst);
 

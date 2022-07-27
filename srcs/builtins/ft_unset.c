@@ -6,40 +6,53 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/04 18:59:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 08:08:30 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	ch_equality(char *str, t_env *tmp2, t_env *lst)
+static int	ch_equality(char *str, t_env *lst)
 {
+	t_env *tmp2;
+
 	if (strcmp(str, lst->name) == 0)
 	{
 		tmp2 = lst;
 		lst->prev->next = lst->next;
 		lst->next->prev = lst->prev;
+		free(tmp2->name);
 		free(tmp2);
+		return (1);
 	}
+	return (0);
 }
 
 void	ft_unset(t_env *lst, t_cmd *cmd_lst)
 {
 	int i;
 	t_env *tmp;
-	t_env *tmp2;
 
 	i = 0;
 	tmp = lst;
-	tmp2 = NULL;
 	while (cmd_lst->argument[i])
 	{
 		while (lst->next != tmp)
 		{
-			ch_equality(cmd_lst->argument[i], tmp2, lst);
+			if (ch_equality(cmd_lst->argument[i], lst) == 1)
+			{
+				lst = tmp;
+				// free_cmd(cmd_lst);
+				return ;
+			}
 			lst = lst->next;
 		}
-		ch_equality(cmd_lst->argument[i], tmp2, lst);
+		if (ch_equality(cmd_lst->argument[i], lst) == 1)
+		{
+			lst = tmp;
+			// free_cmd(cmd_lst);
+			return ;
+		}
 		lst = tmp;
 		i++;
 	}

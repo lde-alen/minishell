@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/25 03:05:07 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 10:08:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ void ft_cd(t_cmd *cmd_lst, t_env *lst)
 		else
 			pwd->value = buff;
 	}
-	// free(buff);
+	free(buff);
 }

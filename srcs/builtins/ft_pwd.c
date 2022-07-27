@@ -6,29 +6,30 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 09:27:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/06/09 04:20:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 10:05:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char    *get_pwd()
+char	*get_pwd()
 {
-	char *buff;
+	char	*buff;
 
-    buff = (char *)malloc(100 * sizeof(char));
-    getcwd(buff,100);
-    return (buff);
+	buff = (char *)malloc(100 * sizeof(char));
+	getcwd(buff,100);
+	return (buff);
 }
 
-void    ft_pwd(t_env *lst)
+void	ft_pwd(t_env *lst)
 {
-    char    *buff;
+	char	*buff;
 
-    buff = get_pwd();
-    if (strcmp(search_pwd(lst)->value, "//") == 0)
-        ft_putendl_fd("//", 1);
-    else
-        ft_putendl_fd(buff, 1);
-    free(buff);
+	buff = NULL;
+	buff = get_pwd();
+	if (strcmp(search_pwd(lst)->value, "//") == 0)
+		ft_putendl_fd("//", 1);
+	else
+		ft_putendl_fd(buff, 1);
+	free(buff);
 }
