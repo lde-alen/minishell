@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/27 08:08:30 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:09:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,11 @@ void	ft_unset(t_env *lst, t_cmd *cmd_lst)
 		while (lst->next != tmp)
 		{
 			if (ch_equality(cmd_lst->argument[i], lst) == 1)
-			{
 				lst = tmp;
-				// free_cmd(cmd_lst);
-				return ;
-			}
 			lst = lst->next;
 		}
 		if (ch_equality(cmd_lst->argument[i], lst) == 1)
-		{
 			lst = tmp;
-			// free_cmd(cmd_lst);
-			return ;
-		}
 		lst = tmp;
 		i++;
 	}
