@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/27 09:47:17 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/28 03:51:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char    *get_pwd();
 t_env   *search_pwd(t_env *lst);
 void	ft_parse(t_env *lst, t_cmd *cmd_lst);
 void    free_split(char **split_cmd);
-// void	div_env(char *str, t_env *lst);
 
 void	lst_free(t_cmd *cmd_lst, t_env *lst);
 void	free_cmd(t_cmd *cmd_lst);
