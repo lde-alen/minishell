@@ -75,6 +75,6 @@ t_cmd	*ft_lst_init(char *str)
 		cmd_lst->argument[i - 1] = split_cmd[i];
 		i++;
 	}
-	cmd_lst->argument[i - 1] = '\0';
+	cmd_lst->argument[i - 1] = NULL;
 	return (cmd_lst);
 }
