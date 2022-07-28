@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/28 10:21:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/28 10:24:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 				len = ft_strchr(cmd_lst->argument[i], '+');
 				div = ft_strchr(cmd_lst->argument[i], '=');
 				if (len != NULL && len[1] == '=')
-				{
-					ft_printf("Prev value: %s\n", check->value);
 					check->value = ft_strjoin(check->value, ft_strchr(div, div[1]));
-				}
 				else
 					check->value = ft_strchr(div, div[1]);
 			}
