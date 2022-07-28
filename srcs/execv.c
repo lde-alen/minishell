@@ -53,29 +53,31 @@ char	**get_path(t_env *lst)
 	return NULL;
 }
 
-void	main_child(t_env *lst, t_cmd *cmd_lst)
+void	main_child(t_env *lst, t_cmd *cmd_lst, char *path)
 {
-	char	**av;
+	char	**params;
 	int		i;
 
-	ft_printf("%d\n", get_args_len(cmd_lst));
-	av = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
-	av[0] = cmd_lst->command;
+	(void)lst;
+	params = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
+	params[0] = cmd_lst->command;
 	i = 0;
 	while (cmd_lst->argument[i])
 	{
-		av[i + 1] = cmd_lst->argument[i];
+		params[i + 1] = cmd_lst->argument[i];
 		i++;
 	}
-	av[i + 1] = NULL;
-	if (execve(cmd_lst->command, av, lst_to_char(lst)) < 0)
+	params[i + 1] = NULL;
+	if (execve(path, params, NULL) < 0)
 		perror("Execve problem");
+	exit(0);
 }
 
 void	check_exec(t_env *lst, t_cmd *cmd_lst)
 {
 	char	**env_path;
 	char	*post_join;
+	char	*path;
 	char	*str;
 	int		id;
 	int		i;
@@ -88,16 +90,16 @@ void	check_exec(t_env *lst, t_cmd *cmd_lst)
 		str = ft_strjoin(env_path[i], post_join);
 		if (access(str, F_OK) == 0)
 		{
-			free(cmd_lst->command);
-			cmd_lst->command = ft_strdup(str);
+			path = ft_strdup(str);
 			id = fork();
 			if (id < 0)
 				ft_putendl_fd("Fork failed", 2);
 			else if (id == 0)
-				main_child(lst, cmd_lst);
+				main_child(lst, cmd_lst, path);
 			waitpid(-1, NULL, 0);
 			free(str);
 			free(post_join);
+			return ;
 		}
 		i++;
 	}
@@ -107,6 +109,7 @@ void	check_execve(t_env *lst, t_cmd *cmd_lst)
 {
 	char	**env_path;
 	char	*post_join;
+	char	*path;
 	char	*str;
 	int		id;
 	int		i;
@@ -120,12 +123,12 @@ void	check_execve(t_env *lst, t_cmd *cmd_lst)
 		if (access(str, F_OK) == 0)
 		{
 			free(cmd_lst->command);
-			cmd_lst->argument[1] = ft_strdup(str);
+			path = ft_strdup(str);
 			id = fork();
 			if (id < 0)
 				ft_putendl_fd("Fork failed", 2);
 			else if (id == 0)
-				main_child(lst, cmd_lst);
+				main_child(lst, cmd_lst, path);
 			waitpid(-1, NULL, 0);
 			free(str);
 			free(post_join);
@@ -133,4 +136,3 @@ void	check_execve(t_env *lst, t_cmd *cmd_lst)
 		i++;
 	}
 }
-
