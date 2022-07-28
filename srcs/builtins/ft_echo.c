@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/27 04:48:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/28 15:01:30 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@ void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 {
 	char	*str;
 	char	*store_value;
-	int		store;
 
 	str = "";
 	store_value = "";
-	store = i;
 	while (cmd_lst->argument[i])
 	{
 		store_value = ft_strjoin(str, cmd_lst->argument[i]);
