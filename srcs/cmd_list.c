@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/28 04:21:07 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/28 06:43:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,17 @@ t_cmd	*ft_lst_init(char *str)
 	i = 0;
 	while (split_cmd[i])
 		i++;
-	cmd_lst->command = split_cmd[0];
+	cmd_lst->command = ft_strdup(split_cmd[0]);
+	free(split_cmd[0]);
 	cmd_lst->argument = (char **)ft_calloc(i, sizeof(char *));
 	i = 1;
 	while (split_cmd[i])
 	{
-		cmd_lst->argument[i - 1] = split_cmd[i];
+		cmd_lst->argument[i - 1] = ft_strdup(split_cmd[i]);
+		free(split_cmd[i]);
 		i++;
 	}
+	free(split_cmd);
 	cmd_lst->argument[i - 1] = NULL;
 	return (cmd_lst);
 }
