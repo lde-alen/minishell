@@ -6,11 +6,23 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/28 02:58:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/27 04:37:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void    free_split(char **split_cmd)
+{
+	int	i;
+
+	i = 0;
+	while (split_cmd[i])
+	{
+		free(split_cmd[i]);
+		i++;
+	}
+}
 
 void	free_env_lst(t_env *lst)
 {
