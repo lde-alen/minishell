@@ -59,6 +59,7 @@ void	main_child(t_env *lst, t_cmd *cmd_lst, char *path)
 	int		i;
 
 	(void)lst;
+	//should it be +1??
 	params = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
 	params[0] = cmd_lst->command;
 	i = 0;
@@ -105,6 +106,21 @@ void	check_exec(t_env *lst, t_cmd *cmd_lst)
 	}
 }
 
+void	main_child_2(t_env *lst, t_cmd *cmd_lst, char *path)
+{
+	char	**params;
+
+	(void)lst;
+	params = (char **)malloc(sizeof(char *) + 1);
+	params[0] = cmd_lst->command;
+	params[1] = NULL;
+	ft_printf("Path: %s\n", path);
+	ft_printf("Command: %s\n", cmd_lst->command);
+	if (execve(path, params, NULL) < 0)
+		perror("Execve problem");
+	exit(0);
+}
+
 void	check_execve(t_env *lst, t_cmd *cmd_lst)
 {
 	char	**env_path;
@@ -122,13 +138,12 @@ void	check_execve(t_env *lst, t_cmd *cmd_lst)
 		str = ft_strjoin(env_path[i], post_join);
 		if (access(str, F_OK) == 0)
 		{
-			free(cmd_lst->command);
 			path = ft_strdup(str);
 			id = fork();
 			if (id < 0)
 				ft_putendl_fd("Fork failed", 2);
 			else if (id == 0)
-				main_child(lst, cmd_lst, path);
+				main_child_2(lst, cmd_lst, path);
 			waitpid(-1, NULL, 0);
 			free(str);
 			free(post_join);
@@ -136,3 +151,48 @@ void	check_execve(t_env *lst, t_cmd *cmd_lst)
 		i++;
 	}
 }
+
+void	main_child_3(t_env *lst, t_cmd *cmd_lst, char *path)
+{
+	char	**params;
+
+	(void)lst;
+	params = (char **)malloc(sizeof(char *) + 1);
+	params[0] = cmd_lst->argument[2];
+	params[1] = NULL;
+	if (execve(path, params, NULL) < 0)
+		perror("Execve problem");
+	exit(0);
+}
+
+void	check_execve2(t_env *lst, t_cmd *cmd_lst)
+{
+	char	**env_path;
+	char	*post_join;
+	char	*path;
+	char	*str;
+	int		id;
+	int		i;
+
+	i = 0;
+	env_path = get_path(lst);
+	while (env_path[i])
+	{
+		post_join = ft_strjoin("/", cmd_lst->argument[2]);
+		str = ft_strjoin(env_path[i], post_join);
+		if (access(str, F_OK) == 0)
+		{
+			path = ft_strdup(str);
+			id = fork();
+			if (id < 0)
+				ft_putendl_fd("Fork failed", 2);
+			else if (id == 0)
+				main_child_3(lst, cmd_lst, path);
+			waitpid(-1, NULL, 0);
+			free(str);
+			free(post_join);
+		}
+		i++;
+	}
+}
+

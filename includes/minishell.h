@@ -91,6 +91,7 @@ void	free_cmd(t_cmd *cmd_lst);
 void	free_env_lst(t_env *lst);
 void	lonely_export(t_env *lst);
 
+void	check_execve2(t_env *lst, t_cmd *cmd_lst);
 void	check_execve(t_env *lst, t_cmd *cmd_lst);
 void	check_exec(t_env *lst, t_cmd *cmd_lst);
 void	pipes(t_env *lst, t_cmd *cmd_lst);

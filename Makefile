@@ -21,6 +21,8 @@ BUILT_DIR	=		builtins/
 
 TOKEN_DIR	=		tokens/
 
+UTILS_DIR	=		utils/
+
 SRCS		=		main.c		\
 					prompt.c	\
 					execute.c	\
@@ -29,7 +31,6 @@ SRCS		=		main.c		\
 					cmd_list.c	\
 					parser.c	\
 					ft_free.c	\
-					len.c		\
 					execv.c		\
 
 BUILTINS	=		ft_env.c	\
@@ -43,7 +44,18 @@ BUILTINS	=		ft_env.c	\
 TOKENS		=		pipes.c		\
 					redirect.c	\
 
-OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o)) $(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o)) $(addprefix $(SRCS_DIR)$(TOKEN_DIR),$(TOKENS:.c=.o))
+UTILS		=		len.c		\
+					print.c		\
+
+SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
+
+BUILT_OBJ	=		$(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o))
+
+TOKEN_OBJ	=		$(addprefix $(SRCS_DIR)$(TOKEN_DIR),$(TOKENS:.c=.o))
+
+UTILS_OBJ	=		$(addprefix $(SRCS_DIR)$(UTILS_DIR),$(UTILS:.c=.o))
+
+OBJS		=		$(SRCS_OBJ) $(BUILT_OBJ) $(TOKEN_OBJ) $(UTILS_OBJ)
 
 OBJS_DIR_N	=		objs
 

@@ -14,9 +14,9 @@
 
 void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 {
-	// if (cmd_lst->argument[0][0] == '|')
-	// 	pipes(lst, cmd_lst);
-	if (cmd_lst->command[0] == '$')
+	if (cmd_lst->argument[0][0] == '|')
+		pipes(lst, cmd_lst);
+	else if (cmd_lst->command[0] == '$')
 		ft_expander(lst, cmd_lst->command);
 	else if (strcmp(cmd_lst->command, "echo") == 0)
 		ft_echo(cmd_lst);

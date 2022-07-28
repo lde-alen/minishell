@@ -16,9 +16,9 @@ void	second_child(int *fd, t_env *lst, t_cmd *cmd_lst)
 {
 	close(fd[1]);
 	if (dup2(fd[0], STDIN_FILENO) < 0)
-		perror("bash: ");
+		perror("second dup2");
 	close(fd[0]);
-	check_execve(lst, cmd_lst);
+	check_execve2(lst, cmd_lst);
 }
 
 void	pipes(t_env *lst, t_cmd *cmd_lst)
@@ -29,22 +29,24 @@ void	pipes(t_env *lst, t_cmd *cmd_lst)
 
 	tmp = dup(STDOUT_FILENO);
 	if (pipe(fd) < 0)
-		perror("bash: ");
+		perror("pipe");
 	id = fork();
 	if (id < 0)
-		perror("bash: ");
+		perror("fork");
 	if (id == 0)
 	{
-		ft_printf("boop\n");
 		close(fd[0]);
+		ft_printf("boop\n");
 		if (dup2(fd[1], STDOUT_FILENO) < 0)
-			perror("bash: ");
+			perror("dup2");
 		close(fd[1]);
-		check_exec(lst, cmd_lst);
+		check_execve(lst, cmd_lst);
+		exit(0);
 	}
-	second_child(fd, lst, cmd_lst);
-	close(fd[0]);
 	close(fd[1]);
+	dup2(STDOUT_FILENO, fd[0]);
+	// second_child(fd, lst, cmd_lst);
+	close(fd[0]);
 	dup2(tmp, STDOUT_FILENO);
 	waitpid(-1, NULL, 0);
 }
