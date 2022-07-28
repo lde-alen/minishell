@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/27 04:37:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/28 04:21:12 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,34 @@ void	free_env_lst(t_env *lst)
 	free (lst);
 }
 
+// void	free_cmd(t_cmd *cmd_lst)
+// {
+// 	t_cmd	*tmp;
+// 	t_cmd	*store;
+
+// 	tmp = cmd_lst;
+// 	while (cmd_lst->next != tmp)
+// 	{
+// 		store = cmd_lst->next;
+// 		free(cmd_lst);
+// 		cmd_lst = store;
+// 	}
+// 	free (cmd_lst);
+// }
+
 void	free_cmd(t_cmd *cmd_lst)
 {
-	t_cmd	*tmp;
-	t_cmd	*store;
+	int	i;
 
-	tmp = cmd_lst;
-	while (cmd_lst->next != tmp)
+	i = 0;
+	free(cmd_lst->command);
+	while (cmd_lst->argument[i])
 	{
-		store = cmd_lst->next;
-		free(cmd_lst);
-		cmd_lst = store;
+		free(cmd_lst->argument[i]);
+		i++;
 	}
-	free (cmd_lst);
+	free(cmd_lst->argument);
+	free(cmd_lst);
 }
 
 void	lst_free(t_cmd *cmd_lst, t_env *lst)
