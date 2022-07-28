@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 07:28:29 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/26 11:27:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/29 03:31:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	main_child(t_env *lst, t_cmd *cmd_lst)
 	char	**av;
 	int		i;
 
+	(void)lst;
 	ft_printf("%d\n", get_args_len(cmd_lst));
 	av = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
 	av[0] = cmd_lst->command;
@@ -68,7 +69,7 @@ void	main_child(t_env *lst, t_cmd *cmd_lst)
 		i++;
 	}
 	av[i + 1] = NULL;
-	if (execve(cmd_lst->command, av, lst_to_char(lst)) < 0)
+	if (execve(cmd_lst->command, av, NULL) < 0)
 		perror("Execve problem");
 }
 
