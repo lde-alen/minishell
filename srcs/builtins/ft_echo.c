@@ -12,40 +12,12 @@
 
 #include "../../includes/minishell.h"
 
-size_t	get_len(t_cmd *cmd_lst, int i)
-{
-	size_t	len;
-
-	len = 0;
-	while (cmd_lst->argument[i])
-	{
-		len++;
-		i++;
-	}
-	return (len);
-}
-
-size_t	args_len(t_cmd *cmd_lst, int i)
-{
-	size_t	len;
-
-	i = 0;
-	len = 0;
-	while (cmd_lst->argument[i])
-	{
-		len += ft_strlen(cmd_lst->argument[i]);
-		i++;
-	}
-	return (len);
-}
-
 void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 {
 	char	*str;
 	char	*store_value;
 	int		store;
 
-	(void)store;
 	str = "";
 	store_value = "";
 	store = i;

@@ -53,13 +53,12 @@ char	**get_path(t_env *lst)
 	return NULL;
 }
 
-void	main_child(t_env *lst, t_cmd *cmd_lst)
+void	main_child(t_env *lst, t_cmd *cmd_lst, char *path)
 {
 	char	**av;
 	int		i;
 
 	(void)lst;
-	ft_printf("%d\n", get_args_len(cmd_lst));
 	av = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
 	av[0] = cmd_lst->command;
 	i = 0;
@@ -69,7 +68,7 @@ void	main_child(t_env *lst, t_cmd *cmd_lst)
 		i++;
 	}
 	av[i + 1] = NULL;
-	if (execve(cmd_lst->command, av, NULL) < 0)
+	if (execve(path, av, NULL) < 0)
 		perror("Execve problem");
 }
 
@@ -77,6 +76,7 @@ void	check_exec(t_env *lst, t_cmd *cmd_lst)
 {
 	char	**env_path;
 	char	*post_join;
+	char	*path;
 	char	*str;
 	int		id;
 	int		i;
@@ -89,13 +89,12 @@ void	check_exec(t_env *lst, t_cmd *cmd_lst)
 		str = ft_strjoin(env_path[i], post_join);
 		if (access(str, F_OK) == 0)
 		{
-			free(cmd_lst->command);
-			cmd_lst->command = ft_strdup(str);
+			path = ft_strdup(str);
 			id = fork();
 			if (id < 0)
 				ft_putendl_fd("Fork failed", 2);
 			else if (id == 0)
-				main_child(lst, cmd_lst);
+				main_child(lst, cmd_lst, path);
 			waitpid(-1, NULL, 0);
 			free(str);
 			free(post_join);
@@ -103,35 +102,3 @@ void	check_exec(t_env *lst, t_cmd *cmd_lst)
 		i++;
 	}
 }
-
-void	check_execve(t_env *lst, t_cmd *cmd_lst)
-{
-	char	**env_path;
-	char	*post_join;
-	char	*str;
-	int		id;
-	int		i;
-
-	i = 0;
-	env_path = get_path(lst);
-	while (env_path[i])
-	{
-		post_join = ft_strjoin("/", cmd_lst->command);
-		str = ft_strjoin(env_path[i], post_join);
-		if (access(str, F_OK) == 0)
-		{
-			free(cmd_lst->command);
-			cmd_lst->argument[1] = ft_strdup(str);
-			id = fork();
-			if (id < 0)
-				ft_putendl_fd("Fork failed", 2);
-			else if (id == 0)
-				main_child(lst, cmd_lst);
-			waitpid(-1, NULL, 0);
-			free(str);
-			free(post_join);
-		}
-		i++;
-	}
-}
-

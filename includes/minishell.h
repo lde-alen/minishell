@@ -99,6 +99,8 @@ void	pipes(t_env *lst, t_cmd *cmd_lst);
 int		get_args_len(t_cmd *cmd_lst);
 int		get_lst_len(t_env *lst);
 
-void	this();
+char	**lst_to_char(t_env *lst);
+char	**get_path(t_env *lst);
+void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 
 #endif
