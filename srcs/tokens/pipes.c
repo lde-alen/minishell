@@ -24,7 +24,7 @@ void	main_child2(t_env *lst, t_cmd *cmd_lst, char *path)
 		perror("Execve problem");
 }
 
-void	check_execve(t_env *lst, t_cmd *cmd_lst)
+void	check_execve(t_env *lst, t_cmd *cmd_lst, int *fd)
 {
 	char	**env_path;
 	char	*post_join;
@@ -32,8 +32,10 @@ void	check_execve(t_env *lst, t_cmd *cmd_lst)
 	char	*str;
 	int		id;
 	int		i;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	env_path = get_path(lst);
 	while (env_path[i])
 	{
@@ -46,11 +48,20 @@ void	check_execve(t_env *lst, t_cmd *cmd_lst)
 			if (id < 0)
 				ft_putendl_fd("Fork failed", 2);
 			else if (id == 0)
+			{
+				close(fd[0]);
+				if (dup2(fd[1], STDOUT_FILENO) < 0)
+					perror("dup2");
+				close(fd[1]);
 				main_child2(lst, cmd_lst, path);
-			waitpid(-1, NULL, 0);
-			free(str);
-			free(post_join);
+				exit(0);
+			}
+			flag = 1;
 		}
+		free(str);
+		free(post_join);
+		if (flag == 1)
+			return ;
 		i++;
 	}
 }
@@ -67,7 +78,7 @@ void	main_child3(t_env *lst, t_cmd *cmd_lst, char *path)
 		perror("Execve problem");
 }
 
-void	check_execve2(t_env *lst, t_cmd *cmd_lst)
+void	check_execve2(t_env *lst, t_cmd *cmd_lst, int *fd)
 {
 	char	**env_path;
 	char	*post_join;
@@ -75,8 +86,10 @@ void	check_execve2(t_env *lst, t_cmd *cmd_lst)
 	char	*str;
 	int		id;
 	int		i;
+	int		flag;
 
 	i = 0;
+	flag = 0;
 	env_path = get_path(lst);
 	while (env_path[i])
 	{
@@ -89,48 +102,31 @@ void	check_execve2(t_env *lst, t_cmd *cmd_lst)
 			if (id < 0)
 				ft_putendl_fd("Fork failed", 2);
 			else if (id == 0)
+			{
+				close(fd[1]);
+				if (dup2(fd[0], STDIN_FILENO) < 0)
+					perror("dup2");
+				close(fd[0]);
 				main_child3(lst, cmd_lst, path);
-			waitpid(-1, NULL, 0);
-			free(str);
-			free(post_join);
+				exit(0);
+			}
+			flag = 1;
 		}
+		free(str);
+		free(post_join);
+		if (flag == 1)
+			return ;
 		i++;
-	}
-}
-
-void	second_child(t_env *lst, t_cmd *cmd_lst, int *fd)
-{
-	int	id;
-
-	id = fork();
-	if (id == 0)
-	{
-		close(fd[1]);
-		if (dup2(STDOUT_FILENO, fd[0]) < 0)
-			perror("dup2");
-		check_execve2(lst, cmd_lst);
-		close(fd[1]);
-		exit(0);
 	}
 }
 
 void	pipes(t_env *lst, t_cmd *cmd_lst)
 {
-	int	id;
 	int	fd[2];
 
-	id = fork();
-	pipe(fd);
-	if (id == 0)
-	{
-		close(fd[0]);
-		if (dup2(fd[1], STDOUT_FILENO) < 0)
-			perror("dup2");
-		check_execve(lst, cmd_lst);
-		close(fd[1]);
-		exit(0);
-	}
-	second_child(lst, cmd_lst, fd);
+	if (pipe(fd) < 0)
+		perror("pipe");
+	check_execve(lst, cmd_lst, fd);
+	check_execve2(lst, cmd_lst, fd);
 	waitpid(-1, NULL, 0);
-	dup2(STDOUT_FILENO, fd[0]);
 }
