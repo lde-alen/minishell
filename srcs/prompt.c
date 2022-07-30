@@ -6,19 +6,19 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/28 08:18:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:36:17 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	new_prompt(int i)
+void	new_prompt(int val)
 {
-	(void)i;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	exit(val);
 }
 
 void	shell_prompt(char **env)

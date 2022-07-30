@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/07/29 03:35:23 by asanthos         ###   ########.fr        #
+#    Updated: 2022/07/30 06:43:48 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS		=		main.c		\
 					cmd_list.c	\
 					parser.c	\
 					ft_free.c	\
-					execv.c		\
+					exec.c		\
 
 BUILTINS	=		ft_env.c	\
 					ft_echo.c	\
@@ -41,7 +41,7 @@ BUILTINS	=		ft_env.c	\
 					ft_pwd.c	\
 					ft_unset.c	\
 
-TOKENS		=		pipes.c		\
+TOKENS		=		pipe.c		\
 					redirect.c	\
 
 UTILS		=		len.c		\

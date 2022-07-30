@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/29 04:16:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/30 14:26:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,16 @@ int		get_lst_len(t_env *lst);
 
 char	**lst_to_char(t_env *lst);
 char	**get_path(t_env *lst);
-void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
+void	main_child(t_cmd *cmd_lst, char *path);
+
+char	**lst_to_char(t_env *lst);
+void	exec_sys(t_env *lst, t_cmd *cmd_lst);
+char	*check_access(t_env *lst, t_cmd *cmd_lst);
+void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
+
+void	redirect_in(t_env *lst, t_cmd *cmd_lst);
+void	redirect_out(t_env *lst, t_cmd *cmd_lst);
+void	append_out(t_env *lst, t_cmd *cmd_lst);
+void	here_doc(t_env *lst, t_cmd *cmd_lst);
 
 #endif

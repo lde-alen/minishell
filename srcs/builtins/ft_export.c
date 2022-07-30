@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/28 10:24:01 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:25:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	char	*len;
 	t_env	*check;
 	
-	i = 0;
+	i = 1;
 	while (cmd_lst->argument[i])
 	{
 		if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
