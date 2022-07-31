@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:08:50 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 07:55:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 10:47:20 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 		redirect_out(lst, cmd_lst);
 	else if (strcmp(cmd_lst->argument[1], ">>") == 0)
 		append_out(lst, cmd_lst);
-	else if (cmd_lst->command[0] == '$')
+	if (cmd_lst->command[0] == '$')
 		ft_expander(lst, cmd_lst->command);
 	else if (strcmp(cmd_lst->command, "echo") == 0)
 		ft_echo(cmd_lst);
@@ -32,7 +32,7 @@ void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 		ft_pwd(lst);
 	else if (strcmp(cmd_lst->command, "env") == 0)
 		print_list_env(lst);
-	else if (strcmp(cmd_lst->command, "export") == 0 && cmd_lst->argument[0] != NULL)
+	else if (strcmp(cmd_lst->command, "export") == 0 && cmd_lst->argument[1] != NULL)
 		ft_export(lst, cmd_lst);
 	else if (strcmp(cmd_lst->command, "export") == 0)
 		lonely_export(lst);

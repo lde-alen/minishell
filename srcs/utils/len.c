@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 07:29:45 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 07:55:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 10:31:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,14 @@ int	get_args_len(t_cmd *cmd_lst)
 	return (i);
 }
 
-char	**lst_to_char(t_env *lst)
+int	iter_diff(t_env *lst, t_env *new_node)
 {
-	char	**env;
-	char	*temp_str;
-	t_env	*tmp;
-	int		i;
+	int	i;
 
 	i = 0;
-	tmp = lst;
-	temp_str = "";
-	env = (char **)malloc(sizeof(char *) * (get_lst_len(lst) + 1));
-	while (lst->next != tmp)
-	{
-		env[i] = lst->name;
-		temp_str = ft_strjoin(env[i], "=");
-		env[i] = ft_strjoin(temp_str, lst->value);
-		lst = lst->next;
+	while (lst->name[i] == new_node->name[i])
 		i++;
-		// free(temp_str);
-	}
-	env[i] = lst->name;
-	temp_str = ft_strjoin(env[i], "=");
-	env[i] = ft_strjoin(temp_str, lst->value);
-	// free(temp_str);
-	return (env);
-};
+	if (lst->name[i] < new_node->name[i])
+		return (1);
+	return (0);
+}

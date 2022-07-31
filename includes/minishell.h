@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/31 07:57:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 10:23:55 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,11 @@ void	here_doc(t_env *lst, t_cmd *cmd_lst);
 void	print_lst(t_env *lst);
 void	print_list_env(t_env *head);
 char	**lst_to_char(t_env *lst);
+
+void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
+int		iter_diff(t_env *lst, t_env *new_node);
+t_env	*check_exist(t_env *lst, char *str);
+t_env	*check_stack(t_env *new_node, t_env *lst);
+void	div_env(char *str, t_env *lst);
 
 #endif
