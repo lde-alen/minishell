@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 07:20:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 07:57:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
 			params[1] = NULL;
 			dup2(file, status);
 			close(file);
-			execve(path, params, NULL);
+			execve(path, params, lst_to_char(lst));
 			exit(0);
 		}
 		waitpid(-1, NULL, 0);
@@ -106,7 +106,7 @@ void	here_doc(t_env *lst, t_cmd *cmd_lst)
 			params[1] = NULL;
 			dup2(file, STDIN_FILENO);
 			close(file);
-			execve(path, params, NULL);
+			execve(path, params, lst_to_char(lst));
 			exit(0);
 		}
 	}

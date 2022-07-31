@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/30 03:25:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 07:38:22 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,26 +104,6 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 		}
 		i++;
 	}
-}
-
-void	print_lst(t_env *lst)
-{
-	t_env	*tmp;
-
-	tmp = lst;
-
-	while (lst->next != tmp)
-	{
-		if (lst->value != NULL)
-			ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
-		else
-			ft_printf("declare -x %s\n", lst->name);
-		lst = lst->next;
-	}
-	if (lst->value != NULL)
-		ft_printf("declare -x %s=\"%s\"\n", lst->name, lst->value);
-	else
-		ft_printf("declare -x %s\n", lst->name);
 }
 
 int	iter_diff(t_env *lst, t_env *new_node)

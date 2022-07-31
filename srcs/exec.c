@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 04:49:15 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/30 06:44:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 07:57:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	return (NULL);
 }
 
-void	main_child(t_cmd *cmd_lst, char *path)
+void	main_child(t_env *lst, t_cmd *cmd_lst, char *path)
 {
-	if (execve(path, cmd_lst->argument, NULL) < 0)
+	if (execve(path, cmd_lst->argument, lst_to_char(lst)) < 0)
 		perror("Execve problem");
 }
 
@@ -76,7 +76,7 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 		if (id < 0)
 			ft_putendl_fd("Fork failed", 2);
 		else if (id == 0)
-			main_child(cmd_lst, path);
+			main_child(lst, cmd_lst, path);
 		waitpid(-1, NULL, 0);
 	}
 }

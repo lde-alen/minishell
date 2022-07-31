@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 07:12:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 07:56:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	second_child(t_cmd *cmd_lst, int *fd, char *path)
+void	second_child(t_env *lst, t_cmd *cmd_lst, int *fd, char *path)
 {
 	int		id2;
 	char	**params;
@@ -27,7 +27,7 @@ void	second_child(t_cmd *cmd_lst, int *fd, char *path)
 		params[0] = cmd_lst->argument[2];
 		params[1] = NULL;
 		dup2(fd[0], STDIN_FILENO);
-		if (execve("/usr/bin/cat", params, NULL) < 0)
+		if (execve("/usr/bin/cat", params, lst_to_char(lst)) < 0)
 			perror("Execve problem");
 		exit(0);
 	}
@@ -55,11 +55,11 @@ void	exec_pipe(t_env *lst, t_cmd *cmd_lst)
 			params[1] = NULL;
 			dup2(STDIN_FILENO, STDOUT_FILENO);
 			dup2(fd[1], STDOUT_FILENO);
-			if (execve(path, params, NULL) < 0)
+			if (execve(path, params, lst_to_char(lst)) < 0)
 				perror("Execve problem");
 			exit(0);
 		}
-		second_child(cmd_lst, fd, path);
+		second_child(lst, cmd_lst, fd, path);
 		waitpid(-1, NULL, 0);
 	}
 }

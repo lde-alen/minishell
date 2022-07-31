@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/30 14:26:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 07:57:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
+	char			**env_str;
 	char			*name;
 	char			*value;
 	struct s_env	*prev;
@@ -101,7 +102,7 @@ int		get_lst_len(t_env *lst);
 
 char	**lst_to_char(t_env *lst);
 char	**get_path(t_env *lst);
-void	main_child(t_cmd *cmd_lst, char *path);
+void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 
 char	**lst_to_char(t_env *lst);
 void	exec_sys(t_env *lst, t_cmd *cmd_lst);
@@ -112,5 +113,9 @@ void	redirect_in(t_env *lst, t_cmd *cmd_lst);
 void	redirect_out(t_env *lst, t_cmd *cmd_lst);
 void	append_out(t_env *lst, t_cmd *cmd_lst);
 void	here_doc(t_env *lst, t_cmd *cmd_lst);
+
+void	print_lst(t_env *lst);
+void	print_list_env(t_env *head);
+char	**lst_to_char(t_env *lst);
 
 #endif
