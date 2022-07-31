@@ -6,20 +6,21 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 03:32:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/31 04:56:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	redirect_in(t_env *lst, t_cmd *cmd_lst)
+void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
 {
 	int		file;
 	int		id;
 	char	*path;
 	char	**params;
 
-	file = open(cmd_lst->argument[2], O_RDONLY);
+	//0777 needed for append redirect
+	file = open(cmd_lst->argument[2], flag, 0777);
 	if (file < 0)
 	{
 		perror("file");
@@ -36,7 +37,7 @@ void	redirect_in(t_env *lst, t_cmd *cmd_lst)
 			params = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
 			params[0] = cmd_lst->command;
 			params[1] = NULL;
-			dup2(file, STDIN_FILENO);
+			dup2(file, status);
 			close(file);
 			execve(path, params, NULL);
 			exit(0);
@@ -45,73 +46,35 @@ void	redirect_in(t_env *lst, t_cmd *cmd_lst)
 	}
 }
 
+void	redirect_in(t_env *lst, t_cmd *cmd_lst)
+{
+	int	flag;
+	int	status;
+
+	flag = O_RDONLY;
+	status = STDIN_FILENO;
+	redirect(lst, cmd_lst, flag, status);
+}
+
 //test cat > file_name
 void	redirect_out(t_env *lst, t_cmd *cmd_lst)
 {
-	int		file;
-	int		id;
-	char	*path;
-	char	**params;
+	int	flag;
+	int	status;
 
-	file = open(cmd_lst->argument[2], O_TRUNC | O_CREAT | O_WRONLY);
-	if (file < 0)
-	{
-		perror("file");
-		return ;
-	}
-	path = check_access(lst, cmd_lst);
-	if (path != NULL)
-	{
-		id = fork();
-		if (id < 0)
-			ft_putendl_fd("Fork failed", 2);
-		else if (id == 0)
-		{
-			params = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
-			params[0] = cmd_lst->command;
-			params[1] = NULL;
-			dup2(file, STDOUT_FILENO);
-			close(file);
-			if (execve(path, params, NULL) < 0)
-				perror("Execve");
-			exit(0);
-		}
-		waitpid(-1, NULL, 0);
-	}
+	flag = O_TRUNC | O_CREAT | O_WRONLY;
+	status = STDOUT_FILENO;
+	redirect(lst, cmd_lst, flag, status);
 }
 
 void	append_out(t_env *lst, t_cmd *cmd_lst)
 {
-	int		file;
-	int		id;
-	char	*path;
-	char	**params;
+	int	flag;
+	int	status;
 
-	file = open(cmd_lst->argument[2], O_APPEND | O_WRONLY | O_CREAT, 0777);
-	if (file < 0)
-	{
-		perror("file");
-		return ;
-	}
-	path = check_access(lst, cmd_lst);
-	if (path != NULL)
-	{
-		id = fork();
-		if (id < 0)
-			ft_putendl_fd("Fork failed", 2);
-		else if (id == 0)
-		{
-			params = (char **)malloc(sizeof(char *) * get_args_len(cmd_lst));
-			params[0] = cmd_lst->command;
-			params[1] = NULL;
-			dup2(file, STDOUT_FILENO);
-			close(file);
-			if (execve(path, params, NULL) < 0)
-				perror("Execve");
-			exit(0);
-		}
-		waitpid(-1, NULL, 0);
-	}
+	flag = O_APPEND | O_WRONLY | O_CREAT;
+	status = STDOUT_FILENO;
+	redirect(lst, cmd_lst, flag, status);
 }
 
 void	here_doc(t_env *lst, t_cmd *cmd_lst)
