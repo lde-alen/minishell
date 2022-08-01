@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/07/26 11:48:51 by asanthos         ###   ########.fr        #
+#    Updated: 2022/07/31 10:22:40 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,29 +21,45 @@ BUILT_DIR	=		builtins/
 
 TOKEN_DIR	=		tokens/
 
-SRCS		=		main.c		\
-					prompt.c	\
-					execute.c	\
-					expand.c	\
-					minishell.c	\
-					cmd_list.c	\
-					parser.c	\
-					ft_free.c	\
-					len.c		\
-					execv.c		\
+UTILS_DIR	=		utils/
 
-BUILTINS	=		ft_env.c	\
-					ft_echo.c	\
-					ft_cd.c		\
-					ft_exit.c	\
-					ft_export.c	\
-					ft_pwd.c	\
-					ft_unset.c	\
+SRCS		=		main.c				\
+					prompt.c			\
+					execute.c			\
+					expand.c			\
+					minishell.c			\
+					cmd_list.c			\
+					parser.c			\
+					ft_free.c			\
+					exec.c				\
 
-TOKENS		=		pipes.c		\
-					redirect.c	\
+BUILTINS	=		ft_env.c			\
+					ft_echo.c			\
+					ft_cd.c				\
+					ft_exit.c			\
+					ft_export.c			\
+					ft_pwd.c			\
+					ft_unset.c			\
 
-OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o)) $(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o)) $(addprefix $(SRCS_DIR)$(TOKEN_DIR),$(TOKENS:.c=.o))
+TOKENS		=		pipe.c				\
+					redirect.c			\
+
+UTILS		=		len.c				\
+					print.c				\
+					env_utils.c			\
+					exec_utils.c		\
+					export_utils.c		\
+					redirect_utils.c	\
+
+SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
+
+BUILT_OBJ	=		$(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o))
+
+TOKEN_OBJ	=		$(addprefix $(SRCS_DIR)$(TOKEN_DIR),$(TOKENS:.c=.o))
+
+UTILS_OBJ	=		$(addprefix $(SRCS_DIR)$(UTILS_DIR),$(UTILS:.c=.o))
+
+OBJS		=		$(SRCS_OBJ) $(BUILT_OBJ) $(TOKEN_OBJ) $(UTILS_OBJ)
 
 OBJS_DIR_N	=		objs
 

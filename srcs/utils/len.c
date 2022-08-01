@@ -1,35 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   len.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/01 09:27:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 02:01:34 by asanthos         ###   ########.fr       */
+/*   Created: 2022/07/26 07:29:45 by asanthos          #+#    #+#             */
+/*   Updated: 2022/08/01 05:38:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	*get_pwd()
+int	get_lst_len(t_env *lst)
 {
-	char	*buff;
+	t_env	*tmp;
+	int		i;
 
-	buff = (char *)malloc(100 * sizeof(char));
-	getcwd(buff,100);
-	return (buff);
+	i = 0;
+	tmp = lst;
+	while (lst->next != tmp)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i + 1);
 }
 
-void	ft_pwd(t_env *lst)
+int	get_args_len(t_cmd *cmd_lst)
 {
-	char	*buff;
+	int		i;
 
-	buff = NULL;
-	buff = get_pwd();
-	if (strcmp(search_pwd(lst)->value, "//") == 0)
-		ft_putendl_fd("//", 1);
-	else
-		ft_putendl_fd(buff, 1);
-	free(buff);
+	i = 0;
+	while (cmd_lst->argument[i])
+		i++;
+	return (i);
+}
+
+int	iter_diff(t_env *lst, t_env *new_node)
+{
+	int	i;
+
+	i = 0;
+	while (lst->name[i] == new_node->name[i])
+		i++;
+	if (lst->name[i] < new_node->name[i])
+		return (1);
+	return (0);
 }

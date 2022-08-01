@@ -6,49 +6,19 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/27 04:48:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 05:20:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-size_t	get_len(t_cmd *cmd_lst, int i)
-{
-	size_t	len;
-
-	len = 0;
-	while (cmd_lst->argument[i])
-	{
-		len++;
-		i++;
-	}
-	return (len);
-}
-
-size_t	args_len(t_cmd *cmd_lst, int i)
-{
-	size_t	len;
-
-	i = 0;
-	len = 0;
-	while (cmd_lst->argument[i])
-	{
-		len += ft_strlen(cmd_lst->argument[i]);
-		i++;
-	}
-	return (len);
-}
-
-void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
+static void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 {
 	char	*str;
 	char	*store_value;
-	int		store;
 
-	(void)store;
 	str = "";
 	store_value = "";
-	store = i;
 	while (cmd_lst->argument[i])
 	{
 		store_value = ft_strjoin(str, cmd_lst->argument[i]);
@@ -73,7 +43,7 @@ void	ft_echo(t_cmd *cmd_lst)
 	int			flag;
 	size_t		j;
 
-	i = 0;
+	i = 1;
 	flag = 0;
 	while (cmd_lst->argument[i])
 	{
