@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/28 07:34:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 07:05:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <limits.h>
+# include <fcntl.h>
 
 /**
  * Setting your vocabulary makes you wiser
@@ -55,6 +56,7 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
+	char			**env_str;
 	char			*name;
 	char			*value;
 	struct s_env	*prev;
@@ -64,39 +66,84 @@ typedef struct s_env
 /**
  * Teaching kinds how to manipulate tools
  */
+
+
+/**
+ * Initialization of program
+ */
 void	shell_prompt(char **env);
+int		minishell(int ac, char **av, char **env);
+void	ft_parse(t_env *lst, t_cmd *cmd_lst);
+void	exec_cmd(t_env *lst, t_cmd *cmd_lst);
+t_cmd	*ft_lst_init(char *str);
+
+void	ft_expander(t_env *lst, char *str);
+
+/**
+ * Buitlins
+ */
+t_env	*ft_env(char **env);
 t_env	*push_env(t_env *lst, char *env_name, char *env_value);
 t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
-void	exec_cmd(t_env *lst, t_cmd *cmd_lst);
-int		minishell(int ac, char **av, char **env);
 
-t_env	*ft_env(char **env);
 void	ft_echo(t_cmd *cmd_lst);
+void	div_env(char *str, t_env *lst);
+t_env	*check_exist(t_env *lst, char *str);
+t_env	*check_stack(t_env *new_node, t_env *lst);
+
 void	ft_pwd(t_env *lst);
-void	ft_export(t_env *lst, t_cmd *cmd_lst);
+
 void	ft_unset(t_env *lst, t_cmd *cmd_lst);
+
 void	ft_cd(t_cmd *cmd_lst, t_env *lst);
 
-void	print_list_env(t_env *head);
-void	ft_expander(t_env *lst, char *str);
-t_cmd	*ft_lst_init(char *str);
-char    *get_pwd();
-t_env   *search_pwd(t_env *lst);
-void	ft_parse(t_env *lst, t_cmd *cmd_lst);
-void    free_split(char **split_cmd);
-// void	div_env(char *str, t_env *lst);
-
-void	lst_free(t_cmd *cmd_lst, t_env *lst);
-void	free_cmd(t_cmd *cmd_lst);
-void	free_env_lst(t_env *lst);
+void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	lonely_export(t_env *lst);
+void	div_env(char *str, t_env *lst);
 
-void	check_execve2(t_env *lst, t_cmd *cmd_lst);
-void	check_execve(t_env *lst, t_cmd *cmd_lst);
-void	check_exec(t_env *lst, t_cmd *cmd_lst);
-void	pipes(t_env *lst, t_cmd *cmd_lst);
+
+/**
+ * UTILS
+ */
+void	print_list_env(t_env *head);
+void	print_lst(t_env *lst);
+
+char	*get_pwd();
+t_env	*search_pwd(t_env *lst);
 
 int		get_args_len(t_cmd *cmd_lst);
 int		get_lst_len(t_env *lst);
+int		iter_diff(t_env *lst, t_env *new_node);
+
+
+/**
+ * EXECUTING FUNCTIONS
+ */
+void	exec_sys(t_env *lst, t_cmd *cmd_lst);
+void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
+char	**get_path(t_env *lst);
+char	*check_access(t_env *lst, t_cmd *cmd_lst);
+char	**lst_to_char(t_env *lst);
+
+void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
+
+void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
+
+void	redirect_in(t_env *lst, t_cmd *cmd_lst);
+
+void	redirect_out(t_env *lst, t_cmd *cmd_lst);
+
+void	append_out(t_env *lst, t_cmd *cmd_lst);
+
+void	here_doc(t_env *lst, t_cmd *cmd_lst);
+
+
+/**
+ * FREE FUNCTONS
+ */
+void	lst_free(t_cmd *cmd_lst, t_env *lst);
+void	free_cmd(t_cmd *cmd_lst);
+void	free_env_lst(t_env *lst);
+
 
 #endif

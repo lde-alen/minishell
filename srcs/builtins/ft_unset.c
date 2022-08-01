@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/27 13:09:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/07/30 03:24:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_unset(t_env *lst, t_cmd *cmd_lst)
 	int i;
 	t_env *tmp;
 
-	i = 0;
+	i = 1;
 	tmp = lst;
 	while (cmd_lst->argument[i])
 	{

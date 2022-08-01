@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/07/26 11:48:51 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/01 07:07:51 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,29 +23,33 @@ TOKEN_DIR	=		tokens/
 
 UTILS_DIR	=		utils/
 
-SRCS		=		main.c		\
-					prompt.c	\
-					execute.c	\
-					expand.c	\
-					minishell.c	\
-					cmd_list.c	\
-					parser.c	\
-					ft_free.c	\
-					execv.c		\
+SRCS		=		main.c				\
+					prompt.c			\
+					execute.c			\
+					expand.c			\
+					minishell.c			\
+					cmd_list.c			\
+					parser.c			\
+					ft_free.c			\
+					exec.c				\
 
-BUILTINS	=		ft_env.c	\
-					ft_echo.c	\
-					ft_cd.c		\
-					ft_exit.c	\
-					ft_export.c	\
-					ft_pwd.c	\
-					ft_unset.c	\
+BUILTINS	=		ft_env.c			\
+					ft_echo.c			\
+					ft_cd.c				\
+					ft_exit.c			\
+					ft_export.c			\
+					ft_pwd.c			\
+					ft_unset.c			\
 
-TOKENS		=		pipes.c		\
-					redirect.c	\
+TOKENS		=		pipe.c				\
+					redirect.c			\
 
-UTILS		=		len.c		\
-					print.c		\
+UTILS		=		len.c				\
+					print.c				\
+					env_utils.c			\
+					exec_utils.c		\
+					export_utils.c		\
+					redirect_utils.c	\
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 
