@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 10:07:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 07:02:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, int file)
 	exit(0);
 }
 
+//basis for all redirections
 void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
 {
 	int		file;

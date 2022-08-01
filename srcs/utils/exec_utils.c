@@ -6,12 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 10:31:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 07:00:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+//get the available paths from the t_env struct
 char	**get_path(t_env *lst)
 {
 	char	**env_path;
@@ -30,6 +31,7 @@ char	**get_path(t_env *lst)
 	return NULL;
 }
 
+//checks existence of command when joined with the path
 char	*check_access(t_env *lst, t_cmd *cmd_lst)
 {
 	char	**env_path;
@@ -58,6 +60,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	return (NULL);
 }
 
+//converts the t_env struct to char **
 char	**lst_to_char(t_env *lst)
 {
 	char	**env;

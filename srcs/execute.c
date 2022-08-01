@@ -6,12 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:08:50 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 10:47:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 07:04:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+//uncomment pipes & redirects when testing builtins
 void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 {
 	if (cmd_lst->argument[1][0] == '|')
@@ -24,7 +25,7 @@ void	exec_cmd(t_env *lst, t_cmd *cmd_lst)
 		redirect_out(lst, cmd_lst);
 	else if (strcmp(cmd_lst->argument[1], ">>") == 0)
 		append_out(lst, cmd_lst);
-	if (cmd_lst->command[0] == '$')
+	else if (cmd_lst->command[0] == '$')
 		ft_expander(lst, cmd_lst->command);
 	else if (strcmp(cmd_lst->command, "echo") == 0)
 		ft_echo(cmd_lst);

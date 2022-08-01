@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/30 03:25:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 05:20:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
+static void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 {
 	char	*str;
 	char	*store_value;

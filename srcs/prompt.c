@@ -6,12 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/30 03:36:17 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 06:56:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+//signal handler for ^C
 void	new_prompt(int val)
 {
 	write(1, "\n", 1);

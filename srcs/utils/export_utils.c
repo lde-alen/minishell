@@ -6,12 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:11:19 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 10:48:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/01 07:02:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+//assign export info to variables
 void	div_env(char *str, t_env *lst)
 {
 	char	*env_name;
@@ -56,6 +57,7 @@ static	t_env	*find_var(t_env *lst, char *env_name)
 	return (NULL);
 }
 
+//check whether the variable exists
 t_env	*check_exist(t_env *lst, char *str)
 {
 	int		len;
