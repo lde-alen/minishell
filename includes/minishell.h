@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/01 05:41:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/02 08:35:38 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	lonely_export(t_env *lst);
 void	div_env(char *str, t_env *lst);
 
+void	ft_exit(t_cmd *cmd_lst);
+
 
 /**
  * UTILS
@@ -126,6 +128,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst);
 char	**lst_to_char(t_env *lst);
 
 void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
+void	exec(t_env *lst, t_cmd *cmd_lst, int status, int file);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 
@@ -144,6 +147,9 @@ void	here_doc(t_env *lst, t_cmd *cmd_lst);
 void	lst_free(t_cmd *cmd_lst, t_env *lst);
 void	free_cmd(t_cmd *cmd_lst);
 void	free_env_lst(t_env *lst);
+
+
+void	new_prompt(int val);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/01 07:02:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/02 08:35:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,11 @@ static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, int file)
 	exit(0);
 }
 
-//basis for all redirections
-void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
+void	exec(t_env *lst, t_cmd *cmd_lst, int status, int file)
 {
-	int		file;
-	int		id;
 	char	*path;
+	int		id;
 
-	//0777 needed for append redirect
-	file = open(cmd_lst->argument[2], flag, 0777);
-	if (file < 0)
-	{
-		perror("file");
-		return ;
-	}
 	path = check_access(lst, cmd_lst);
 	if (path != NULL)
 	{
@@ -50,4 +41,21 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
 		waitpid(-1, NULL, 0);
 	}
 	free(path);
+	
+}	
+
+//basis for all redirections
+void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
+{
+	int		file;
+
+	//0777 needed for append redirect
+	file = open(cmd_lst->argument[2], flag, 0777);
+	if (file < 0)
+	{
+		perror("file");
+		return ;
+	}
+	//replace with exec_sys()
+	exec(lst, cmd_lst, status, file);
 }
