@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/02 08:35:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:54:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst);
 char	**lst_to_char(t_env *lst);
 
 void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
-void	exec(t_env *lst, t_cmd *cmd_lst, int status, int file);
+void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 

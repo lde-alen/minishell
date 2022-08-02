@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/02 08:41:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/02 15:06:38 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,19 @@ void	here_doc(t_env *lst, t_cmd *cmd_lst)
 	int		file;
 	int		status;
 	char	*str;
+	char	*file_name;
 
-	file = open("store.txt", O_TRUNC | O_CREAT | O_RDWR);
+	file_name = "store.txt";
+	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	str = "";
 	while (strcmp(str, cmd_lst->argument[2]) != 0)
 	{
 		str = readline("> ");
-		ft_putendl_fd(str, file);
+		if (strcmp(str, cmd_lst->argument[2]) != 0)
+			ft_putendl_fd(str, file);
 	}
-	status = STDIN_FILENO;
-	exec(lst, cmd_lst, status, file);
 	close(file);
-	unlink("store.txt");
+	status = STDIN_FILENO;
+	exec(lst, cmd_lst, status, file_name);
+	unlink(file_name); 
 }

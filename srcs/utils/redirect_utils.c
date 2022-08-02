@@ -6,26 +6,29 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/02 08:35:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/02 11:56:30 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, int file)
+static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, char *file_name)
 {
 	char	**params;
+	int		file;
 
+	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	params = (char **)malloc(sizeof(char *) * (get_args_len(cmd_lst) + 1));
 	params[0] = cmd_lst->command;
 	params[1] = NULL;
 	dup2(file, status);
 	close(file);
 	execve(path, params, lst_to_char(lst));
+	ft_printf("failed\n");
 	exit(0);
 }
 
-void	exec(t_env *lst, t_cmd *cmd_lst, int status, int file)
+void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file)
 {
 	char	*path;
 	int		id;
@@ -41,7 +44,6 @@ void	exec(t_env *lst, t_cmd *cmd_lst, int status, int file)
 		waitpid(-1, NULL, 0);
 	}
 	free(path);
-	
 }	
 
 //basis for all redirections
@@ -57,5 +59,5 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
 		return ;
 	}
 	//replace with exec_sys()
-	exec(lst, cmd_lst, status, file);
+	exec(lst, cmd_lst, status, cmd_lst->argument[2]);
 }
