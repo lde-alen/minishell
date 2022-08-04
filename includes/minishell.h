@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/07/29 19:45:23 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/04 11:18:18 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@
 # define D_QUOTE	6
 # define CASHMONEY	7
 
-
 /**
  * Defining your tools and refining them is the key
  */
@@ -67,9 +66,10 @@ typedef struct s_env
  */
 void	shell_prompt(char **env);
 void	ft_print_char_arr(char **array);
-
 int		minishell(int ac, char **av, char **env);
 int		ft_init(t_cmd **cmd, t_env **env);
 int		ft_parse(char *str, char **src_env);
-int		ft_fill_arg(char **argument, char *str);
+int		ft_fill_arg(char ***argument, char *str);
+int		ft_fill_cmd(char **command, char **argument);
+
 #endif
