@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/04 11:18:18 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/06 01:05:57 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ typedef struct s_cmd
 {
 	char			**argument;
 	char			*command;
+	char			*str;
+	int				q_flag;
+	int				p_flag;
+	int				r_flag;
+	int				cash_flag;
 	int				token;
 	unsigned int	side;
 	struct s_cmd	*next;

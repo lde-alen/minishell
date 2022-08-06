@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/04 10:38:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/06 06:51:10 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	shell_prompt(char **env)
 			ft_parse(str, env);
 		}
 		else
-			exit(0);
+		{
+			exit(EXIT_FAILURE);
+		}
 	}
 }
