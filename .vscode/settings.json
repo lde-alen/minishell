@@ -3,6 +3,7 @@
 		"sstream": "c",
 		"typeinfo": "c",
 		"libft.h": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"readline.h": "c"
 	}
 }

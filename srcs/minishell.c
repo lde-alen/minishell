@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/05/30 11:13:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/06 19:51:56 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	minishell(int ac, char **av, char **env)
 {

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/06 01:05:57 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 01:08:28 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_sh
+{
+	char	*input;
+}	t_sh;
+
 /**
  * Teaching kinds how to manipulate tools
  */
@@ -76,5 +81,8 @@ int		ft_init(t_cmd **cmd, t_env **env);
 int		ft_parse(char *str, char **src_env);
 int		ft_fill_arg(char ***argument, char *str);
 int		ft_fill_cmd(char **command, char **argument);
+int		check_redirections(char *str, char *redirection);
+int		check_quotes(char *str, char quote);
+int		check_p(char *str);
 
 #endif

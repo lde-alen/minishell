@@ -1,44 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   parser_check_quotes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/06 19:51:55 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
+/*   Updated: 2022/08/07 01:00:23 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	new_prompt(int val)
+int	check_quotes(char *str, char quote)
 {
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	exit (val);
-}
+	size_t	i;
 
-void	shell_prompt(char **env)
-{
-	char	*str;
-
-	(void)env;
-	signal(SIGINT, new_prompt);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
+	i = -1;
+	while (str[++i])
 	{
-		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
-		if (str)
+		if (str[i] == quote)
 		{
-			add_history(str);
-			ft_parse(str, env);
-		}
-		else
-		{
-			exit(EXIT_FAILURE);
+			if (ft_strchr(str + ++i, quote) != NULL)
+			{
+				while (str[i] != quote && str[i])
+					i++;
+			}
+			else
+			{
+				if (quote == '\'')
+					ft_putstr_fd("Error: Missing quote... RTFPDF.\n", 2);
+				else if (quote == '"')
+					ft_putstr_fd("Error: missing dquote... RTFPDF", 2);
+				return (1);
+			}
 		}
 	}
+	return (0);
 }

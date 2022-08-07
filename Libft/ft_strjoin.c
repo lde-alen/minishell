@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 03:21:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/06/04 19:38:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/06 19:02:08 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,5 @@ char	*ft_strjoin(char const *str, char const *buffer)
 	while (buffer[j] != '\0')
 		new[i++] = buffer[j++];
 	new[ft_strlen(str) + ft_strlen(buffer)] = '\0';
-	// free ((char *)str);
 	return (new);
 }
