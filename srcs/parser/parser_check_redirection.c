@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/07 19:48:58 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 21:56:58 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	check_redirections(char *str, t_sh *sh)
 		if (str[i] == '"')
 		{
 			sh->dq = 1;
-			while (str[i] != '"' || str[i])
+			while (str[i] != '"' && str[i])
 				i++;
 		}
 		if (str[i] == '\'')
 		{
 			sh->sq = 1;
-			while (str[i] != '\'' || str[i])
+			while (str[i] != '\'' && str[i])
 				i++;
 		}
 		if (str[i] == '>')
