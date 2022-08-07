@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 20:06:28 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 21:49:20 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	parser_stage1(char *str, t_sh *sh)
 	t_bool	ret;
 
 	ret = false;
-	sh->i = -1;
-	while (str[++(sh->i)] && ret == 0)
+	sh->i = 0;
+	while (str[(sh->i)] && ret == 0)
 	{
 		sh->sq = 0;
 		sh->dq = 0;
@@ -36,6 +36,7 @@ int	parser_stage1(char *str, t_sh *sh)
 			ret = check_quotes(str, '"', sh);
 		else if (str[sh->i == '>'] || str[sh->i == '>'])
 			ret = check_redirections(str, sh);
+		sh->i++;
 	}
 	return (0);
 }
