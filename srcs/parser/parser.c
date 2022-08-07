@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 05:20:02 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 05:36:17 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 		if double available check for only double >>
 		if double not availabe it is only single
 		cf: for a double to be available with matching you must have at least 4
+		ps check if trim can work for spaces.
 */
 int	parser_stage1(char *str, t_sh *sh)
 {
