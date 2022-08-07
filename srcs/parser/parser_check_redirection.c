@@ -6,41 +6,72 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/07 18:34:54 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 19:48:58 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	check if inside quotes
 */
-int	check_redirections(char *str, char redirection)
+int	check_redirections(char *str, t_sh *sh)
 {
 	size_t	i;
-	size_t	sr;
 
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == redirection)
+		if (str[i] == '"')
 		{
-			sr = 1;
-			while (str[i] == redirection)
+			sh->dq = 1;
+			while (str[i] != '"' || str[i])
+				i++;
+		}
+		if (str[i] == '\'')
+		{
+			sh->sq = 1;
+			while (str[i] != '\'' || str[i])
+				i++;
+		}
+		if (str[i] == '>')
+		{
+			sh->sr = 0;
+			while (str[i] == '>' && str[i])
 			{
-				sr++;
+				sh->sr++;
 				i++;
 			}
-			if (sr > 2)
+			if (sh->sr > 2)
 			{
-				ft_putstr_fd("ERROR:\n", 2);
+				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
 			}
-			while (str[i] == ' ')
+			while (str[i] == ' ' && str[i])
 				i++;
-			if (!((str[i] > ' ' && str[i] <= '~') && str[i] != '\0'))
+			if (!(str[i] > ' ' && str[i] <= '~') || str[i] == '<')
 			{
-				ft_putstr_fd("ERROR:\n", 2);
+				ft_putstr_fd("ERROR REDIR\n", 2);
+				return (1);
+			}
+		}
+		if (str[i] == '<')
+		{
+			sh->sr = 0;
+			while (str[i] == '<' && str[i])
+			{
+				sh->sr++;
+				i++;
+			}
+			if (sh->sr > 2)
+			{
+				ft_putstr_fd("ERROR REDIR\n", 2);
+				return (1);
+			}
+			while (str[i] == ' ' && str[i])
+				i++;
+			if (!(str[i] > ' ' && str[i] <= '~') || str[i] == '>')
+			{
+				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
 			}
 		}
