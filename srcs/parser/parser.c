@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 05:36:17 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 18:11:44 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,19 @@
 */
 int	parser_stage1(char *str, t_sh *sh)
 {
-	int	i;
+	t_bool	ret;
 
-	i = 0;
-	(void)sh;
-	if (!str)
-		return (1); 
-	check_quotes(str, '\'');
-	check_quotes(str, '"');
-	check_redirections(str, "<<");
-	check_redirections(str, ">>");
-	check_redirections(str, ">");
-	check_redirections(str, "<");
+	ret = false;
+	sh->i = -1;
+	while (str[++(sh->i)] && ret == 0)
+	{
+		if (str[sh->i] == '\'')
+			ret = check_quotes(str, '\'', sh);
+		else if (str[sh->i] == '"')
+			ret = check_quotes(str, '"', sh);
+		ret = check_redirections(str, '>');
+	}
+	// check_redirections(str, '<');
 	return (0);
 }
 
@@ -52,7 +53,10 @@ int	ft_parse(char *str, char **src_env)
 	t_sh	*sh;
 
 	(void)src_env;
+	if (!str)
+		return (1); 
 	sh = (t_sh *)malloc(sizeof(t_sh));
+	sh->j = 0;
 	parser_stage1(str, sh);
 	// parser_stage2;
 	// ft_printf("%d\n", check_sq(str));
