@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 22:10:08 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 22:13:05 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	parser_stage1(char *str, t_sh *sh)
 
 	ret = false;
 	sh->i = 0;
-	while (str[sh->i] && ret == 0)
+	while (str[sh->i] && ret == false)
 	{
 		sh->sq = 0;
 		sh->dq = 0;
