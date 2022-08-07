@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/07 22:16:48 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 23:35:02 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	check_quotes(char *str, char quote, t_sh *sh)
 			sh->dq += 1;
 		if ((quote == '\'' && sh->dq == 0) || (quote == '"' && sh->sq == 0))
 		{
-			if (str[sh->i + 1] && ft_strchr((str + sh->i + 1), quote) != NULL)
+			sh->i++;
+			if (str[sh->i] && ft_strchr((str + sh->i), quote) != NULL)
 			{
 				while (str[sh->i] != quote && str[sh->i])
 					sh->i++;
