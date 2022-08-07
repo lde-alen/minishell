@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 22:02:10 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/07 22:10:08 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	ft_parse(char *str, char **src_env)
 		return (1); 
 	sh = (t_sh *)malloc(sizeof(t_sh));
 	parser_stage1(str, sh);
+	free (sh);
 	// parser_stage2;
 	// ft_printf("%d\n", check_sq(str));
 	// ft_init(&cmd, &env);
