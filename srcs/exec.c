@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 04:49:15 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 21:07:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:39:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_env_kid(char **env_kid)
 		free(env_kid[i]);
 		i++;
 	}
+	free(env_kid[i]);
 	free(env_kid);
 }
 
