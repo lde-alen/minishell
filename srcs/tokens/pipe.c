@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/01 05:17:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/07 21:07:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	second_child(t_env *lst, t_cmd *cmd_lst, int *fd)
 {
@@ -33,7 +33,9 @@ static void	first_child(t_env *lst, t_cmd *cmd_lst,int *fd, char *path)
 	params = (char **)malloc(sizeof(char *) * (get_args_len(cmd_lst) + 1));
 	params[0] = cmd_lst->command;
 	params[1] = NULL;
-	if (dup2(STDIN_FILENO, STDOUT_FILENO) < 0)
+	// if (dup2(STDIN_FILENO, STDOUT_FILENO) < 0)
+	// 	perror("dup2");
+	if (dup2(fd[0], STDIN_FILENO) < 0)
 		perror("dup2");
 	if (dup2(fd[1], STDOUT_FILENO) < 0)
 		perror("dup2");
@@ -67,4 +69,5 @@ void	exec_pipe(t_env *lst, t_cmd *cmd_lst)
 			second_child(lst, cmd_lst, fd);
 	}
 	waitpid(-1, NULL, 0);
+	free(path);
 }

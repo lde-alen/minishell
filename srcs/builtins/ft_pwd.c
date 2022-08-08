@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 09:27:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 02:01:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 char	*get_pwd()
 {
@@ -27,7 +27,7 @@ void	ft_pwd(t_env *lst)
 
 	buff = NULL;
 	buff = get_pwd();
-	if (strcmp(search_pwd(lst)->value, "//") == 0)
+	if (ft_strcmp(search_pwd(lst)->value, "//") == 0)
 		ft_putendl_fd("//", 1);
 	else
 		ft_putendl_fd(buff, 1);

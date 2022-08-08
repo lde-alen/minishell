@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:08:44 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 10:09:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/07 18:30:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value)
 {
@@ -36,6 +36,7 @@ t_env	*push_env(t_env *lst, char *env_name, char *env_value)
 	new_node = (t_env *)malloc(sizeof(t_env));
 	new_node->name = ft_strdup(env_name);
 	new_node->value = env_value;
+	new_node->export_flag = 0;
 	if (!lst)
 	{
 		new_node->next = new_node;

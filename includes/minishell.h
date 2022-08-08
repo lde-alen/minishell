@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/01 07:05:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:43:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_env
 	char			**env_str;
 	char			*name;
 	char			*value;
+	int				export_flag;
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
@@ -66,7 +67,6 @@ typedef struct s_env
 /**
  * Teaching kinds how to manipulate tools
  */
-
 
 /**
  * Initialization of program
@@ -101,6 +101,8 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	lonely_export(t_env *lst);
 void	div_env(char *str, t_env *lst);
 
+void	ft_exit(t_cmd *cmd_lst);
+
 
 /**
  * UTILS
@@ -115,7 +117,6 @@ int		get_args_len(t_cmd *cmd_lst);
 int		get_lst_len(t_env *lst);
 int		iter_diff(t_env *lst, t_env *new_node);
 
-
 /**
  * EXECUTING FUNCTIONS
  */
@@ -126,6 +127,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst);
 char	**lst_to_char(t_env *lst);
 
 void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
+void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 
@@ -137,13 +139,21 @@ void	append_out(t_env *lst, t_cmd *cmd_lst);
 
 void	here_doc(t_env *lst, t_cmd *cmd_lst);
 
-
 /**
  * FREE FUNCTONS
  */
 void	lst_free(t_cmd *cmd_lst, t_env *lst);
 void	free_cmd(t_cmd *cmd_lst);
 void	free_env_lst(t_env *lst);
+void	free_split(char **split_res);
 
+void	new_prompt(int val);
+
+/**
+ * ERROR FUNCTONS
+ */
+void	export_error(char *val);
+
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif

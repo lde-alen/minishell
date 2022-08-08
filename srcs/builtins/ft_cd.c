@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 02:02:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_env   *search_pwd(t_env *lst)
 {
@@ -19,7 +19,7 @@ t_env   *search_pwd(t_env *lst)
 	tmp = lst;
 	while (lst->next != tmp)
 	{
-		if (strcmp(lst->name, "PWD") == 0)
+		if (ft_strcmp(lst->name, "PWD") == 0)
 			return (lst);
 		lst = lst->next;
 	}
@@ -33,7 +33,7 @@ t_env   *search_oldpwd(t_env *lst)
 	tmp = lst;
 	while (lst->next != tmp)
 	{
-		if (strcmp(lst->name, "OLDPWD") == 0)
+		if (ft_strcmp(lst->name, "OLDPWD") == 0)
 			return (lst);
 		lst = lst->next;
 	}
@@ -58,7 +58,7 @@ void ft_cd(t_cmd *cmd_lst, t_env *lst)
 		pwd->value = buff;
 	else
 	{
-		if (strcmp(cmd_lst->argument[1], "//") == 0)
+		if (ft_strcmp(cmd_lst->argument[1], "//") == 0)
 			pwd->value = "//";
 		else
 			pwd->value = buff;

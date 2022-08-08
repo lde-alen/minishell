@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 03:36:49 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 07:38:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/06 20:28:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	print_list_env(t_env *head)
 {

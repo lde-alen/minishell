@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/01 07:07:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:42:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 //get the available paths from the t_env struct
 char	**get_path(t_env *lst)
@@ -21,7 +21,7 @@ char	**get_path(t_env *lst)
 	tmp = lst;
 	while (lst->next != tmp)
 	{
-		if (strcmp(lst->name, "PATH") == 0)
+		if (ft_strcmp(lst->name, "PATH") == 0)
 		{
 			env_path = ft_split(lst->value, ':');
 			return (env_path);
@@ -51,12 +51,14 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 			path = ft_strdup(str);
 			free(str);
 			free(post_join);
+			free_split(env_path);
 			return (path);
 		}
 		free(str);
 		free(post_join);
 		i++;
 	}
+	free_split(env_path);
 	return (NULL);
 }
 
@@ -74,16 +76,19 @@ char	**lst_to_char(t_env *lst)
 	env = (char **)malloc(sizeof(char *) * (get_lst_len(lst) + 1));
 	while (lst->next != tmp)
 	{
-		env[i] = lst->name;
+		env[i] = ft_strdup(lst->name);
 		temp_str = ft_strjoin(env[i], "=");
+		free(env[i]);
 		env[i] = ft_strjoin(temp_str, lst->value);
+		free(temp_str);
 		lst = lst->next;
 		i++;
-		// free(temp_str);
 	}
-	env[i] = lst->name;
+	env[i] = ft_strdup(lst->name);
 	temp_str = ft_strjoin(env[i], "=");
+	free(env[i]);
 	env[i] = ft_strjoin(temp_str, lst->value);
-	// free(temp_str);
+	env[i + 1] = NULL;
+	free(temp_str);
 	return (env);
-};
+}

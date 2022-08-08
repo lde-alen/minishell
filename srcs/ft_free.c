@@ -6,11 +6,24 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/28 03:49:30 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/07 21:14:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
+
+void	free_split(char **split_res)
+{
+	int	i;
+
+	i = 0;
+	while (split_res[i])
+	{
+		free(split_res[i]);
+		i++;
+	}
+	free(split_res);
+}
 
 void	free_env_lst(t_env *lst)
 {
@@ -22,34 +35,22 @@ void	free_env_lst(t_env *lst)
 	{
 		store = lst->next;
 		free(lst->name);
+		if (lst->export_flag == 1)
+			free(lst->value);
 		free(lst);
 		lst = store;
 	}
 	free(lst->name);
+	if (lst->export_flag == 1)
+		free(lst->value);
 	free (lst);
 }
-
-// void	free_cmd(t_cmd *cmd_lst)
-// {
-// 	t_cmd	*tmp;
-// 	t_cmd	*store;
-
-// 	tmp = cmd_lst;
-// 	while (cmd_lst->next != tmp)
-// 	{
-// 		store = cmd_lst->next;
-// 		free(cmd_lst);
-// 		cmd_lst = store;
-// 	}
-// 	free (cmd_lst);
-// }
 
 void	free_cmd(t_cmd *cmd_lst)
 {
 	int	i;
 
 	i = 0;
-	free(cmd_lst->command);
 	while (cmd_lst->argument[i])
 	{
 		free(cmd_lst->argument[i]);
@@ -57,10 +58,4 @@ void	free_cmd(t_cmd *cmd_lst)
 	}
 	free(cmd_lst->argument);
 	free(cmd_lst);
-}
-
-void	lst_free(t_cmd *cmd_lst, t_env *lst)
-{
-	(void)lst;
-	free_cmd(cmd_lst);
 }
