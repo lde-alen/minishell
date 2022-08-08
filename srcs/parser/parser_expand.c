@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser_expand.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/08 19:35:59 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/08/08 16:44:32 by lde-alen          #+#    #+#             */
+/*   Updated: 2022/08/08 19:56:03 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+int	ft_check_expand(char *str, t_sh *sh, t_env *env)
 {
-	if (ac == 1)
+	size_t	i;
+
+	i = 0;
+	ft_printf("euro = %d\n", sh->euro);
+	while (str[i])
 	{
-		if (*env == NULL)
-		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(av[0], 2);
-			ft_putendl_fd(": ENV = NULL", 2);
-			return (0);
-		}
-		else
-			minishell(env);
+		ft_printf("str[i] = %c\n", str[i]);
+		if (str[i] == '$')
+			print_list_env(env);
+		i++;
 	}
-	else
-		ft_putendl_fd("Too many arguments!!\n\nRun with:\n./minishell", 2);
 	return (0);
 }

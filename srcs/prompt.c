@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 22:11:43 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:14:52 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,19 @@ void	new_prompt(int val)
 void	shell_prompt(char **env)
 {
 	char	*str;
+	t_env	*env_lst;
 
-	(void)env;
 	signal(SIGINT, new_prompt);
 	signal(SIGQUIT, SIG_IGN);
-	while (1)
+	ft_memset(&env_lst, 0, sizeof(t_env));
+	env_lst = ft_env(env);
+	while (42)
 	{
 		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
 		if (str)
 		{
 			add_history(str);
-			ft_parse(str, env);
+			ft_parse(str, env_lst);
 		}
 		else
 		{

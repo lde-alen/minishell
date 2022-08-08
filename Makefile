@@ -6,14 +6,13 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/07 00:19:03 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/08/08 19:43:11 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=		minishell
 
 LIBFT_NAME	=		libft.a
-
 LIBFT_DIR	=		./Libft
 
 SRCS_DIR	=		./srcs/
@@ -24,15 +23,17 @@ TOKEN_DIR	=		tokens/
 
 PARS_DIR	=		parser/
 
-MINI_BIN	=		miniswag_bin/
-
 UTILS_DIR	=		utils/
+
+EXPAN_DIR	=		expansion/
+
+EXPAN		=		expansion.C					\
 
 SRCS		=		prompt.c					\
 					minishell.c					\
 					main.c						\
 
-BUILTINS	=
+BUILTINS	=		ft_env.c					\
 
 TOKENS		=
 
@@ -44,7 +45,13 @@ PARS		=		parser.c					\
 					parser_check_quotes.c		\
 					parser_check_redirection.c	\
 					parser_init.c				\
+					env.c						\
+					parser_expand.c				\
 
+
+SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
+
+EXPAN_OBJ	=		$(addprefix $(EXPAN_DIR),$(EXPAN:.c=.o))
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 

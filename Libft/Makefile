@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
+#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/19 09:20:19 by lde-alen          #+#    #+#              #
-#    Updated: 2022/06/04 18:55:02 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/08 18:52:54 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,8 +86,6 @@ CFLAGS		+= -Wall -Werror -Wextra -g3
 
 $(NAME)		:	$(OBJS)
 				$(LIB) $(NAME) $(OBJS)
-				mkdir -p $(OBJS_DIR_N)
-				mv $(OBJS) $(OBJS_DIR_N)
 
 all			:	$(NAME)
 

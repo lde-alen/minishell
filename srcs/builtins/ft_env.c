@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/08 19:35:59 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
+/*   Updated: 2022/08/08 19:08:11 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+t_env	*ft_env(char **env)
 {
-	if (ac == 1)
+	t_env	*lst;
+	char	*env_name;
+	char	*env_value;
+	char	*div;
+	int		i;
+
+	i = 0;
+	lst = NULL;
+	while (env[i])
 	{
-		if (*env == NULL)
-		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(av[0], 2);
-			ft_putendl_fd(": ENV = NULL", 2);
-			return (0);
-		}
-		else
-			minishell(env);
+		env_name = ft_substr(env[i], 0,
+				ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '=')));
+		div = ft_strchr(env[i], '=');
+		env_value = ft_strchr(div, div[1]);
+		lst = push_env(lst, env_name, env_value);
+		free(env_name);
+		i++;
 	}
-	else
-		ft_putendl_fd("Too many arguments!!\n\nRun with:\n./minishell", 2);
-	return (0);
+	return (lst);
 }

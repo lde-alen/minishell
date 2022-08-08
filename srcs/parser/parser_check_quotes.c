@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/07 23:35:02 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/08 20:14:43 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	check_quotes(char *str, char quote, t_sh *sh)
 			if (str[sh->i] && ft_strchr((str + sh->i), quote) != NULL)
 			{
 				while (str[sh->i] != quote && str[sh->i])
+				{
+					if (str[sh->i] == '$')
+						sh->euro += 1;
 					sh->i++;
+				}
 			}
 			else
 			{

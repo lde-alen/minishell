@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/07 19:47:25 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/08 19:42:08 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_sh
 {
 	unsigned int	i;
 	char			*input;
+	size_t			euro;
 	size_t			sq;
 	size_t			dq;
 	size_t			sr;
@@ -86,13 +87,21 @@ typedef enum e_boolean
  */
 void	shell_prompt(char **env);
 void	ft_print_char_arr(char **array);
-int		minishell(int ac, char **av, char **env);
+int		minishell(char **env);
 int		ft_init(t_cmd **cmd, t_env **env);
-int		ft_parse(char *str, char **src_env);
+int		ft_parse(char *str, t_env *env_lst);
 int		ft_fill_arg(char ***argument, char *str);
 int		ft_fill_cmd(char **command, char **argument);
 int		check_redirections(char *str, t_sh *sh);
 int		check_quotes(char *str, char quote, t_sh *sh);
+t_env	*push_env(t_env *env_list, char *env_name, char *env_value);
+t_env	*ft_env(char **env);
+void	ft_expand(t_env *lst, char *str);
+t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
+int		parser_stage1(char *str, t_sh *sh);
+int		parser_stage2(char *str, t_sh *sh, t_env *env);
+int		ft_check_expand(char *str, t_sh *sh, t_env *env);
 int		check_p(char *str);
+void	print_list_env(t_env *head);
 
 #endif

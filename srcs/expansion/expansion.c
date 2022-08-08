@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/08 19:35:59 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
+/*   Updated: 2022/08/08 19:42:36 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
+void	ft_expand(t_env *lst, char *str)
 {
-	if (ac == 1)
+	t_env	*tmp;
+
+	tmp = lst;
+	while (lst->next != tmp)
 	{
-		if (*env == NULL)
-		{
-			ft_putstr_fd("Error: ", 2);
-			ft_putstr_fd(av[0], 2);
-			ft_putendl_fd(": ENV = NULL", 2);
-			return (0);
-		}
-		else
-			minishell(env);
+		if (ft_strcmp(lst->name, ft_strchr(str, str[1])) == 0)
+			ft_putendl_fd(lst->value, 1);
+		lst = lst->next;
 	}
-	else
-		ft_putendl_fd("Too many arguments!!\n\nRun with:\n./minishell", 2);
-	return (0);
+	if (ft_strcmp(lst->name, ft_strchr(str, str[1])) == 0)
+		ft_putendl_fd(lst->value, 1);
+	lst = tmp;
 }
