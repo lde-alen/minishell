@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/02 05:37:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/06 20:28:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 // void	ft_exit(t_cmd *cmd_lst)
 // {

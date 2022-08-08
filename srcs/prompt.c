@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/02 06:58:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/07 21:11:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 //signal handler for ^C
 void	new_prompt(int val)
@@ -44,9 +44,9 @@ void	shell_prompt(char **env)
 				add_history(str);
 				cmd_lst = ft_lst_init(str);
 				ft_parse(lst, cmd_lst);
-				free(cmd_lst->argument);
-				free(cmd_lst);
-				// free_cmd(cmd_lst);
+				// free(cmd_lst->argument);
+				// free(cmd_lst);
+				free_cmd(cmd_lst);
 			}
 		}
 		else

@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/30 03:23:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:11:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*push_cmd(t_env *lst, char *env_name, char *env_value)
 {
@@ -68,7 +68,7 @@ t_cmd	*ft_lst_init(char *str)
 	while (split_cmd[i])
 		i++;
 	//+1??
-	cmd_lst->argument = (char **)ft_calloc(i, sizeof(char *));
+	cmd_lst->argument = (char **)ft_calloc((i + 1), sizeof(char *));
 	i = 0;
 	while (split_cmd[i])
 	{
@@ -76,8 +76,8 @@ t_cmd	*ft_lst_init(char *str)
 		free(split_cmd[i]);
 		i++;
 	}
-	free(split_cmd);
 	cmd_lst->argument[i] = NULL;
+	free(split_cmd);
 	cmd_lst->command = cmd_lst->argument[0];
 	return (cmd_lst);
 }

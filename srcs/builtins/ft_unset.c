@@ -6,17 +6,17 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/30 03:24:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	ch_equality(char *str, t_env *lst)
 {
 	t_env *tmp2;
 
-	if (strcmp(str, lst->name) == 0)
+	if (ft_strcmp(str, lst->name) == 0)
 	{
 		tmp2 = lst;
 		lst->prev->next = lst->next;

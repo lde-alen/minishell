@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:11:19 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/01 07:02:14 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 //assign export info to variables
 void	div_env(char *str, t_env *lst)
@@ -41,19 +41,20 @@ static	t_env	*find_var(t_env *lst, char *env_name)
 	tmp = lst;
 	while (lst->next != tmp)
 	{
-		if (strcmp(env_name, lst->name) == 0)
+		if (ft_strcmp(env_name, lst->name) == 0)
 		{
 			free(env_name);
 			return (lst);
 		}
 		lst = lst->next;
 	}
-	if (strcmp(env_name, lst->name) == 0)
+	if (ft_strcmp(env_name, lst->name) == 0)
 	{
 		free(env_name);
 		return (lst);
 	}
 	lst = tmp;
+	free(env_name);
 	return (NULL);
 }
 

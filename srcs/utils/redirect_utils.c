@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/02 11:56:30 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/06 20:28:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, char *file_name)
 {

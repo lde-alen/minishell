@@ -6,10 +6,10 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 08:43:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/02 08:43:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/06 20:28:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 

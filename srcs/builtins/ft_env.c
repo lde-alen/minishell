@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/31 10:09:05 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/07 18:31:07 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 t_env	*ft_env(char **env)
 {
@@ -22,6 +22,7 @@ t_env	*ft_env(char **env)
 
 	i = 0;
 	lst = NULL;
+	// lst = (t_env *)malloc(sizeof(t_env));
 	while (env[i])
 	{
 		env_name = ft_substr(env[i], 0, ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '=')));
