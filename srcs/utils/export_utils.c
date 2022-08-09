@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:11:19 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/10 02:13:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	div_env(char *str, t_env *lst)
 	char	*env_name;
 	char	*env_value;
 	char	*div;
+	char	*store;
 
 	if (ft_strchr(str, '=') == NULL)
 	{
@@ -26,12 +27,18 @@ void	div_env(char *str, t_env *lst)
 	}
 	else
 	{
-		env_name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
+		store = ft_strchr(str, '+');
+		if ((store != NULL) && (store[1] == '='))
+			env_name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '+')));
+		else
+			env_name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(ft_strchr(str, '=')));
 		div = ft_strchr(str, '=');
-		env_value = ft_strchr(div, div[1]);
+		env_value = ft_strdup(ft_strchr(div, div[1]));
 	}
 	lst = push_env(lst, env_name, env_value);
 	free(env_name);
+	if (env_value)
+		free(env_value);
 }
 
 static	t_env	*find_var(t_env *lst, char *env_name)
@@ -54,7 +61,7 @@ static	t_env	*find_var(t_env *lst, char *env_name)
 		return (lst);
 	}
 	lst = tmp;
-	free(env_name);
+	// free(env_name);
 	return (NULL);
 }
 
@@ -64,6 +71,7 @@ t_env	*check_exist(t_env *lst, char *str)
 	int		len;
 	char	*env_name;
 	char	*check;
+
 	if (ft_strchr(str, '=') == NULL)
 		env_name = str;
 	else

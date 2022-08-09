@@ -6,12 +6,14 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 21:28:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/10 01:57:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
- 
+
+//when += is typed first
+
 static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 {
 	t_env	*check;
@@ -24,8 +26,11 @@ static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 		div = ft_strchr(cmd_lst->argument[i], '=');
 		if (len != NULL && len[1] == '=')
 		{
-			check->export_flag = 1;
-			check->value = ft_strjoin(check->value, ft_strchr(div, div[1]));
+			if (check->value != NULL)
+				check->value = ft_strjoin(check->value, ft_strchr(div, div[1]));
+			else
+				check->value = ft_strdup(ft_strchr(div, div[1]));
+			ft_printf("Check value: %s\n", check->value);
 		}
 		else
 			check->value = ft_strchr(div, div[1]);
@@ -54,7 +59,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	char	*len;
 	char	*val;
 	t_env	*check;
-	
+
 	i = 1;
 	len = NULL;
 	val = check_validity(cmd_lst);
@@ -96,7 +101,6 @@ void	lonely_export(t_env *lst)
 	print_lst(new_node);
 	free_env_lst(new_node);
 }
-
 
 //export boop test test=lala lala=hah lala+=ye
 //test with ^^
