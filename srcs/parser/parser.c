@@ -23,6 +23,8 @@
 /*
 	Identify quotes or not quotes, expand or not expand 
 	and then store accordingly
+	save status when dollar is found
+	take snapshot
 */
 int	parser_stage2(char *str, t_sh *sh, t_env *env)
 {
@@ -43,11 +45,6 @@ int	parser_stage1(char *str, t_sh *sh)
 	{
 		sh->sq = 0;
 		sh->dq = 0;
-		if (str[sh->i] == '$')
-		{
-			ft_printf("WTF");
-			sh->euro += 1;
-		}
 		if (str[sh->i] == '\'')
 			ret = check_quotes(str, '\'', sh);
 		else if (str[sh->i] == '"')
