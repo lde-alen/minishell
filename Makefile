@@ -6,13 +6,14 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/08 19:43:11 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/08/11 21:15:27 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=		minishell
 
 LIBFT_NAME	=		libft.a
+
 LIBFT_DIR	=		./Libft
 
 SRCS_DIR	=		./srcs/
@@ -27,7 +28,7 @@ UTILS_DIR	=		utils/
 
 EXPAN_DIR	=		expansion/
 
-EXPAN		=		expansion.C					\
+EXPAN		=		expansion.c					\
 
 SRCS		=		prompt.c					\
 					minishell.c					\
@@ -51,7 +52,7 @@ PARS		=		parser.c					\
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 
-EXPAN_OBJ	=		$(addprefix $(EXPAN_DIR),$(EXPAN:.c=.o))
+EXPAN_OBJ	=		$(addprefix $(SRCS_DIR)$(EXPAN_DIR),$(EXPAN:.c=.o))
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 
@@ -63,7 +64,7 @@ UTILS_OBJ	=		$(addprefix $(SRCS_DIR)$(UTILS_DIR),$(UTILS:.c=.o))
 
 PARS_OBJ	=		$(addprefix $(SRCS_DIR)$(PARS_DIR),$(PARS:.c=.o))
 
-OBJS		=		$(SRCS_OBJ) $(BUILT_OBJ) $(TOKEN_OBJ) $(UTILS_OBJ) $(PARS_OBJ)
+OBJS		=		$(SRCS_OBJ) $(EXPAN_OBJ) $(BUILT_OBJ) $(TOKEN_OBJ) $(UTILS_OBJ) $(PARS_OBJ) 
 
 OBJS_DIR_N	=		objs
 
@@ -90,13 +91,11 @@ $(LIBFT_C)	:		$(MAKE) -C ./Libft
 $(NAME)		:		$(OBJS)
 					$(MAKE) -C ./Libft
 					$(CC) $(CFLAGS) $(RFLAGS) -L/usr/local/Cellar/readline/8.1/lib  $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
-					mkdir -p $(OBJS_DIR_N)
-					mv $(OBJS) $(OBJS_DIR)
 
 all			:		$(NAME)
 
 clean		:
-					$(RM) $(OBJS_DIR)/$(OBJS)
+					$(RM) $(OBJS)
 					$(MAKE) clean -C $(LIBFT_DIR)
 
 

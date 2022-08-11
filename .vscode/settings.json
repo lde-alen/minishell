@@ -4,6 +4,7 @@
 		"typeinfo": "c",
 		"libft.h": "c",
 		"minishell.h": "c",
-		"readline.h": "c"
+		"readline.h": "c",
+		"stddef.h": "c"
 	}
 }

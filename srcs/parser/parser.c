@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 20:09:14 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/11 20:47:25 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 		*  invalid after >> & <<
 
 */
+/**
+ * d
+ */
 /*
 	Identify quotes or not quotes, expand or not expand 
 	and then store accordingly
@@ -34,7 +37,7 @@ int	parser_stage2(char *str, t_sh *sh, t_env *env)
 	return (0);
 }
 
-int	parser_stage1(char *str, t_sh *sh)
+int	parser_stage1(char *str, t_sh *sh, t_env *env)
 {
 	t_bool	ret;
 
@@ -46,11 +49,13 @@ int	parser_stage1(char *str, t_sh *sh)
 		sh->sq = 0;
 		sh->dq = 0;
 		if (str[sh->i] == '\'')
-			ret = check_quotes(str, '\'', sh);
+			ret = check_quotes(str, '\'', sh, env);
 		else if (str[sh->i] == '"')
-			ret = check_quotes(str, '"', sh);
+			ret = check_quotes(str, '"', sh, env);
 		else if (str[sh->i == '>'] || str[sh->i == '>'])
 			ret = check_redirections(str, sh);
+		if (str[sh->i] == '$')
+			ft_expand(env, "$PATH");
 		sh->i++;
 	}
 	if (ret == false)
@@ -66,9 +71,7 @@ int	ft_parse(char *str, t_env *env)
 	if (!str)
 		return (1);
 	sh = (t_sh *)malloc(sizeof(t_sh));
-	ft_printf("return of stage1 = %d\n", parser_stage1(str, sh));
-	if (parser_stage1(str, sh) == 0)
-		parser_stage2(str, sh, env);
+	parser_stage1(str, sh, env);
 	free (sh);
 	return (1);
 }

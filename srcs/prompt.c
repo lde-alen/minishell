@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 19:14:52 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/11 13:32:54 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	shell_prompt(char **env)
 
 	signal(SIGINT, new_prompt);
 	signal(SIGQUIT, SIG_IGN);
-	ft_memset(&env_lst, 0, sizeof(t_env));
+	ft_memset(&env_lst, 0, sizeof(t_env *));
 	env_lst = ft_env(env);
 	while (42)
 	{

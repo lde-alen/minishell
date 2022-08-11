@@ -6,13 +6,13 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/08 20:14:43 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/11 11:06:20 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_quotes(char *str, char quote, t_sh *sh)
+int	check_quotes(char *str, char quote, t_sh *sh, t_env *env)
 {
 	if (str[sh->i] == '\'' || str[sh->i] == '"')
 	{
@@ -27,8 +27,8 @@ int	check_quotes(char *str, char quote, t_sh *sh)
 			{
 				while (str[sh->i] != quote && str[sh->i])
 				{
-					if (str[sh->i] == '$')
-						sh->euro += 1;
+					if (str[sh->i] == '$' && quote == '"')
+						ft_expand(env, "$PATH");
 					sh->i++;
 				}
 			}
