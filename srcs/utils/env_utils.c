@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:08:44 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/09 15:17:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 14:03:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_env	*push_env(t_env *lst, char *env_name, char *env_value)
 
 	new_node = (t_env *)malloc(sizeof(t_env));
 	new_node->name = ft_strdup(env_name);
+	new_node->value = NULL;
 	if (env_value)
 		new_node->value = ft_strdup(env_value);
 	if (!lst)

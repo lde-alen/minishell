@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 16:11:02 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/10 11:50:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_env	*push_cmd(t_env *lst, char *env_name, char *env_value)
 	t_env	*temp_node;
 
 	new_node = (t_env *)malloc(sizeof(t_env));
-	new_node->name = env_name;
-	new_node->value = env_value;
+	new_node->name = ft_strdup(env_name);
+	new_node->value = ft_strdup(env_value);
 	if (!lst)
 	{
 		new_node->next = new_node;
@@ -36,6 +36,8 @@ t_env	*push_cmd(t_env *lst, char *env_name, char *env_value)
 		new_node->next = temp_node;
 		lst = temp_node;
 	}
+	free(env_name);
+	free(env_value);
 	return (lst);
 }
 

@@ -6,18 +6,17 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/10 01:57:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 14:10:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//when += is typed first
-
 static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 {
 	t_env	*check;
 	char	*div;
+	char	*tmp;
 
 	check = check_exist(lst, cmd_lst->argument[i]);
 	if (check != NULL)
@@ -27,13 +26,21 @@ static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 		if (len != NULL && len[1] == '=')
 		{
 			if (check->value != NULL)
-				check->value = ft_strjoin(check->value, ft_strchr(div, div[1]));
+			{
+				tmp = ft_strdup(check->value);
+				free(check->value);
+				check->value = ft_strjoin(tmp, ft_strchr(div, div[1]));
+				free(tmp);
+			}
 			else
 				check->value = ft_strdup(ft_strchr(div, div[1]));
-			ft_printf("Check value: %s\n", check->value);
 		}
 		else
-			check->value = ft_strchr(div, div[1]);
+		{
+			if (check->value)
+				free(check->value);
+			check->value = ft_strdup(ft_strchr(div, div[1]));
+		}
 	}
 	else
 		div_env(cmd_lst->argument[i], lst);
@@ -67,6 +74,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 		export_error(val);
 	else
 	{
+		// VALGRIND_DO_LEAK_CHECK;
 		while (cmd_lst->argument[i])
 		{
 			if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
@@ -104,3 +112,5 @@ void	lonely_export(t_env *lst)
 
 //export boop test test=lala lala=hah lala+=ye
 //test with ^^
+
+//valgrind do_leak_check
