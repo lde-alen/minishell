@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/10 11:52:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void ft_cd(t_cmd *cmd_lst, t_env *lst)
 
 	//cd alone should take to Desktop. FIX!
 	if (!cmd_lst->argument[1])
-		pwd->value = buff;
+		pwd->value = ft_strdup(buff);
 	else
 	{
 		if (ft_strcmp(cmd_lst->argument[1], "//") == 0)
 			pwd->value = "//";
 		else
-			pwd->value = buff;
+			pwd->value =ft_strdup(buff);
 	}
 	free(buff);
 }

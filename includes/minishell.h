@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/08 16:43:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 14:15:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <valgrind/memcheck.h>
 
 /**
  * Setting your vocabulary makes you wiser

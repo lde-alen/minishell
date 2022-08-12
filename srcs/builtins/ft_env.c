@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 18:31:07 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/11 13:51:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_env	*ft_env(char **env)
 
 	i = 0;
 	lst = NULL;
-	// lst = (t_env *)malloc(sizeof(t_env));
 	while (env[i])
 	{
 		env_name = ft_substr(env[i], 0, ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '=')));
 		div = ft_strchr(env[i], '=');
-		env_value = ft_strchr(div, div[1]);
+		env_value = ft_strdup(ft_strchr(div, div[1]));
 		lst = push_env(lst, env_name, env_value);
 		free(env_name);
+		free(env_value);
 		i++;
 	}
 	return (lst);

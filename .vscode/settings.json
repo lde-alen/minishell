@@ -4,6 +4,7 @@
         "typeinfo": "c",
         "minishell.h": "c",
         "random": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "numbers": "c"
     }
 }

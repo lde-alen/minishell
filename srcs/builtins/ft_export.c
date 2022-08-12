@@ -6,16 +6,17 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/07 21:28:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 14:10:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
- 
+
 static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 {
 	t_env	*check;
 	char	*div;
+	char	*tmp;
 
 	check = check_exist(lst, cmd_lst->argument[i]);
 	if (check != NULL)
@@ -24,11 +25,22 @@ static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 		div = ft_strchr(cmd_lst->argument[i], '=');
 		if (len != NULL && len[1] == '=')
 		{
-			check->export_flag = 1;
-			check->value = ft_strjoin(check->value, ft_strchr(div, div[1]));
+			if (check->value != NULL)
+			{
+				tmp = ft_strdup(check->value);
+				free(check->value);
+				check->value = ft_strjoin(tmp, ft_strchr(div, div[1]));
+				free(tmp);
+			}
+			else
+				check->value = ft_strdup(ft_strchr(div, div[1]));
 		}
 		else
-			check->value = ft_strchr(div, div[1]);
+		{
+			if (check->value)
+				free(check->value);
+			check->value = ft_strdup(ft_strchr(div, div[1]));
+		}
 	}
 	else
 		div_env(cmd_lst->argument[i], lst);
@@ -54,7 +66,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	char	*len;
 	char	*val;
 	t_env	*check;
-	
+
 	i = 1;
 	len = NULL;
 	val = check_validity(cmd_lst);
@@ -62,6 +74,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 		export_error(val);
 	else
 	{
+		// VALGRIND_DO_LEAK_CHECK;
 		while (cmd_lst->argument[i])
 		{
 			if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
@@ -97,6 +110,7 @@ void	lonely_export(t_env *lst)
 	free_env_lst(new_node);
 }
 
-
 //export boop test test=lala lala=hah lala+=ye
 //test with ^^
+
+//valgrind do_leak_check
