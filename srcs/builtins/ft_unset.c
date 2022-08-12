@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:37:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	ch_equality(char *str, t_env *lst)
 		lst->prev->next = lst->next;
 		lst->next->prev = lst->prev;
 		free(tmp2->name);
+		free(tmp2->value);
 		free(tmp2);
 		return (1);
 	}

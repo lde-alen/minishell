@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/11 13:51:50 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 15:31:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_env	*ft_env(char **env)
 		env_value = ft_strdup(ft_strchr(div, div[1]));
 		lst = push_env(lst, env_name, env_value);
 		free(env_name);
-		free(env_value);
+		if (env_value)
+			free(env_value);
 		i++;
 	}
 	return (lst);

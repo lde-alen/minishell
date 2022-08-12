@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/10 11:52:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 16:01:51 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ t_env   *search_oldpwd(t_env *lst)
 	while (lst->next != tmp)
 	{
 		if (ft_strcmp(lst->name, "OLDPWD") == 0)
+		{
+			free(lst->value);
 			return (lst);
+		}
 		lst = lst->next;
 	}
 	return (NULL);
@@ -51,15 +54,16 @@ void ft_cd(t_cmd *cmd_lst, t_env *lst)
 	else
 		chdir(cmd_lst->argument[1]);
 	buff = get_pwd();
-	search_oldpwd(lst)->value = pwd->value;
+	search_oldpwd(lst)->value = ft_strdup(pwd->value);
 
 	//cd alone should take to Desktop. FIX!
+	free(pwd->value);
 	if (!cmd_lst->argument[1])
 		pwd->value = ft_strdup(buff);
 	else
 	{
 		if (ft_strcmp(cmd_lst->argument[1], "//") == 0)
-			pwd->value = "//";
+			pwd->value = ft_strdup("//");
 		else
 			pwd->value =ft_strdup(buff);
 	}
