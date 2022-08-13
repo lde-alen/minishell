@@ -6,56 +6,74 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/11 20:47:25 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/13 23:30:35 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	check for errors and invalid synthax:
-		*  missing dq
-		*  missing sq
-		*  invalid after > & <
-		*  invalid after >> & <<
-
+	start filling struct,
+	trim spaces if not inside quotes
+	trim initial '' and ""
 */
-/**
- * d
- */
-/*
-	Identify quotes or not quotes, expand or not expand 
-	and then store accordingly
-	save status when dollar is found
-	take snapshot
-*/
-int	parser_stage2(char *str, t_sh *sh, t_env *env)
-{
-	ft_printf("euro = %d\n", sh->euro);
-	if (sh->euro > 0)
-		ft_check_expand(str, sh, env);
-	return (0);
-}
+// int	parser_stage2(char *str, t_sh *sh, t_env *env)
+// {
+// 	char	*name;
 
-int	parser_stage1(char *str, t_sh *sh, t_env *env)
+// 	sh->i = 0;
+// 	sh->euro = 0;
+// 	while (str[sh->i] && ret == false)
+// 	{
+// 		sh->sq = 0;
+// 		sh->dq = 0;
+// 		if (str[sh->i] == '\'')
+// 			check_fill_quotes(str, '\'', sh, env);
+// 		else if (str[sh->i] == '"')
+// 			check_fill_quotes(str, '"', sh, env);
+// 		else if (str[sh->i == '>'] || str[sh->i == '>'])
+// 			check_fill_redirections(str, sh);
+// 		if (str[sh->i] == '$')
+// 		{
+// 			name = ft_calloc(2, sizeof(char));
+// 			name[0] = '$';
+// 			sh->i++;
+// 			if ((ft_isdigit(str[sh->i]) == 1)
+// 				&& str[sh->i - 1] == '$')
+// 				sh->i++;
+// 			else
+// 			{
+// 				while (str[sh->i] && str[sh->i] != '$'
+// 					&& ft_isalnum(str[sh->i]) == 1)
+// 				{
+// 					name = ft_append_char(name, str[sh->i]);
+// 					sh->i++;
+// 				}
+// 				ft_expand(env, name);
+// 				sh->i--;
+// 			}
+// 			free(name);
+// 		}
+// 		sh->i++;
+// 	}
+// }
+
+int	parser_stage1(char *str, t_sh *sh)
 {
 	t_bool	ret;
 
 	ret = false;
 	sh->i = 0;
-	sh->euro = 0;
 	while (str[sh->i] && ret == false)
 	{
 		sh->sq = 0;
 		sh->dq = 0;
 		if (str[sh->i] == '\'')
-			ret = check_quotes(str, '\'', sh, env);
+			ret = check_quotes(str, '\'', sh);
 		else if (str[sh->i] == '"')
-			ret = check_quotes(str, '"', sh, env);
-		else if (str[sh->i == '>'] || str[sh->i == '>'])
+			ret = check_quotes(str, '"', sh);
+		else if (str[sh->i == '>'] || str[sh->i == '<'])
 			ret = check_redirections(str, sh);
-		if (str[sh->i] == '$')
-			ft_expand(env, "$PATH");
 		sh->i++;
 	}
 	if (ret == false)
@@ -70,17 +88,11 @@ int	ft_parse(char *str, t_env *env)
 
 	if (!str)
 		return (1);
+	(void)env;
 	sh = (t_sh *)malloc(sizeof(t_sh));
-	parser_stage1(str, sh, env);
+	if (parser_stage1(str, sh) == 0)
+		ft_printf("\nhayeh\n");
+		// parser_stage2(str, sh, env);
 	free (sh);
 	return (1);
 }
-	// ft_printf("%d\n", check_sq(str));
-	// ft_init(&cmd, &env);
-	// ft_fill_arg(&cmd->argument, str);
-	// ft_fill_cmd(&cmd->command, &cmd->argument[0]);
-	// ft_printf("Original str:\n%s\n", str);
-	// ft_printf("User input is:\n");
-	// ft_print_char_arr(cmd->argument);
-	// ft_printf("Command is:\n");
-	// ft_printf(("%s\n"), cmd->command);
