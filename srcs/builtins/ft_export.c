@@ -6,11 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/12 14:10:14 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/14 13:42:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// extern int g_exit;
 
 static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 {
@@ -46,17 +48,35 @@ static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 		div_env(cmd_lst->argument[i], lst);
 }
 
+
+//CHECK
 static char	*check_validity(t_cmd *cmd_lst)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	while (cmd_lst->argument[i])
 	{
-		if (cmd_lst->argument[i][0] != '_' && !(isalpha((cmd_lst->argument[i][0]))))
+		if (cmd_lst->argument[i][0] != '_' && (isalpha((cmd_lst->argument[i][0]))) == 0)
+		{
+			// g_exit = 1;
 			return (cmd_lst->argument[i]);
+		}
+		j = 1;
+		while (cmd_lst->argument[i][j])
+		{
+			if ((ft_isalnum(cmd_lst->argument[i][j])) == 0 && cmd_lst->argument[i][j] != '=')
+			{
+				// g_exit = 1;
+				return (cmd_lst->argument[i]);
+			}
+			j++;
+		}
 		i++;
 	}
+	// g_exit = 0;
 	return (NULL);
 }
 

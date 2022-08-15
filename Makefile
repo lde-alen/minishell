@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/12 14:15:46 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/14 16:19:21 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRCS		=		main.c				\
 					cmd_list.c			\
 					parser.c			\
 					ft_free.c			\
-					exec.c				\
+					exec_test.c				\
 					error.c				\
 
 BUILTINS	=		ft_env.c			\
@@ -94,7 +94,7 @@ all			:		$(NAME)
 
 clean		:
 					$(MAKE) clean -C $(LIBFT_DIR)
-					$(RM) -r $(OBJS_DIR)/
+					$(RM) -r $(OBJS_DIR)/$(OBJS)
 
 
 fclean		:		clean

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/12 14:15:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/15 20:13:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@
  * Defining your tools and refining them is the key
  */
 
+// extern int	g_exit = 0;
+
+extern	int	g_exit = 0;
+
 typedef struct s_cmd
 {
 	char			*command;
@@ -76,7 +80,8 @@ void	shell_prompt(char **env);
 int		minishell(int ac, char **av, char **env);
 void	ft_parse(t_env *lst, t_cmd *cmd_lst);
 void	exec_cmd(t_env *lst, t_cmd *cmd_lst);
-t_cmd	*ft_lst_init(char *str);
+t_cmd	*ft_cmd_lst(char *str);
+// t_cmd	*ft_lst_init(char *str);
 
 void	ft_expander(t_env *lst, char *str);
 
@@ -117,6 +122,7 @@ t_env	*search_pwd(t_env *lst);
 int		get_args_len(t_cmd *cmd_lst);
 int		get_lst_len(t_env *lst);
 int		iter_diff(t_env *lst, t_env *new_node);
+int		get_cmd_len(t_cmd *cmd);	
 
 /**
  * EXECUTING FUNCTIONS

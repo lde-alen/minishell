@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/10 11:50:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/12 19:00:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ void	print_list_cmd(t_cmd *head)
 	ft_printf("%s\n", head->command);
 }
 
-t_cmd	*ft_lst_init(char *str)
+t_cmd	*ft_lst_init(t_cmd *cmd, char *str)
 {
 	char	**split_cmd;
 	t_cmd   *cmd_lst;
+	t_cmd	*tmp;
 	int		i;
 
 	cmd_lst = (t_cmd *)malloc(sizeof(t_cmd));
@@ -81,5 +82,77 @@ t_cmd	*ft_lst_init(char *str)
 	cmd_lst->argument[i] = NULL;
 	free(split_cmd);
 	cmd_lst->command = cmd_lst->argument[0];
-	return (cmd_lst);
+	cmd_lst->next = NULL;
+	if (!cmd)
+		return (cmd_lst);
+	tmp = cmd;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = cmd_lst;
+	return (cmd);
 }
+
+void	print_cmd(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd != NULL)
+	{
+		i = 0;
+		while (cmd->argument[i])
+		{
+			ft_printf("%s\n", cmd->argument[i]);
+			i++;
+		}
+		cmd = cmd->next;
+	}
+}
+
+t_cmd	*ft_cmd_lst(char *str)
+{
+	char	**split_pipes;
+	t_cmd	*cmd;
+	int		i;
+
+	i = 0;
+	cmd = NULL;
+	split_pipes = ft_split(str, '|');
+	while (split_pipes[i])
+	{
+		cmd = ft_lst_init(cmd, split_pipes[i]);
+		free(split_pipes[i]);
+		i++;
+	}
+	free(split_pipes[i]);
+	free(split_pipes);
+	return (cmd);
+}
+
+
+
+// t_cmd	*ft_lst_init(char *str)
+// {
+// 	char	**split_cmd;
+// 	t_cmd   *cmd_lst;
+// 	int		i;
+
+// 	cmd_lst = (t_cmd *)malloc(sizeof(t_cmd));
+// 	split_cmd = ft_split(str, ' ');
+// 	i = 0;
+// 	while (split_cmd[i])
+// 		i++;
+// 	//+1??
+// 	cmd_lst->argument = (char **)ft_calloc((i + 1), sizeof(char *));
+// 	i = 0;
+// 	while (split_cmd[i])
+// 	{
+// 		cmd_lst->argument[i] = ft_strdup(split_cmd[i]);
+// 		free(split_cmd[i]);
+// 		i++;
+// 	}
+// 	cmd_lst->argument[i] = NULL;
+// 	free(split_cmd);
+// 	cmd_lst->command = cmd_lst->argument[0];
+// 	return (cmd_lst);
+// }
