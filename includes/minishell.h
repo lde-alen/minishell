@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/15 20:13:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/16 13:56:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,6 @@
 /**
  * Defining your tools and refining them is the key
  */
-
-// extern int	g_exit = 0;
-
-extern	int	g_exit = 0;
 
 typedef struct s_cmd
 {
