@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/18 16:08:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/18 17:20:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,11 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id)
 	}
 	else
 		exec_alone(cmd_lst, lst, id, path);
-	waitpid(-1, NULL, 0);
+	for (int i=0; i + 1 <= len; i++)
+	{
+		wait(NULL);
+	}
+	// waitpid(-1, NULL, 0);
 }
 
 int	check_all_path(t_env *lst, t_cmd *cmd_lst)
