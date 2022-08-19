@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/14 16:19:21 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/19 19:55:47 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRCS		=		main.c				\
 					cmd_list.c			\
 					parser.c			\
 					ft_free.c			\
-					exec_test.c				\
 					error.c				\
 
 BUILTINS	=		ft_env.c			\
@@ -44,6 +43,8 @@ BUILTINS	=		ft_env.c			\
 
 TOKENS		=		pipe.c				\
 					redirect.c			\
+					exec_check.c		\
+					exec_pipe.c			\
 
 UTILS		=		len.c				\
 					print.c				\
@@ -51,6 +52,7 @@ UTILS		=		len.c				\
 					exec_utils.c		\
 					export_utils.c		\
 					redirect_utils.c	\
+					exec.c				\
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 

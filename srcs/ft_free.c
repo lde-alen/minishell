@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/12 13:45:10 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/19 20:58:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,34 @@ void	free_env_lst(t_env *lst)
 	free (lst);
 }
 
-void	free_cmd(t_cmd *cmd_lst)
+void	free_cmd(t_cmd **cmd_lst)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = *cmd_lst;
+	while ((*cmd_lst)->argument[i])
+	{
+		free((*cmd_lst)->argument[i]);
+		i++;
+	}
+	free((*cmd_lst)->argument[i]);
+	free((*cmd_lst)->argument);
+	(*cmd_lst) = ((*cmd_lst))->next;
+	free(tmp);
+}
+
+void	free_env_kid(char **env_kid)
 {
 	int	i;
 
 	i = 0;
-	while (cmd_lst->argument[i])
+	while (env_kid[i])
 	{
-		free(cmd_lst->argument[i]);
+		free(env_kid[i]);
 		i++;
 	}
-	free(cmd_lst->argument[i]);
-	free(cmd_lst->argument);
-	free(cmd_lst);
+	free(env_kid[i]);
+	free(env_kid);
 }

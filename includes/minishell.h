@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/16 13:56:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/19 20:59:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,19 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
 void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
+int		exec_builtin(t_env *lst, t_cmd *cmd_lst);
+void	exec_alone(t_cmd *cmd_lst, t_env *lst, int *id, char *path);
+void	exec_sys(t_env *lst, t_cmd *cmd_lst);
+void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id, int len, int i, int flag);
+void	fork_arr(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id);
+void	loop_lst(t_env *lst, t_cmd **cmd_lst, int len, int (*fd)[2], int *id, int flag);
+void	pipe_arr(int (*fd)[2], int i);
+void	close_pipes(int (*fd)[2], int i, int len);
+int		check_builtin(t_cmd *cmd_lst);
+int		check_path(t_cmd *cmd_lst, char *path, int *flag);
+int		check_all_path(t_env *lst, t_cmd *cmd_lst);
+void	main_child2(t_cmd *cmd_lst, char *path, char **env_kid);
+void	check_pos(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int len, int i, int flag);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
 
@@ -146,9 +159,10 @@ void	here_doc(t_env *lst, t_cmd *cmd_lst);
  * FREE FUNCTONS
  */
 void	lst_free(t_cmd *cmd_lst, t_env *lst);
-void	free_cmd(t_cmd *cmd_lst);
+void	free_cmd(t_cmd **cmd_lst);
 void	free_env_lst(t_env *lst);
 void	free_split(char **split_res);
+void	free_env_kid(char **env_kid);
 
 void	new_prompt(int val);
 
