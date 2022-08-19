@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/19 15:25:51 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/19 17:28:08 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@
  */
 
 int *flag;
-int	least left;
-int	rr;
 i = 5; = flag_len
 while i <= flag_len
 	i++
