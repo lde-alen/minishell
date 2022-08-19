@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/14 01:12:03 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/19 15:25:51 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,23 @@
  * Defining your tools and refining them is the key
  */
 
+int *flag;
+int	least left;
+int	rr;
+i = 5; = flag_len
+while i <= flag_len
+	i++
+
+flag[0] = R_REDIR					file[0] = file name 1
+flag[1] = R_REDIR					file[1] = file name 2
+flag[2] = R_REDIR					file[2]	= file name 3
+flag[5] = L_REDIR
+flag[3] = R_REDIR
+flag[4] = R_REDIR
+flag[6] = R_REDIR
+
+flag_len;
+
 typedef struct s_cmd
 {
 	char			**argument;
@@ -57,6 +74,12 @@ typedef struct s_cmd
 	unsigned int	side;
 	struct s_cmd	*next;
 }	t_cmd;
+
+typedef struct s_redir
+{
+	int	r_flag;
+	char	**file_names;
+}	t_redir;
 
 typedef struct s_env
 {

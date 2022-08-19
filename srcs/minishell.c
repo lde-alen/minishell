@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/14 01:12:21 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/19 14:01:21 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	minishell(char **env)
 			ft_parse(str, env_lst, cmd);
 		}
 		else
-		{
 			exit(EXIT_FAILURE);
-		}
 	}
 }
