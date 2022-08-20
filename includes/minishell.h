@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/20 16:43:58 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/20 18:08:59 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,27 @@
 // flag[6] = R_REDIR
 
 // flag_len;
+/**
+ * Alka perfect input:
+ * 		- char **argument must have in arg[0] the cmd and the rest 
+ * 	should be the arguments even with args after redirections
+ * 
+ * 		- char *command will contain only the command without arguments
+ * 
+ * 		- char **flag will will contain redirections in their respective orders 
+ * 	and on the sam
+ * 
+ */
 
-//not using
 typedef struct s_redir
 {
 	size_t		r_flag;
+	char		**r_name;
 	size_t		**flag;
 	size_t		flag_len;
+	size_t		ll;
+	size_t		lr;
+	size_t		rr;
 
 }	t_redir;
 
@@ -69,7 +83,6 @@ typedef struct s_cmd
 {
 	char			**argument;
 	char			*command;
-	char			*str;
 	t_redir			*redir;
 
 	struct s_cmd	*next;
@@ -86,10 +99,14 @@ typedef struct s_env
 typedef struct s_sh
 {
 	unsigned int	i;
+	char			*str_cpy;
+	size_t			input_len;
+	size_t			expand_len;
 	size_t			euro;
 	size_t			sq;
 	size_t			dq;
 	size_t			sr;
+	size_t			p;
 }	t_sh;
 
 typedef enum e_boolean

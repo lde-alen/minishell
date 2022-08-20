@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/20 16:19:13 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/21 00:37:30 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,21 @@ int	check_redirections(char *str, t_sh *sh)
 		if (str[i] == '"')
 		{
 			sh->dq = 1;
+			i++;
 			while (str[i] != '"' && str[i])
 				i++;
 		}
-		if (str[i] == '\'')
+		else if (str[i] == '\'')
 		{
 			sh->sq = 1;
+			i++;
 			while (str[i] != '\'' && str[i])
 				i++;
 		}
-		if (str[i] == '>')
+		else if (str[i] == '>')
 		{
-			sh->sr = 1;
 			i++;
+			sh->sr = 1;
 			while (str[i] == '>' && str[i])
 			{
 				sh->sr++;
@@ -55,11 +57,12 @@ int	check_redirections(char *str, t_sh *sh)
 				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
 			}
+			i--;
 		}
-		if (str[i] == '<')
+		else if (str[i] == '<')
 		{
-			sh->sr = 1;
 			i++;
+			sh->sr = 1;
 			while (str[i] == '<' && str[i])
 			{
 				sh->sr++;
@@ -78,11 +81,25 @@ int	check_redirections(char *str, t_sh *sh)
 				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
 			}
+			i--;
 		}
-		if (str[i] == '|')
+		else if (str[i] == '|')
 		{
-
-			
+			sh->p = 1;
+			if (i == 0)
+			{
+				ft_putstr_fd("ERROR PIPE\n", 2);
+				return (1);
+			}
+			while (str[i] == ' ' && str[i])
+				i++;
+			if (!(str[i] > ' ' && str[i] <= '~')
+				|| str[i] == '>' || str[i] == '<' || str[i] == '|')
+			{
+				ft_putstr_fd("ERROR PIPE\n", 2);
+				return (1);
+			}
+			i--;
 		}
 	}
 	return (0);
