@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/19 21:03:51 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/20 14:13:21 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id)
 
 void	loop_lst(t_env *lst, t_cmd **cmd_lst, int len, int (*fd)[2], int *id, int flag)
 {
-	// t_cmd	*tmp;
 	char	*path;
 	int		i;
 
@@ -68,9 +67,6 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, int len, int (*fd)[2], int *id, int f
 	{
 		pipe_exec(lst, *cmd_lst, fd, id, len, i, flag);
 		i++;
-		// tmp = *cmd_lst;
-		// *cmd_lst = (*cmd_lst)->next;
-		// free(tmp);
 		free(path);
 		free_cmd(cmd_lst);
 		if (*cmd_lst != NULL)

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/19 20:58:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/20 15:34:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	free_cmd(t_cmd **cmd_lst)
 	}
 	free((*cmd_lst)->argument[i]);
 	free((*cmd_lst)->argument);
-	(*cmd_lst) = ((*cmd_lst))->next;
+	if (cmd_lst)
+		(*cmd_lst) = ((*cmd_lst))->next;
 	free(tmp);
 }
 

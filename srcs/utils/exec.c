@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/19 20:25:32 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/20 15:32:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,11 @@ int	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 	else if (ft_strcmp(cmd_lst->command, "exit") == 0)
 		exit(0);
 	else
+	{
+		free_cmd(&cmd_lst);
 		return (1);
+	}
+	free_cmd(&cmd_lst);
 	return (0);
 }
 
@@ -42,15 +46,18 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, int *id, char *path)
 	char	**env_kid;
 
 	if (exec_builtin(lst, cmd_lst) == 0)
+	{
+		free_cmd(&cmd_lst);
 		return ;
+	}
 	env_kid = lst_to_char(lst);
 	id[0] = fork();
 	if (id[0] < 0)
 		perror("fork");
 	else if (id[0] == 0)
 		main_child2(cmd_lst, path, env_kid);
-	free(path);
-	free(env_kid);
+	free_env_kid(env_kid);
+	free_cmd(&cmd_lst);
 }
 
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)

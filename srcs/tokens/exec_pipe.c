@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/19 20:03:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/20 14:26:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void	check_pos(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int len, int i, int fla
 	else
 		mid_kid(lst, cmd_lst, fd, path, env_kid, i, flag);
 	free(path);
-	free(env_kid);
+	free_cmd(&cmd_lst);
+	free_env_kid(env_kid);
 }
