@@ -1,0 +1,16 @@
+total 48
+drwxr-xr-x  15 lde-alen  2021_abudhabi   510 Aug 20 15:37 .
+drwxr-xr-x   3 lde-alen  2021_abudhabi   102 Jul 29 15:56 ..
+drwxr-xr-x  15 lde-alen  2021_abudhabi   510 Aug 20 15:23 .git
+-rw-r--r--   1 lde-alen  2021_abudhabi   439 Jul 29 14:19 .gitignore
+drwxr-xr-x   5 lde-alen  2021_abudhabi   170 Jul 29 22:34 .vscode
+-rw-r--r--   1 lde-alen  2021_abudhabi     7 Aug 20 15:36 1
+drwxr-xr-x  64 lde-alen  2021_abudhabi  2176 Aug 14 00:55 Libft
+-rw-r--r--   1 lde-alen  2021_abudhabi  2789 Aug 13 17:41 Makefile
+-rw-r--r--   1 lde-alen  2021_abudhabi   135 Jul 29 22:34 README.md
+drwxr-xr-x   6 lde-alen  2021_abudhabi   204 Aug 19 08:20 assets
+-rw-r--r--   1 lde-alen  2021_abudhabi     0 Aug 20 15:39 file
+-rw-r--r--   1 lde-alen  2021_abudhabi   139 Jul 29 22:34 file.sup
+drwxr-xr-x   4 lde-alen  2021_abudhabi   136 Aug 11 10:55 includes
+-rw-r--r--   1 lde-alen  2021_abudhabi   152 Aug 19 14:06 main.c
+drwxr-xr-x   9 lde-alen  2021_abudhabi   306 Aug 20 14:02 srcs

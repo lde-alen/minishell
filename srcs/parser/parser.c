@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/14 01:11:49 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:32:29 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,48 +15,48 @@
 /*
 	start filling struct,
 	trim spaces if not inside quotes
-	trim initial '' and ""
+	trim initial '' and "" at the end
 */
-int	parser_stage2(char *str, t_sh *sh, t_env *env, t_cmd *cmd)
-{
-	char	*name;
+// int	parser_stage2(char *str, t_msh *msh)
+// {
+// 	char	*name;
 
-	sh->i = 0;
-	sh->euro = 0;
-	while (str[sh->i])
-	{
-		sh->sq = 0;
-		sh->dq = 0;
-		if (str[sh->i] == '\'')
-			check_fill_quotes(str, '\'', sh, env);
-		else if (str[sh->i] == '"')
-			check_fill_quotes(str, '"', sh, env);
-		else if (str[sh->i == '>'] || str[sh->i == '>'])
-			check_fill_redirections(str, sh);
-		if (str[sh->i] == '$')
-		{
-			name = ft_calloc(2, sizeof(char));
-			name[0] = '$';
-			sh->i++;
-			if ((ft_isdigit(str[sh->i]) == 1)
-				&& str[sh->i - 1] == '$')
-				sh->i++;
-			else
-			{
-				while (str[sh->i] && str[sh->i] != '$'
-					&& ft_isalnum(str[sh->i]) == 1)
-				{
-					name = ft_append_char(name, str[sh->i]);
-					sh->i++;
-				}
-				ft_expand(env, name);
-				sh->i--;
-			}
-			free(name);
-		}
-		sh->i++;
-	}
-}
+// 	msh->sh->i = 0;
+// 	msh->sh->euro = 0;
+// 	while (str[msh->sh->i])
+// 	{
+// 		msh->sh->sq = 0;
+// 		msh->sh->dq = 0;
+// 		if (str[msh->sh->i] == '\'')
+// 			check_fill_quotes(str, '\'', msh);
+// 		else if (str[msh->sh->i] == '"')
+// 			check_fill_quotes(str, '"', msh);
+// 		else if (str[msh->sh->i == '>'] || str[msh->sh->i == '>'])
+// 			check_fill_redirections(str, msh);
+// 		if (str[msh->sh->i] == '$')
+// 		{
+// 			name = ft_calloc(2, sizeof(char));
+// 			name[0] = '$';
+// 			msh->sh->i++;
+// 			if ((ft_isdigit(str[msh->sh->i]) == 1)
+// 				&& str[msh->sh->i - 1] == '$')
+// 				msh->sh->i++;
+// 			else
+// 			{
+// 				while (str[msh->sh->i] && str[msh->sh->i] != '$'
+// 					&& ft_isalnum(str[msh->sh->i]) == 1)
+// 				{
+// 					name = ft_append_char(name, str[msh->sh->i]);
+// 					msh->sh->i++;
+// 				}
+// 				ft_expand(msh->env, name);
+// 				msh->sh->i--;
+// 			}
+// 			free(name);
+// 		}
+// 		msh->sh->i++;
+// 	}
+// }
 
 int	parser_stage1(char *str, t_sh *sh)
 {
@@ -82,16 +82,12 @@ int	parser_stage1(char *str, t_sh *sh)
 		return (1);
 }
 
-int	ft_parse(char *str, t_env *env, t_cmd *cmd)
+int	ft_parse(char *str, t_msh *msh)
 {
-	t_sh	*sh;
-
 	if (!str)
 		return (1);
-	(void)env;
-	sh = (t_sh *)malloc(sizeof(t_sh));
-	if (parser_stage1(str, sh) == 0)
-		parser_stage2(str, sh, env, cmd);
-	free(sh);
+	msh->sh = (t_sh *)malloc(sizeof(t_sh));
+	parser_stage1(str, msh->sh);
+	free(msh->sh);
 	return (1);
 }

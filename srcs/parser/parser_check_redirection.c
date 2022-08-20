@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/14 00:50:46 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:19:13 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	check_redirections(char *str, t_sh *sh)
 		if (str[i] == '>')
 		{
 			sh->sr = 1;
+			i++;
 			while (str[i] == '>' && str[i])
 			{
 				sh->sr++;
@@ -49,7 +50,7 @@ int	check_redirections(char *str, t_sh *sh)
 			while (str[i] == ' ' && str[i])
 				i++;
 			if (!(str[i] > ' ' && str[i] <= '~')
-				|| str[i] == '<' || str[i] == '>')
+				|| str[i] == '<' || str[i] == '>' || str[i] == '|')
 			{
 				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
@@ -58,6 +59,7 @@ int	check_redirections(char *str, t_sh *sh)
 		if (str[i] == '<')
 		{
 			sh->sr = 1;
+			i++;
 			while (str[i] == '<' && str[i])
 			{
 				sh->sr++;
@@ -71,11 +73,16 @@ int	check_redirections(char *str, t_sh *sh)
 			while (str[i] == ' ' && str[i])
 				i++;
 			if (!(str[i] > ' ' && str[i] <= '~')
-				|| str[i] == '>' || str[i] == '<')
+				|| str[i] == '>' || str[i] == '<' || str[i] == '|')
 			{
 				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
 			}
+		}
+		if (str[i] == '|')
+		{
+
+			
 		}
 	}
 	return (0);

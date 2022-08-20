@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/19 17:28:08 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:30:47 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,55 +30,51 @@
 /**
  * Setting your vocabulary makes you wiser
  */
-# define NOTHING	-1
-# define R_REDIR	0
-# define L_REDIR	1
-# define DR_REDIR	2
-# define DL_REDIR	3
-# define PIPE		4
-# define S_QUOTE	5
-# define D_QUOTE	6
-# define CASHMONEY	7
+# define NOTHING	0
+# define R_REDIR	1
+# define L_REDIR	2
+# define DR_REDIR	3
+# define DL_REDIR	4
 
 /**
  * Defining your tools and refining them is the key
  */
 
-int *flag;
-i = 5; = flag_len
-while i <= flag_len
-	i++
+// int *flag;
+// i = 5; = flag_len
+// while i <= flag_len
+// 	i++
 
-flag[0] = R_REDIR					file[0] = file name 1
-flag[1] = R_REDIR					file[1] = file name 2
-flag[2] = R_REDIR					file[2]	= file name 3
-flag[5] = L_REDIR
-flag[3] = R_REDIR
-flag[4] = R_REDIR
-flag[6] = R_REDIR
+// flag[0] = R_REDIR					file[0] = file name 1
+// flag[1] = R_REDIR					file[1] = file name 2
+// flag[2] = R_REDIR					file[2]	= file name 3
+// flag[5] = L_REDIR
+// flag[3] = R_REDIR
+// flag[4] = R_REDIR
+// flag[6] = R_REDIR
 
-flag_len;
+// flag_len;
 
+//not using
+typedef struct s_redir
+{
+	size_t		r_flag;
+	size_t		**flag;
+	size_t		flag_len;
+}	t_redir;
+
+// split by pipes / arg / command / str / next /
 typedef struct s_cmd
 {
 	char			**argument;
 	char			*command;
 	char			*str;
-	int				q_flag;
-	int				p_flag;
-	int				r_flag;
 	int				cash_flag;
 	int				token;
 	unsigned int	side;
+	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;
-
-typedef struct s_redir
-{
-	int	r_flag;
-	char	**file_names;
-}	t_redir;
-
 typedef struct s_env
 {
 	char			*name;
@@ -102,6 +98,14 @@ typedef enum e_boolean
 	true
 }	t_bool;
 
+typedef struct s_msh
+{
+	t_redir	*redir;
+	t_env	*env;
+	t_sh	*sh;
+	t_cmd	*cmd;
+}	t_msh;
+
 /**
  * Teaching kinds how to manipulate tools
  */
@@ -115,18 +119,17 @@ char	*ft_append_char(char *name, char c);
 
 int		minishell(char **env);
 int		ft_init(t_cmd **cmd, t_env **env);
-int		ft_parse(char *str, t_env *env_lst, t_cmd *cmd);
+int		ft_parse(char *str, t_msh *msh);
 int		ft_fill_arg(char ***argument, char *str);
 int		ft_fill_cmd(char **command, char **argument);
 int		check_redirections(char *str, t_sh *sh);
 int		check_quotes(char *str, char quote, t_sh *sh);
 int		parser_stage1(char *str, t_sh *sh);
-int		parser_stage2(char *str, t_sh *sh, t_env *env, t_cmd *cmd);
+int		parser_stage2(char *str, t_msh *msh);
 int		ft_check_expand(char *str, t_sh *sh, t_env *env);
 int		check_p(char *str);
-int		check_fill_redirections(char *str, t_sh *sh);
-int		check_fill_quotes(char *str, char c, t_sh *sh, t_env *env);
-int		check_fill_quotes(char *str, char c, t_sh *sh, t_env *env);
+int		check_fill_redirections(char *str, t_msh *msh);
+int		check_fill_quotes(char *str, char c, t_msh *msh);
 
 t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
 t_env	*push_env(t_env *env_list, char *env_name, char *env_value);
