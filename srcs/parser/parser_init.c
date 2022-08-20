@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:57:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/06 19:52:39 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:43:17 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	ft_init(t_cmd **cmd, t_env **env)
 	*cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	*env = (t_env *)malloc(sizeof(t_env));
 	(*cmd)->command = NULL;
-	(*cmd)->token = -1;
-	(*cmd)->side = 0;
 	(*cmd)->next = NULL;
 	(*env)->name = NULL;
 	(*env)->value = NULL;

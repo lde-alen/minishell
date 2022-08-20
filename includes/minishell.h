@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/20 16:30:47 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:43:58 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_redir
 	size_t		r_flag;
 	size_t		**flag;
 	size_t		flag_len;
+
 }	t_redir;
 
 // split by pipes / arg / command / str / next /
@@ -69,16 +70,15 @@ typedef struct s_cmd
 	char			**argument;
 	char			*command;
 	char			*str;
-	int				cash_flag;
-	int				token;
-	unsigned int	side;
 	t_redir			*redir;
+
 	struct s_cmd	*next;
 }	t_cmd;
 typedef struct s_env
 {
 	char			*name;
 	char			*value;
+
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;

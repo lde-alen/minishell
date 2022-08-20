@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/20 16:32:29 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:42:24 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,29 @@
 // 		}
 // 		msh->sh->i++;
 // 	}
+// }
+
+/*
+	count number of pipes
+	malloc nodes and fill until number of pipes
+	init struct
+	malloc
+	fill args each node
+	fill command each node
+
+
+	ignore dir
+	ignore token
+	ingnore cash
+	ignore side
+*/
+// int	parser_stage2(char *str, t_msh *msh)
+// {
+// 	char	**nodes;
+// 	size_t	i;
+
+// 	i = 0;
+
 // }
 
 int	parser_stage1(char *str, t_sh *sh)
