@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/20 15:32:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:05:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 		exit(0);
 	else
 	{
-		free_cmd(&cmd_lst);
+		// free_cmd(&cmd_lst);
 		return (1);
 	}
-	free_cmd(&cmd_lst);
+	// free_cmd(&cmd_lst);
 	return (0);
 }
 

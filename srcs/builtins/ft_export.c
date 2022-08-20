@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/14 13:42:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/20 16:17:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ static char	*check_validity(t_cmd *cmd_lst)
 		j = 1;
 		while (cmd_lst->argument[i][j])
 		{
-			if ((ft_isalnum(cmd_lst->argument[i][j])) == 0 && cmd_lst->argument[i][j] != '=')
+			if (ft_isalnum(cmd_lst->argument[i][j]) == 0 && (cmd_lst->argument[i][j] != '='))
 			{
+				if (cmd_lst->argument[i][j] == '+' && cmd_lst->argument[i][j + 1] != '=')
+					return (cmd_lst->argument[i]);
 				// g_exit = 1;
-				return (cmd_lst->argument[i]);
 			}
 			j++;
 		}
