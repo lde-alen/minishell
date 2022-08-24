@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/19 20:23:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:59:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 int	check_builtin(t_cmd *cmd_lst)
 {
-	if (cmd_lst->command[0] == '$' || ft_strcmp(cmd_lst->command, "echo") == 0 ||
-		ft_strcmp(cmd_lst->command, "pwd") == 0 || ft_strcmp(cmd_lst->command, "env") == 0 ||
-		(ft_strcmp(cmd_lst->command, "export") == 0 && cmd_lst->argument[1] != NULL) ||
-		ft_strcmp(cmd_lst->command, "export") == 0 || ft_strcmp(cmd_lst->command, "unset") == 0 ||
-		ft_strcmp(cmd_lst->command, "cd") == 0 || ft_strcmp(cmd_lst->command, "exit") == 0)
+	if (cmd_lst->command[0] == '$' || ft_strcmp(cmd_lst->command, "echo") == 0
+		|| ft_strcmp(cmd_lst->command, "pwd") == 0
+		|| ft_strcmp(cmd_lst->command, "env") == 0
+		|| (ft_strcmp(cmd_lst->command, "export") == 0
+			&& cmd_lst->argument[1] != NULL)
+		|| ft_strcmp(cmd_lst->command, "export") == 0
+		|| ft_strcmp(cmd_lst->command, "unset") == 0
+		|| ft_strcmp(cmd_lst->command, "cd") == 0
+		|| ft_strcmp(cmd_lst->command, "exit") == 0)
 		return (1);
 	return (0);
 }
 
-int	check_path(t_cmd *cmd_lst, char *path, int *flag)
+int	check_path(t_cmd *cmd_lst, char *path, size_t *flag)
 {
 	if (path == NULL)
 	{

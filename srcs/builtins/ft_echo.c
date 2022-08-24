@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 16:43:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:46:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,41 @@ static void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 	free(str);
 }
 
-void	ft_echo(t_cmd *cmd_lst)
+void	loop_str(t_cmd *cmd_lst, size_t i, size_t j)
 {
-	int			i;
-	int			flag;
-	size_t		j;
+	size_t	flag;
 
-	i = 1;
 	flag = 0;
-	while (cmd_lst->argument[i])
+	if (cmd_lst->argument[i][j] == '-' && cmd_lst->argument[i][j + 1])
 	{
-		j = 0;
-		if (cmd_lst->argument[i][j] == '-' && cmd_lst->argument[i][j + 1])
-		{
+		j++;
+		while (cmd_lst->argument[i][j] == 'n')
 			j++;
-			while (cmd_lst->argument[i][j] == 'n')
-				j++;
-			if (ft_strlen(cmd_lst->argument[i]) != j)
-			{
-				ft_join_echo(cmd_lst, i, flag);
-				return ;
-			}
-			else
-				flag = 1;
-		}
-		else
+		if (ft_strlen(cmd_lst->argument[i]) != j)
 		{
 			ft_join_echo(cmd_lst, i, flag);
 			return ;
 		}
+		else
+			flag = 1;
+	}
+	else
+	{
+		ft_join_echo(cmd_lst, i, flag);
+		return ;
+	}
+}
+
+void	ft_echo(t_cmd *cmd_lst)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 1;
+	while (cmd_lst->argument[i])
+	{
+		j = 0;
+		loop_str(cmd_lst, i, j);
 		i++;
 	}
 }

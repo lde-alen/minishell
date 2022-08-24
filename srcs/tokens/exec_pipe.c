@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/20 14:26:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 20:00:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	main_child2(t_cmd *cmd_lst, char *path, char **env_kid)
 	exit(0);
 }
 
-static void	first_child(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, char **env_kid, int i, int flag)
+static	void	first_child(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, char **env_kid, int i, int flag)
 {
 	close(fd[i][0]);
 	if (dup2(fd[i][1], STDOUT_FILENO) < 0)
@@ -35,7 +35,7 @@ static void	first_child(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, ch
 	exit(0);
 }
 
-static void	last_child(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, char **env_kid, int i, int flag)
+static	void	last_child(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, char **env_kid, int i, int flag)
 {
 	if (dup2(fd[(i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
@@ -48,10 +48,10 @@ static void	last_child(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, cha
 			perror("Execve problem");
 	}
 	exit(0);
-} 
+}
 
 
-static void	mid_kid(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, char **env_kid, int i, int flag)
+static	void	mid_kid(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], char *path, char **env_kid, int i, int flag)
 {
 	close(fd[i][0]);
 	if (dup2(fd[(i - 1)][0], STDIN_FILENO) < 0)

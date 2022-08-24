@@ -6,19 +6,18 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 09:27:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/08 16:14:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:56:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_pwd()
+char	*get_pwd(void)
 {
-	char	*buff;
+	char	buff[PATH_MAX];
 
-	buff = (char *)malloc(100 * sizeof(char));
-	getcwd(buff,100);
-	return (buff);
+	getcwd(buff, PATH_MAX);
+	return (ft_strdup(buff));
 }
 
 void	ft_pwd(t_env *lst)
