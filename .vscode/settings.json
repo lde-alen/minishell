@@ -3,6 +3,8 @@
         "sstream": "c",
         "typeinfo": "c",
         "minishell.h": "c",
-        "random": "c"
+        "random": "c",
+        "cstdlib": "c",
+        "numbers": "c"
     }
 }
