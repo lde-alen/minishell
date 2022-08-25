@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/20 12:50:03 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:41:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,16 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_exec
+{
+	int		**fd;
+	int		*id;
+	char	*path;
+	char	**env_kid;
+	int		flag;
+	int		i;
+}	t_exec;
+
 /**
  * Teaching kinds how to manipulate tools
  */
@@ -105,14 +115,13 @@ void	div_env(char *str, t_env *lst);
 
 void	ft_exit(t_cmd *cmd_lst);
 
-
 /**
  * UTILS
  */
 void	print_list_env(t_env *head);
 void	print_lst(t_env *lst);
 
-char	*get_pwd();
+char	*get_pwd(void);
 t_env	*search_pwd(t_env *lst);
 
 int		get_args_len(t_cmd *cmd_lst);
@@ -133,19 +142,19 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
 void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
-int		exec_builtin(t_env *lst, t_cmd *cmd_lst);
-void	exec_alone(t_cmd *cmd_lst, t_env *lst, int *id, char *path);
+size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst);
+void	exec_alone(t_cmd *cmd_lst, t_env *lst, ssize_t *id, char *path);
 void	exec_sys(t_env *lst, t_cmd *cmd_lst);
-void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id, int len, int i, int flag);
-void	fork_arr(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id);
-void	loop_lst(t_env *lst, t_cmd **cmd_lst, int len, int (*fd)[2], int *id, int flag);
-void	pipe_arr(int (*fd)[2], int i);
-void	close_pipes(int (*fd)[2], int i, int len);
-int		check_builtin(t_cmd *cmd_lst);
-int		check_path(t_cmd *cmd_lst, char *path, int *flag);
-int		check_all_path(t_env *lst, t_cmd *cmd_lst);
+void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id, size_t len, size_t i, size_t flag);
+void	fork_arr(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id);
+void	loop_lst(t_env *lst, t_cmd **cmd_lst, size_t len, int **fd, ssize_t *id, size_t flag);
+void	pipe_arr(int **fd, size_t i);
+void	close_pipes(int **fd, size_t i, size_t len);
+size_t	check_builtin(t_cmd *cmd_lst);
+size_t	check_path(t_cmd *cmd_lst, char *path, size_t *flag);
+size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
 void	main_child2(t_cmd *cmd_lst, char *path, char **env_kid);
-void	check_pos(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int len, int i, int flag);
+void	check_pos(t_env *lst, t_cmd *cmd_lst, int **fd, size_t len, size_t i, size_t flag);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
 

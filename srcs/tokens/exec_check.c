@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/24 19:59:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:03:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_builtin(t_cmd *cmd_lst)
+size_t	check_builtin(t_cmd *cmd_lst)
 {
 	if (cmd_lst->command[0] == '$' || ft_strcmp(cmd_lst->command, "echo") == 0
 		|| ft_strcmp(cmd_lst->command, "pwd") == 0
@@ -27,7 +27,7 @@ int	check_builtin(t_cmd *cmd_lst)
 	return (0);
 }
 
-int	check_path(t_cmd *cmd_lst, char *path, size_t *flag)
+size_t	check_path(t_cmd *cmd_lst, char *path, size_t *flag)
 {
 	if (path == NULL)
 	{
@@ -44,7 +44,7 @@ int	check_path(t_cmd *cmd_lst, char *path, size_t *flag)
 	return (0);
 }
 
-int	check_all_path(t_env *lst, t_cmd *cmd_lst)
+size_t	check_all_path(t_env *lst, t_cmd *cmd_lst)
 {
 	char	*path;
 

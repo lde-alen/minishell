@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 03:36:49 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/06 20:28:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 21:47:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	print_lst(t_env *lst)
 	t_env	*tmp;
 
 	tmp = lst;
-
 	while (lst->next != tmp)
 	{
 		if (lst->value != NULL)

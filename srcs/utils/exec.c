@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/20 16:05:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:43:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_builtin(t_env *lst, t_cmd *cmd_lst)
+size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 {
 	if (cmd_lst->command[0] == '$')
 		ft_expander(lst, cmd_lst->command);
@@ -22,7 +22,8 @@ int	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 		ft_pwd(lst);
 	else if (ft_strcmp(cmd_lst->command, "env") == 0)
 		print_list_env(lst);
-	else if (ft_strcmp(cmd_lst->command, "export") == 0 && cmd_lst->argument[1] != NULL)
+	else if (ft_strcmp(cmd_lst->command, "export") == 0
+		&& cmd_lst->argument[1] != NULL)
 		ft_export(lst, cmd_lst);
 	else if (ft_strcmp(cmd_lst->command, "export") == 0)
 		lonely_export(lst);
@@ -33,15 +34,11 @@ int	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 	else if (ft_strcmp(cmd_lst->command, "exit") == 0)
 		exit(0);
 	else
-	{
-		// free_cmd(&cmd_lst);
 		return (1);
-	}
-	// free_cmd(&cmd_lst);
 	return (0);
 }
 
-void	exec_alone(t_cmd *cmd_lst, t_env *lst, int *id, char *path)
+void	exec_alone(t_cmd *cmd_lst, t_env *lst, ssize_t *id, char *path)
 {
 	char	**env_kid;
 
@@ -62,9 +59,18 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, int *id, char *path)
 
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 {
-	int		fd[get_cmd_len(cmd_lst)][2];
-	int		id[get_cmd_len(cmd_lst) + 1];
+	ssize_t		*id;
+	int			**fd;
+	int			i;
 
+	i = 0;
+	fd = (int **)malloc(sizeof(int) * get_cmd_len(cmd_lst));
+	id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(cmd_lst) + 1));
+	while (i < get_cmd_len(cmd_lst))
+	{
+		fd[i] = (int *)malloc(sizeof(int) * 2);
+		i++;
+	}
 	if (check_all_path(lst, cmd_lst) == 1)
 		return ;
 	fork_arr(lst, cmd_lst, fd, id);

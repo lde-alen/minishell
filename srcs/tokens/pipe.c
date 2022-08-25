@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/20 14:13:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 14:41:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id, int len, int i, int flag)
+void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id, size_t len, size_t i, size_t flag)
 {
 	if ((i + 1) != len)
 		pipe_arr(fd, i);
@@ -28,12 +28,12 @@ void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id, int len, int i
 	close_pipes(fd, i, len);
 }
 
-void	fork_arr(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id)
+void	fork_arr(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id)
 {
 	char	*path;
-	int		len;
-	int		flag;
-	int		i;
+	size_t		len;
+	size_t		flag;
+	size_t		i;
 
 	i = 0;
 	flag = 0;
@@ -54,10 +54,10 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], int *id)
 	}
 }
 
-void	loop_lst(t_env *lst, t_cmd **cmd_lst, int len, int (*fd)[2], int *id, int flag)
+void	loop_lst(t_env *lst, t_cmd **cmd_lst, size_t len, int **fd, ssize_t *id, size_t flag)
 {
 	char	*path;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	path = check_access(lst, *cmd_lst);
@@ -80,7 +80,7 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, int len, int (*fd)[2], int *id, int f
 		ft_putendl_fd("path doesn't exist", 2);
 }
 
-void	pipe_arr(int (*fd)[2], int i)
+void	pipe_arr(int **fd, size_t i)
 {
 	if (pipe(fd[i]) < 0)
 	{
@@ -93,7 +93,7 @@ void	pipe_arr(int (*fd)[2], int i)
 	}
 }
 
-void	close_pipes(int (*fd)[2], int i, int len)
+void	close_pipes(int **fd, size_t i, size_t len)
 {
 	if (i == 0)
 		close(fd[i][1]);

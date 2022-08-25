@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/20 13:05:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 23:05:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	shell_prompt(char **env)
 		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
 		if (str)
 		{
-			if(ft_strlen(str) > 1)
+			if (ft_strlen(str) > 1)
 			{
 				add_history(str);
 				cmd_lst = ft_cmd_lst(str);

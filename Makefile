@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/19 19:55:47 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/25 14:22:50 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,13 @@ UTILS_DIR	=		utils/
 
 SRCS		=		main.c				\
 					prompt.c			\
-					execute.c			\
 					expand.c			\
 					minishell.c			\
 					cmd_list.c			\
 					parser.c			\
 					ft_free.c			\
 					error.c				\
+					execute.c			\
 
 BUILTINS	=		ft_env.c			\
 					ft_echo.c			\

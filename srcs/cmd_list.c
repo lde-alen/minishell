@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/24 16:08:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 21:49:36 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	print_list_cmd(t_cmd *head)
 t_cmd	*ft_lst_init(t_cmd *cmd, char *str)
 {
 	char	**split_cmd;
-	t_cmd   *cmd_lst;
+	t_cmd	*cmd_lst;
 	t_cmd	*tmp;
 	int		i;
 
@@ -128,31 +128,3 @@ t_cmd	*ft_cmd_lst(char *str)
 	free(split_pipes);
 	return (cmd);
 }
-
-
-
-// t_cmd	*ft_lst_init(char *str)
-// {
-// 	char	**split_cmd;
-// 	t_cmd   *cmd_lst;
-// 	int		i;
-
-// 	cmd_lst = (t_cmd *)malloc(sizeof(t_cmd));
-// 	split_cmd = ft_split(str, ' ');
-// 	i = 0;
-// 	while (split_cmd[i])
-// 		i++;
-// 	//+1??
-// 	cmd_lst->argument = (char **)ft_calloc((i + 1), sizeof(char *));
-// 	i = 0;
-// 	while (split_cmd[i])
-// 	{
-// 		cmd_lst->argument[i] = ft_strdup(split_cmd[i]);
-// 		free(split_cmd[i]);
-// 		i++;
-// 	}
-// 	cmd_lst->argument[i] = NULL;
-// 	free(split_cmd);
-// 	cmd_lst->command = cmd_lst->argument[0];
-// 	return (cmd_lst);
-// }
