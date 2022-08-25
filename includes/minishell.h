@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/25 15:23:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:47:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,16 +145,16 @@ void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst);
 void	exec_alone(t_cmd *cmd_lst, t_env *lst, ssize_t *id, char *path);
 void	exec_sys(t_env *lst, t_cmd *cmd_lst);
-void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], ssize_t *id, size_t len, size_t i, size_t flag);
-void	fork_arr(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], ssize_t *id);
-void	loop_lst(t_env *lst, t_cmd **cmd_lst, size_t len, int (*fd)[2], ssize_t *id, size_t flag);
-void	pipe_arr(int (*fd)[2], size_t i);
-void	close_pipes(int (*fd)[2], size_t i, size_t len);
+void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id, size_t len, size_t i, size_t flag);
+void	fork_arr(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id);
+void	loop_lst(t_env *lst, t_cmd **cmd_lst, size_t len, int **fd, ssize_t *id, size_t flag);
+void	pipe_arr(int **fd, size_t i);
+void	close_pipes(int **fd, size_t i, size_t len);
 size_t	check_builtin(t_cmd *cmd_lst);
 size_t	check_path(t_cmd *cmd_lst, char *path, size_t *flag);
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
 void	main_child2(t_cmd *cmd_lst, char *path, char **env_kid);
-void	check_pos(t_env *lst, t_cmd *cmd_lst, int (*fd)[2], size_t len, size_t i, size_t flag);
+void	check_pos(t_env *lst, t_cmd *cmd_lst, int **fd, size_t len, size_t i, size_t flag);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
 
@@ -172,7 +172,7 @@ void	free_cmd(t_cmd **cmd_lst);
 void	free_env_lst(t_env *lst);
 void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
-void	free_exec(int (*fd)[2], ssize_t *id);
+void	free_exec(int **fd, ssize_t *id, size_t len);
 
 void	new_prompt(int val);
 
