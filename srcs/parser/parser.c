@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/20 18:02:29 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/26 14:52:59 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@
 // 			free(name);
 // 		}
 // 		msh->sh->i++;
+// 		return (0);
 // 	}
+// 	return (0);
 // }
 
 /*
@@ -72,33 +74,48 @@
 	ingnore cash
 	ignore side
 */
-// int	parser_stage2(char *str, t_msh *msh)
-// {
-// 	char	**nodes;
-// 	size_t	i;
-
-// 	i = 0;
-
-// }
-
-int	parser_stage1(char *str, t_sh *sh)
+int	parser_stage1(char *str, t_msh *msh)
 {
 	t_bool	ret;
+	char	*name;
 
 	ret = false;
-	sh->i = 0;
-	while (str[sh->i] && ret == false)
+	msh->sh->i = 0;
+	msh->sh->euro = 0;
+	while (str[msh->sh->i] && ret == false)
 	{
-		sh->sq = 0;
-		sh->dq = 0;
-		if (str[sh->i] == '\'')
-			ret = check_quotes(str, '\'', sh);
-		else if (str[sh->i] == '"')
-			ret = check_quotes(str, '"', sh);
-		else if (str[sh->i == '>'] || str[sh->i == '<'])
-			ret = check_redirections(str, sh);
-		sh->i++;
+		msh->sh->sq = 0;
+		msh->sh->dq = 0;
+		if (str[msh->sh->i] == '\'')
+			ret = check_quotes(str, '\'', msh);
+		else if (str[msh->sh->i] == '"')
+			ret = check_quotes(str, '"', msh);
+		else if (str[msh->sh->i == '>'] || str[msh->sh->i == '<'])
+			ret = check_redirections(str, msh);
+		if (str[msh->sh->i] == '$')
+		{
+			name = ft_calloc(2, sizeof(char));
+			name[0] = '$';
+			msh->sh->i++;
+			if ((ft_isdigit(str[msh->sh->i]) == 1)
+				&& str[msh->sh->i - 1] == '$')
+				msh->sh->i++;
+			else
+			{
+				while (str[msh->sh->i] && str[msh->sh->i] != '$'
+					&& ft_isalnum(str[msh->sh->i]) == 1)
+				{
+					name = ft_append_char(name, str[msh->sh->i]);
+					msh->sh->i++;
+				}
+				ft_expand(msh->env, name);
+				msh->sh->i--;
+			}
+			free(name);
+		}
+		msh->sh->i++;
 	}
+	msh->sh->input_len = msh->sh->i;
 	if (ret == false)
 		return (0);
 	else
@@ -110,7 +127,9 @@ int	ft_parse(char *str, t_msh *msh)
 	if (!str)
 		return (1);
 	msh->sh = (t_sh *)malloc(sizeof(t_sh));
-	parser_stage1(str, msh->sh);
+	if (parser_stage1(str, msh) == 0)
+		ft_printf("valid\n");
+		// parser_stage2(str, msh);
 	free(msh->sh);
 	return (1);
 }

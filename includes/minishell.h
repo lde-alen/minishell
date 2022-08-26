@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/20 18:08:59 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/26 15:27:54 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_sh
 	char			*str_cpy;
 	size_t			input_len;
 	size_t			expand_len;
+	ssize_t			dolla_size;
 	size_t			euro;
 	size_t			sq;
 	size_t			dq;
@@ -139,9 +140,9 @@ int		ft_init(t_cmd **cmd, t_env **env);
 int		ft_parse(char *str, t_msh *msh);
 int		ft_fill_arg(char ***argument, char *str);
 int		ft_fill_cmd(char **command, char **argument);
-int		check_redirections(char *str, t_sh *sh);
-int		check_quotes(char *str, char quote, t_sh *sh);
-int		parser_stage1(char *str, t_sh *sh);
+int		check_redirections(char *str, t_msh *msh);
+int		check_quotes(char *str, char quote, t_msh *msh);
+int		parser_stage1(char *str, t_msh *msh);
 int		parser_stage2(char *str, t_msh *msh);
 int		ft_check_expand(char *str, t_sh *sh, t_env *env);
 int		check_p(char *str);
