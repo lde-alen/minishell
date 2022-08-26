@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 13:21:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 14:00:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	exec->len = get_cmd_len(cmd_lst);
 	exec->path = check_access(lst, cmd_lst);
 	if (check_path(cmd_lst, &exec) == 1)
+	{
+		// free_cmd(&cmd_lst);
 		return ;
+	}
 	ft_printf("here\n");
 	if (exec->path)
 		free(exec->path);

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 12:04:23 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 15:14:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	char	**env_path;
 	char	*path;
 
-	if (access(cmd_lst->command, F_OK) == 0)
+	if (access(cmd_lst->command, F_OK | X_OK) == 0)
 		return (cmd_lst->command);
 	env_path = get_path(lst);
 	path = NULL;

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 13:18:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:03:12 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 
 void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 {
-	ft_printf("here\n");
+	//ft_printf("here\n");
 	if (exec_builtin(lst, cmd_lst) == 0)
 	{
 		free_cmd(&cmd_lst);
@@ -64,6 +64,7 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 	ft_memset(&exec, 0, sizeof(t_exec *));
 	exec = (t_exec *)malloc(sizeof(t_exec));
 	exec->i = 0;
+	exec->len = get_cmd_len(cmd_lst);
 	exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(cmd_lst));
 	exec->id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(cmd_lst) + 1));
 	while (exec->i < get_cmd_len(cmd_lst))
@@ -73,9 +74,11 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 	}
 	if (check_all_path(lst, cmd_lst) == 1)
 	{
-		free(exec);
+		ft_printf("BOOP\n");
+		free_exec(exec);
+		free_cmd(&cmd_lst);
 		return ;
 	}
 	fork_arr(lst, cmd_lst, exec);
-	free(exec);
+	free_exec(exec);
 }
