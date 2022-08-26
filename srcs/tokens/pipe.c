@@ -6,103 +6,94 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 15:47:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:33:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pipe_exec(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id, size_t len, size_t i, size_t flag)
+void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	if ((i + 1) != len)
-		pipe_arr(fd, i);
-	id[i] = fork();
-	if (id[i] < 0)
+	if ((exec->i + 1) != exec->len)
+		pipe_arr(exec);
+	exec->id[exec->i] = fork();
+	if (exec->id[exec->i] < 0)
 	{
-		close_pipes(fd, i, len);
+		close_pipes(exec);
 		perror("Fork");
 		return ;
 	}
-	else if (id[i] == 0)
-		check_pos(lst, cmd_lst, fd, len, i, flag);
-	close_pipes(fd, i, len);
+	else if (exec->id[exec->i] == 0)
+		check_pos(lst, cmd_lst, exec);
+	close_pipes(exec);
 }
 
-void	fork_arr(t_env *lst, t_cmd *cmd_lst, int **fd, ssize_t *id)
+void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	char	*path;
-	size_t	len;
-	size_t	flag;
-	size_t	i;
-
-	i = 0;
-	flag = 0;
-	len = get_cmd_len(cmd_lst);
-	path = check_access(lst, cmd_lst);
-	if (check_path(cmd_lst, path, &flag) == 1)
+	exec->i = 0;
+	exec->flag = 0;
+	exec->len = get_cmd_len(cmd_lst);
+	exec->path = check_access(lst, cmd_lst);
+	if (check_path(cmd_lst, &exec) == 1)
 		return ;
-	if (len > 1)
-		loop_lst(lst, &cmd_lst, len, fd, id, flag);
+	if (exec->len > 1)
+		loop_lst(lst, &cmd_lst, exec);
 	else
-		exec_alone(cmd_lst, lst, id, path);
-	free(path);
-	i = 0;
-	while ((i + 1) <= len)
+		exec_alone(cmd_lst, lst, exec);
+	free(exec->path);
+	exec->i = 0;
+	while ((exec->i + 1) <= exec->len)
 	{
 		wait(NULL);
-		i++;
+		exec->i++;
 	}
-	free_exec(fd, id, len);
+	free_exec(exec);
 }
 
-void	loop_lst(t_env *lst, t_cmd **cmd_lst, size_t len, int **fd, ssize_t *id, size_t flag)
+void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 {
-	char	*path;
-	size_t	i;
-
-	i = 0;
-	path = check_access(lst, *cmd_lst);
-	if (check_path(*cmd_lst, path, &flag) == 1)
+	exec->path = check_access(lst, *cmd_lst);
+	if (check_path(*cmd_lst, &exec) == 1)
 		return ;
 	while (*cmd_lst != NULL)
 	{
-		pipe_exec(lst, *cmd_lst, fd, id, len, i, flag);
-		i++;
-		free(path);
+		pipe_exec(lst, *cmd_lst, exec);
+		exec->i++;
+		free(exec->path);
 		free_cmd(cmd_lst);
 		if (*cmd_lst != NULL)
 		{
-			path = check_access(lst, *cmd_lst);
-			if (check_path(*cmd_lst, path, &flag) == 1)
+			exec->path = check_access(lst, *cmd_lst);
+			if (check_path(*cmd_lst, &exec) == 1)
 				return ;
 		}
 	}
-	if (*cmd_lst && path == NULL)
+	if (*cmd_lst && exec->path == NULL)
 		ft_putendl_fd("path doesn't exist", 2);
 }
 
-void	pipe_arr(int **fd, size_t i)
+void	pipe_arr(t_exec *exec)
 {
-	if (pipe(fd[i]) < 0)
+	if (pipe(exec->fd[exec->i]) < 0)
 	{
-		if (i != 0)
+		if (exec->i != 0)
 		{
-			close(fd[i - 1][0]);
-			close(fd[i - 1][1]);
+			close(exec->fd[exec->i - 1][0]);
+			close(exec->fd[exec->i - 1][1]);
 		}
 		perror("pipe");
 	}
 }
 
-void	close_pipes(int **fd, size_t i, size_t len)
+void	close_pipes(t_exec *exec)
 {
-	if (i == 0)
-		close(fd[i][1]);
-	else if ((i + 1) == len)
-		close(fd[i - 1][0]);
+	if (exec->i == 0)
+		close(exec->fd[exec->i][1]);
+	else if ((exec->i + 1) == exec->len)
+		close(exec->fd[exec->i - 1][0]);
 	else
 	{
-		close(fd[i - 1][0]);
-		close(fd[i][1]);
+		close(exec->fd[exec->i - 1][0]);
+		close(exec->fd[exec->i][1]);
 	}
 }

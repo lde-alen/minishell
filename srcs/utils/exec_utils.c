@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 14:01:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 18:02:55 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	**lst_to_char(t_env *lst)
 	char	**env;
 	char	*temp_str;
 	t_env	*tmp;
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	tmp = lst;

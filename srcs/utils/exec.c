@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 15:45:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 08:25:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,40 +38,37 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 	return (0);
 }
 
-void	exec_alone(t_cmd *cmd_lst, t_env *lst, ssize_t *id, char *path)
+void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 {
-	char	**env_kid;
-
 	if (exec_builtin(lst, cmd_lst) == 0)
 	{
 		free_cmd(&cmd_lst);
 		return ;
 	}
-	env_kid = lst_to_char(lst);
-	id[0] = fork();
-	if (id[0] < 0)
+	exec->env_kid = lst_to_char(lst);
+	exec->id[0] = fork();
+	if (exec->id[0] < 0)
 		perror("fork");
-	else if (id[0] == 0)
-		main_child2(cmd_lst, path, env_kid);
-	free_env_kid(env_kid);
+	else if (exec->id[0] == 0)
+		main_child2(cmd_lst, exec);
+	free_env_kid(exec->env_kid);
 	free_cmd(&cmd_lst);
 }
 
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 {
-	int			**fd;
-	ssize_t		*id;
-	size_t		i;
+	t_exec		*exec;
 
-	i = 0;
-	fd = (int **)malloc(sizeof(int *) * get_cmd_len(cmd_lst));
-	id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(cmd_lst) + 1));
-	while (i < get_cmd_len(cmd_lst))
+	ft_memset(&exec, 0, sizeof(t_exec *));
+	exec->i = 0;
+	exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(cmd_lst));
+	exec->id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(cmd_lst) + 1));
+	while (exec->i < get_cmd_len(cmd_lst))
 	{
-		fd[i] = (int *)malloc(sizeof(int) * 2);
-		i++;
+		exec->fd[exec->i] = (int *)malloc(sizeof(int) * 2);
+		exec->i++;
 	}
 	if (check_all_path(lst, cmd_lst) == 1)
 		return ;
-	fork_arr(lst, cmd_lst, fd, id);
+	fork_arr(lst, cmd_lst, exec);
 }

@@ -5,6 +5,8 @@
         "minishell.h": "c",
         "random": "c",
         "cstdlib": "c",
-        "numbers": "c"
+        "numbers": "c",
+        "__locale": "c",
+        "locale": "c"
     }
 }

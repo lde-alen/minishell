@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 14:03:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/25 17:48:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ size_t	check_builtin(t_cmd *cmd_lst)
 	return (0);
 }
 
-size_t	check_path(t_cmd *cmd_lst, char *path, size_t *flag)
+size_t	check_path(t_cmd *cmd_lst, t_exec **exec)
 {
-	if (path == NULL)
+	if ((*exec)->path == NULL)
 	{
 		if (check_builtin(cmd_lst) == 0)
 		{
 			perror("path error");
-			free(path);
+			free((*exec)->path);
 			return (1);
 		}
 		else
-			*flag = 1;
-		free(path);
+			(*exec)->flag = 1;
+		free((*exec)->path);
 	}
 	return (0);
 }
