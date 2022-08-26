@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/24 19:48:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 12:39:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,41 @@
 static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 {
 	t_env	*check;
-	char	*div;
-	char	*tmp;
 
 	check = check_exist(lst, cmd_lst->argument[i]);
 	if (check != NULL)
-	{
-		len = ft_strchr(cmd_lst->argument[i], '+');
-		div = ft_strchr(cmd_lst->argument[i], '=');
-		if (len != NULL && len[1] == '=')
-		{
-			if (check->value != NULL)
-			{
-				tmp = ft_strdup(check->value);
-				free(check->value);
-				check->value = ft_strjoin(tmp, ft_strchr(div, div[1]));
-				free(tmp);
-			}
-			else
-				check->value = ft_strdup(ft_strchr(div, div[1]));
-		}
-		else
-		{
-			if (check->value)
-				free(check->value);
-			check->value = ft_strdup(ft_strchr(div, div[1]));
-		}
-	}
+		join_str(cmd_lst, &len, i, &check);
 	else
 		div_env(cmd_lst->argument[i], lst);
+}
+
+char	*check_str(t_cmd *cmd_lst, size_t i)
+{
+	size_t	j;
+
+	j = 1;
+	while (cmd_lst->argument[i][j])
+	{
+		if (ft_isalnum(cmd_lst->argument[i][j]) == 0
+			&& (cmd_lst->argument[i][j] != '='))
+		{
+			if (cmd_lst->argument[i][j] == '+'
+				&& cmd_lst->argument[i][j + 1] != '=')
+				return (cmd_lst->argument[i]);
+			// g_exit = 1;
+		}
+		j++;
+	}
+	return (NULL);
 }
 
 //CHECK
 static char	*check_validity(t_cmd *cmd_lst)
 {
-	int	i;
-	int	j;
+	char	*ret;
+	size_t	i;
 
 	i = 0;
-	j = 0;
 	while (cmd_lst->argument[i])
 	{
 		if (cmd_lst->argument[i][0] != '_'
@@ -64,19 +60,9 @@ static char	*check_validity(t_cmd *cmd_lst)
 			// g_exit = 1;
 			return (cmd_lst->argument[i]);
 		}
-		j = 1;
-		while (cmd_lst->argument[i][j])
-		{
-			if (ft_isalnum(cmd_lst->argument[i][j]) == 0
-				&& (cmd_lst->argument[i][j] != '='))
-			{
-				if (cmd_lst->argument[i][j] == '+'
-					&& cmd_lst->argument[i][j + 1] != '=')
-					return (cmd_lst->argument[i]);
-				// g_exit = 1;
-			}
-			j++;
-		}
+		ret = check_str(cmd_lst, i);
+		if (ret != NULL)
+			return (ret);
 		i++;
 	}
 	// g_exit = 0;

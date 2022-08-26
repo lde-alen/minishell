@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/24 21:49:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 12:12:05 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,35 @@ void	print_list_cmd(t_cmd *head)
 	ft_printf("%s\n", head->command);
 }
 
+void	split_lst_cmd(char **split_cmd, t_cmd **cmd_lst, size_t i)
+{
+	while (split_cmd[i])
+	{
+		(*cmd_lst)->argument[i] = ft_strdup(split_cmd[i]);
+		free(split_cmd[i]);
+		i++;
+	}
+	(*cmd_lst)->argument[i] = NULL;
+	free(split_cmd);
+	(*cmd_lst)->command = (*cmd_lst)->argument[0];
+	(*cmd_lst)->next = NULL;
+}
+
 t_cmd	*ft_lst_init(t_cmd *cmd, char *str)
 {
 	char	**split_cmd;
 	t_cmd	*cmd_lst;
 	t_cmd	*tmp;
-	int		i;
+	size_t	i;
 
 	cmd_lst = (t_cmd *)malloc(sizeof(t_cmd));
 	split_cmd = ft_split(str, ' ');
 	i = 0;
 	while (split_cmd[i])
 		i++;
-	//+1??
 	cmd_lst->argument = (char **)ft_calloc((i + 1), sizeof(char *));
 	i = 0;
-	while (split_cmd[i])
-	{
-		cmd_lst->argument[i] = ft_strdup(split_cmd[i]);
-		free(split_cmd[i]);
-		i++;
-	}
-	cmd_lst->argument[i] = NULL;
-	free(split_cmd);
-	cmd_lst->command = cmd_lst->argument[0];
-	cmd_lst->next = NULL;
+	split_lst_cmd(split_cmd, &cmd_lst, i);
 	if (!cmd)
 		return (cmd_lst);
 	tmp = cmd;
@@ -90,23 +94,6 @@ t_cmd	*ft_lst_init(t_cmd *cmd, char *str)
 		tmp = tmp->next;
 	tmp->next = cmd_lst;
 	return (cmd);
-}
-
-void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd != NULL)
-	{
-		i = 0;
-		while (cmd->argument[i])
-		{
-			ft_printf("%s\n", cmd->argument[i]);
-			i++;
-		}
-		cmd = cmd->next;
-	}
 }
 
 t_cmd	*ft_cmd_lst(char *str)

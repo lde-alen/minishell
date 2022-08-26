@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 18:02:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 12:04:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,13 @@ char	**get_path(t_env *lst)
 	return (NULL);
 }
 
-//checks existence of command when joined with the path
-char	*check_access(t_env *lst, t_cmd *cmd_lst)
+char	*join_path(t_cmd *cmd_lst, char *path, char **env_path)
 {
-	char	**env_path;
 	char	*post_join;
-	char	*path;
 	char	*str;
-	int		i;
+	size_t	i;
 
-	if (access(cmd_lst->command, F_OK) == 0)
-		return (cmd_lst->command);
 	i = 0;
-	env_path = get_path(lst);
 	while (env_path[i])
 	{
 		post_join = ft_strjoin("/", cmd_lst->command);
@@ -60,6 +54,22 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 		free(post_join);
 		i++;
 	}
+	return (NULL);
+}
+
+//checks existence of command when joined with the path
+char	*check_access(t_env *lst, t_cmd *cmd_lst)
+{
+	char	**env_path;
+	char	*path;
+
+	if (access(cmd_lst->command, F_OK) == 0)
+		return (cmd_lst->command);
+	env_path = get_path(lst);
+	path = NULL;
+	path = join_path(cmd_lst, path, env_path);
+	if (path != NULL)
+		return (path);
 	free_split(env_path);
 	return (NULL);
 }
@@ -74,7 +84,6 @@ char	**lst_to_char(t_env *lst)
 
 	i = 0;
 	tmp = lst;
-	temp_str = "";
 	env = (char **)malloc(sizeof(char *) * (get_lst_len(lst) + 1));
 	while (lst->next != tmp)
 	{

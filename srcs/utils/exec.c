@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 08:53:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 09:16:27 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	}
 	exec->env_kid = lst_to_char(lst);
 	exec->id[0] = fork();
+	exec->path = check_access(lst, cmd_lst);
 	if (exec->id[0] < 0)
 		perror("fork");
 	else if (exec->id[0] == 0)

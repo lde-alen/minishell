@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 08:42:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 12:45:48 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_exec
 	size_t		flag;
 	size_t		len;
 	size_t		i;
+	int			j;
 	char		*path;
 	char		**env_kid;
 }	t_exec;
@@ -103,17 +104,15 @@ void	ft_echo(t_cmd *cmd_lst);
 void	div_env(char *str, t_env *lst);
 t_env	*check_exist(t_env *lst, char *str);
 t_env	*check_stack(t_env *new_node, t_env *lst);
+void	join_str(t_cmd *cmd_lst, char **len, int i, t_env **check);
+void	get_sub(char **store, char *str, char **env_name, char **env_value);
 
 void	ft_pwd(t_env *lst);
-
 void	ft_unset(t_env *lst, t_cmd *cmd_lst);
-
 void	ft_cd(t_cmd *cmd_lst, t_env *lst);
-
 void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	lonely_export(t_env *lst);
 void	div_env(char *str, t_env *lst);
-
 void	ft_exit(t_cmd *cmd_lst);
 
 /**
@@ -133,6 +132,7 @@ size_t	get_cmd_len(t_cmd *cmd);
 /**
  * EXECUTING FUNCTIONS
  */
+void	exec_sys(t_env *lst, t_cmd *cmd_lst);
 void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
@@ -157,11 +157,8 @@ void	main_child2(t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
-
 void	redirect_out(t_env *lst, t_cmd *cmd_lst);
-
 void	append_out(t_env *lst, t_cmd *cmd_lst);
-
 void	here_doc(t_env *lst, t_cmd *cmd_lst);
 
 /**

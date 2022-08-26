@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:11:19 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 14:23:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 12:46:38 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,6 @@ void	get_sub(char **store, char *str, char **env_name, char **env_value)
 	*env_value = NULL;
 	if (ft_strchr(div, div[1]))
 		*env_value = ft_strdup(ft_strchr(div, div[1]));
-}
-
-//assign export info to variables
-void	div_env(char *str, t_env *lst)
-{
-	char	*env_name;
-	char	*env_value;
-	char	*store;
-
-	if (ft_strchr(str, '=') == NULL)
-	{
-		env_name = ft_strdup(str);
-		env_value = NULL;
-	}
-	else
-		get_sub(&store, str, &env_name, &env_value);
-	lst = push_env(lst, env_name, env_value);
-	free(env_name);
-	if (env_value)
-		free(env_value);
 }
 
 static	t_env	*find_var(t_env *lst, char *env_name)
@@ -114,4 +94,31 @@ t_env	*check_stack(t_env *new_node, t_env *lst)
 		if (iter_diff(lst, new_node) == 1)
 			return (push_lst(tmp, new_node, lst->name, lst->value));
 	return (push_env(tmp, lst->name, lst->value));
+}
+
+void	join_str(t_cmd *cmd_lst, char **len, int i, t_env **check)
+{
+	char	*div;
+	char	*tmp;
+
+	*len = ft_strchr(cmd_lst->argument[i], '+');
+	div = ft_strchr(cmd_lst->argument[i], '=');
+	if (*len != NULL && *len[1] == '=')
+	{
+		if ((*check)->value != NULL)
+		{
+			tmp = ft_strdup((*check)->value);
+			free((*check)->value);
+			(*check)->value = ft_strjoin(tmp, ft_strchr(div, div[1]));
+			free(tmp);
+		}
+		else
+			(*check)->value = ft_strdup(ft_strchr(div, div[1]));
+	}
+	else
+	{
+		if ((*check)->value)
+			free((*check)->value);
+		(*check)->value = ft_strdup(ft_strchr(div, div[1]));
+	}
 }
