@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 12:12:05 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 12:49:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,6 @@ t_env	*push_cmd(t_env *lst, char *env_name, char *env_value)
 	free(env_name);
 	free(env_value);
 	return (lst);
-}
-
-//just for teshtazz
-void	print_list_cmd(t_cmd *head)
-{
-	int		i;
-
-	i = 0;
-	if (head->argument[i])
-	{
-		while (head->argument[i])
-		{
-			ft_printf("%s\n", head->argument[i]);
-			i++;
-		}
-	}
-	ft_printf("%s\n", head->command);
 }
 
 void	split_lst_cmd(char **split_cmd, t_cmd **cmd_lst, size_t i)
