@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 08:24:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 08:42:12 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_exec
 	size_t		flag;
 	size_t		len;
 	size_t		i;
-	int			j;
 	char		*path;
 	char		**env_kid;
 }	t_exec;
@@ -134,7 +133,6 @@ size_t	get_cmd_len(t_cmd *cmd);
 /**
  * EXECUTING FUNCTIONS
  */
-void	exec_sys(t_env *lst, t_cmd *cmd_lst);
 void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
