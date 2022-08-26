@@ -6,11 +6,37 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/13 19:52:02 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:07:44 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*get_env_value(t_env *env, char *name)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp->next != env)
+	{
+		if (ft_strcmp(tmp->name, name) == 0)
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+ssize_t	get_expand_len(char *name, t_env *env)
+{
+	ssize_t	len;
+	size_t	len_name;
+	size_t	len_value;
+
+	len_name = ft_strlen(name);
+	len_value = ft_strlen(get_env_value(env, name));
+	len = len_value - len_name;
+	return (len);
+}
 
 void	ft_expand(t_env *lst, char *str)
 {

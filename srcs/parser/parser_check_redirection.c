@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 14:50:30 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/26 19:37:08 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_redirections(char *str, t_msh *msh)
 				i++;
 			if (str[i] == '|')
 			{
-				ft_putstr_fd("ERROR REDIR\n", 2);
+				ft_putstr_fd("ERROR PIPE\n", 2);
 				return (1);
 			}
 		}

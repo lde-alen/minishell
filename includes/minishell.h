@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 15:27:54 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/26 20:01:46 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_msh
 /**
  * Teaching kinds how to manipulate tools
  */
+ssize_t	get_expand_len(char *name, t_env *env);
 void	ft_print_char_arr(char **array);
 void	print_list_env(t_env *head);
 void	ft_expand(t_env *lst, char *str);

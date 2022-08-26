@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 14:52:59 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/26 19:53:50 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ int	parser_stage1(char *str, t_msh *msh)
 					name = ft_append_char(name, str[msh->sh->i]);
 					msh->sh->i++;
 				}
+				msh->sh->input_len += get_expand_len(name, msh->env);
 				ft_expand(msh->env, name);
 				msh->sh->i--;
 			}
@@ -115,7 +116,7 @@ int	parser_stage1(char *str, t_msh *msh)
 		}
 		msh->sh->i++;
 	}
-	msh->sh->input_len = msh->sh->i;
+	msh->sh->input_len += msh->sh->i;
 	if (ret == false)
 		return (0);
 	else
