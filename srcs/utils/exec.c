@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 20:03:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/27 09:46:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 
 void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 {
-	//ft_printf("here\n");
 	if (exec_builtin(lst, cmd_lst) == 0)
 	{
 		free_cmd(&cmd_lst);
@@ -54,6 +53,7 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	else if (exec->id[0] == 0)
 		main_child2(cmd_lst, exec);
 	free_env_kid(exec->env_kid);
+	free(exec->path);
 	free_cmd(&cmd_lst);
 }
 
@@ -74,7 +74,6 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 	}
 	if (check_all_path(lst, cmd_lst) == 1)
 	{
-		ft_printf("BOOP\n");
 		free_exec(exec);
 		free_cmd(&cmd_lst);
 		return ;
