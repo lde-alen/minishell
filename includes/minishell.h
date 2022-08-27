@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 20:01:46 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/27 23:03:48 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_msh
  * Teaching kinds how to manipulate tools
  */
 ssize_t	get_expand_len(char *name, t_env *env);
+char	*get_env_value(t_env *env, char *name);
 void	ft_print_char_arr(char **array);
 void	print_list_env(t_env *head);
 void	ft_expand(t_env *lst, char *str);
@@ -145,8 +146,8 @@ int		check_redirections(char *str, t_msh *msh);
 int		check_quotes(char *str, char quote, t_msh *msh);
 int		parser_stage1(char *str, t_msh *msh);
 int		parser_stage2(char *str, t_msh *msh);
-int		ft_check_expand(char *str, t_sh *sh, t_env *env);
-int		check_p(char *str);
+int		ft_check_expand(char *str, t_msh *msh);
+int		check_p(char *str, t_msh *msh);
 int		check_fill_redirections(char *str, t_msh *msh);
 int		check_fill_quotes(char *str, char c, t_msh *msh);
 

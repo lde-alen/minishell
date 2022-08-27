@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 14:47:39 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/27 23:12:34 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,18 @@
 
 int	check_quotes(char *str, char quote, t_msh *msh)
 {
-	char	*name;
-
 	if (str[msh->sh->i] == '\'' || str[msh->sh->i] == '"')
 	{
 		if (str[msh->sh->i] == '\'')
 			msh->sh->sq += 1;
 		if (str[msh->sh->i] == '"')
 			msh->sh->dq += 1;
-		if ((quote == '\'' && msh->sh->dq == 0) || (quote == '"' && msh->sh->sq == 0))
+		if ((quote == '\'' && msh->sh->dq == 0) ||
+			(quote == '"' && msh->sh->sq == 0))
 		{
 			msh->sh->i++;
 			if (str[msh->sh->i] == '$' && quote == '"')
-			{
-				name = ft_calloc(2, sizeof(char));
-				name[0] = '$';
-				msh->sh->i++;
-				if ((ft_isdigit(str[msh->sh->i]) == 1)
-					&& str[msh->sh->i - 1] == '$')
-					msh->sh->i++;
-				else
-				{
-					while (str[msh->sh->i] && str[msh->sh->i] != '$'
-						&& ft_isalnum(str[msh->sh->i]) == 1)
-					{
-						name = ft_append_char(name, str[msh->sh->i]);
-						msh->sh->i++;
-					}
-					ft_expand(msh->env, name);
-					msh->sh->i--;
-				}
-				free(name);
-			}
+				ft_check_expand(str, msh);
 			if (str[msh->sh->i] && ft_strchr((str + msh->sh->i), quote) != NULL)
 			{
 				while (str[msh->sh->i] != quote && str[msh->sh->i])
