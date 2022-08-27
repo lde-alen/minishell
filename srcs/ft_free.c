@@ -6,22 +6,23 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/07/28 04:21:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/27 09:32:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void    free_split(char **split_cmd)
+void	free_split(char **split_res)
 {
 	int	i;
 
 	i = 0;
-	while (split_cmd[i])
+	while (split_res[i])
 	{
-		free(split_cmd[i]);
+		free(split_res[i]);
 		i++;
 	}
+	free(split_res);
 }
 
 void	free_env_lst(t_env *lst)
@@ -34,45 +35,59 @@ void	free_env_lst(t_env *lst)
 	{
 		store = lst->next;
 		free(lst->name);
+		if (lst->value)
+			free(lst->value);
 		free(lst);
 		lst = store;
 	}
 	free(lst->name);
+	if (lst->value)
+		free(lst->value);
 	free (lst);
 }
 
-// void	free_cmd(t_cmd *cmd_lst)
-// {
-// 	t_cmd	*tmp;
-// 	t_cmd	*store;
+void	free_cmd(t_cmd **cmd_lst)
+{
+	t_cmd	*tmp;
+	size_t	i;
 
-// 	tmp = cmd_lst;
-// 	while (cmd_lst->next != tmp)
-// 	{
-// 		store = cmd_lst->next;
-// 		free(cmd_lst);
-// 		cmd_lst = store;
-// 	}
-// 	free (cmd_lst);
-// }
+	i = 0;
+	tmp = *cmd_lst;
+	while ((*cmd_lst)->argument[i])
+	{
+		free((*cmd_lst)->argument[i]);
+		i++;
+	}
+	// free((*cmd_lst)->argument[i]);
+	free((*cmd_lst)->argument);
+	if (cmd_lst)
+		(*cmd_lst) = ((*cmd_lst))->next;
+	free(tmp);
+}
 
-void	free_cmd(t_cmd *cmd_lst)
+void	free_env_kid(char **env_kid)
 {
 	int	i;
 
 	i = 0;
-	free(cmd_lst->command);
-	while (cmd_lst->argument[i])
+	while (env_kid[i])
 	{
-		free(cmd_lst->argument[i]);
+		free(env_kid[i]);
 		i++;
 	}
-	free(cmd_lst->argument);
-	free(cmd_lst);
+	free(env_kid[i]);
+	free(env_kid);
 }
 
-void	lst_free(t_cmd *cmd_lst, t_env *lst)
+void	free_exec(t_exec *exec)
 {
-	(void)lst;
-	free_cmd(cmd_lst);
+	exec->i = 0;
+	while (exec->i < exec->len)
+	{
+		free(exec->fd[exec->i]);
+		exec->i++;
+	}
+	free(exec->fd);
+	free(exec->id);
+	free(exec);
 }

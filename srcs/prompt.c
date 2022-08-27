@@ -6,20 +6,21 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/01 06:56:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/26 08:41:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 //signal handler for ^C
 void	new_prompt(int val)
 {
+	(void)val;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	exit(val);
+	// exit(val);
 }
 
 void	shell_prompt(char **env)
@@ -30,27 +31,26 @@ void	shell_prompt(char **env)
 
 	signal(SIGINT, new_prompt);
 	signal(SIGQUIT, SIG_IGN);
-	ft_memset(&lst, 0, sizeof(lst));
-	ft_memset(&cmd_lst, 0, sizeof(cmd_lst));
+	ft_memset(&lst, 0, sizeof(t_env *));
+	ft_memset(&cmd_lst, 0, sizeof(t_cmd *));
 	lst = ft_env(env);
 	while (1)
 	{
 		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
 		if (str)
 		{
-			if(ft_strlen(str) > 1)
+			if (ft_strlen(str) > 1)
 			{
 				add_history(str);
-				cmd_lst = ft_lst_init(str);
+				cmd_lst = ft_cmd_lst(str);
 				ft_parse(lst, cmd_lst);
-				free(cmd_lst->argument);
-				free(cmd_lst);
 				// free_cmd(cmd_lst);
 			}
 		}
 		else
 		{
 			free_env_lst(lst);
+			// free_cmd(cmd_lst);
 			exit(0);
 		}
 	}

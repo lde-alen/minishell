@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/07/31 10:22:40 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/26 09:03:33 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,13 @@ UTILS_DIR	=		utils/
 
 SRCS		=		main.c				\
 					prompt.c			\
-					execute.c			\
 					expand.c			\
 					minishell.c			\
 					cmd_list.c			\
 					parser.c			\
 					ft_free.c			\
-					exec.c				\
+					error.c				\
+					execute.c			\
 
 BUILTINS	=		ft_env.c			\
 					ft_echo.c			\
@@ -43,6 +43,8 @@ BUILTINS	=		ft_env.c			\
 
 TOKENS		=		pipe.c				\
 					redirect.c			\
+					exec_check.c		\
+					exec_pipe.c			\
 
 UTILS		=		len.c				\
 					print.c				\
@@ -50,6 +52,7 @@ UTILS		=		len.c				\
 					exec_utils.c		\
 					export_utils.c		\
 					redirect_utils.c	\
+					exec.c				\
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 
@@ -78,14 +81,14 @@ INCLUDES	+=		-I./includes/
 CC			=		gcc
 
 .c.o		:
-					$(CC) $(CFLAGS) -I/usr/local/Cellar/readline/8.1/include -c $< -o $(<:.c=.o)
+					$(CC) $(CFLAGS) -I/usr/local/Cellar/readline/8.1/include $(INCLUDES) -c $< -o $(<:.c=.o)
 
 $(LIBFT_C)	:		$(MAKE) -C ./Libft
 					$(CP) $(LIBFT_DIR)/libft.h ./includes/
 
 $(NAME)		:		$(OBJS)
 					$(MAKE) -C ./Libft
-					$(CC) $(CFLAGS) $(RFLAGS) -L/usr/local/Cellar/readline/8.1/lib  $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) $(INCLUDES) -o $(NAME)
+					$(CC) $(CFLAGS) $(RFLAGS) -L/usr/local/Cellar/readline/8.1/lib  $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
 					mkdir -p $(OBJS_DIR_N)
 					mv $(OBJS) $(OBJS_DIR)
 
@@ -93,7 +96,7 @@ all			:		$(NAME)
 
 clean		:
 					$(MAKE) clean -C $(LIBFT_DIR)
-					$(RM) -r $(OBJS_DIR)/
+					$(RM) -r $(OBJS_DIR)/$(OBJS)
 
 
 fclean		:		clean

@@ -6,22 +6,23 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/01 07:20:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/24 19:57:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 static int	ch_equality(char *str, t_env *lst)
 {
-	t_env *tmp2;
+	t_env	*tmp2;
 
-	if (strcmp(str, lst->name) == 0)
+	if (ft_strcmp(str, lst->name) == 0)
 	{
 		tmp2 = lst;
 		lst->prev->next = lst->next;
 		lst->next->prev = lst->prev;
 		free(tmp2->name);
+		free(tmp2->value);
 		free(tmp2);
 		return (1);
 	}
@@ -30,8 +31,8 @@ static int	ch_equality(char *str, t_env *lst)
 
 void	ft_unset(t_env *lst, t_cmd *cmd_lst)
 {
-	int i;
-	t_env *tmp;
+	size_t	i;
+	t_env	*tmp;
 
 	i = 1;
 	tmp = lst;
@@ -42,7 +43,6 @@ void	ft_unset(t_env *lst, t_cmd *cmd_lst)
 			if (ch_equality(cmd_lst->argument[i], lst) == 1)
 			{
 				lst = tmp;
-				// free_cmd(cmd_lst);
 				return ;
 			}
 			lst = lst->next;
@@ -50,7 +50,6 @@ void	ft_unset(t_env *lst, t_cmd *cmd_lst)
 		if (ch_equality(cmd_lst->argument[i], lst) == 1)
 		{
 			lst = tmp;
-			// free_cmd(cmd_lst);
 			return ;
 		}
 		lst = tmp;
