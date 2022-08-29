@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 05:26:13 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/02 05:50:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/29 17:54:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @return long
  */
 
-static void	check_resaz(long long res)
+static void	check_resaz(size_t res)
 {
 	if (res > 9223372036854775807)
 	{
@@ -27,11 +27,11 @@ static void	check_resaz(long long res)
 	}
 }
 
-long	ft_atoi(const char *str)
+long	ft_atol(const char *str)
 {
-	int				i;
-	int				neg;
-	long long		res;
+	size_t			i;
+	size_t			neg;
+	size_t			res;
 
 	i = 0;
 	neg = 1;

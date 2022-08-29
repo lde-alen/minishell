@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 09:06:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:21:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ size_t	check_all_path(t_env *lst, t_cmd *cmd_lst)
 
 	while (cmd_lst != NULL)
 	{
-		path = check_access(lst, cmd_lst);
-		if (path == NULL)
+		if (check_builtin(cmd_lst) == 0)
 		{
-			if (check_builtin(cmd_lst) == 0)
+			path = check_access(lst, cmd_lst);
+			if (path == NULL)
 			{
 				ft_putstr_fd("minishell: ", 2);
 				ft_putstr_fd(cmd_lst->argument[0], 2);
@@ -61,7 +61,6 @@ size_t	check_all_path(t_env *lst, t_cmd *cmd_lst)
 				return (1);
 			}
 		}
-		free(path);
 		cmd_lst = cmd_lst->next;
 	}
 	return (0);

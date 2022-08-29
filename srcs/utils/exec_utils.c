@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/29 17:01:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:22:17 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 
 	if (access(cmd_lst->command, F_OK | X_OK) == 0)
 	{
-		ft_printf("am i here\n");
 		// if (access(cmd_lst->command, X_OK) == 0)
 		// 	return (cmd_lst->command);
 		return (cmd_lst->command);

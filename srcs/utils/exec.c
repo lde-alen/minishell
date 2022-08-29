@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/29 17:08:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/29 18:19:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 		exec->fd[exec->i] = (int *)malloc(sizeof(int) * 2);
 		exec->i++;
 	}
-	// if (check_all_path(lst, cmd_lst) == 1)
-	// 	return ;
+	if (check_all_path(lst, cmd_lst) == 1)
+		return ;
 	fork_arr(lst, cmd_lst, exec);
 	free(exec);
 }
