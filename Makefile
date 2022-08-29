@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/26 09:03:33 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/29 16:49:25 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ RM			=		rm -f
 CP			=		cp
 
 CFLAGS		+=		-Wall -Wextra -Werror -g3
-	
+
 RFLAGS		+=		-lreadline -I/usr/local/Cellar/readline/8.1/include
 
 INCLUDES	+=		-I./includes/
