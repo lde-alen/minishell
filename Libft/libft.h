@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 09:21:31 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/08 16:16:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/30 13:03:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+char	*ft_ltoa(size_t n);
+size_t	ft_atol(const char *str);
 
 /*
 	printf

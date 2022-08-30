@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/29 18:19:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/30 13:14:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 	else if (ft_strcmp(cmd_lst->command, "cd") == 0)
 		ft_cd(cmd_lst, lst);
 	else if (ft_strcmp(cmd_lst->command, "exit") == 0)
-		exit(0);
+		ft_exit(cmd_lst);
 	else
 		return (1);
 	return (0);

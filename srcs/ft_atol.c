@@ -6,11 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 05:26:13 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/29 17:54:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/30 16:37:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../Libft/libft.h"
 
 /**
  * @brief ft_atoi converts a string (ASCII values) into a long.
@@ -18,19 +18,10 @@
  * @return long
  */
 
-static void	check_resaz(size_t res)
-{
-	if (res > 9223372036854775807)
-	{
-		ft_putendl_fd("Error", 2);
-		exit(EXIT_FAILURE);
-	}
-}
-
-long	ft_atol(const char *str)
+size_t	ft_atol(const char *str)
 {
 	size_t			i;
-	size_t			neg;
+	int				neg;
 	size_t			res;
 
 	i = 0;
@@ -40,8 +31,10 @@ long	ft_atol(const char *str)
 		|| str[i] == '\f' || str[i] == '\t' || str[i] == '\v')
 		i++;
 	if (str[i] == '+' || str[i] == '-')
+	{
 		if (str[i++] == '-')
 			neg = -1;
+	}
 	while (str[i] >= '0' && str[i] <= '9')
 		res = (res * 10) + (str[i++] - '0');
 	return (res * neg);

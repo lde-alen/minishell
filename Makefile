@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/29 16:49:25 by asanthos         ###   ########.fr        #
+#    Updated: 2022/08/30 13:07:24 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,8 @@ SRCS		=		main.c				\
 					ft_free.c			\
 					error.c				\
 					execute.c			\
+					ft_atol.c			\
+					ft_ltoa.c			\
 
 BUILTINS	=		ft_env.c			\
 					ft_echo.c			\

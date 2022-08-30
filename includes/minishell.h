@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 12:45:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/30 13:14:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,5 +179,7 @@ void	new_prompt(int val);
 void	export_error(char *val);
 
 int		ft_strcmp(const char *s1, const char *s2);
+size_t	ft_atol(const char *str);
+char	*ft_ltoa(size_t n);
 
 #endif
