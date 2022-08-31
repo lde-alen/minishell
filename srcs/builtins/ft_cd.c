@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 11:55:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:26:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	if (check < 0)
 	{
 		if (access(cmd->argument[1], F_OK) == 0)
-			err_msg(cmd, cmd->argument[1], "': Not a directory");
+			err_msg(cmd, cmd->argument[1], ": Not a directory");
 		else
-			err_msg(cmd, cmd->argument[1], "': No such file or directory");
+			err_msg(cmd, cmd->argument[1], ": No such file or directory");
 		g_exit = 1;
 	}
 	store = search_oldpwd(lst);

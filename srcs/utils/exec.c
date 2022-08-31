@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 10:32:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:19:12 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 	else if (ft_strcmp(cmd_lst->command, "pwd") == 0)
 		ft_pwd(lst);
 	else if (ft_strcmp(cmd_lst->command, "env") == 0)
-		print_list_env(lst);
+		print_list_env(lst, cmd_lst);
 	else if (ft_strcmp(cmd_lst->command, "export") == 0
 		&& cmd_lst->argument[1] != NULL)
 		ft_export(lst, cmd_lst);

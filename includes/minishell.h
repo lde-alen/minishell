@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/31 10:58:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:27:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	ft_exit(t_cmd *cmd_lst);
 /**
  * UTILS
  */
-void	print_list_env(t_env *head);
+void	print_list_env(t_env *head, t_cmd *cmd_lst);
 void	print_lst(t_env *lst);
 
 char	*get_pwd(void);
