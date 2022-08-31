@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 03:36:49 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 12:36:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:38:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	check_args(t_env *head, t_cmd *cmd)
 	if (ft_strcmp(cmd->argument[1], "PWD") == 0)
 	{
 		if (cmd->argument[2])
+		{
+			g_exit = 1;
 			ft_putendl_fd("usage: pwd [-L | -P]", 2);
+		}
 		else
 			ft_putendl_fd(search_pwd(head)->value, 1);
 	}
