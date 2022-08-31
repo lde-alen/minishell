@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/29 16:52:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 10:32:21 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,17 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		loop_lst(lst, &cmd_lst, exec);
 	else
 		exec_alone(cmd_lst, lst, exec);
-	exec->i = 0;
-	while ((exec->i + 1) <= exec->len)
+	if (exec->flag == 2)
 	{
-		wait(NULL);
-		exec->i++;
+		exec->i = 0;
+		while ((exec->i + 1) <= exec->len)
+		{
+			wait(&exec->status);
+			g_exit = WEXITSTATUS(exec->status);
+			g_exit = 126;
+			ft_printf("ME: %d\n", g_exit);
+			exec->i++;
+		}
 	}
 }
 

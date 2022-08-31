@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/30 13:14:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 10:58:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,13 @@ typedef struct s_exec
 	size_t		flag;
 	size_t		len;
 	size_t		i;
+	int			status;
 	int			j;
 	char		*path;
 	char		**env_kid;
 }	t_exec;
+
+extern int	g_exit;
 
 /**
  * Teaching kinds how to manipulate tools
@@ -172,6 +175,7 @@ void	free_env_kid(char **env_kid);
 void	free_exec(t_exec *exec);
 
 void	new_prompt(int val);
+void	err_msg(t_cmd *cmd_lst, char *val, char *err);
 
 /**
  * ERROR FUNCTONS
