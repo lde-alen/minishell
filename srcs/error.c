@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:24:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 12:25:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:47:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	export_error(char *val)
 
 void	err_msg(t_cmd *cmd_lst, char *val, char *err)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd_lst->command, 2);
 	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(val, 2);
