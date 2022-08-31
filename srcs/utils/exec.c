@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 14:03:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:13:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 
 	ft_memset(&exec, 0, sizeof(t_exec *));
 	exec = (t_exec *)malloc(sizeof(t_exec));
+	if (!exec)
+		return ;
 	exec->i = 0;
 	exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(cmd_lst));
 	exec->id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(cmd_lst) + 1));
@@ -77,3 +79,5 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 	fork_arr(lst, cmd_lst, exec);
 	free(exec);
 }
+
+//PROTECT ALL MALLOCS
