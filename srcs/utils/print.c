@@ -6,23 +6,35 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 03:36:49 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 12:28:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 12:36:38 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	check_args(t_env *head, t_cmd *cmd)
+{
+	if (ft_strcmp(cmd->argument[1], "PWD") == 0)
+	{
+		if (cmd->argument[2])
+			ft_putendl_fd("usage: pwd [-L | -P]", 2);
+		else
+			ft_putendl_fd(search_pwd(head)->value, 1);
+	}
+	else
+	{
+		g_exit = 127;
+		err_msg(cmd, cmd->argument[1], ": No such file or directory");
+	}
+}
+
 void	print_list_env(t_env *head, t_cmd *cmd)
 {
 	t_env	*tmp;
 
+	g_exit = 0;
 	if (cmd->argument[1])
-	{
-		if (ft_strcmp(cmd->argument[1], "PWD") == 0)
-			ft_putendl_fd(search_pwd(head)->value, 1);
-		else
-			err_msg(cmd, cmd->argument[1], ": No such file or directory");
-	}
+		check_args(head, cmd);
 	else
 	{
 		tmp = head;
