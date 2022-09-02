@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:33 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/28 00:09:45 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/02 18:00:25 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	check_p(char *str, t_msh *msh)
 {
-	char	*name;
-
 	if (str[msh->sh->i] == '|')
 	{
 		msh->sh->p = 1;
@@ -33,7 +31,8 @@ int	check_p(char *str, t_msh *msh)
 			return (1);
 		}
 		if (!(str[msh->sh->i] > ' ' && str[msh->sh->i] <= '~')
-			|| str[msh->sh->i] == '>' || str[msh->sh->i] == '<' || str[msh->sh->i] == '|')
+			|| str[msh->sh->i] == '>' || str[msh->sh->i] == '<'
+			|| str[msh->sh->i] == '|')
 		{
 			ft_putstr_fd("ERROR PIPE\n", 2);
 			return (1);
