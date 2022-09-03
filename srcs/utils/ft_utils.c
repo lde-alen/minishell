@@ -6,13 +6,13 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 16:53:18 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/03 20:03:12 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/03 22:30:36 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_strjustlcat(char *dst, const char *src, size_t len)
+void	ft_strjustcat(char *dst, const char *src)
 {
 	char	*tmp_src;
 	size_t	len_dest;
@@ -21,7 +21,7 @@ void	ft_strjustlcat(char *dst, const char *src, size_t len)
 	tmp_src = (char *)src;
 	len_dest = ft_strlen(dst);
 	i = 0;
-	while (i < len)
+	while (tmp_src[i])
 	{
 		dst[len_dest] = tmp_src[i];
 		len_dest++;

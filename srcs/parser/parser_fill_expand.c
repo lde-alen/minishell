@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/03 20:05:43 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 00:42:04 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	ft_fill_expand(char *str, t_msh *msh)
 {
 	char	*name;
 
-	name = ft_calloc(2, sizeof(char));
-	name[0] = '$';
+	name = "";
 	msh->sh->i++;
 	if ((ft_isdigit(str[msh->sh->i]) == 1)
 		&& str[msh->sh->i - 1] == '$'
@@ -33,9 +32,8 @@ void	ft_fill_expand(char *str, t_msh *msh)
 			msh->sh->j++;
 		}
 		msh->sh->expand_len += get_expand_len(name, msh->env);
-		ft_strjustcat(msh->sh->tmp_str, ft_expand(msh->env, name), ft_strlen(name));
+		ft_strjustcat(msh->sh->tmp_str, ft_expand(msh->env, name));
 		msh->sh->j += (ft_strlen(ft_expand(msh->env, name)) - 1);
-		free(name);
-		msh->sh->i--;
+		// free(name);
 	}
 }

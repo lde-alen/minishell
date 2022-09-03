@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/03 20:03:09 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/03 22:30:55 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	ft_print_char_arr(char **array);
 void	print_list_env(t_env *head);
 char	*ft_expand(t_env *lst, char *str);
 void	new_prompt(int val);
-void	ft_strjustlcat(char *dst, const char *src, size_t len);
+void	ft_strjustcat(char *dst, const char *src);
 int		minishell(char **env);
 int		ft_init(t_cmd **cmd, t_env **env);
 int		ft_parse(char *str, t_msh *msh);

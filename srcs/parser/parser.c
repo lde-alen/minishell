@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/03 19:54:14 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 00:35:22 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	parser_stage2(char *str, t_msh *msh)
 	}
 	msh->sh->tmp_str[msh->sh->j] = '\0';
 	ft_printf("%s\n", msh->sh->tmp_str);
-	free(msh->sh->tmp_str);
+	// free(msh->sh->tmp_str);
 	return (0);
 }
 
