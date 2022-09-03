@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print.c                                         :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/29 19:31:56 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/03 16:53:38 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/09/03 16:53:18 by lde-alen          #+#    #+#             */
+/*   Updated: 2022/09/03 20:03:12 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_print_char_arr(char **array)
+void	ft_strjustlcat(char *dst, const char *src, size_t len)
 {
-	int	i;
+	char	*tmp_src;
+	size_t	len_dest;
+	size_t	i;
 
+	tmp_src = (char *)src;
+	len_dest = ft_strlen(dst);
 	i = 0;
-	while (array[i])
+	while (i < len)
 	{
-		ft_printf("%s\n", array[i]);
+		dst[len_dest] = tmp_src[i];
+		len_dest++;
 		i++;
 	}
-}
-
-void	print_list_env(t_env *head)
-{
-	t_env	*tmp;
-
-	tmp = head;
-	while (head->next != tmp)
-	{
-		if (head->value != NULL)
-			ft_printf("%s=%s\n", head->name, head->value);
-		head = head->next;
-	}
-	if (head->value != NULL)
-		ft_printf("%s=%s\n", head->name, head->value);
-	head = tmp;
 }

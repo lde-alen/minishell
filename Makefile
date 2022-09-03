@@ -6,9 +6,11 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/13 17:41:22 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/03 17:40:20 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+UNAME		:= $(shell uname)
 
 NAME		=		minishell
 
@@ -39,6 +41,7 @@ BUILTINS	=		ft_env.c					\
 TOKENS		=
 
 UTILS		=		ft_print.c					\
+					ft_utils.c					\
 
 PARS		=		parser.c					\
 					parser_fill.c				\
@@ -48,6 +51,8 @@ PARS		=		parser.c					\
 					parser_init.c				\
 					env.c						\
 					parser_expand.c				\
+					parser_fill_expand.c		\
+					parser_fill_quotes.c		\
 
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
@@ -76,7 +81,9 @@ CP			=		cp
 
 CFLAGS		+=		-Wall -Wextra -Werror -g3
 	
-RFLAGS		+=		-lreadline -I/usr/local/Cellar/readline/8.1/include
+RFLAGS		+=		-I/usr/local/Cellar/readline/8.1/include -lreadline 
+
+RLFLAGS		+=		-I/usr/include/readline/ -lreadline
 
 INCLUDES	+=		-I./includes
 

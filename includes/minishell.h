@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/27 23:03:48 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/03 20:03:09 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,10 @@ typedef struct s_env
 typedef struct s_sh
 {
 	unsigned int	i;
-	char			*str_cpy;
+	unsigned int	j;
+	char			*tmp_str;
 	size_t			input_len;
-	size_t			expand_len;
+	ssize_t			expand_len;
 	ssize_t			dolla_size;
 	size_t			euro;
 	size_t			sq;
@@ -129,14 +130,13 @@ typedef struct s_msh
  */
 ssize_t	get_expand_len(char *name, t_env *env);
 char	*get_env_value(t_env *env, char *name);
+char	*ft_append_char(char *name, char c);
+void	ft_fill_expand(char *str, t_msh *msh);
 void	ft_print_char_arr(char **array);
 void	print_list_env(t_env *head);
-void	ft_expand(t_env *lst, char *str);
+char	*ft_expand(t_env *lst, char *str);
 void	new_prompt(int val);
-void	ft_expand(t_env *lst, char *str);
-
-char	*ft_append_char(char *name, char c);
-
+void	ft_strjustlcat(char *dst, const char *src, size_t len);
 int		minishell(char **env);
 int		ft_init(t_cmd **cmd, t_env **env);
 int		ft_parse(char *str, t_msh *msh);
@@ -149,8 +149,7 @@ int		parser_stage2(char *str, t_msh *msh);
 int		ft_check_expand(char *str, t_msh *msh);
 int		check_p(char *str, t_msh *msh);
 int		check_fill_redirections(char *str, t_msh *msh);
-int		check_fill_quotes(char *str, char c, t_msh *msh);
-
+void	check_fill_quotes(char *str, char c, t_msh *msh);
 t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
 t_env	*push_env(t_env *env_list, char *env_name, char *env_value);
 t_env	*ft_env(char **env);

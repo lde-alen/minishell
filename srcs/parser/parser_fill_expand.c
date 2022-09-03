@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_expand.c                                    :+:      :+:    :+:   */
+/*   parser_fill_expand.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/08 16:44:32 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/03 19:11:24 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
+/*   Updated: 2022/09/03 20:05:43 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_check_expand(char *str, t_msh *msh)
+void	ft_fill_expand(char *str, t_msh *msh)
 {
 	char	*name;
 
@@ -30,11 +30,12 @@ int	ft_check_expand(char *str, t_msh *msh)
 		{
 			name = ft_append_char(name, str[msh->sh->i]);
 			msh->sh->i++;
+			msh->sh->j++;
 		}
 		msh->sh->expand_len += get_expand_len(name, msh->env);
-		ft_expand(msh->env, name);
+		ft_strjustcat(msh->sh->tmp_str, ft_expand(msh->env, name), ft_strlen(name));
+		msh->sh->j += (ft_strlen(ft_expand(msh->env, name)) - 1);
+		free(name);
 		msh->sh->i--;
 	}
-	free(name);
-	return (0);
 }
