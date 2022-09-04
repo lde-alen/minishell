@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 22:59:56 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 23:16:05 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,21 @@ int	parser_stage2(char *str, t_msh *msh)
 	msh->sh->j = 0;
 	while (msh->sh->i < ft_strlen(str))
 	{
-		msh->sh->sq = 0;
-		msh->sh->dq = 0;
-		if (str[msh->sh->i] == '\'')
-		{
-			msh->sh->sq = 1;
-			check_fill_quotes(str, '\'', msh);
-		}
-		else if (str[msh->sh->i] == '"')
-		{
-			msh->sh->dq = 1;
-			check_fill_quotes(str, '"', msh);
-			msh->sh->j--;
-		}
+
+		if (str[msh->sh->i] == '\'' || str[msh->sh->i] == '"')
+			check_fill_quotes(str, str[msh->sh->i], msh);
 		else if (str[msh->sh->i] == '>' || str[msh->sh->i] == '<')
 			check_redirections(str, msh);
 		else if (str[msh->sh->i] == '|')
 			check_p(str, msh);
 		else if (str[msh->sh->i] == '$')
-		{
-			msh->sh->i++;
 			ft_fill_expand(str, msh);
-		}
 		else
-		{
 			msh->sh->tmp_str[msh->sh->j] = str[msh->sh->i];
-		}
 		msh->sh->i++;
 		msh->sh->j++;
 
 	}
-	// msh->sh->tmp_str[8] = ' ';
 	ft_printf("actual tmp_str is: %s\n", msh->sh->tmp_str);
 	free(msh->sh->tmp_str);
 	return (0);
