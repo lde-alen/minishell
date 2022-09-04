@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:44:32 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/04 15:47:17 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:55:22 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_check_expand(char *str, t_msh *msh)
 		}
 		msh->sh->expand_len += get_expand_len(name, msh->env);
 		ft_expand(msh->env, name);
-		msh->sh->i--;
 	}
 	free(name);
 	return (0);

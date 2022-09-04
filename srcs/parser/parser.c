@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 17:34:20 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 18:25:37 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 */
 int	parser_stage2(char *str, t_msh *msh)
 {
-	ft_printf("%d\n", msh->sh->input_len);
-	msh->sh->tmp_str = ft_calloc(msh->sh->input_len, sizeof(char));
+	ft_printf("input_len value is: %d\n", msh->sh->input_len);
+	msh->sh->tmp_str = ft_calloc(msh->sh->input_len + 1, sizeof(char));
 	if (!msh->sh->tmp_str)
 		return (0);
 	msh->sh->i = 0;
@@ -31,13 +31,11 @@ int	parser_stage2(char *str, t_msh *msh)
 		if (str[msh->sh->i] == '\'')
 		{
 			msh->sh->sq = 1;
-			msh->sh->i++;
 			check_fill_quotes(str, '\'', msh);
 		}
 		else if (str[msh->sh->i] == '"')
 		{
 			msh->sh->dq = 1;
-			msh->sh->i++;
 			check_fill_quotes(str, '"', msh);
 		}
 		else if (str[msh->sh->i] == '>' || str[msh->sh->i] == '<')
@@ -45,7 +43,10 @@ int	parser_stage2(char *str, t_msh *msh)
 		else if (str[msh->sh->i] == '|')
 			check_p(str, msh);
 		else if (str[msh->sh->i] == '$')
+		{
+			msh->sh->i++;
 			ft_fill_expand(str, msh);
+		}
 		else
 			msh->sh->tmp_str[msh->sh->j] = str[msh->sh->i];
 		msh->sh->j++;
@@ -78,7 +79,7 @@ int	parser_stage1(char *str, t_msh *msh)
 	msh->sh->i = 0;
 	msh->sh->euro = 0;
 	msh->sh->expand_len = 0;
-	while (str[msh->sh->i] && ret == false)
+	while (msh->sh->i < ft_strlen(str) && ret == false)
 	{
 		msh->sh->sq = 0;
 		msh->sh->dq = 0;
@@ -94,7 +95,7 @@ int	parser_stage1(char *str, t_msh *msh)
 			ft_check_expand(str, msh);
 		msh->sh->i++;
 	}
-	msh->sh->input_len = msh->sh->i + msh->sh->expand_len + 1;
+	msh->sh->input_len = msh->sh->i + msh->sh->expand_len;
 	if (ret == false)
 		return (0);
 	else
