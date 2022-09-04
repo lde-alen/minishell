@@ -6,36 +6,11 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/03 22:21:32 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 11:14:49 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	check_fill_quotes(char *str, char quote, t_sh *sh, t_env *env)
-// {
-// 	if (str[sh->i] == '\'' || str[sh->i] == '"')
-// 	{
-// 		if (str[sh->i] == '\'')
-// 			sh->sq += 1;
-// 		if (str[sh->i] == '"')
-// 			sh->dq += 1;
-// 		if ((quote == '\'' && sh->dq == 0) || (quote == '"' && sh->sq == 0))
-// 		{
-// 			sh->i++;
-// 			if (str[sh->i] && ft_strchr((str + sh->i), quote) != NULL)
-// 			{
-// 				while (str[sh->i] != quote && str[sh->i])
-// 				{
-// 					if (str[sh->i] == '$' && quote == '"')
-// 						ft_expand(env, "$PATH");
-// 					sh->i++;
-// 				}
-// 			}
-// 		}
-// 	}
-// 	return (0);
-// }
 
 int	check_quotes(char *str, char quote, t_msh *msh)
 {

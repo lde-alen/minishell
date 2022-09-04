@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/03 17:40:20 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/04 14:53:25 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,23 +81,25 @@ CP			=		cp
 
 CFLAGS		+=		-Wall -Wextra -Werror -g3
 	
-RFLAGS		+=		-I/usr/local/Cellar/readline/8.1/include -lreadline 
+RFLAGS		+=		-I/usr/local/Cellar/readline/8.1/include
 
 RLFLAGS		+=		-I/usr/include/readline/ -lreadline
+
+LDFLAGS 	=		-lreadline -L /usr/local/Cellar/readline/8.1/lib/
 
 INCLUDES	+=		-I./includes
 
 CC			=		gcc
 
 .c.o		:
-					$(CC) $(CFLAGS) -I/usr/local/Cellar/readline/8.1/include $(INCLUDES) -c $< -o $(<:.c=.o)
+					$(CC) $(CFLAGS) $(RFLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
 
 $(LIBFT_C)	:		$(MAKE) -C ./Libft
 					$(CP) $(LIBFT_DIR)/libft.h ./includes/
 
 $(NAME)		:		$(OBJS)
 					$(MAKE) -C ./Libft
-					$(CC) $(CFLAGS) $(RFLAGS) -L/usr/local/Cellar/readline/8.1/lib $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
+					$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
 
 all			:		$(NAME)
 
