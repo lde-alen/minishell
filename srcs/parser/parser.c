@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 11:56:33 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:34:20 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ int	parser_stage2(char *str, t_msh *msh)
 {
 	ft_printf("%d\n", msh->sh->input_len);
 	msh->sh->tmp_str = ft_calloc(msh->sh->input_len, sizeof(char));
+	if (!msh->sh->tmp_str)
+		return (0);
 	msh->sh->i = 0;
 	msh->sh->euro = 0;
 	msh->sh->j = 0;
-	while (str[msh->sh->i])
+	while (msh->sh->i < ft_strlen(str))
 	{
 		msh->sh->sq = 0;
 		msh->sh->dq = 0;
@@ -44,13 +46,13 @@ int	parser_stage2(char *str, t_msh *msh)
 			check_p(str, msh);
 		else if (str[msh->sh->i] == '$')
 			ft_fill_expand(str, msh);
-		msh->sh->tmp_str[msh->sh->j] = str[msh->sh->i];
+		else
+			msh->sh->tmp_str[msh->sh->j] = str[msh->sh->i];
 		msh->sh->j++;
 		msh->sh->i++;
 	}
-	msh->sh->tmp_str[msh->sh->j] = '\0';
 	ft_printf("%s\n", msh->sh->tmp_str);
-	// free(msh->sh->tmp_str);
+	free(msh->sh->tmp_str);
 	return (0);
 }
 
@@ -104,6 +106,8 @@ int	ft_parse(char *str, t_msh *msh)
 	if (!str)
 		return (1);
 	msh->sh = (t_sh *)malloc(sizeof(t_sh));
+	if (!msh->sh)
+		return (0);
 	if (parser_stage1(str, msh) == 0)
 		parser_stage2(str, msh);
 	free(msh->sh);

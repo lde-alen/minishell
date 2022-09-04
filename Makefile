@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/04 14:53:25 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/04 17:28:03 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,8 +83,6 @@ CFLAGS		+=		-Wall -Wextra -Werror -g3
 	
 RFLAGS		+=		-I/usr/local/Cellar/readline/8.1/include
 
-RLFLAGS		+=		-I/usr/include/readline/ -lreadline
-
 LDFLAGS 	=		-lreadline -L /usr/local/Cellar/readline/8.1/lib/
 
 INCLUDES	+=		-I./includes
@@ -113,6 +111,8 @@ fclean		:		clean
 					$(RM) $(LIBFT_DIR)/$(LIBFT_NAME)
 					$(MAKE) fclean -C $(LIBFT_DIR)
 
+make v		:		all
+					valgrind --leak-check=full --show-leak-kinds=all --suppressions=file.sup ./minishell
 
 re			:		fclean all
 
