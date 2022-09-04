@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 10:32:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 11:41:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,24 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	exec->flag = 0;
 	exec->len = get_cmd_len(cmd_lst);
 	exec->path = check_access(lst, cmd_lst);
-	if (check_path(cmd_lst, &exec) == 1)
-		return ;
-	free(exec->path);
+	check_path(cmd_lst, &exec);
 	if (exec->len > 1)
 		loop_lst(lst, &cmd_lst, exec);
 	else
+	{
 		exec_alone(cmd_lst, lst, exec);
-	if (exec->flag == 2)
+		free(exec->path);
+	}
+	if (exec->flag != 2)
 	{
 		exec->i = 0;
 		while ((exec->i + 1) <= exec->len)
 		{
 			wait(&exec->status);
-			g_exit = WEXITSTATUS(exec->status);
-			g_exit = 126;
-			ft_printf("ME: %d\n", g_exit);
+			if (WIFEXITED(exec->status))
+				g_exit = WEXITSTATUS(exec->status);
+			ft_printf("ERRNO: %d\n", errno);
+			ft_printf("G_EXIT: %d\n", g_exit);
 			exec->i++;
 		}
 	}
@@ -57,9 +59,9 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 
 void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 {
+	free(exec->path);
 	exec->path = check_access(lst, *cmd_lst);
-	if (check_path(*cmd_lst, &exec) == 1)
-		return ;
+	check_path(*cmd_lst, &exec);
 	while (*cmd_lst != NULL)
 	{
 		pipe_exec(lst, *cmd_lst, exec);
@@ -69,8 +71,7 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 		if (*cmd_lst != NULL)
 		{
 			exec->path = check_access(lst, *cmd_lst);
-			if (check_path(*cmd_lst, &exec) == 1)
-				return ;
+			check_path(*cmd_lst, &exec);
 		}
 	}
 	if (*cmd_lst && exec->path == NULL)

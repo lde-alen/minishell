@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 14:13:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/03 18:26:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,16 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	{
 		//leish double free
 		// free_cmd(&cmd_lst);
+		exec->flag = 2;
 		return ;
 	}
-	exec->env_kid = lst_to_char(lst);
+	exec->env_kid = lst_to_char(&lst);
 	exec->id[0] = fork();
-	exec->path = check_access(lst, cmd_lst);
 	if (exec->id[0] < 0)
 		perror("fork");
 	else if (exec->id[0] == 0)
 		main_child2(cmd_lst, exec);
 	free_env_kid(exec->env_kid);
-	exec->flag = 2;
 	// free_cmd(&cmd_lst);
 }
 
@@ -64,18 +63,22 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 
 	ft_memset(&exec, 0, sizeof(t_exec *));
 	exec = (t_exec *)malloc(sizeof(t_exec));
-	if (!exec)
-		return ;
 	exec->i = 0;
 	exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(cmd_lst));
 	exec->id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(cmd_lst) + 1));
 	while (exec->i < get_cmd_len(cmd_lst))
 	{
 		exec->fd[exec->i] = (int *)malloc(sizeof(int) * 2);
+		if (!exec || !exec->fd || !exec->id || !exec->fd[exec->i])
+		{
+			free_cmd(&cmd_lst);
+			free_exec(exec);
+			return ;
+		}
 		exec->i++;
 	}
-	if (check_all_path(lst, cmd_lst) == 1)
-		return ;
+	// if (check_all_path(lst, cmd_lst) == 1)
+	// 	return ;
 	fork_arr(lst, cmd_lst, exec);
 	free(exec);
 }

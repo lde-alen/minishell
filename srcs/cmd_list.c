@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:30:36 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 14:02:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:36:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_cmd	*ft_lst_init(t_cmd *cmd, char *str)
 	size_t	i;
 
 	cmd_lst = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!cmd_lst)
+		return (NULL);
 	split_cmd = ft_split(str, ' ');
 	i = 0;
 	while (split_cmd[i])

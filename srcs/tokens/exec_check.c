@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/29 18:21:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 11:40:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,37 +27,51 @@ size_t	check_builtin(t_cmd *cmd_lst)
 	return (0);
 }
 
-size_t	check_path(t_cmd *cmd_lst, t_exec **exec)
+void	check_path(t_cmd *cmd_lst, t_exec **exec)
 {
-	if ((*exec)->path == NULL)
-	{
-		if (check_builtin(cmd_lst) == 0)
-		{
-			perror("path error");
-			free((*exec)->path);
-			return (1);
-		}
-		else
-			(*exec)->flag = 1;
-		free((*exec)->path);
-	}
-	return (0);
+	if (check_builtin(cmd_lst) == 1)
+		(*exec)->flag = 1;
 }
 
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst)
 {
-	char	*path;
+	struct stat	path_stat;
+	char		*path;
 
 	while (cmd_lst != NULL)
 	{
 		if (check_builtin(cmd_lst) == 0)
 		{
 			path = check_access(lst, cmd_lst);
+			stat(cmd_lst->command, &path_stat);
+			if (S_ISDIR(path_stat.st_mode))
+			{
+				if (cmd_lst->command[get_len(cmd_lst->command) - 1] != '/'
+					&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
+					path = NULL;
+				else
+				{
+					err_msg(cmd_lst, "", "Is a directory");
+					g_exit = 126;
+					return (1);
+				}
+			}
 			if (path == NULL)
 			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(cmd_lst->argument[0], 2);
-				ft_putendl_fd(": command not found\n", 2);
+				if (cmd_lst->command[get_len(cmd_lst->command) - 1] == '/')
+				{
+					err_msg(cmd_lst, "", "Not a directory");
+					g_exit = 126;
+					return (1);
+				}
+				else if (ft_strncmp(cmd_lst->command, "./", 2) == 0)
+				{
+					err_msg(cmd_lst, "", "Permission denied");
+					g_exit = 126;
+					return (1);
+				}
+				err_msg(cmd_lst, "", "command not found");
+				g_exit = 127;
 				return (1);
 			}
 		}

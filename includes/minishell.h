@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/31 13:13:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 11:40:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/errno.h>
 # include <limits.h>
 # include <fcntl.h>
 // # include <valgrind/memcheck.h>
@@ -128,6 +130,7 @@ char	*get_pwd(void);
 t_env	*search_pwd(t_env *lst);
 
 int		get_args_len(t_cmd *cmd_lst);
+int		get_len(char *str);
 int		get_lst_len(t_env *lst);
 int		iter_diff(t_env *lst, t_env *new_node);
 size_t	get_cmd_len(t_cmd *cmd);
@@ -141,7 +144,7 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst);
 void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
-char	**lst_to_char(t_env *lst);
+char	**lst_to_char(t_env **lst);
 
 void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
 void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file);
@@ -156,7 +159,7 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec);
 void	pipe_arr(t_exec *exec);
 void	close_pipes(t_exec *exec);
 size_t	check_builtin(t_cmd *cmd_lst);
-size_t	check_path(t_cmd *cmd_lst, t_exec **exec);
+void	check_path(t_cmd *cmd_lst, t_exec **exec);
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
 void	main_child2(t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec);

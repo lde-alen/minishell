@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 17:55:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:15:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,12 @@ void	free_exec(t_exec *exec)
 	exec->i = 0;
 	while (exec->i < exec->len)
 	{
-		free(exec->fd[exec->i]);
+		if (exec->fd[exec->i])
+			free(exec->fd[exec->i]);
 		exec->i++;
 	}
-	free(exec->fd);
-	free(exec->id);
+	if (exec->fd)
+		free(exec->fd);
+	if (exec->id)
+		free(exec->id);
 }
