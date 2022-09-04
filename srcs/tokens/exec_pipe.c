@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 12:06:02 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:18:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	check_type(t_cmd *cmd_lst, t_exec **exec)
 {
 	struct stat	path_stat;
 
-	stat(cmd_lst->command, &path_stat);
-	if (S_ISDIR(path_stat.st_mode))
+	if (stat(cmd_lst->command, &path_stat) > 0 && S_ISDIR(path_stat.st_mode))
 	{
 		if (cmd_lst->command[get_len(cmd_lst->command) - 1] != '/'
 			&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
@@ -31,21 +30,13 @@ int	check_type(t_cmd *cmd_lst, t_exec **exec)
 	}
 	if ((*exec)->path == NULL)
 	{
-		if (cmd_lst->command[get_len(cmd_lst->command) - 1] == '/')
+		if (ft_strchr(cmd_lst->command, '/') == 0)
 		{
-			err_msg(cmd_lst, "", "Not a directory");
-			g_exit = 126;
+			err_msg(cmd_lst, "", "command not found");
+			g_exit = 127;
 			return (1);
 		}
-		else if (ft_strncmp(cmd_lst->command, "./", 2) == 0)
-		{
-			err_msg(cmd_lst, "", "Permission denied");
-			g_exit = 126;
-			return (1);
-		}
-		err_msg(cmd_lst, "", "command not found");
-		g_exit = 127;
-		return (1);
+		(*exec)->path = ft_strdup(cmd_lst->command);
 	}
 	return (0);
 }
@@ -54,8 +45,8 @@ void	main_child2(t_cmd *cmd_lst, t_exec *exec)
 {
 	int	ret;
 
-	// if (check_type(cmd_lst, &exec) == 1)
-	// 	return ;
+	if (check_type(cmd_lst, &exec) == 1)
+		return ;
 	ret = 0;
 	ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
 	if (ret < 0)
@@ -72,10 +63,14 @@ static	void	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2");
 	close(exec->fd[exec->i][1]);
-	// if (check_type(cmd_lst, &exec) == 1)
-	// 	return ;
+	if (check_type(cmd_lst, &exec) == 1)
+		return ;
 	if (exec->flag == 1)
+	{
+		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
+		ret = 0;
+	}
 	else
 	{
 		ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
@@ -93,10 +88,14 @@ static	void	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
-	// if (check_type(cmd_lst, &exec) == 1)
-	// 	return ;
+	if (check_type(cmd_lst, &exec) == 1)
+		return ;
 	if (exec->flag == 1)
+	{
+		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
+		ret = 0;
+	}
 	else
 	{
 		ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
@@ -121,7 +120,11 @@ static	void	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	// if (check_type(cmd_lst, &exec) == 1)
 	// 	return ;
 	if (exec->flag == 1)
+	{
+		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
+		ret = 0;
+	}
 	else
 	{
 		ret = execve(exec->path, cmd_lst->argument, exec->env_kid);

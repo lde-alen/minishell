@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 14:15:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:27:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,17 @@ void	free_env_kid(char **env_kid)
 	free(env_kid);
 }
 
-void	free_exec(t_exec *exec)
+void	free_exec(t_exec **exec)
 {
-	exec->i = 0;
-	while (exec->i < exec->len)
+	(*exec)->i = 0;
+	while ((*exec)->i < (*exec)->len)
 	{
-		if (exec->fd[exec->i])
-			free(exec->fd[exec->i]);
-		exec->i++;
+		// if ((*exec)->fd[(*exec)->i])
+			free((*exec)->fd[(*exec)->i]);
+		(*exec)->i++;
 	}
-	if (exec->fd)
-		free(exec->fd);
-	if (exec->id)
-		free(exec->id);
+	// if ((*exec)->fd)
+		free((*exec)->fd);
+	// if ((*exec)->id)
+		free((*exec)->id);
 }

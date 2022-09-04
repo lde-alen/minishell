@@ -6,19 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:44:13 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 13:27:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 15:08:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-/**
- * @brief ft_itoa constructs a string representation of a long. The
- * malloc'ed string representing the long. NULL if the allocation fails.
- * 
- * @param n 
- * @return char* (FREE REQ)
- */
 
 char	*ft_ltoa(size_t n)
 {
@@ -30,8 +22,7 @@ char	*ft_ltoa(size_t n)
 	i = 1;
 	pow_ten = 1;
 	sign = 0;
-	if (n < 0 && ++sign)
-		n = -n;
+	++sign;
 	while (n / pow_ten / 10 && i++)
 		pow_ten *= 10;
 	str = ft_calloc(i + sign + 1, 1);

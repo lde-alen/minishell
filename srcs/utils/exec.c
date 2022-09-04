@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/03 18:26:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:27:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 {
+	ft_printf("%s\n", cmd_lst->command);
 	if (cmd_lst->command[0] == '$')
 		ft_expander(lst, cmd_lst->command);
 	else if (ft_strcmp(cmd_lst->command, "echo") == 0)
@@ -53,8 +54,9 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 		perror("fork");
 	else if (exec->id[0] == 0)
 		main_child2(cmd_lst, exec);
+	free(exec->path);
 	free_env_kid(exec->env_kid);
-	// free_cmd(&cmd_lst);
+	free_cmd(&cmd_lst);
 }
 
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)
@@ -72,7 +74,7 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 		if (!exec || !exec->fd || !exec->id || !exec->fd[exec->i])
 		{
 			free_cmd(&cmd_lst);
-			free_exec(exec);
+			free_exec(&exec);
 			return ;
 		}
 		exec->i++;
@@ -80,6 +82,7 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 	// if (check_all_path(lst, cmd_lst) == 1)
 	// 	return ;
 	fork_arr(lst, cmd_lst, exec);
+	free_exec(&exec);
 	free(exec);
 }
 

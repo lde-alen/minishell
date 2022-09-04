@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/04 11:40:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 17:27:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int		iter_diff(t_env *lst, t_env *new_node);
 size_t	get_cmd_len(t_cmd *cmd);
 
 char	*check_validity(t_cmd *cmd_lst);
+int		check_type(t_cmd *cmd_lst, t_exec **exec);
 
 /**
  * EXECUTING FUNCTIONS
@@ -177,7 +178,7 @@ void	free_cmd(t_cmd **cmd_lst);
 void	free_env_lst(t_env *lst);
 void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
-void	free_exec(t_exec *exec);
+void	free_exec(t_exec **exec);
 
 void	new_prompt(int val);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);

@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/08/30 13:07:24 by asanthos         ###   ########.fr        #
+#    Updated: 2022/09/04 15:12:13 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,21 +76,21 @@ CP			=		cp
 
 CFLAGS		+=		-Wall -Wextra -Werror -g3
 
-RFLAGS		+=		-lreadline -I/usr/local/Cellar/readline/8.1/include
+RFLAGS		+=		-I/usr/local/Cellar/readline/8.1/include -lreadline
 
 INCLUDES	+=		-I./includes/
 
 CC			=		gcc
 
 .c.o		:
-					$(CC) $(CFLAGS) -I/usr/local/Cellar/readline/8.1/include $(INCLUDES) -c $< -o $(<:.c=.o)
+					$(CC) $(CFLAGS) $(RFLAGS) $(INCLUDES) -c $< -o $(<:.c=.o)
 
 $(LIBFT_C)	:		$(MAKE) -C ./Libft
 					$(CP) $(LIBFT_DIR)/libft.h ./includes/
 
 $(NAME)		:		$(OBJS)
 					$(MAKE) -C ./Libft
-					$(CC) $(CFLAGS) $(RFLAGS) -L/usr/local/Cellar/readline/8.1/lib  $(OBJS) $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
+					$(CC) $(CFLAGS) $(OBJS) $(RFLAGS) -L /usr/local/Cellar/readline/8.1/lib $(LIBFT_DIR)/$(LIBFT_NAME) -o $(NAME)
 					mkdir -p $(OBJS_DIR_N)
 					mv $(OBJS) $(OBJS_DIR)
 
