@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 16:53:18 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/04 11:48:05 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 19:40:28 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ void	ft_strjustcat(char *dst, const char *src)
 		len_dest++;
 		i++;
 	}
+	// ft_printf("len source = %d\ndest = %s\n" ,ft_strlen(src), dst);
 }

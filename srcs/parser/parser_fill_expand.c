@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/04 18:16:55 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/04 22:59:36 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,22 @@ void	ft_fill_expand(char *str, t_msh *msh)
 {
 	char	*name;
 
-	name = (char *)malloc(sizeof(char) * 1);
-	name[0] = '\0';
+	name = ft_calloc(1, sizeof(char));
 	if ((ft_isdigit(str[msh->sh->i]) == 1)
 		&& (ft_isdigit(str[msh->sh->i + 1]) == 1))
 		msh->sh->i++;
 	else
 	{
 		while (str[msh->sh->i] && str[msh->sh->i] != '$'
-			&& ft_isalnum(str[msh->sh->i]) == 1 && msh->sh->i < ft_strlen(str))
+			&& ft_isalnum(str[msh->sh->i]) == 1)
 		{
 			name = ft_append_char(name, str[msh->sh->i]);
 			msh->sh->i++;
 		}
+		msh->sh->i--;
 		msh->sh->expand_len += get_expand_len(name, msh->env);
 		msh->sh->j += (ft_strlen(get_env_value(msh->env, name)) - 1);
 		ft_strjustcat(msh->sh->tmp_str, get_env_value(msh->env, name));
-		msh->sh->i--;
 	}
 	free (name);
 }
