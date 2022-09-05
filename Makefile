@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/04 21:42:55 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/05 16:12:54 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ PARS		=		parser.c					\
 					parser_expand.c				\
 					parser_fill_expand.c		\
 					parser_fill_quotes.c		\
+					parser_fill_redirections.c	\
 
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
@@ -111,7 +112,7 @@ fclean		:		clean
 					$(RM) $(LIBFT_DIR)/$(LIBFT_NAME)
 					$(MAKE) fclean -C $(LIBFT_DIR)
 
-make v		:	all
+make v		:		all clean
 					valgrind --leak-check=full --show-leak-kinds=all --suppressions=file.sup ./minishell
 
 re			:		fclean all

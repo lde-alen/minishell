@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/04 23:15:45 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/05 16:11:18 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int		parser_stage1(char *str, t_msh *msh);
 int		parser_stage2(char *str, t_msh *msh);
 int		ft_check_expand(char *str, t_msh *msh);
 int		check_p(char *str, t_msh *msh);
-int		check_fill_redirections(char *str, t_msh *msh);
+void	check_fill_redirections(char *str, t_msh *msh);
 void	check_fill_quotes(char *str, char c, t_msh *msh);
 t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
 t_env	*push_env(t_env *env_list, char *env_name, char *env_value);
