@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 17:27:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:05:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 {
-	ft_printf("%s\n", cmd_lst->command);
 	if (cmd_lst->command[0] == '$')
 		ft_expander(lst, cmd_lst->command);
 	else if (ft_strcmp(cmd_lst->command, "echo") == 0)

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 11:41:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:10:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		exec->i = 0;
 		while ((exec->i + 1) <= exec->len)
 		{
-			wait(&exec->status);
-			if (WIFEXITED(exec->status))
-				g_exit = WEXITSTATUS(exec->status);
-			ft_printf("ERRNO: %d\n", errno);
-			ft_printf("G_EXIT: %d\n", g_exit);
+			wait(NULL);
+			// if (WIFEXITED(exec->status))
+			// 	g_exit = WEXITSTATUS(exec->status);
+			// ft_printf("ERRNO: %d\n", errno);
+			// ft_printf("G_EXIT: %d\n", g_exit);
 			exec->i++;
 		}
 	}
@@ -73,6 +73,7 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 			exec->path = check_access(lst, *cmd_lst);
 			check_path(*cmd_lst, &exec);
 		}
+		exec->flag = 0;
 	}
 	if (*cmd_lst && exec->path == NULL)
 		ft_putendl_fd("path doesn't exist", 2);

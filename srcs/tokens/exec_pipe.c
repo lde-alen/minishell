@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 17:18:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/07 16:38:05 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	main_child2(t_cmd *cmd_lst, t_exec *exec)
 {
 	int	ret;
 
-	if (check_type(cmd_lst, &exec) == 1)
-		return ;
+	// if (check_type(cmd_lst, &exec) == 1)
+	// 	return ;
 	ret = 0;
 	ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
 	if (ret < 0)
@@ -63,8 +63,8 @@ static	void	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2");
 	close(exec->fd[exec->i][1]);
-	if (check_type(cmd_lst, &exec) == 1)
-		return ;
+	// if (check_type(cmd_lst, &exec) == 1)
+	// 	return ;
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
@@ -88,8 +88,8 @@ static	void	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
-	if (check_type(cmd_lst, &exec) == 1)
-		return ;
+	// if (check_type(cmd_lst, &exec) == 1)
+	// 	return ;
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
