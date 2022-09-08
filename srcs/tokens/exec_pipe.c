@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/08 11:56:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:25:38 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 {
 	struct stat	path_stat;
 
+	(*exec)->status = 1;
 	if ((stat(cmd_lst->command, &path_stat) == 0) && (S_ISDIR(path_stat.st_mode)))
 	{
 		if (S_ISDIR(path_stat.st_mode))
 		{
 			if (cmd_lst->command[get_len(cmd_lst->command) - 1] != '/'
 				&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
-				(*exec)->path = NULL;
+				(*exec)->status = 0;
 			else
 			{
 				err_msg(cmd_lst, "", "is a directory");
@@ -33,7 +34,7 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	}
 	else
 	{
-		if ((*exec)->path == NULL)
+		if ((*exec)->status == 0)
 		{
 			if (ft_strchr(cmd_lst->command, '/') == 0)
 			{
@@ -43,7 +44,6 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 			}
 		}
 	}
-	(*exec)->path = ft_strdup(cmd_lst->command);
 	return (0);
 }
 
