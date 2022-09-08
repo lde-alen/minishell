@@ -6,21 +6,21 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 09:05:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 13:50:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:09:55 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //signal handler for ^C
-void	new_prompt(int val)
+void	sig_handler(int val)
 {
-	(void)val;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	// exit(val);
+	g_exit = 1;
+	signal(val, sig_handler);
 }
 
 void	shell_prompt(char **env)
@@ -29,7 +29,7 @@ void	shell_prompt(char **env)
 	t_env	*lst;
 	t_cmd	*cmd_lst;
 
-	signal(SIGINT, new_prompt);
+	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	ft_memset(&lst, 0, sizeof(t_env *));
 	ft_memset(&cmd_lst, 0, sizeof(t_cmd *));

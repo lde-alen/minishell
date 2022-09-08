@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/08 14:25:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 18:34:20 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	main_child2(t_cmd *cmd_lst, t_exec *exec)
 	exit(ret);
 }
 
-static	void	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+static	size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	int		ret;
 	size_t	err;
@@ -89,10 +89,10 @@ static	void	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		if (execve(exec->path, cmd_lst->argument, exec->env_kid) < 0)
 			perror("Minishell");
 	}
-	exit(ret);
+	return (ret);
 }
 
-static	void	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+static	size_t	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	int		ret;
 	size_t	err;
@@ -118,10 +118,10 @@ static	void	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		if (execve(exec->path, cmd_lst->argument, exec->env_kid) < 0)
 			perror("Minishell");
 	}
-	exit(ret);
+	return (ret);
 }
 
-static	void	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	int		ret;
 	size_t	err;
@@ -151,20 +151,38 @@ static	void	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		if (execve(exec->path, cmd_lst->argument, exec->env_kid) < 0)
 			perror("Minishell");
 	}
-	exit(ret);
+	return (ret);
+	// exit(ret);
+}
+
+void	free_cmd_lst(t_cmd *cmd_lst)
+{
+	while (cmd_lst != NULL)
+	{
+		free_cmd(&cmd_lst);
+	}
 }
 
 void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	exec->env_kid = lst_to_char(&lst);
-	exec->path = check_access(lst, cmd_lst);
+	size_t	ret;
+
 	if (exec->i == 0)
-		first_child(lst, cmd_lst, exec);
+		ret = first_child(lst, cmd_lst, exec);
 	else if (exec->i + 1 == exec->len)
-		last_child(lst, cmd_lst, exec);
+		ret = last_child(lst, cmd_lst, exec);
 	else
-		mid_kid(lst, cmd_lst, exec);
-	free(exec->path);
-	free_cmd(&cmd_lst);
-	free_env_kid(exec->env_kid);
+		ret = mid_kid(lst, cmd_lst, exec);
+	if (exec->env_kid)
+		free_env_kid(exec->env_kid);
+	ft_printf("PATH IN CHILD: %s\n", exec->path);
+	if (exec->path)
+		free(exec->path);
+	// if (cmd_lst)
+	// 	free_cmd(&cmd_lst);
+	free_cmd_lst(cmd_lst);
+	free_exec(&exec);
+	free(exec);
+	free_env_lst(lst);
+	exit(ret);
 }

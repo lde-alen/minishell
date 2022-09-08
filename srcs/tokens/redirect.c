@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/08 14:07:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:11:27 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	here_doc(t_env *lst, t_cmd *cmd_lst)
 	file_name = "store.txt";
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	str = "";
-	signal(SIGINT, new_prompt);
+	signal(SIGINT, sig_handler);
 	while (ft_strcmp(str, cmd_lst->argument[2]) != 0)
 	{
 		str = readline("> ");

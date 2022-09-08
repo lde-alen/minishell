@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/08 11:54:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:11:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
 void	free_exec(t_exec **exec);
 
-void	new_prompt(int val);
+void	sig_handler(int val);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);
 
 /**

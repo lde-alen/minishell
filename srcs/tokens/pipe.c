@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/08 10:31:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:18:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
+	exec->env_kid = lst_to_char(&lst);
+	exec->path = check_access(lst, cmd_lst); 
 	if ((exec->i + 1) != exec->len)
 		pipe_arr(exec);
 	exec->id[exec->i] = fork();
@@ -26,6 +28,12 @@ void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	else if (exec->id[exec->i] == 0)
 		check_pos(lst, cmd_lst, exec);
 	close_pipes(exec);
+	// free_cmd(&cmd_lst);
+	if (exec->env_kid)
+		free_env_kid(exec->env_kid);
+	ft_printf("PATH IN PARENT: %s\n", exec->path);
+	if (exec->path)
+		free(exec->path);
 }
 
 void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
@@ -52,6 +60,8 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 			exec->i++;
 		}
 	}
+	// if (exec->env_kid)
+	// 	free_env_kid(exec->env_kid);
 }
 
 void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
@@ -61,9 +71,10 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 	check_path(*cmd_lst, &exec);
 	while (*cmd_lst != NULL)
 	{
+		if (exec->path)
+			free(exec->path);
 		pipe_exec(lst, *cmd_lst, exec);
 		exec->i++;
-		free(exec->path);
 		free_cmd(cmd_lst);
 		if (*cmd_lst != NULL)
 		{
@@ -72,6 +83,7 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 		}
 		exec->flag = 0;
 	}
+	//free_cmd(cmd_lst);
 	if (*cmd_lst && exec->path == NULL)
 		ft_putendl_fd("path doesn't exist", 2);
 }
