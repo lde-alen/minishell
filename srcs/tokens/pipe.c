@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/07 19:10:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 10:31:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (exec->len > 1)
 		loop_lst(lst, &cmd_lst, exec);
 	else
-	{
 		exec_alone(cmd_lst, lst, exec);
-		free(exec->path);
-	}
 	if (exec->flag != 2)
 	{
 		exec->i = 0;

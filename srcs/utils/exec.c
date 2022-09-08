@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/07 16:05:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:56:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 		main_child2(cmd_lst, exec);
 	free(exec->path);
 	free_env_kid(exec->env_kid);
-	free_cmd(&cmd_lst);
 }
 
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)

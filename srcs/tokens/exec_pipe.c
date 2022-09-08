@@ -6,47 +6,55 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/07 16:38:05 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/08 11:56:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_type(t_cmd *cmd_lst, t_exec **exec)
+size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 {
 	struct stat	path_stat;
 
-	if (stat(cmd_lst->command, &path_stat) > 0 && S_ISDIR(path_stat.st_mode))
+	if ((stat(cmd_lst->command, &path_stat) == 0) && (S_ISDIR(path_stat.st_mode)))
 	{
-		if (cmd_lst->command[get_len(cmd_lst->command) - 1] != '/'
-			&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
-			(*exec)->path = NULL;
-		else
+		if (S_ISDIR(path_stat.st_mode))
 		{
-			err_msg(cmd_lst, "", "Is a directory");
-			g_exit = 126;
-			return (1);
+			if (cmd_lst->command[get_len(cmd_lst->command) - 1] != '/'
+				&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
+				(*exec)->path = NULL;
+			else
+			{
+				err_msg(cmd_lst, "", "is a directory");
+				g_exit = 126;
+				return (g_exit);
+			}
 		}
 	}
-	if ((*exec)->path == NULL)
+	else
 	{
-		if (ft_strchr(cmd_lst->command, '/') == 0)
+		if ((*exec)->path == NULL)
 		{
-			err_msg(cmd_lst, "", "command not found");
-			g_exit = 127;
-			return (1);
+			if (ft_strchr(cmd_lst->command, '/') == 0)
+			{
+				err_msg(cmd_lst, "", "command not found");
+				g_exit = 127;
+				return (g_exit);
+			}
 		}
-		(*exec)->path = ft_strdup(cmd_lst->command);
 	}
+	(*exec)->path = ft_strdup(cmd_lst->command);
 	return (0);
 }
 
 void	main_child2(t_cmd *cmd_lst, t_exec *exec)
 {
-	int	ret;
+	int		ret;
+	size_t	err;
 
-	// if (check_type(cmd_lst, &exec) == 1)
-	// 	return ;
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		exit(err);
 	ret = 0;
 	ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
 	if (ret < 0)
@@ -56,15 +64,19 @@ void	main_child2(t_cmd *cmd_lst, t_exec *exec)
 
 static	void	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	int	ret;
+	int		ret;
+	size_t	err;
 
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		exit(err);
 	ret = 0;
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2");
 	close(exec->fd[exec->i][1]);
-	// if (check_type(cmd_lst, &exec) == 1)
-	// 	return ;
+	if (check_type(cmd_lst, &exec) == 1)
+		exit(ret);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
@@ -82,14 +94,18 @@ static	void	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 
 static	void	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	int	ret;
+	int		ret;
+	size_t	err;
 
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		exit(err);
 	ret = 0;
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
-	// if (check_type(cmd_lst, &exec) == 1)
-	// 	return ;
+	if (check_type(cmd_lst, &exec) == 1)
+		exit(ret);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
@@ -107,8 +123,12 @@ static	void	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 
 static	void	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	int	ret;
+	int		ret;
+	size_t	err;
 
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		exit(err);
 	ret = 0;
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
@@ -117,8 +137,8 @@ static	void	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		perror("dup2_mid2");
 	close(exec->fd[(exec->i - 1)][0]);
 	close(exec->fd[exec->i][1]);
-	// if (check_type(cmd_lst, &exec) == 1)
-	// 	return ;
+	if (check_type(cmd_lst, &exec) == 1)
+		exit(ret);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
