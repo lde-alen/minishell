@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/09 18:27:34 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/09 20:32:31 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 int	parser_stage3(t_msh *msh)
 {
 	ssize_t	i;
+	ssize_t	j;
 	char	**tab;
 
 	i = 0;
+	j = 0;
 	msh->cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!msh->cmd)
 		return (1);
@@ -26,16 +28,14 @@ int	parser_stage3(t_msh *msh)
 		return (1);
 	while (tab[i])
 	{
-		check_spaces();
-		msh->cmd->command = ft_strdup(tab[i]);
-		msh->cmd->redir = (t_redir *)malloc(sizeof(t_redir));
-		if (!msh->cmd->redir)
-			return (1);
-		if (!msh->cmd->redir)
-			return (1);
+		while (tab[i][++j] == ' ')
+			j++;
+		msh->cmd->command = ft_strdup(tab[i] + j);
 		msh->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
+		ft_printf("%s\n", msh->cmd->command);
 		i++;
 	}
+	msh->cmd->next = NULL;
 	return (0);
 }
 
@@ -62,7 +62,6 @@ int	parser_stage2(char *str, t_msh *msh)
 		msh->sh->j++;
 	}
 	ft_printf("actual tmp_str is: %s\n", msh->sh->tmp_str);
-	free(msh->sh->tmp_str);
 	return (0);
 }
 
