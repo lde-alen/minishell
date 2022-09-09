@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/05 17:43:15 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:27:34 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,28 @@
 int	parser_stage3(t_msh *msh)
 {
 	ssize_t	i;
+	char	**tab;
 
 	i = 0;
-	while (msh->sh->tmp_str[i])
+	msh->cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!msh->cmd)
+		return (1);
+	tab = ft_split(msh->sh->tmp_str, '|');
+	if (tab == NULL)
+		return (1);
+	while (tab[i])
 	{
+		check_spaces();
+		msh->cmd->command = ft_strdup(tab[i]);
+		msh->cmd->redir = (t_redir *)malloc(sizeof(t_redir));
+		if (!msh->cmd->redir)
+			return (1);
+		if (!msh->cmd->redir)
+			return (1);
+		msh->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
 		i++;
 	}
+	return (0);
 }
 
 /*
