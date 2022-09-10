@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 18:30:57 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:40:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 			perror("Minishell");
 	}
 	return (ret);
-	// exit(ret);
+	exit(ret);
 }
 
 void	free_cmd_lst(t_cmd *cmd_lst)

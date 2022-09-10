@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 19:13:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:55:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 			exec->i++;
 		}
 	}
-	ft_printf("g_exit here is: %d\n", g_exit);
-	// signal(SIGCHLD, SIG_IGN);
-	// if (exec->env_kid)
-	// 	free_env_kid(exec->env_kid);
 }
 
 void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
