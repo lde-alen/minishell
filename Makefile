@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/05 16:12:54 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/10 15:18:28 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ TOKENS		=
 
 UTILS		=		ft_print.c					\
 					ft_utils.c					\
+					ft_fill_utils.c				\
 
 PARS		=		parser.c					\
 					parser_fill.c				\
