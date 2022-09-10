@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/08 17:18:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:13:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	// free_cmd(&cmd_lst);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
-	ft_printf("PATH IN PARENT: %s\n", exec->path);
 	if (exec->path)
 		free(exec->path);
 }
@@ -52,14 +51,14 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		exec->i = 0;
 		while ((exec->i + 1) <= exec->len)
 		{
-			wait(NULL);
-			// if (WIFEXITED(exec->status))
-				// g_exit = WEXITSTATUS(exec->status);
-			// ft_printf("ERRNO: %d\n", errno);
-			// ft_printf("G_EXIT: %d\n", g_exit);
+			wait(&g_exit);
+			if (WIFEXITED(g_exit))
+				g_exit = WEXITSTATUS(g_exit);
 			exec->i++;
 		}
 	}
+	ft_printf("g_exit here is: %d\n", g_exit);
+	// signal(SIGCHLD, SIG_IGN);
 	// if (exec->env_kid)
 	// 	free_env_kid(exec->env_kid);
 }

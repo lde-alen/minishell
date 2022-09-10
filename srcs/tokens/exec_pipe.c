@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 13:21:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/10 18:30:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 		{
 			if (cmd_lst->command[get_len(cmd_lst->command) - 1] != '/'
 				&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
-				(*exec)->status = 0;
+				(*exec)->flag = 0;
+				// (*exec)->status = 0;
 			else
 			{
 				err_msg(cmd_lst, "", "is a directory");
@@ -36,7 +37,8 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	}
 	if ((ft_strchr(cmd_lst->command, '/') == 0 && (*exec)->path == NULL)
 		|| (ft_strchr(cmd_lst->command, '/') == 0
-			&& (stat_ch == 0 && S_ISDIR(path_stat.st_mode))))
+			&& (stat_ch == 0 && S_ISDIR(path_stat.st_mode)))
+		|| (cmd_lst->command == NULL))
 	{
 		err_msg(cmd_lst, "", "command not found");
 		g_exit = 127;
@@ -52,13 +54,15 @@ size_t	main_child2(t_cmd *cmd_lst, t_exec *exec)
 	int		ret;
 	size_t	err;
 
-	err = check_type(cmd_lst, &exec);
-	if (err != 0)
-		return (err);
-	ret = 0;
 	ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
 	if (ret < 0)
+	{
+		err = check_type(cmd_lst, &exec);
+		if (err != 0)
+			return (err);
 		perror("Minishell");
+		return (42);
+	}
 	return (ret);
 }
 
@@ -176,7 +180,6 @@ void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		ret = mid_kid(lst, cmd_lst, exec);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
-	ft_printf("PATH IN CHILD: %s\n", exec->path);
 	if (exec->path)
 		free(exec->path);
 	// if (cmd_lst)
