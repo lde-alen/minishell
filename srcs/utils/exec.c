@@ -40,6 +40,8 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 
 void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 {
+	size_t	ret;
+
 	if (exec_builtin(lst, cmd_lst) == 0)
 	{
 		//leish double free
@@ -52,10 +54,17 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	if (exec->id[0] < 0)
 		perror("fork");
 	else if (exec->id[0] == 0)
-		main_child2(cmd_lst, exec);
+	{
+		ret = main_child2(cmd_lst, exec);
+		free_cmd_lst(cmd_lst);
+		free_exec(&exec);
+		free(exec);
+		free_env_lst(lst);
+		exit (ret);
+	}
 	free(exec->path);
 	free_env_kid(exec->env_kid);
-	free_cmd(&cmd_lst);
+	// free_cmd(&cmd_lst);
 }
 
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)

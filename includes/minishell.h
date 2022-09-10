@@ -162,7 +162,7 @@ void	close_pipes(t_exec *exec);
 size_t	check_builtin(t_cmd *cmd_lst);
 void	check_path(t_cmd *cmd_lst, t_exec **exec);
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
-void	main_child2(t_cmd *cmd_lst, t_exec *exec);
+size_t	main_child2(t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
@@ -179,6 +179,7 @@ void	free_env_lst(t_env *lst);
 void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
 void	free_exec(t_exec **exec);
+void	free_cmd_lst(t_cmd *cmd_lst);
 
 void	sig_handler(int val);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);

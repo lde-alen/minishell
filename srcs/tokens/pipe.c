@@ -54,7 +54,7 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		{
 			wait(NULL);
 			// if (WIFEXITED(exec->status))
-			// 	g_exit = WEXITSTATUS(exec->status);
+				// g_exit = WEXITSTATUS(exec->status);
 			// ft_printf("ERRNO: %d\n", errno);
 			// ft_printf("G_EXIT: %d\n", g_exit);
 			exec->i++;

@@ -32,22 +32,21 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 			}
 		}
 	}
-	else
-	{
-		if ((*exec)->status == 0)
+	// else
+	// {
+		if (ft_strchr(cmd_lst->command, '/') == 0 || (ft_strchr(cmd_lst->command, '/') == 0 && S_ISDIR(path_stat.st_mode)))
 		{
-			if (ft_strchr(cmd_lst->command, '/') == 0)
-			{
-				err_msg(cmd_lst, "", "command not found");
-				g_exit = 127;
-				return (g_exit);
-			}
+			err_msg(cmd_lst, "", "command not found");
+			g_exit = 127;
+			return (g_exit);
 		}
-	}
+	// }
+	if ((*exec)->path == NULL)
+		(*exec)->path = ft_strdup(cmd_lst->command);
 	return (0);
 }
 
-void	main_child2(t_cmd *cmd_lst, t_exec *exec)
+size_t	main_child2(t_cmd *cmd_lst, t_exec *exec)
 {
 	int		ret;
 	size_t	err;
