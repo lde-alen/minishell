@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/08 18:34:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/10 13:21:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 {
 	struct stat	path_stat;
+	int			stat_ch;
 
 	(*exec)->status = 1;
-	if ((stat(cmd_lst->command, &path_stat) == 0) && (S_ISDIR(path_stat.st_mode)))
+	stat_ch = stat(cmd_lst->command, &path_stat);
+	if ((stat_ch == 0) && (S_ISDIR(path_stat.st_mode)))
 	{
 		if (S_ISDIR(path_stat.st_mode))
 		{
@@ -32,15 +34,14 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 			}
 		}
 	}
-	// else
-	// {
-		if (ft_strchr(cmd_lst->command, '/') == 0 || (ft_strchr(cmd_lst->command, '/') == 0 && S_ISDIR(path_stat.st_mode)))
-		{
-			err_msg(cmd_lst, "", "command not found");
-			g_exit = 127;
-			return (g_exit);
-		}
-	// }
+	if ((ft_strchr(cmd_lst->command, '/') == 0 && (*exec)->path == NULL)
+		|| (ft_strchr(cmd_lst->command, '/') == 0
+			&& (stat_ch == 0 && S_ISDIR(path_stat.st_mode))))
+	{
+		err_msg(cmd_lst, "", "command not found");
+		g_exit = 127;
+		return (g_exit);
+	}
 	if ((*exec)->path == NULL)
 		(*exec)->path = ft_strdup(cmd_lst->command);
 	return (0);
@@ -53,12 +54,12 @@ size_t	main_child2(t_cmd *cmd_lst, t_exec *exec)
 
 	err = check_type(cmd_lst, &exec);
 	if (err != 0)
-		exit(err);
+		return (err);
 	ret = 0;
 	ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
 	if (ret < 0)
 		perror("Minishell");
-	exit(ret);
+	return (ret);
 }
 
 static	size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
@@ -158,7 +159,8 @@ void	free_cmd_lst(t_cmd *cmd_lst)
 {
 	while (cmd_lst != NULL)
 	{
-		free_cmd(&cmd_lst);
+		if (cmd_lst)
+			free_cmd(&cmd_lst);
 	}
 }
 
