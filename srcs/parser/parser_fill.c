@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/11 08:26:33 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 08:27:47 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	ft_fill_arg(t_msh *msh)
 	free(msh->cmd->command);
 	msh->cmd->command = msh->cmd ->argument[0];
 	ft_print_char_arr(msh->cmd->argument);
+	ft_printf("*command: %s\n", msh->cmd->command);
 	ft_printf("initial string before split is: %s\n", args);
 	ft_printf("the nb of args is: %d\n", nb_args);
 	ft_printf("the value of i is: %d\n", i);
