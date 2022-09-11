@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/11 04:45:54 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 09:20:22 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	parser_stage3(t_msh *msh)
 	{
 		if (i == 0)
 			tmp = msh->cmd;
-		ft_fill_command(tab, i, msh);
+		msh->cmd->command = ft_strdup(tab[i]);
+		msh->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
 		ft_fill_redir(msh);
 		ft_fill_arg(msh);
-		if (msh->cmd->next)
-			msh->cmd = msh->cmd->next;
+		msh->cmd = msh->cmd->next;
 		i++;
 	}
 	msh->cmd->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/11 08:27:47 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 09:20:29 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,20 +131,4 @@ void	ft_init_file(char **file, size_t count)
 		i++;
 	}
 	file[i] = NULL;
-}
-
-void	ft_fill_command(char **tab, size_t i, t_msh *msh)
-{
-	size_t	j;
-
-	while (tab[i])
-	{
-		j = 0;
-		while (tab[i][j] == ' ')
-			j++;
-		msh->cmd->command = ft_strdup(tab[i] + j);
-		msh->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
-		// ft_printf("%s\n", msh->cmd->command);
-		i++;
-	}
 }
