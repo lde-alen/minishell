@@ -53,7 +53,7 @@ void	here_doc(t_env *lst, t_cmd *cmd_lst)
 	file_name = "store.txt";
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	str = "";
-	signal(SIGINT, sig_handler);
+	// signal(SIGINT, sig_handler);
 	while (ft_strcmp(str, cmd_lst->argument[2]) != 0)
 	{
 		str = readline("> ");

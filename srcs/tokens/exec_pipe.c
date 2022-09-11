@@ -49,91 +49,82 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	return (0);
 }
 
-size_t	main_child2(t_cmd *cmd_lst, t_exec *exec)
+size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)
 {
 	int		ret;
-	size_t	err;
 
 	ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
+	ft_printf("Errno: %d\n", errno);	
 	if (ret < 0)
 	{
-		err = check_type(cmd_lst, &exec);
-		if (err != 0)
-			return (err);
-		perror("Minishell");
-		return (42);
+		perror("Minishel");
+		if (errno == 13)
+		{
+			g_exit = 126;
+			return (g_exit);
+		}
+		if (errno == 2)
+		{
+			g_exit = 127;
+			return (g_exit);
+		}
 	}
-	return (ret);
+	return (0);
+}
+
+size_t	main_child2(t_cmd *cmd_lst, t_exec *exec)
+{
+	size_t	err;
+
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		return (err);
+	return (exec_child(cmd_lst, exec));
 }
 
 static	size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	int		ret;
 	size_t	err;
 
-	err = check_type(cmd_lst, &exec);
-	if (err != 0)
-		exit(err);
-	ret = 0;
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2");
 	close(exec->fd[exec->i][1]);
-	if (check_type(cmd_lst, &exec) == 1)
-		exit(ret);
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		return (err);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
-		ret = 0;
+		return (0);
 	}
-	else
-	{
-		ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
-		if (execve(exec->path, cmd_lst->argument, exec->env_kid) < 0)
-			perror("Minishell");
-	}
-	return (ret);
+	return (exec_child(cmd_lst, exec));
 }
 
 static	size_t	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	int		ret;
 	size_t	err;
 
-	err = check_type(cmd_lst, &exec);
-	if (err != 0)
-		exit(err);
-	ret = 0;
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
-	if (check_type(cmd_lst, &exec) == 1)
-		exit(ret);
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		return (err);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
-		ret = 0;
+		return (0);
 	}
-	else
-	{
-		ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
-		if (execve(exec->path, cmd_lst->argument, exec->env_kid) < 0)
-			perror("Minishell");
-	}
-	return (ret);
+	return (exec_child(cmd_lst, exec));
 }
 
 static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	int		ret;
 	size_t	err;
 
-	err = check_type(cmd_lst, &exec);
-	if (err != 0)
-		exit(err);
-	ret = 0;
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2_Mid1");
@@ -141,31 +132,16 @@ static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		perror("dup2_mid2");
 	close(exec->fd[(exec->i - 1)][0]);
 	close(exec->fd[exec->i][1]);
-	if (check_type(cmd_lst, &exec) == 1)
-		exit(ret);
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		return (err);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
-		ret = 0;
+		return (0);
 	}
-	else
-	{
-		ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
-		if (execve(exec->path, cmd_lst->argument, exec->env_kid) < 0)
-			perror("Minishell");
-	}
-	return (ret);
-	exit(ret);
-}
-
-void	free_cmd_lst(t_cmd *cmd_lst)
-{
-	while (cmd_lst != NULL)
-	{
-		if (cmd_lst)
-			free_cmd(&cmd_lst);
-	}
+	return (exec_child(cmd_lst, exec));
 }
 
 void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
@@ -182,9 +158,11 @@ void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		free_env_kid(exec->env_kid);
 	if (exec->path)
 		free(exec->path);
-	// if (cmd_lst)
-	// 	free_cmd(&cmd_lst);
-	free_cmd_lst(cmd_lst);
+	while (cmd_lst != NULL)
+	{
+		if (cmd_lst)
+			free_cmd(&cmd_lst);
+	}
 	free_exec(&exec);
 	free(exec);
 	free_env_lst(lst);

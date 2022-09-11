@@ -28,6 +28,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
+# include <sys/ioctl.h>
 # include <limits.h>
 # include <fcntl.h>
 // # include <valgrind/memcheck.h>
@@ -164,6 +165,7 @@ void	check_path(t_cmd *cmd_lst, t_exec **exec);
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
 size_t	main_child2(t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
+size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
 void	redirect_out(t_env *lst, t_cmd *cmd_lst);

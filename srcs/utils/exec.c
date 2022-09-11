@@ -55,8 +55,8 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	{
 		ret = main_child2(cmd_lst, exec);
 		free_env_kid(exec->env_kid);
-		// free_exec(&exec);
-		// free(exec);
+		free_exec(&exec);
+		free(exec);
 		free_env_lst(lst);
 		free_cmd(&cmd_lst);
 		exit (ret);

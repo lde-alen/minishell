@@ -15,12 +15,15 @@
 //signal handler for ^C
 void	sig_handler(int val)
 {
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	g_exit = 1;
-	signal(val, sig_handler);
+	if (val == SIGINT)
+	{
+		// ioctl(STDIN_FILENO, TIOCSTI);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_exit = 130;
+	}
 }
 
 void	shell_prompt(char **env)
@@ -36,7 +39,6 @@ void	shell_prompt(char **env)
 	lst = ft_env(env);
 	while (1)
 	{
-		// g_exit = 0;
 		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
 		if (str)
 		{
