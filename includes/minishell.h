@@ -182,6 +182,7 @@ void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
 void	free_exec(t_exec **exec);
 void	free_cmd_lst(t_cmd *cmd_lst);
+void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst);
 
 void	sig_handler(int val);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);

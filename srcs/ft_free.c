@@ -84,12 +84,24 @@ void	free_exec(t_exec **exec)
 	(*exec)->i = 0;
 	while ((*exec)->i < (*exec)->len)
 	{
-		// if ((*exec)->fd[(*exec)->i])
-			free((*exec)->fd[(*exec)->i]);
+		free((*exec)->fd[(*exec)->i]);
 		(*exec)->i++;
 	}
-	// if ((*exec)->fd)
-		free((*exec)->fd);
-	// if ((*exec)->id)
-		free((*exec)->id);
+	free((*exec)->fd);
+	free((*exec)->id);
+	free(*exec);
+}
+
+void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst)
+{
+	if (exec->env_kid)
+		free_env_kid(exec->env_kid);
+	if (exec->path)
+		free(exec->path);
+	if (exec)
+		free_exec(&exec);
+	if (lst)
+		free_env_lst(lst);
+	if (cmd_lst)
+		free_cmd(&cmd_lst);
 }

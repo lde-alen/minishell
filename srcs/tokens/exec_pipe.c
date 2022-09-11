@@ -17,28 +17,22 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	struct stat	path_stat;
 	int			stat_ch;
 
-	(*exec)->status = 1;
 	stat_ch = stat(cmd_lst->command, &path_stat);
 	if (stat_ch == 0)
 	{
 		if (S_ISDIR(path_stat.st_mode))
 		{
-			if (cmd_lst->command[get_len(cmd_lst->command) - 1] != '/'
-				&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
-				(*exec)->flag = 0;
-				// (*exec)->status = 0;
-			else if (ft_strchr(cmd_lst->command, '/') == 0)
+			if (ft_strchr(cmd_lst->command, '/') == 0)
 			{
 				err_msg(cmd_lst, "", "command not found");
 				g_exit = 127;
-				return (g_exit);
 			}
 			else
 			{
 				err_msg(cmd_lst, "", "is a directory");
 				g_exit = 126;
-				return (g_exit);
 			}
+			return (g_exit);
 		}
 	}
 	if ((ft_strchr(cmd_lst->command, '/') == 0 && (*exec)->path == NULL)
@@ -62,14 +56,14 @@ size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)
 	if (ret < 0)
 	{
 		perror("Minishel");
-		if (errno == 13)
-		{
-			g_exit = 126;
-			return (g_exit);
-		}
 		if (errno == 2)
 		{
 			g_exit = 127;
+			return (g_exit);
+		}
+		else if (errno == 13 || errno == 20)
+		{
+			g_exit = 126;
 			return (g_exit);
 		}
 	}
@@ -159,17 +153,6 @@ void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		ret = last_child(lst, cmd_lst, exec);
 	else
 		ret = mid_kid(lst, cmd_lst, exec);
-	if (exec->env_kid)
-		free_env_kid(exec->env_kid);
-	if (exec->path)
-		free(exec->path);
-	while (cmd_lst != NULL)
-	{
-		if (cmd_lst)
-			free_cmd(&cmd_lst);
-	}
-	free_exec(&exec);
-	free(exec);
-	free_env_lst(lst);
+	free_child(exec, lst, cmd_lst);
 	exit(ret);
 }

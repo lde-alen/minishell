@@ -55,12 +55,7 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	else if (exec->id[0] == 0)
 	{
 		ret = main_child2(cmd_lst, exec);
-		free_env_kid(exec->env_kid);
-		free(exec->path);
-		free_exec(&exec);
-		free(exec);
-		free_env_lst(lst);
-		free_cmd(&cmd_lst);
+		free_child(exec, lst, cmd_lst);
 		exit (ret);
 	}
 	free(exec->path);
@@ -88,11 +83,8 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 		}
 		exec->i++;
 	}
-	// if (check_all_path(lst, cmd_lst) == 1)
-	// 	return ;
 	fork_arr(lst, cmd_lst, exec);
 	free_exec(&exec);
-	free(exec);
 }
 
 //PROTECT ALL MALLOCS
