@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-//signal handler for ^C
 void	sig_handler(int val)
 {
 	if (val == SIGINT)
@@ -47,13 +46,11 @@ void	shell_prompt(char **env)
 				add_history(str);
 				cmd_lst = ft_cmd_lst(str);
 				exec_cmd(lst, cmd_lst);
-				// free_cmd(cmd_lst);
 			}
 		}
 		else
 		{
 			free_env_lst(lst);
-			// free_cmd(cmd_lst);
 			exit(0);
 		}
 	}
