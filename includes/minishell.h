@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/11 04:43:20 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 08:20:43 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ typedef enum e_boolean
 
 typedef struct s_msh
 {
-	t_redir	*redir;
 	t_env	*env;
 	t_sh	*sh;
 	t_cmd	*cmd;

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/11 04:48:32 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 08:26:33 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,102 @@
  * finish filling the rest
  * parse the rest
  */
-void	ft_fill_arg(t_msh *msh)
-{
-	size_t	i;
-	char	*tmp;
 
-	i = 0;
-	tmp = ft_calloc(1, sizeof(char));
-	while (msh->cmd->command[i] && msh->cmd->command[i] != ' ' && msh->cmd->command[i] != '<' && msh->cmd->command[i] != '>' && msh->cmd->command[i] != '|')
+size_t	ft_fill_first_arg(t_msh *msh, size_t i, char *tmp)
+{
+	while (msh->cmd->command[i] && msh->cmd->command[i] != ' '
+		&& msh->cmd->command[i] != '<' && msh->cmd->command[i] != '>'
+		&& msh->cmd->command[i] != '|')
 	{
 		ft_append_back(&tmp, msh->cmd->command[i]);
 		i++;
 	}
+	return (i);
+}
+
+/**
+ * should be fine
+ */
+char	*ft_args_to_str(t_msh *msh)
+{
+	size_t	i;
+	char	*tmp;
+
+	tmp = (char *)ft_calloc(1, sizeof(char));
+	i = 0;
+	while (msh->cmd->command[i])
+	{
+		while (msh->cmd->command[i] == ' ')
+			i++;
+		if (msh->cmd->command[i] == '<' || msh->cmd->command[i] == '>')
+		{
+			i++;
+			if (msh->cmd->command[i] == '<' || msh->cmd->command[i] == '>')
+				i++;
+			while (msh->cmd->command[i] == ' ')
+				i++;
+			while (msh->cmd->command[i] != ' ' && msh->cmd->command[i] != '>'
+				&& msh->cmd->command[i] != '<' && msh->cmd->command[i] != '|')
+					i++;
+				i++;
+		}
+		while (msh->cmd->command[i] == ' ')
+			i++;
+		tmp = ft_strjoin(tmp, " ");
+		while (msh->cmd->command[i] != ' ' && msh->cmd->command[i] != '>'
+			&& msh->cmd->command[i] != '<' && msh->cmd->command[i] != '|'
+			&& msh->cmd->command[i])
+		{
+			ft_append_back(&tmp, msh->cmd->command[i]);
+			i++;
+		}
+		i++;
+	}
+	return (tmp);
+}
+
+size_t	ft_count_args(char *args)
+{
+	size_t	count;
+	size_t	i;
+
+	count = 0;
+	i = 0;
+	while (args[i])
+	{
+		while (args[i] == ' ')
+			i++;
+		if (args[i] != ' ')
+		{
+			count++;
+			while (args[i] && args[i] != ' ')
+				i++;
+		}
+		i++;
+	}
+	return (count);
+}
+
+void	ft_fill_arg(t_msh *msh)
+{
+	size_t	i;
+	size_t	nb_args;
+	char	*args;
+	char	*tmp;
+
+	i = 0;
+	tmp = ft_calloc(1, sizeof(char));
+	i = ft_fill_first_arg(msh, i, tmp);
+	args = ft_args_to_str(msh);
+	nb_args = ft_count_args(args);
+	msh->cmd->argument = (char **)malloc(sizeof(char *) * (nb_args + 1));
+	msh->cmd ->argument = ft_split(args, ' ');
+	free(msh->cmd->command);
+	msh->cmd->command = msh->cmd ->argument[0];
+	ft_print_char_arr(msh->cmd->argument);
+	ft_printf("initial string before split is: %s\n", args);
+	ft_printf("the nb of args is: %d\n", nb_args);
+	ft_printf("the value of i is: %d\n", i);
 	ft_printf("the value of tmp is: %s\n", tmp);
 }
 
