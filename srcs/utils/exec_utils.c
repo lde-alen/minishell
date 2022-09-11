@@ -67,7 +67,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	{
 		// if (access(cmd_lst->command, X_OK) == 0)
 		// 	return (cmd_lst->command);
-		return (cmd_lst->command);
+		return (ft_strdup(cmd_lst->command));
 	}
 	env_path = get_path(lst);
 	path = NULL;

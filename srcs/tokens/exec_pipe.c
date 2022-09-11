@@ -19,7 +19,7 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 
 	(*exec)->status = 1;
 	stat_ch = stat(cmd_lst->command, &path_stat);
-	if ((stat_ch == 0) && (S_ISDIR(path_stat.st_mode)))
+	if (stat_ch == 0)
 	{
 		if (S_ISDIR(path_stat.st_mode))
 		{
@@ -27,6 +27,12 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 				&& ft_strncmp(cmd_lst->command, "./", 2) != 0)
 				(*exec)->flag = 0;
 				// (*exec)->status = 0;
+			else if (ft_strchr(cmd_lst->command, '/') == 0)
+			{
+				err_msg(cmd_lst, "", "command not found");
+				g_exit = 127;
+				return (g_exit);
+			}
 			else
 			{
 				err_msg(cmd_lst, "", "is a directory");
@@ -36,8 +42,6 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 		}
 	}
 	if ((ft_strchr(cmd_lst->command, '/') == 0 && (*exec)->path == NULL)
-		|| (ft_strchr(cmd_lst->command, '/') == 0
-			&& (stat_ch == 0 && S_ISDIR(path_stat.st_mode)))
 		|| (cmd_lst->command == NULL))
 	{
 		err_msg(cmd_lst, "", "command not found");
@@ -77,6 +81,7 @@ size_t	main_child2(t_cmd *cmd_lst, t_exec *exec)
 	size_t	err;
 
 	err = check_type(cmd_lst, &exec);
+
 	if (err != 0)
 		return (err);
 	return (exec_child(cmd_lst, exec));

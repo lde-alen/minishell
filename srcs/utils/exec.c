@@ -42,6 +42,7 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 {
 	size_t	ret;
 
+	exec->path = check_access(lst, cmd_lst);
 	if (exec_builtin(lst, cmd_lst) == 0)
 	{
 		exec->flag = 2;
@@ -55,12 +56,16 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	{
 		ret = main_child2(cmd_lst, exec);
 		free_env_kid(exec->env_kid);
+		free(exec->path);
 		free_exec(&exec);
 		free(exec);
 		free_env_lst(lst);
 		free_cmd(&cmd_lst);
 		exit (ret);
 	}
+	free(exec->path);
+	free_env_kid(exec->env_kid);
+	free_cmd(&cmd_lst);
 }
 
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)

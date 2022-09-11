@@ -15,7 +15,7 @@
 void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	exec->env_kid = lst_to_char(&lst);
-	exec->path = check_access(lst, cmd_lst); 
+	exec->path = check_access(lst, cmd_lst);
 	if ((exec->i + 1) != exec->len)
 		pipe_arr(exec);
 	exec->id[exec->i] = fork();
@@ -28,7 +28,6 @@ void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	else if (exec->id[exec->i] == 0)
 		check_pos(lst, cmd_lst, exec);
 	close_pipes(exec);
-	// free_cmd(&cmd_lst);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
 	if (exec->path)
@@ -40,7 +39,6 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	exec->i = 0;
 	exec->flag = 0;
 	exec->len = get_cmd_len(cmd_lst);
-	exec->path = check_access(lst, cmd_lst);
 	check_path(cmd_lst, &exec);
 	if (exec->len > 1)
 		loop_lst(lst, &cmd_lst, exec);
@@ -61,26 +59,17 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 
 void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 {
-	free(exec->path);
-	exec->path = check_access(lst, *cmd_lst);
 	check_path(*cmd_lst, &exec);
 	while (*cmd_lst != NULL)
 	{
-		if (exec->path)
-			free(exec->path);
 		pipe_exec(lst, *cmd_lst, exec);
 		exec->i++;
-		free_cmd(cmd_lst);
-		if (*cmd_lst != NULL)
-		{
-			exec->path = check_access(lst, *cmd_lst);
+		if (*cmd_lst)
+			free_cmd(cmd_lst);
+		if (*cmd_lst)
 			check_path(*cmd_lst, &exec);
-		}
 		exec->flag = 0;
 	}
-	//free_cmd(cmd_lst);
-	if (*cmd_lst && exec->path == NULL)
-		ft_putendl_fd("path doesn't exist", 2);
 }
 
 void	pipe_arr(t_exec *exec)
