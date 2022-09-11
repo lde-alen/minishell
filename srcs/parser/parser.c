@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 18:54:23 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 04:45:54 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	parser_stage3(t_msh *msh)
 */
 int	parser_stage2(char *str, t_msh *msh)
 {
-	ft_printf("input_len value is: %d\n", msh->sh->input_len);
 	msh->sh->tmp_str = ft_calloc(msh->sh->input_len + 1, sizeof(char));
 	if (!msh->sh->tmp_str)
 		return (0);
@@ -71,7 +70,7 @@ int	parser_stage2(char *str, t_msh *msh)
 		msh->sh->i++;
 		msh->sh->j++;
 	}
-	ft_printf("actual tmp_str is: %s\n", msh->sh->tmp_str);
+	// ft_printf("actual tmp_str is: %s\n", msh->sh->tmp_str);
 	return (0);
 }
 

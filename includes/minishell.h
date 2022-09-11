@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/10 19:07:02 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 04:43:20 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@
 
 typedef struct s_redir
 {
-	size_t		r_flag;
 	char		**file;
+	size_t		r_flag;
 	size_t		*flag;
 	size_t		flag_len;
 	size_t		ll;
@@ -151,5 +151,8 @@ void	ft_fill_redir(t_msh *msh);
 t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
 t_env	*push_env(t_env *env_list, char *env_name, char *env_value);
 t_env	*ft_env(char **env);
+void	ft_fill_command(char **tab, size_t i, t_msh *msh);
+void	ft_fill_arg(t_msh *msh);
+void	ft_append_back(char **str, char c);
 
 #endif

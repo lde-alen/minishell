@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 16:53:18 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/04 19:40:28 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/11 04:45:31 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,22 @@ void	ft_strjustcat(char *dst, const char *src)
 		len_dest++;
 		i++;
 	}
-	// ft_printf("len source = %d\ndest = %s\n" ,ft_strlen(src), dst);
+}
+
+void	ft_append_back(char **str, char c)
+{
+	size_t	i;
+	char	*tmp;
+
+	i = 0;
+	tmp = (char *)malloc(sizeof(char) * (ft_strlen(*str) + 2));
+	while ((*str)[i])
+	{
+		tmp[i] = (*str)[i];
+		i++;
+	}
+	tmp[i] = c;
+	tmp[i + 1] = '\0';
+	free (*str);
+	*str = ft_strdup(tmp);
 }
