@@ -12,28 +12,6 @@
 
 #include "minishell.h"
 
-void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
-{
-	exec->env_kid = lst_to_char(&lst);
-	exec->path = check_access(lst, cmd_lst);
-	if ((exec->i + 1) != exec->len)
-		pipe_arr(exec);
-	exec->id[exec->i] = fork();
-	if (exec->id[exec->i] < 0)
-	{
-		close_pipes(exec);
-		perror("Fork");
-		return ;
-	}
-	else if (exec->id[exec->i] == 0)
-		check_pos(lst, cmd_lst, exec);
-	close_pipes(exec);
-	if (exec->env_kid)
-		free_env_kid(exec->env_kid);
-	if (exec->path)
-		free(exec->path);
-}
-
 void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	exec->i = 0;
@@ -57,6 +35,31 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	}
 }
 
+void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
+{
+	size_t	ret;
+
+	exec->path = check_access(lst, cmd_lst);
+	if (exec_builtin(lst, cmd_lst) == 0)
+	{
+		exec->flag = 2;
+		return ;
+	}
+	exec->env_kid = lst_to_char(&lst);
+	exec->id[0] = fork();
+	if (exec->id[0] < 0)
+		perror("fork");
+	else if (exec->id[0] == 0)
+	{
+		ret = main_child2(cmd_lst, exec);
+		free_child(exec, lst, cmd_lst);
+		exit (ret);
+	}
+	free(exec->path);
+	free_env_kid(exec->env_kid);
+	free_cmd(&cmd_lst);
+}
+
 void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 {
 	check_path(*cmd_lst, &exec);
@@ -72,28 +75,24 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 	}
 }
 
-void	pipe_arr(t_exec *exec)
+void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	if (pipe(exec->fd[exec->i]) < 0)
+	exec->env_kid = lst_to_char(&lst);
+	exec->path = check_access(lst, cmd_lst);
+	if ((exec->i + 1) != exec->len)
+		pipe_arr(exec);
+	exec->id[exec->i] = fork();
+	if (exec->id[exec->i] < 0)
 	{
-		if (exec->i != 0)
-		{
-			close(exec->fd[exec->i - 1][0]);
-			close(exec->fd[exec->i - 1][1]);
-		}
-		perror("pipe");
+		close_pipes(exec);
+		perror("Fork");
+		return ;
 	}
-}
-
-void	close_pipes(t_exec *exec)
-{
-	if (exec->i == 0)
-		close(exec->fd[exec->i][1]);
-	else if ((exec->i + 1) == exec->len)
-		close(exec->fd[exec->i - 1][0]);
-	else
-	{
-		close(exec->fd[exec->i - 1][0]);
-		close(exec->fd[exec->i][1]);
-	}
+	else if (exec->id[exec->i] == 0)
+		check_pos(lst, cmd_lst, exec);
+	close_pipes(exec);
+	if (exec->env_kid)
+		free_env_kid(exec->env_kid);
+	if (exec->path)
+		free(exec->path);
 }

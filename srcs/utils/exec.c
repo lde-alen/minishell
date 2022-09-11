@@ -38,31 +38,6 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 	return (0);
 }
 
-void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
-{
-	size_t	ret;
-
-	exec->path = check_access(lst, cmd_lst);
-	if (exec_builtin(lst, cmd_lst) == 0)
-	{
-		exec->flag = 2;
-		return ;
-	}
-	exec->env_kid = lst_to_char(&lst);
-	exec->id[0] = fork();
-	if (exec->id[0] < 0)
-		perror("fork");
-	else if (exec->id[0] == 0)
-	{
-		ret = main_child2(cmd_lst, exec);
-		free_child(exec, lst, cmd_lst);
-		exit (ret);
-	}
-	free(exec->path);
-	free_env_kid(exec->env_kid);
-	free_cmd(&cmd_lst);
-}
-
 void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 {
 	t_exec	*exec;

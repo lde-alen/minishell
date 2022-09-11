@@ -32,3 +32,29 @@ void	check_path(t_cmd *cmd_lst, t_exec **exec)
 	if (check_builtin(cmd_lst) == 1)
 		(*exec)->flag = 1;
 }
+
+void	pipe_arr(t_exec *exec)
+{
+	if (pipe(exec->fd[exec->i]) < 0)
+	{
+		if (exec->i != 0)
+		{
+			close(exec->fd[exec->i - 1][0]);
+			close(exec->fd[exec->i - 1][1]);
+		}
+		perror("pipe");
+	}
+}
+
+void	close_pipes(t_exec *exec)
+{
+	if (exec->i == 0)
+		close(exec->fd[exec->i][1]);
+	else if ((exec->i + 1) == exec->len)
+		close(exec->fd[exec->i - 1][0]);
+	else
+	{
+		close(exec->fd[exec->i - 1][0]);
+		close(exec->fd[exec->i][1]);
+	}
+}
