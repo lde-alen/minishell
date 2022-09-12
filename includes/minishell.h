@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 23:39:04 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 00:19:13 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,34 +46,8 @@
 /**
  * Defining your tools and refining them is the key
  */
-
-// int *flag;
-// i = 5; = flag_len
-// while i <= flag_len
-// 	i++
-
-// flag[0] = R_REDIR					file[0] = file name 1
-// flag[1] = R_REDIR					file[1] = file name 2
-// flag[2] = R_REDIR					file[2]	= file name 3
-// flag[5] = L_REDIR
-// flag[3] = R_REDIR
-// flag[4] = R_REDIR
-// flag[6] = R_REDIR
-
-// flag_len;
-/**
- * Alka perfect input:
- * 		- char **argument must have in arg[0] the cmd and the rest 
- * 	should be the arguments even with args after redirections
- * 
- * 		- char *command will contain only the command without arguments
- * 
- * 		- char **flag will will contain redirections in their respective orders 
- * 	and on the sam
- * 
- */
-
 extern int	g_exit;
+
 typedef struct s_redir
 {
 	char		**file;
@@ -88,6 +62,7 @@ typedef struct s_cmd
 	t_redir			*redir;
 	struct s_cmd	*next;
 }	t_cmd;
+
 typedef struct s_env
 {
 	char			*name;
