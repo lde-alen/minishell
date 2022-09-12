@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 16:04:31 by lde-alen          #+#    #+#             */
-/*   Updated: 2021/12/03 20:36:40 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/08/02 05:27:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/**
+ * @brief ft_atoi converts a string (ASCII values) into a float.
+ * @param str
+ * @return float
+ */
 
 double	ft_atof(const char *str)
 {

@@ -5,6 +5,10 @@
 		"libft.h": "c",
 		"minishell.h": "c",
 		"readline.h": "c",
-		"stddef.h": "c"
-	}
+		"stddef.h": "c",
+		"ioctl.h": "c",
+		"stdlib.h": "c",
+		"random": "c"
+	},
+	"git.mergeEditor": false,
 }

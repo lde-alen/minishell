@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/13 18:00:57 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 19:51:05 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env	*ft_env(char **env)
 	char	*env_name;
 	char	*env_value;
 	char	*div;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	lst = NULL;
@@ -27,9 +27,11 @@ t_env	*ft_env(char **env)
 		env_name = ft_substr(env[i], 0,
 				ft_strlen(env[i]) - ft_strlen(ft_strchr(env[i], '=')));
 		div = ft_strchr(env[i], '=');
-		env_value = ft_strchr(div, div[1]);
+		env_value = ft_strdup(ft_strchr(div, div[1]));
 		lst = push_env(lst, env_name, env_value);
 		free(env_name);
+		if (env_value)
+			free(env_value);
 		i++;
 	}
 	return (lst);

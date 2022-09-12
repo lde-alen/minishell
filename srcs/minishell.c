@@ -6,18 +6,31 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 12:04:18 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:23:46 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	sig_handler(int val)
+{
+	if (val == SIGINT)
+	{
+		// ioctl(STDIN_FILENO, TIOCSTI);
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_exit = 130;
+	}
+}
 
 int	minishell(char **env)
 {
 	t_lex	*lex;
 	char	*str;
 
-	signal(SIGINT, new_prompt);
+	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	lex = (t_lex *)malloc(sizeof(t_lex));
 	ft_memset(&lex->env, 0, sizeof(t_env *));
@@ -27,10 +40,17 @@ int	minishell(char **env)
 		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
 		if (str)
 		{
-			add_history(str);
-			ft_parse(str, lex);
+			if (ft_strlen(str) > 1)
+			{
+				add_history(str);
+				ft_parse(str, lex);
+				exec_cmd(lex->env, lex->cmd);
+			}
 		}
 		else
-			exit(EXIT_FAILURE);
+		{
+			free_env_lst(lex->env);
+			exit(0);
+		}
 	}
 }

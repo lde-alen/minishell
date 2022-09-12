@@ -6,11 +6,9 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/11 03:06:23 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/12 20:33:18 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-UNAME		:= $(shell uname)
 
 NAME		=		minishell
 
@@ -32,15 +30,37 @@ EXPAN_DIR	=		expansion/
 
 EXPAN		=		expansion.c					\
 
-SRCS		=		prompt.c					\
-					minishell.c					\
+SRCS		=		minishell.c					\
 					main.c						\
 
 BUILTINS	=		ft_env.c					\
+					ft_echo.c					\
+					ft_cd.c						\
+					ft_exit.c					\
+					ft_export.c					\
+					ft_pwd.c					\
+					ft_unset.c					\
 
-TOKENS		=
+TOKENS		=		pipe.c						\
+					redirect.c					\
+					exec_check.c				\
+					exec_pipe.c					\
 
-UTILS		=		ft_print.c					\
+UTILS		=		len.c						\
+					env_utils.c					\
+					exec_utils.c				\
+					export_utils.c				\
+					redirect_utils.c			\
+					exec.c						\
+					ft_init.c					\
+					expand.c					\
+					cmd_list.c					\
+					ft_free.c					\
+					error.c						\
+					execute.c					\
+					ft_atol.c					\
+					ft_ltoa.c					\
+					ft_print.c					\
 					ft_utils.c					\
 
 PARS		=		parser.c					\
@@ -49,7 +69,6 @@ PARS		=		parser.c					\
 					parser_check_quotes.c		\
 					parser_check_redirection.c	\
 					parser_init.c				\
-					env.c						\
 					parser_expand.c				\
 					parser_fill_expand.c		\
 					parser_fill_quotes.c		\
@@ -60,8 +79,6 @@ SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 
 EXPAN_OBJ	=		$(addprefix $(SRCS_DIR)$(EXPAN_DIR),$(EXPAN:.c=.o))
 
-SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
-
 BUILT_OBJ	=		$(addprefix $(SRCS_DIR)$(BUILT_DIR),$(BUILTINS:.c=.o))
 
 TOKEN_OBJ	=		$(addprefix $(SRCS_DIR)$(TOKEN_DIR),$(TOKENS:.c=.o))
@@ -71,10 +88,6 @@ UTILS_OBJ	=		$(addprefix $(SRCS_DIR)$(UTILS_DIR),$(UTILS:.c=.o))
 PARS_OBJ	=		$(addprefix $(SRCS_DIR)$(PARS_DIR),$(PARS:.c=.o))
 
 OBJS		=		$(SRCS_OBJ) $(EXPAN_OBJ) $(BUILT_OBJ) $(TOKEN_OBJ) $(UTILS_OBJ) $(PARS_OBJ) 
-
-OBJS_DIR_N	=		objs
-
-OBJS_DIR	=		./objs
 
 RM			=		rm -rf
 

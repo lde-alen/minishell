@@ -6,11 +6,13 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/11 20:46:49 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:02:48 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit = 0;
 
 int	main(int ac, char **av, char **env)
 {
