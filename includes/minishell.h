@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 04:55:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 05:22:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ typedef struct s_exec
 	size_t		flag;
 	size_t		len;
 	size_t		i;
-	int			status;
-	int			j;
 	char		*path;
 	char		**env_kid;
 }	t_exec;
@@ -196,5 +194,7 @@ size_t	ft_atol(const char *str);
 char	*ft_ltoa(size_t n);
 
 void	ft_env_init(t_env *lst);
+void	ft_cmd_init(t_cmd *cmd_lst);
+void	ft_exec_init(t_exec *exec);
 
 #endif
