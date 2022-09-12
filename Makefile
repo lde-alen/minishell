@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/11 17:12:51 by asanthos         ###   ########.fr        #
+#    Updated: 2022/09/12 10:13:24 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,18 +22,6 @@ BUILT_DIR	=		builtins/
 TOKEN_DIR	=		tokens/
 
 UTILS_DIR	=		utils/
-
-SRCS		=		main.c				\
-					prompt.c			\
-					expand.c			\
-					minishell.c			\
-					cmd_list.c			\
-					parser.c			\
-					ft_free.c			\
-					error.c				\
-					execute.c			\
-					ft_atol.c			\
-					ft_ltoa.c			\
 
 BUILTINS	=		ft_env.c			\
 					ft_echo.c			\
@@ -56,6 +44,17 @@ UTILS		=		len.c				\
 					redirect_utils.c	\
 					exec.c				\
 					ft_init.c			\
+					main.c				\
+					prompt.c			\
+					expand.c			\
+					minishell.c			\
+					cmd_list.c			\
+					parser.c			\
+					ft_free.c			\
+					error.c				\
+					execute.c			\
+					ft_atol.c			\
+					ft_ltoa.c			\
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 
