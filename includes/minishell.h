@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/08 15:11:41 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 04:55:36 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ typedef struct s_env
 	char			**env_str;
 	char			*name;
 	char			*value;
-	int				export_flag;
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
@@ -195,5 +194,7 @@ void	export_error(char *val);
 int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_atol(const char *str);
 char	*ft_ltoa(size_t n);
+
+void	ft_env_init(t_env *lst);
 
 #endif

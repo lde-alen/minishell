@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/10 12:58:21 by asanthos         ###   ########.fr        #
+#    Updated: 2022/09/11 17:12:51 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ UTILS		=		len.c				\
 					export_utils.c		\
 					redirect_utils.c	\
 					exec.c				\
+					ft_init.c			\
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 

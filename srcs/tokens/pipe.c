@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 19:55:23 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 05:15:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 	if (exec_builtin(lst, cmd_lst) == 0)
 	{
 		exec->flag = 2;
+		free(exec->path);
+		free_cmd(&cmd_lst);
 		return ;
 	}
 	exec->env_kid = lst_to_char(&lst);
