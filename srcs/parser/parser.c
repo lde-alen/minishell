@@ -6,118 +6,110 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/11 09:20:22 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:19:15 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/**
- * fill command; -
- * 
- * count redirections
- * malloc redirections array
- */
-int	parser_stage3(t_msh *msh)
+int	parser_stage3(t_lex *lex)
 {
 	ssize_t	i;
-	ssize_t	f_i;
 	char	**tab;
 	t_cmd	*tmp;
 
 	i = 0;
-	f_i = 0;
-	msh->cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!msh->cmd)
+	lex->cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!lex->cmd)
 		return (1);
-	tab = ft_split(msh->sh->tmp_str, '|');
+	tab = ft_split(lex->sh->tmp_str, '|');
 	if (tab == NULL)
 		return (1);
 	while (tab[i])
 	{
 		if (i == 0)
-			tmp = msh->cmd;
-		msh->cmd->command = ft_strdup(tab[i]);
-		msh->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
-		ft_fill_redir(msh);
-		ft_fill_arg(msh);
-		msh->cmd = msh->cmd->next;
+			tmp = lex->cmd;
+		lex->cmd->command = ft_strdup(tab[i]);
+		lex->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
+		ft_fill_redir(lex);
+		ft_fill_arg(lex);
+		lex->cmd = lex->cmd->next;
 		i++;
 	}
-	msh->cmd->next = NULL;
-	msh->cmd = tmp;
+	lex->cmd->next = NULL;
+	lex->cmd = tmp;
 	return (0);
 }
 
 /*
 */
-int	parser_stage2(char *str, t_msh *msh)
+int	parser_stage2(char *str, t_lex *lex)
 {
-	msh->sh->tmp_str = ft_calloc(msh->sh->input_len + 1, sizeof(char));
-	if (!msh->sh->tmp_str)
+	lex->sh->tmp_str = ft_calloc(lex->sh->input_len + 1, sizeof(char));
+	if (!lex->sh->tmp_str)
 		return (0);
-	msh->sh->i = 0;
-	msh->sh->euro = 0;
-	msh->sh->j = 0;
-	while (msh->sh->i < ft_strlen(str))
+	lex->sh->i = 0;
+	lex->sh->euro = 0;
+	lex->sh->j = 0;
+	while (lex->sh->i < ft_strlen(str))
 	{
-		if (str[msh->sh->i] == '\'' || str[msh->sh->i] == '"')
-			check_fill_quotes(str, str[msh->sh->i], msh);
-		else if (str[msh->sh->i] == '$')
-			ft_fill_expand(str, msh);
+		if (str[lex->sh->i] == '\'' || str[lex->sh->i] == '"')
+			check_fill_quotes(str, str[lex->sh->i], lex);
+		else if (str[lex->sh->i] == '$')
+			ft_fill_expand(str, lex);
 		else
-			msh->sh->tmp_str[msh->sh->j] = str[msh->sh->i];
-		msh->sh->i++;
-		msh->sh->j++;
+			lex->sh->tmp_str[lex->sh->j] = str[lex->sh->i];
+		lex->sh->i++;
+		lex->sh->j++;
 	}
-	// ft_printf("actual tmp_str is: %s\n", msh->sh->tmp_str);
+	// ft_printf("actual tmp_str is: %s\n", lex->sh->tmp_str);
 	return (0);
 }
 
 /*
 
 */
-int	parser_stage1(char *str, t_msh *msh)
+int	parser_stage1(char *str, t_lex *lex)
 {
 	t_bool	ret;
 
 	ret = false;
-	msh->sh->i = 0;
-	msh->sh->euro = 0;
-	msh->sh->expand_len = 0;
-	while (msh->sh->i < ft_strlen(str) && ret == false)
+	lex->sh->i = 0;
+	lex->sh->euro = 0;
+	lex->sh->expand_len = 0;
+	while (lex->sh->i < ft_strlen(str) && ret == false)
 	{
-		msh->sh->sq = 0;
-		msh->sh->dq = 0;
-		if (str[msh->sh->i] == '\'' || str[msh->sh->i] == '"')
-			ret = check_quotes(str, str[msh->sh->i], msh);
-		else if (str[msh->sh->i] == '>' || str[msh->sh->i] == '<')
-			ret = check_redirections(str, msh);
-		else if (str[msh->sh->i] == '|')
-			ret = check_p(str, msh);
-		else if (str[msh->sh->i] == '$')
-			ft_check_expand(str, msh);
-		msh->sh->i++;
+		lex->sh->sq = 0;
+		lex->sh->dq = 0;
+		if (str[lex->sh->i] == '\'' || str[lex->sh->i] == '"')
+			ret = check_quotes(str, str[lex->sh->i], lex);
+		else if (str[lex->sh->i] == '>' || str[lex->sh->i] == '<')
+			ret = check_redirections(str, lex);
+		else if (str[lex->sh->i] == '|')
+			ret = check_p(str, lex);
+		else if (str[lex->sh->i] == '$')
+			ft_check_expand(str, lex);
+		lex->sh->i++;
 	}
-	msh->sh->input_len = msh->sh->i + msh->sh->expand_len;
+	lex->sh->input_len = lex->sh->i + lex->sh->expand_len;
 	if (ret == false)
 		return (0);
 	else
 		return (1);
 }
 
-int	ft_parse(char *str, t_msh *msh)
+int	ft_parse(char *str, t_lex *lex)
 {
 	if (!str)
 		return (1);
-	msh->sh = (t_sh *)malloc(sizeof(t_sh));
-	if (!msh->sh)
+	lex->sh = (t_sh *)malloc(sizeof(t_sh));
+	if (!lex->sh)
 		return (0);
-	if (parser_stage1(str, msh) == 0)
+	if (parser_stage1(str, lex) == 0)
 	{
-		parser_stage2(str, msh);
-		parser_stage3(msh);
+		parser_stage2(str, lex);
+		parser_stage3(lex);
 	}
-	free(msh->sh);
+	free(lex->sh);
 	return (1);
 }

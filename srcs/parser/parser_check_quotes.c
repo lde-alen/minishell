@@ -6,26 +6,26 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/04 22:41:52 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:02:02 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_quotes(char *str, char quote, t_msh *msh)
+int	check_quotes(char *str, char quote, t_lex *lex)
 {
-	if (str[msh->sh->i] == '\'')
-		msh->sh->sq += 1;
-	if (str[msh->sh->i] == '"')
-		msh->sh->dq += 1;
-	msh->sh->i++;
-	if (str[msh->sh->i] && ft_strchr((str + msh->sh->i), quote) != NULL)
+	if (str[lex->sh->i] == '\'')
+		lex->sh->sq += 1;
+	if (str[lex->sh->i] == '"')
+		lex->sh->dq += 1;
+	lex->sh->i++;
+	if (str[lex->sh->i] && ft_strchr((str + lex->sh->i), quote) != NULL)
 	{
-		while (str[msh->sh->i] != quote && str[msh->sh->i])
+		while (str[lex->sh->i] != quote && str[lex->sh->i])
 		{
-			if (str[msh->sh->i] == '$' && quote == '"')
-				ft_check_expand(str, msh);
-			msh->sh->i++;
+			if (str[lex->sh->i] == '$' && quote == '"')
+				ft_check_expand(str, lex);
+			lex->sh->i++;
 		}
 	}
 	else

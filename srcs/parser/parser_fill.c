@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/11 09:20:29 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:00:15 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
  * parse the rest
  */
 
-size_t	ft_fill_first_arg(t_msh *msh, size_t i, char *tmp)
+size_t	ft_fill_first_arg(t_lex *lex, size_t i, char *tmp)
 {
-	while (msh->cmd->command[i] && msh->cmd->command[i] != ' '
-		&& msh->cmd->command[i] != '<' && msh->cmd->command[i] != '>'
-		&& msh->cmd->command[i] != '|')
+	while (lex->cmd->command[i] && lex->cmd->command[i] != ' '
+		&& lex->cmd->command[i] != '<' && lex->cmd->command[i] != '>'
+		&& lex->cmd->command[i] != '|')
 	{
-		ft_append_back(&tmp, msh->cmd->command[i]);
+		ft_append_back(&tmp, lex->cmd->command[i]);
 		i++;
 	}
 	return (i);
@@ -35,39 +35,41 @@ size_t	ft_fill_first_arg(t_msh *msh, size_t i, char *tmp)
 /**
  * should be fine
  */
-char	*ft_args_to_str(t_msh *msh)
+char	*ft_args_to_str(t_lex *lex)
 {
 	size_t	i;
 	char	*tmp;
 
 	tmp = (char *)ft_calloc(1, sizeof(char));
 	i = 0;
-	while (msh->cmd->command[i])
+	while (i < ft_strlen(lex->cmd->command))
 	{
-		while (msh->cmd->command[i] == ' ')
+		while (lex->cmd->command[i] == ' ')
 			i++;
-		if (msh->cmd->command[i] == '<' || msh->cmd->command[i] == '>')
+		if (lex->cmd->command[i] == '<' || lex->cmd->command[i] == '>')
 		{
 			i++;
-			if (msh->cmd->command[i] == '<' || msh->cmd->command[i] == '>')
+			if (lex->cmd->command[i] == '<' || lex->cmd->command[i] == '>')
 				i++;
-			while (msh->cmd->command[i] == ' ')
+			while (lex->cmd->command[i] == ' ')
 				i++;
-			while (msh->cmd->command[i] != ' ' && msh->cmd->command[i] != '>'
-				&& msh->cmd->command[i] != '<' && msh->cmd->command[i] != '|')
+			while ((lex->cmd->command[i] != ' ' && lex->cmd->command[i] != '>'
+					&& lex->cmd->command[i] != '<'
+					&& lex->cmd->command[i] != '|')
+				&& lex->cmd->command[i])
 					i++;
-				i++;
 		}
-		while (msh->cmd->command[i] == ' ')
+		while (lex->cmd->command[i] == ' ')
 			i++;
-		tmp = ft_strjoin(tmp, " ");
-		while (msh->cmd->command[i] != ' ' && msh->cmd->command[i] != '>'
-			&& msh->cmd->command[i] != '<' && msh->cmd->command[i] != '|'
-			&& msh->cmd->command[i])
+		while (lex->cmd->command[i] != ' ' && lex->cmd->command[i] != '>'
+			&& lex->cmd->command[i] != '<' && lex->cmd->command[i] != '|'
+			&& lex->cmd->command[i])
 		{
-			ft_append_back(&tmp, msh->cmd->command[i]);
+			ft_append_back(&tmp, lex->cmd->command[i]);
 			i++;
 		}
+		i--;
+		tmp = ft_strjoin(tmp, " ");
 		i++;
 	}
 	return (tmp);
@@ -80,7 +82,7 @@ size_t	ft_count_args(char *args)
 
 	count = 0;
 	i = 0;
-	while (args[i])
+	while (i < ft_strlen(args))
 	{
 		while (args[i] == ' ')
 			i++;
@@ -95,7 +97,7 @@ size_t	ft_count_args(char *args)
 	return (count);
 }
 
-void	ft_fill_arg(t_msh *msh)
+void	ft_fill_arg(t_lex *lex)
 {
 	size_t	i;
 	size_t	nb_args;
@@ -104,19 +106,17 @@ void	ft_fill_arg(t_msh *msh)
 
 	i = 0;
 	tmp = ft_calloc(1, sizeof(char));
-	i = ft_fill_first_arg(msh, i, tmp);
-	args = ft_args_to_str(msh);
+	i = ft_fill_first_arg(lex, i, tmp);
+	args = ft_args_to_str(lex);
 	nb_args = ft_count_args(args);
-	msh->cmd->argument = (char **)malloc(sizeof(char *) * (nb_args + 1));
-	msh->cmd ->argument = ft_split(args, ' ');
-	free(msh->cmd->command);
-	msh->cmd->command = msh->cmd ->argument[0];
-	ft_print_char_arr(msh->cmd->argument);
-	ft_printf("*command: %s\n", msh->cmd->command);
-	ft_printf("initial string before split is: %s\n", args);
+	lex->cmd->argument = (char **)malloc(sizeof(char *) * (nb_args + 1));
+	lex->cmd ->argument = ft_split(args, ' ');
+	free(lex->cmd->command);
+	lex->cmd->command = lex->cmd ->argument[0];
+	ft_printf("*command: %s\n", lex->cmd->command);
+	ft_printf("string with all args: %s\n", args);
 	ft_printf("the nb of args is: %d\n", nb_args);
 	ft_printf("the value of i is: %d\n", i);
-	ft_printf("the value of tmp is: %s\n", tmp);
 }
 
 void	ft_init_file(char **file, size_t count)

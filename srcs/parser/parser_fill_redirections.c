@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/11 04:49:49 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:29:12 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,61 +33,89 @@ size_t	ft_count_redir(char *str)
 	return (count);
 }
 
+void	ft_init2_file(t_lex *lex)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < lex->cmd->redir->flag_len)
+	{
+		lex->cmd->redir->file[i] = (char *)ft_calloc(1, sizeof(char));
+		i++;
+	}
+}
+
+void	ft_get_file_name(char *str, t_lex *lex, size_t j)
+{
+	size_t	i;
+
+	i = 1;
+	while (str[i] == ' ')
+		i++;
+	while (str[i] && str[i] != ' ' && str[i] != '>'
+		&& str[i] != '<' && str[i] != '|')
+	{
+		ft_append_back(&lex->cmd->redir->file[j], str[i]);
+		i++;
+	}
+}
+
 /**
  * should be working
  */
-void	ft_fill_r_flags(t_msh *msh, size_t count)
+void	ft_fill_r_flags(t_lex *lex, size_t count)
 {
 	size_t	i;
 	size_t	j;
-	size_t	x;
 
 	i = 0;
 	j = 0;
-	x = 0;
-	msh->cmd->redir->flag_len = count - 1;
-	msh->cmd->redir->flag = (size_t *)malloc(sizeof(size_t) * count);
-	while (msh->cmd->command[i])
+	lex->cmd->redir->flag_len = count;
+	lex->cmd->redir->flag = (size_t *)malloc(sizeof(size_t) * (count));
+	lex->cmd->redir->file = (char **)ft_calloc((count), sizeof(char *));
+	ft_init2_file(lex);
+	while (lex->cmd->command[i])
 	{
-		if (msh->cmd->command[i] == '>' || msh->cmd->command[i] == '<')
+		if (lex->cmd->command[i] == '>' || lex->cmd->command[i] == '<')
 		{
 			i++;
-			if (msh->cmd->command[i] == '>')
-				msh->cmd->redir->flag[j] = DR_REDIR;
-			else if (msh->cmd->command[i] == '<')
-				msh->cmd->redir->flag[j] = DL_REDIR;
+			if (lex->cmd->command[i] == '>')
+			{
+				lex->cmd->redir->flag[j] = DR_REDIR;
+				ft_get_file_name(lex->cmd->command + i, lex, j);
+			}
+			else if (lex->cmd->command[i] == '<')
+			{
+				lex->cmd->redir->flag[j] = DL_REDIR;
+				ft_get_file_name(lex->cmd->command + i, lex, j);
+			}
 			else
 			{
 				i--;
-				if (msh->cmd->command[i] == '>')
-					msh->cmd->redir->flag[j] = R_REDIR;
-				if (msh->cmd->command[i] == '<')
-					msh->cmd->redir->flag[j] = L_REDIR;
+				if (lex->cmd->command[i] == '>')
+					lex->cmd->redir->flag[j] = R_REDIR;
+				if (lex->cmd->command[i] == '<')
+					lex->cmd->redir->flag[j] = L_REDIR;
+				ft_get_file_name(lex->cmd->command + i, lex, j);
 			}
+			ft_printf("file_name %d: %s\n", j,lex->cmd->redir->file[j]);
 			j++;
 		}
 		i++;
 	}
 }
 
-// void	ft_fill_r_file(t_msh *msh, size_t count)
-// {
-// 	size_t	i;
 
-// 	i = 0;
-
-// }
-void	ft_fill_redir(t_msh *msh)
+void	ft_fill_redir(t_lex *lex)
 {
 	size_t	count;
 
-	count = ft_count_redir(msh->cmd->command);
+	count = ft_count_redir(lex->cmd->command);
 	if (count == 0)
 		return ;
 	else
 	{
-		msh->cmd->redir = (t_redir *)malloc(sizeof(t_redir));
-		ft_fill_r_flags(msh, count);
-		// ft_fill_r_file(msh, count);
+		lex->cmd->redir = (t_redir *)malloc(sizeof(t_redir));
+		ft_fill_r_flags(lex, count);
 	}
 }

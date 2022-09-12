@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/28 00:18:29 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:37:31 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 /*
 */
-int	check_redirections(char *str, t_msh *msh)
+int	check_redirections(char *str, t_lex *lex)
 {
-	size_t	i;
+	ssize_t	i;
 
 	i = -1;
 	while (str[++i])
@@ -28,18 +28,18 @@ int	check_redirections(char *str, t_msh *msh)
 		}
 		if (str[i] == '"')
 		{
-			msh->sh->dq = 1;
+			lex->sh->dq = 1;
 			i++;
 			while (str[i] != '"' && str[i])
 			{
 				if (str[i] == '$')
-					ft_check_expand(str, msh);
+					ft_check_expand(str, lex);
 				i++;
 			}
 		}
 		else if (str[i] == '\'')
 		{
-			msh->sh->sq = 1;
+			lex->sh->sq = 1;
 			i++;
 			while (str[i] != '\'' && str[i])
 				i++;
@@ -47,13 +47,13 @@ int	check_redirections(char *str, t_msh *msh)
 		else if (str[i] == '>')
 		{
 			i++;
-			msh->sh->sr = 1;
+			lex->sh->sr = 1;
 			while (str[i] == '>' && str[i])
 			{
-				msh->sh->sr++;
+				lex->sh->sr++;
 				i++;
 			}
-			if (msh->sh->sr > 2)
+			if (lex->sh->sr > 2)
 			{
 				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
@@ -67,19 +67,19 @@ int	check_redirections(char *str, t_msh *msh)
 				return (1);
 			}
 			if (str[i] == '$')
-				ft_check_expand(str, msh);
+				ft_check_expand(str, lex);
 			i--;
 		}
 		else if (str[i] == '<')
 		{
 			i++;
-			msh->sh->sr = 1;
+			lex->sh->sr = 1;
 			while (str[i] == '<' && str[i])
 			{
-				msh->sh->sr++;
+				lex->sh->sr++;
 				i++;
 			}
-			if (msh->sh->sr > 2)
+			if (lex->sh->sr > 2)
 			{
 				ft_putstr_fd("ERROR REDIR\n", 2);
 				return (1);
@@ -93,7 +93,7 @@ int	check_redirections(char *str, t_msh *msh)
 				return (1);
 			}
 			if (str[i] == '$')
-				ft_check_expand(str, msh);
+				ft_check_expand(str, lex);
 			i--;
 		}
 	}

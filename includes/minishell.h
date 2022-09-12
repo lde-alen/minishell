@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/11 08:20:43 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:04:59 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,10 @@
 typedef struct s_redir
 {
 	char		**file;
-	size_t		r_flag;
 	size_t		*flag;
 	size_t		flag_len;
-	size_t		ll;
-	size_t		lr;
-	size_t		rr;
-
 }	t_redir;
 
-// split by pipes / arg / command / str / next /
 typedef struct s_cmd
 {
 	char			**argument;
@@ -115,12 +109,12 @@ typedef enum e_boolean
 	true
 }	t_bool;
 
-typedef struct s_msh
+typedef struct s_lex
 {
 	t_env	*env;
 	t_sh	*sh;
 	t_cmd	*cmd;
-}	t_msh;
+}	t_lex;
 
 /**
  * Teaching kinds how to manipulate tools
@@ -128,7 +122,7 @@ typedef struct s_msh
 ssize_t	get_expand_len(char *name, t_env *env);
 char	*get_env_value(t_env *env, char *name);
 char	*ft_append_char(char *name, char c);
-void	ft_fill_expand(char *str, t_msh *msh);
+void	ft_fill_expand(char *str, t_lex *lex);
 void	ft_print_char_arr(char **array);
 void	print_list_env(t_env *head);
 char	*ft_expand(t_env *lst, char *str);
@@ -136,22 +130,22 @@ void	new_prompt(int val);
 void	ft_strjustcat(char *dst, const char *src);
 int		minishell(char **env);
 int		ft_init(t_cmd **cmd, t_env **env);
-int		ft_parse(char *str, t_msh *msh);
-void	ft_fill_arg(t_msh *msh);
-int		check_redirections(char *str, t_msh *msh);
-int		check_quotes(char *str, char quote, t_msh *msh);
-int		parser_stage1(char *str, t_msh *msh);
-int		parser_stage2(char *str, t_msh *msh);
-int		ft_check_expand(char *str, t_msh *msh);
-int		check_p(char *str, t_msh *msh);
-void	check_fill_redirections(char *str, t_msh *msh);
-void	check_fill_quotes(char *str, char c, t_msh *msh);
-void	ft_fill_redir(t_msh *msh);
+int		ft_parse(char *str, t_lex *lex);
+void	ft_fill_arg(t_lex *lex);
+int		check_redirections(char *str, t_lex *lex);
+int		check_quotes(char *str, char quote, t_lex *lex);
+int		parser_stage1(char *str, t_lex *lex);
+int		parser_stage2(char *str, t_lex *lex);
+int		ft_check_expand(char *str, t_lex *lex);
+int		check_p(char *str, t_lex *lex);
+void	check_fill_redirections(char *str, t_lex *lex);
+void	check_fill_quotes(char *str, char c, t_lex *lex);
+void	ft_fill_redir(t_lex *lex);
 t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value);
 t_env	*push_env(t_env *env_list, char *env_name, char *env_value);
 t_env	*ft_env(char **env);
-void	ft_fill_command(char **tab, size_t i, t_msh *msh);
-void	ft_fill_arg(t_msh *msh);
+void	ft_fill_command(char **tab, size_t i, t_lex *lex);
+void	ft_fill_arg(t_lex *lex);
 void	ft_append_back(char **str, char c);
 
 #endif
