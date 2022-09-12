@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 13:51:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/04 11:40:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,34 @@ size_t	check_builtin(t_cmd *cmd_lst)
 	return (0);
 }
 
-size_t	check_path(t_cmd *cmd_lst, t_exec **exec)
+void	check_path(t_cmd *cmd_lst, t_exec **exec)
 {
-	if ((*exec)->path == NULL)
-	{
-		if (check_builtin(cmd_lst) == 0)
-		{
-			perror("path error");
-			return (1);
-		}
-		else
-			(*exec)->flag = 1;
-	}
-	return (0);
+	if (check_builtin(cmd_lst) == 1)
+		(*exec)->flag = 1;
 }
 
-size_t	check_all_path(t_env *lst, t_cmd *cmd_lst)
+void	pipe_arr(t_exec *exec)
 {
-	char	*path;
-
-	while (cmd_lst != NULL)
+	if (pipe(exec->fd[exec->i]) < 0)
 	{
-		path = check_access(lst, cmd_lst);
-		if (path == NULL)
+		if (exec->i != 0)
 		{
-			if (check_builtin(cmd_lst) == 0)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				ft_putstr_fd(cmd_lst->argument[0], 2);
-				ft_putendl_fd(": command not found\n", 2);
-				return (1);
-			}
+			close(exec->fd[exec->i - 1][0]);
+			close(exec->fd[exec->i - 1][1]);
 		}
-		free(path);
-		cmd_lst = cmd_lst->next;
+		perror("pipe");
 	}
-	return (0);
+}
+
+void	close_pipes(t_exec *exec)
+{
+	if (exec->i == 0)
+		close(exec->fd[exec->i][1]);
+	else if ((exec->i + 1) == exec->len)
+		close(exec->fd[exec->i - 1][0]);
+	else
+	{
+		close(exec->fd[exec->i - 1][0]);
+		close(exec->fd[exec->i][1]);
+	}
 }

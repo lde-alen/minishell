@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 15:14:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/01 15:14:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	char	*path;
 
 	if (access(cmd_lst->command, F_OK | X_OK) == 0)
-		return (cmd_lst->command);
+	{
+		// if (access(cmd_lst->command, X_OK) == 0)
+		// 	return (cmd_lst->command);
+		return (ft_strdup(cmd_lst->command));
+	}
 	env_path = get_path(lst);
 	path = NULL;
 	path = join_path(cmd_lst, path, env_path);
@@ -75,7 +79,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 }
 
 //converts the t_env struct to char **
-char	**lst_to_char(t_env *lst)
+char	**lst_to_char(t_env **lst)
 {
 	char	**env;
 	char	*temp_str;
@@ -83,22 +87,22 @@ char	**lst_to_char(t_env *lst)
 	size_t	i;
 
 	i = 0;
-	tmp = lst;
-	env = (char **)malloc(sizeof(char *) * (get_lst_len(lst) + 1));
-	while (lst->next != tmp)
+	tmp = *lst;
+	env = (char **)malloc(sizeof(char *) * (get_lst_len(*lst) + 1));
+	while (tmp->next != *lst)
 	{
-		env[i] = ft_strdup(lst->name);
+		env[i] = ft_strdup(tmp->name);
 		temp_str = ft_strjoin(env[i], "=");
 		free(env[i]);
-		env[i] = ft_strjoin(temp_str, lst->value);
+		env[i] = ft_strjoin(temp_str, tmp->value);
 		free(temp_str);
-		lst = lst->next;
+		tmp = tmp->next;
 		i++;
 	}
-	env[i] = ft_strdup(lst->name);
+	env[i] = ft_strdup(tmp->name);
 	temp_str = ft_strjoin(env[i], "=");
 	free(env[i]);
-	env[i] = ft_strjoin(temp_str, lst->value);
+	env[i] = ft_strjoin(temp_str, tmp->value);
 	env[i + 1] = NULL;
 	free(temp_str);
 	return (env);

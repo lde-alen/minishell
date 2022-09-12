@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/27 09:32:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/10 13:42:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_env_lst(t_env *lst)
 void	free_cmd(t_cmd **cmd_lst)
 {
 	t_cmd	*tmp;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	tmp = *cmd_lst;
@@ -58,7 +58,7 @@ void	free_cmd(t_cmd **cmd_lst)
 		free((*cmd_lst)->argument[i]);
 		i++;
 	}
-	// free((*cmd_lst)->argument[i]);
+	free((*cmd_lst)->argument[i]);
 	free((*cmd_lst)->argument);
 	if (cmd_lst)
 		(*cmd_lst) = ((*cmd_lst))->next;
@@ -79,15 +79,29 @@ void	free_env_kid(char **env_kid)
 	free(env_kid);
 }
 
-void	free_exec(t_exec *exec)
+void	free_exec(t_exec **exec)
 {
-	exec->i = 0;
-	while (exec->i < exec->len)
+	(*exec)->i = 0;
+	while ((*exec)->i < (*exec)->len)
 	{
-		free(exec->fd[exec->i]);
-		exec->i++;
+		free((*exec)->fd[(*exec)->i]);
+		(*exec)->i++;
 	}
-	free(exec->fd);
-	free(exec->id);
-	free(exec);
+	free((*exec)->fd);
+	free((*exec)->id);
+	free(*exec);
+}
+
+void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst)
+{
+	if (exec->env_kid)
+		free_env_kid(exec->env_kid);
+	if (exec->path)
+		free(exec->path);
+	if (exec)
+		free_exec(&exec);
+	if (lst)
+		free_env_lst(lst);
+	if (cmd_lst)
+		free_cmd(&cmd_lst);
 }

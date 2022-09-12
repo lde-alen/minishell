@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_ltoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/06 19:24:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 12:47:09 by asanthos         ###   ########.fr       */
+/*   Created: 2022/08/30 12:44:13 by asanthos          #+#    #+#             */
+/*   Updated: 2022/09/04 15:08:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	export_error(char *val)
+char	*ft_ltoa(size_t n)
 {
-	ft_putstr_fd("bash: export: '", 2);
-	ft_putstr_fd(val, 2);
-	ft_putendl_fd("': not a valid identifier", 2);
-}
+	size_t			i;
+	char			*str;
+	short			sign;
+	size_t			pow_ten;
 
-void	err_msg(t_cmd *cmd_lst, char *val, char *err)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd_lst->command, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(val, 2);
-	ft_putendl_fd(err, 2);
+	i = 1;
+	pow_ten = 1;
+	sign = 0;
+	++sign;
+	while (n / pow_ten / 10 && i++)
+		pow_ten *= 10;
+	str = ft_calloc(i + sign + 1, 1);
+	if (!str)
+		return (NULL);
+	i = 0;
+	if (sign)
+		str[i++] = '-';
+	while (pow_ten)
+	{
+		str[i++] = n / pow_ten + '0';
+		n = n % pow_ten;
+		pow_ten /= 10;
+	}
+	return (str);
 }

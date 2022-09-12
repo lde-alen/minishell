@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 07:29:45 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/25 14:55:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/03 15:06:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ int	get_args_len(t_cmd *cmd_lst)
 
 	i = 0;
 	while (cmd_lst->argument[i])
+		i++;
+	return (i);
+}
+
+int	get_len(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
 		i++;
 	return (i);
 }

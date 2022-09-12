@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/27 09:32:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 05:22:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # include <signal.h>
 # include <stdlib.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/errno.h>
+# include <sys/ioctl.h>
 # include <limits.h>
 # include <fcntl.h>
 // # include <valgrind/memcheck.h>
@@ -60,7 +63,6 @@ typedef struct s_env
 	char			**env_str;
 	char			*name;
 	char			*value;
-	int				export_flag;
 	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
@@ -72,10 +74,11 @@ typedef struct s_exec
 	size_t		flag;
 	size_t		len;
 	size_t		i;
-	int			j;
 	char		*path;
 	char		**env_kid;
 }	t_exec;
+
+extern int	g_exit;
 
 /**
  * Teaching kinds how to manipulate tools
@@ -118,16 +121,20 @@ void	ft_exit(t_cmd *cmd_lst);
 /**
  * UTILS
  */
-void	print_list_env(t_env *head);
+void	print_list_env(t_env *head, t_cmd *cmd_lst);
 void	print_lst(t_env *lst);
 
 char	*get_pwd(void);
 t_env	*search_pwd(t_env *lst);
 
 int		get_args_len(t_cmd *cmd_lst);
+int		get_len(char *str);
 int		get_lst_len(t_env *lst);
 int		iter_diff(t_env *lst, t_env *new_node);
-size_t	get_cmd_len(t_cmd *cmd);	
+size_t	get_cmd_len(t_cmd *cmd);
+
+char	*check_validity(t_cmd *cmd_lst);
+size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 
 /**
  * EXECUTING FUNCTIONS
@@ -136,7 +143,7 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst);
 void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
-char	**lst_to_char(t_env *lst);
+char	**lst_to_char(t_env **lst);
 
 void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status);
 void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file);
@@ -151,10 +158,11 @@ void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec);
 void	pipe_arr(t_exec *exec);
 void	close_pipes(t_exec *exec);
 size_t	check_builtin(t_cmd *cmd_lst);
-size_t	check_path(t_cmd *cmd_lst, t_exec **exec);
+void	check_path(t_cmd *cmd_lst, t_exec **exec);
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
-void	main_child2(t_cmd *cmd_lst, t_exec *exec);
+size_t	main_child2(t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
+size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
 void	redirect_out(t_env *lst, t_cmd *cmd_lst);
@@ -169,9 +177,12 @@ void	free_cmd(t_cmd **cmd_lst);
 void	free_env_lst(t_env *lst);
 void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
-void	free_exec(t_exec *exec);
+void	free_exec(t_exec **exec);
+void	free_cmd_lst(t_cmd *cmd_lst);
+void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst);
 
-void	new_prompt(int val);
+void	sig_handler(int val);
+void	err_msg(t_cmd *cmd_lst, char *val, char *err);
 
 /**
  * ERROR FUNCTONS
@@ -179,5 +190,11 @@ void	new_prompt(int val);
 void	export_error(char *val);
 
 int		ft_strcmp(const char *s1, const char *s2);
+size_t	ft_atol(const char *str);
+char	*ft_ltoa(size_t n);
+
+void	ft_env_init(t_env *lst);
+void	ft_cmd_init(t_cmd *cmd_lst);
+void	ft_exec_init(t_exec *exec);
 
 #endif

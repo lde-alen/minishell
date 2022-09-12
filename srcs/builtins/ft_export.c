@@ -6,13 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 12:39:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/08/31 13:12:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// extern int g_exit;
 
 static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 {
@@ -25,7 +23,7 @@ static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
 		div_env(cmd_lst->argument[i], lst);
 }
 
-char	*check_str(t_cmd *cmd_lst, size_t i)
+static char	*check_str(t_cmd *cmd_lst, size_t i)
 {
 	size_t	j;
 
@@ -37,8 +35,10 @@ char	*check_str(t_cmd *cmd_lst, size_t i)
 		{
 			if (cmd_lst->argument[i][j] == '+'
 				&& cmd_lst->argument[i][j + 1] != '=')
+			{
+				g_exit = 1;
 				return (cmd_lst->argument[i]);
-			// g_exit = 1;
+			}
 		}
 		j++;
 	}
@@ -46,7 +46,7 @@ char	*check_str(t_cmd *cmd_lst, size_t i)
 }
 
 //CHECK
-static char	*check_validity(t_cmd *cmd_lst)
+char	*check_validity(t_cmd *cmd_lst)
 {
 	char	*ret;
 	size_t	i;
@@ -57,7 +57,7 @@ static char	*check_validity(t_cmd *cmd_lst)
 		if (cmd_lst->argument[i][0] != '_'
 			&& (isalpha((cmd_lst->argument[i][0]))) == 0)
 		{
-			// g_exit = 1;
+			g_exit = 1;
 			return (cmd_lst->argument[i]);
 		}
 		ret = check_str(cmd_lst, i);
@@ -65,7 +65,7 @@ static char	*check_validity(t_cmd *cmd_lst)
 			return (ret);
 		i++;
 	}
-	// g_exit = 0;
+	g_exit = 0;
 	return (NULL);
 }
 
@@ -103,6 +103,7 @@ void	lonely_export(t_env *lst)
 	t_env	*new_node;
 	t_env	*tmp;
 
+	g_exit = 0;
 	tmp = lst;
 	new_node = NULL;
 	while (lst->next != tmp)

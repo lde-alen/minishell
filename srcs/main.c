@@ -6,11 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/26 12:10:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/10 18:33:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit = 0;
 
 int	main(int ac, char **av, char **env)
 {

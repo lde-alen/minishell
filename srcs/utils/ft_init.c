@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/06 19:24:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 12:47:09 by asanthos         ###   ########.fr       */
+/*   Created: 2022/09/11 17:12:22 by asanthos          #+#    #+#             */
+/*   Updated: 2022/09/12 05:23:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	export_error(char *val)
+void	ft_env_init(t_env *lst)
 {
-	ft_putstr_fd("bash: export: '", 2);
-	ft_putstr_fd(val, 2);
-	ft_putendl_fd("': not a valid identifier", 2);
+	lst->env_str = NULL;
+	lst->name = NULL;
+	lst->value = NULL;
+	lst->next = NULL;
+	lst->prev = NULL;
 }
 
-void	err_msg(t_cmd *cmd_lst, char *val, char *err)
+void	ft_cmd_init(t_cmd *cmd_lst)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd_lst->command, 2);
-	ft_putstr_fd(": ", 2);
-	ft_putstr_fd(val, 2);
-	ft_putendl_fd(err, 2);
+	cmd_lst->command = NULL;
+	cmd_lst->argument = NULL;
+	cmd_lst->o_token = NULL;
+	cmd_lst->next = NULL;
+}
+
+void	ft_exec_init(t_exec *exec)
+{
+	exec->fd = NULL;
+	exec->id = 0;
+	exec->flag = 0;
+	exec->len = 0;
+	exec->i = 0;
+	exec->path = NULL;
+	exec->env_kid = NULL;
 }
