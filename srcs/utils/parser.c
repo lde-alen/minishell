@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/10 18:41:26 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/10 18:44:01 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
+/*   Updated: 2022/08/26 08:41:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
+#include "minishell.h"
 
-int	main(void)
+void	ft_parse(t_env *lst, t_cmd *cmd_lst)
 {
-	int	i;
-
-	i = 15;
-	while (i > 0)
-	{
-		printf("\033[A\33[2KT\rAmount of seconds missing %d seconds...\n", i);
-		i--;
-		sleep(1);
-	}
-	return (0);
+	exec_cmd(lst, cmd_lst);
 }
