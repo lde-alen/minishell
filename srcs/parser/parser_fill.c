@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 16:00:15 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:48:56 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,6 @@ void	ft_fill_arg(t_lex *lex)
 	lex->cmd ->argument = ft_split(args, ' ');
 	free(lex->cmd->command);
 	lex->cmd->command = lex->cmd ->argument[0];
-	ft_printf("*command: %s\n", lex->cmd->command);
-	ft_printf("string with all args: %s\n", args);
-	ft_printf("the nb of args is: %d\n", nb_args);
-	ft_printf("the value of i is: %d\n", i);
 }
 
 void	ft_init_file(char **file, size_t count)

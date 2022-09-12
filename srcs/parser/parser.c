@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 14:19:15 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:53:41 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ int	ft_parse(char *str, t_lex *lex)
 		parser_stage3(lex);
 	}
 	free(lex->sh);
+	ft_printf("~~~~~~ End of Parsing. ~~~~~~\n\n");
 	return (1);
 }

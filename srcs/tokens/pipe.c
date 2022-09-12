@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 05:15:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:54:52 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
 
 void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
 {
-	check_path(*cmd_lst, &exec);
 	while (*cmd_lst != NULL)
 	{
 		pipe_exec(lst, *cmd_lst, exec);

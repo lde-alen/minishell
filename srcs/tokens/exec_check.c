@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 11:40:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:51:01 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 size_t	check_builtin(t_cmd *cmd_lst)
 {
+	ft_printf("command value: %s\n", cmd_lst->command);
 	if (cmd_lst->command[0] == '$' || ft_strcmp(cmd_lst->command, "echo") == 0
 		|| ft_strcmp(cmd_lst->command, "pwd") == 0
 		|| ft_strcmp(cmd_lst->command, "env") == 0

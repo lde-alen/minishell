@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 16:29:12 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:48:40 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void	ft_fill_r_flags(t_lex *lex, size_t count)
 					lex->cmd->redir->flag[j] = L_REDIR;
 				ft_get_file_name(lex->cmd->command + i, lex, j);
 			}
-			ft_printf("file_name %d: %s\n", j,lex->cmd->redir->file[j]);
 			j++;
 		}
 		i++;
