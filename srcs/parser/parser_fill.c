@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 20:48:56 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 00:03:50 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ size_t	ft_fill_first_arg(t_lex *lex, size_t i, char *tmp)
 		ft_append_back(&tmp, lex->cmd->command[i]);
 		i++;
 	}
+	free (tmp);
 	return (i);
 }
 
-/**
- * should be fine
- */
 char	*ft_args_to_str(t_lex *lex)
 {
 	size_t	i;
@@ -91,6 +89,7 @@ size_t	ft_count_args(char *args)
 			count++;
 			while (args[i] && args[i] != ' ')
 				i++;
+			i--;
 		}
 		i++;
 	}
@@ -100,7 +99,6 @@ size_t	ft_count_args(char *args)
 void	ft_fill_arg(t_lex *lex)
 {
 	size_t	i;
-	size_t	nb_args;
 	char	*args;
 	char	*tmp;
 
@@ -108,10 +106,9 @@ void	ft_fill_arg(t_lex *lex)
 	tmp = ft_calloc(1, sizeof(char));
 	i = ft_fill_first_arg(lex, i, tmp);
 	args = ft_args_to_str(lex);
-	nb_args = ft_count_args(args);
-	lex->cmd->argument = (char **)malloc(sizeof(char *) * (nb_args + 1));
-	lex->cmd ->argument = ft_split(args, ' ');
+	lex->cmd->argument = ft_split(args, ' ');
 	free(lex->cmd->command);
+	free(args);
 	lex->cmd->command = lex->cmd ->argument[0];
 }
 

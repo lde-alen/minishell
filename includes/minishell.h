@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 20:22:04 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 23:39:04 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,7 @@ void	free_env_kid(char **env_kid);
 void	free_exec(t_exec **exec);
 void	free_cmd_lst(t_cmd *cmd_lst);
 void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst);
+void	free_split_baqala(char **split_res, int i);
 
 void	sig_handler(int val);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);

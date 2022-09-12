@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 20:53:41 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 22:48:44 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,31 @@ int	parser_stage3(t_lex *lex)
 	i = 0;
 	lex->cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!lex->cmd)
+	{
+		free (lex->sh->tmp_str);
 		return (1);
+	}
 	tab = ft_split(lex->sh->tmp_str, '|');
+	free (lex->sh->tmp_str);
 	if (tab == NULL)
+	{
+		free (lex->sh->tmp_str);
 		return (1);
+	}
+	tmp = lex->cmd;
 	while (tab[i])
 	{
-		if (i == 0)
-			tmp = lex->cmd;
 		lex->cmd->command = ft_strdup(tab[i]);
-		lex->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
 		ft_fill_redir(lex);
 		ft_fill_arg(lex);
-		lex->cmd = lex->cmd->next;
+		if (tab[i + 1])
+		{
+			lex->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
+			lex->cmd = lex->cmd->next;
+		}
 		i++;
 	}
+	free_split(tab);
 	lex->cmd->next = NULL;
 	lex->cmd = tmp;
 	return (0);
@@ -62,7 +72,6 @@ int	parser_stage2(char *str, t_lex *lex)
 		lex->sh->i++;
 		lex->sh->j++;
 	}
-	// ft_printf("actual tmp_str is: %s\n", lex->sh->tmp_str);
 	return (0);
 }
 

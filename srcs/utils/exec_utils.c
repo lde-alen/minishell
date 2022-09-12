@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/01 15:14:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 23:39:18 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ char	*join_path(t_cmd *cmd_lst, char *path, char **env_path)
 	i = 0;
 	while (env_path[i])
 	{
-		post_join = ft_strjoin("/", cmd_lst->command);
+		post_join = ft_strjoin(ft_strdup("/"), cmd_lst->command);
 		str = ft_strjoin(env_path[i], post_join);
 		if (access(str, F_OK) == 0)
 		{
 			path = ft_strdup(str);
 			free(str);
 			free(post_join);
-			free_split(env_path);
+			free_split_baqala(env_path, i + 1);
 			return (path);
 		}
 		free(str);
@@ -74,7 +74,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	path = join_path(cmd_lst, path, env_path);
 	if (path != NULL)
 		return (path);
-	free_split(env_path);
+	// free_split(env_path);
 	return (NULL);
 }
 
@@ -82,7 +82,6 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 char	**lst_to_char(t_env **lst)
 {
 	char	**env;
-	char	*temp_str;
 	t_env	*tmp;
 	size_t	i;
 
@@ -92,18 +91,14 @@ char	**lst_to_char(t_env **lst)
 	while (tmp->next != *lst)
 	{
 		env[i] = ft_strdup(tmp->name);
-		temp_str = ft_strjoin(env[i], "=");
-		free(env[i]);
-		env[i] = ft_strjoin(temp_str, tmp->value);
-		free(temp_str);
+		env[i] = ft_strjoin(env[i], "=");
+		env[i] = ft_strjoin(env[i], tmp->value);
 		tmp = tmp->next;
 		i++;
 	}
 	env[i] = ft_strdup(tmp->name);
-	temp_str = ft_strjoin(env[i], "=");
-	free(env[i]);
-	env[i] = ft_strjoin(temp_str, tmp->value);
+	env[i] = ft_strjoin(env[i], "=");
+	env[i] = ft_strjoin(env[i], tmp->value);
 	env[i + 1] = NULL;
-	free(temp_str);
 	return (env);
 }

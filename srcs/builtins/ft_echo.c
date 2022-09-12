@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 12:13:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/13 00:07:28 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,13 @@
 static void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 {
 	char	*str;
-	char	*store_value;
 
-	str = "";
-	store_value = "";
+	str = ft_strdup("");
 	while (cmd_lst->argument[i])
 	{
-		store_value = ft_strjoin(str, cmd_lst->argument[i]);
-		str = ft_strdup(store_value);
-		free(store_value);
-		store_value = ft_strjoin(str, " ");
-		free(str);
-		str = ft_strdup(store_value);
-		free(store_value);
+		str = ft_strjoin(str, cmd_lst->argument[i]);
+		if (cmd_lst->argument[i + 1])
+			str = ft_strjoin(str, " ");
 		i++;
 	}
 	if (flag == 0)

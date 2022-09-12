@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 05:23:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 21:33:58 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	exec_sys(t_env *lst, t_cmd *cmd_lst)
 {
 	t_exec	*exec;
 
-	ft_memset(&exec, 0, sizeof(t_exec *));
 	exec = (t_exec *)malloc(sizeof(t_exec));
 	ft_exec_init(exec);
 	exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(cmd_lst));

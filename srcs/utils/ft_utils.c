@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 16:53:18 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 15:34:07 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/12 22:23:21 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,5 @@ void	ft_append_back(char **str, char c)
 	if (*str)
 		free (*str);
 	*str = ft_strdup(tmp);
+	free(tmp);
 }

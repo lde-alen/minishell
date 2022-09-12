@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 13:42:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/12 23:40:45 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,19 @@ void	free_split(char **split_res)
 	i = 0;
 	while (split_res[i])
 	{
-		free(split_res[i]);
+		if (split_res[i])
+			free(split_res[i]);
+		i++;
+	}
+	free(split_res);
+}
+
+void	free_split_baqala(char **split_res, int i)
+{
+	while (split_res[i])
+	{
+		if (split_res[i])
+			free(split_res[i]);
 		i++;
 	}
 	free(split_res);
