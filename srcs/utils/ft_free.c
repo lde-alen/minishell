@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 04:53:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/13 05:02:48 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,11 @@ void	free_child(t_exec *exec, t_lex *lex)
 		free_exec(&exec);
 	if (lex->cmd)
 		free_env_lst(lex->env);
-	if (lex->cmd)
-		free_cmd(&lex->cmd);
+	while (lex->cmd != NULL)
+	{
+		if (lex->cmd)
+			free_cmd(&lex->cmd);
+	}
 	if (lex)
 		free(lex);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 23:39:18 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 05:12:07 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	path = join_path(cmd_lst, path, env_path);
 	if (path != NULL)
 		return (path);
-	// free_split(env_path);
+	free(env_path);
 	return (NULL);
 }
 
