@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 22:48:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 04:13:16 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,14 @@ int	ft_parse(char *str, t_lex *lex)
 		return (1);
 	lex->sh = (t_sh *)malloc(sizeof(t_sh));
 	if (!lex->sh)
-		return (0);
+		return (1);
 	if (parser_stage1(str, lex) == 0)
 	{
 		parser_stage2(str, lex);
 		parser_stage3(lex);
+		free(lex->sh);
+		ft_printf("~~~~~~ End of Parsing. ~~~~~~\n\n");
+		return (0);
 	}
 	free(lex->sh);
 	ft_printf("~~~~~~ End of Parsing. ~~~~~~\n\n");
