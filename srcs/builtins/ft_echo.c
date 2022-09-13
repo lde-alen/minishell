@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 00:07:28 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 06:14:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 		free(str);
 }
 
-void	loop_str(t_cmd *cmd_lst, size_t i, size_t j)
+size_t	loop_str(t_cmd *cmd_lst, size_t i, size_t j)
 {
 	size_t	flag;
 
@@ -45,7 +45,7 @@ void	loop_str(t_cmd *cmd_lst, size_t i, size_t j)
 		if (ft_strlen(cmd_lst->argument[i]) != j)
 		{
 			ft_join_echo(cmd_lst, i, flag);
-			return ;
+			return (1);
 		}
 		else
 			flag = 1;
@@ -53,8 +53,9 @@ void	loop_str(t_cmd *cmd_lst, size_t i, size_t j)
 	else
 	{
 		ft_join_echo(cmd_lst, i, flag);
-		return ;
+		return (1);
 	}
+	return (0);
 }
 
 void	ft_echo(t_cmd *cmd_lst)
@@ -63,12 +64,13 @@ void	ft_echo(t_cmd *cmd_lst)
 	size_t	j;
 
 	i = 1;
+	if (!cmd_lst->argument[i])
+		ft_putendl_fd("", 1);
 	while (cmd_lst->argument[i])
 	{
 		j = 0;
-		loop_str(cmd_lst, i, j);
+		if (loop_str(cmd_lst, i, j) == 1)
+			return ;
 		i++;
 	}
-	if (!cmd_lst->argument[1])
-		ft_putendl_fd("", 1);
 }
