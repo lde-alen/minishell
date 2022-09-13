@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/13 04:11:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/13 04:36:07 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	minishell(char **env)
 			{
 				add_history(str);
 				if (ft_parse(str, lex) == 0)
-					exec_cmd(lex->env, lex->cmd);
+					exec_cmd(lex);
 				
 			}
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/13 00:19:13 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 04:48:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	ft_append_back(char **str, char c);
  * Initialization of program
  */
 void	shell_prompt(char **env);
-void	exec_cmd(t_env *lst, t_cmd *cmd_lst);
+void	exec_cmd(t_lex *lex);
 t_cmd	*ft_cmd_lst(char *str);
 // t_cmd	*ft_lst_init(char *str);
 
@@ -194,7 +194,7 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 /**
  * EXECUTING FUNCTIONS
  */
-void	exec_sys(t_env *lst, t_cmd *cmd_lst);
+void	exec_sys(t_lex *lex);
 void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
@@ -205,18 +205,17 @@ void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst);
-void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec);
-void	exec_sys(t_env *lst, t_cmd *cmd_lst);
-void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
-void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
-void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec);
+void	exec_alone(t_lex *lex, t_exec *exec);
+void	pipe_exec(t_lex *lex, t_exec *exec);
+void	fork_arr(t_lex *lex, t_exec *exec);
+void	loop_lst(t_lex *lex, t_exec *exec);
 void	pipe_arr(t_exec *exec);
 void	close_pipes(t_exec *exec);
 size_t	check_builtin(t_cmd *cmd_lst);
 void	check_path(t_cmd *cmd_lst, t_exec **exec);
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
 size_t	main_child2(t_cmd *cmd_lst, t_exec *exec);
-void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
+void	check_pos(t_lex *lex, t_exec *exec);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 
 void	redirect_in(t_env *lst, t_cmd *cmd_lst);
@@ -234,7 +233,7 @@ void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
 void	free_exec(t_exec **exec);
 void	free_cmd_lst(t_cmd *cmd_lst);
-void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst);
+void	free_child(t_exec *exec, t_lex *lex);
 void	free_split_baqala(char **split_res, int i);
 
 void	sig_handler(int val);

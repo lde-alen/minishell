@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 19:40:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/13 04:49:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,16 +143,16 @@ static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	return (exec_child(cmd_lst, exec));
 }
 
-void	check_pos(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+void	check_pos(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
 
 	if (exec->i == 0)
-		ret = first_child(lst, cmd_lst, exec);
+		ret = first_child(lex->env, lex->cmd, exec);
 	else if (exec->i + 1 == exec->len)
-		ret = last_child(lst, cmd_lst, exec);
+		ret = last_child(lex->env, lex->cmd, exec);
 	else
-		ret = mid_kid(lst, cmd_lst, exec);
-	free_child(exec, lst, cmd_lst);
+		ret = mid_kid(lex->env, lex->cmd, exec);
+	free_child(exec, lex);
 	exit(ret);
 }

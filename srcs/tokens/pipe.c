@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 22:02:23 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 04:52:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+void	fork_arr(t_lex *lex, t_exec *exec)
 {
 	exec->i = 0;
 	exec->flag = 0;
-	exec->len = get_cmd_len(cmd_lst);
-	check_path(cmd_lst, &exec);
+	exec->len = get_cmd_len(lex->cmd);
+	check_path(lex->cmd, &exec);
 	if (exec->len > 1)
-		loop_lst(lst, &cmd_lst, exec);
+		loop_lst(lex, exec);
 	else
-		exec_alone(cmd_lst, lst, exec);
+		exec_alone(lex, exec);
 	if (exec->flag != 2)
 	{
 		exec->i = 0;
@@ -35,51 +35,51 @@ void	fork_arr(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	}
 }
 
-void	exec_alone(t_cmd *cmd_lst, t_env *lst, t_exec *exec)
+void	exec_alone(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
 
-	exec->path = check_access(lst, cmd_lst);
-	if (exec_builtin(lst, cmd_lst) == 0)
+	exec->path = check_access(lex->env, lex->cmd);
+	if (exec_builtin(lex->env, lex->cmd) == 0)
 	{
 		exec->flag = 2;
 		free(exec->path);
-		free_cmd(&cmd_lst);
+		free_cmd(&lex->cmd);
 		return ;
 	}
-	exec->env_kid = lst_to_char(&lst);
+	exec->env_kid = lst_to_char(&lex->env);
 	exec->id[0] = fork();
 	if (exec->id[0] < 0)
 		perror("fork");
 	else if (exec->id[0] == 0)
 	{
-		ret = main_child2(cmd_lst, exec);
-		free_child(exec, lst, cmd_lst);
+		ret = main_child2(lex->cmd, exec);
+		free_child(exec, lex);
 		exit (ret);
 	}
 	free(exec->path);
 	free_env_kid(exec->env_kid);
-	free_cmd(&cmd_lst);
+	free_cmd(&lex->cmd);
 }
 
-void	loop_lst(t_env *lst, t_cmd **cmd_lst, t_exec *exec)
+void	loop_lst(t_lex *lex, t_exec *exec)
 {
-	while (*cmd_lst != NULL)
+	while (lex->cmd != NULL)
 	{
-		pipe_exec(lst, *cmd_lst, exec);
+		pipe_exec(lex, exec);
 		exec->i++;
-		if (*cmd_lst)
-			free_cmd(cmd_lst);
-		if (*cmd_lst)
-			check_path(*cmd_lst, &exec);
+		if (lex->cmd)
+			free_cmd(&lex->cmd);
+		if (lex->cmd)
+			check_path(lex->cmd, &exec);
 		exec->flag = 0;
 	}
 }
 
-void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+void	pipe_exec(t_lex *lex, t_exec *exec)
 {
-	exec->env_kid = lst_to_char(&lst);
-	exec->path = check_access(lst, cmd_lst);
+	exec->env_kid = lst_to_char(&lex->env);
+	exec->path = check_access(lex->env, lex->cmd);
 	if ((exec->i + 1) != exec->len)
 		pipe_arr(exec);
 	exec->id[exec->i] = fork();
@@ -90,7 +90,7 @@ void	pipe_exec(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		return ;
 	}
 	else if (exec->id[exec->i] == 0)
-		check_pos(lst, cmd_lst, exec);
+		check_pos(lex, exec);
 	close_pipes(exec);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);

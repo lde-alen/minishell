@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 23:40:45 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/13 04:53:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	free_exec(t_exec **exec)
 	free(*exec);
 }
 
-void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst)
+void	free_child(t_exec *exec, t_lex *lex)
 {
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
@@ -112,8 +112,10 @@ void	free_child(t_exec *exec, t_env *lst, t_cmd *cmd_lst)
 		free(exec->path);
 	if (exec)
 		free_exec(&exec);
-	if (lst)
-		free_env_lst(lst);
-	if (cmd_lst)
-		free_cmd(&cmd_lst);
+	if (lex->cmd)
+		free_env_lst(lex->env);
+	if (lex->cmd)
+		free_cmd(&lex->cmd);
+	if (lex)
+		free(lex);
 }
