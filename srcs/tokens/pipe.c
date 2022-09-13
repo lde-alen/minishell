@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 04:52:50 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/13 05:19:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 		exec->i++;
 		if (lex->cmd)
 			free_cmd(&lex->cmd);
+		exec->flag = 0;
 		if (lex->cmd)
 			check_path(lex->cmd, &exec);
-		exec->flag = 0;
 	}
 }
 

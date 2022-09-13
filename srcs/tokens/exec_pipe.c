@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 04:49:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/13 05:19:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ static	size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2");
 	close(exec->fd[exec->i][1]);
-	err = check_type(cmd_lst, &exec);
-	if (err != 0)
-		return (err);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
 		return (0);
 	}
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		return (err);
 	return (exec_child(cmd_lst, exec));
 }
 
@@ -108,15 +108,15 @@ static	size_t	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
-	err = check_type(cmd_lst, &exec);
-	if (err != 0)
-		return (err);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
 		return (0);
 	}
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		return (err);
 	return (exec_child(cmd_lst, exec));
 }
 
@@ -131,15 +131,15 @@ static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 		perror("dup2_mid2");
 	close(exec->fd[(exec->i - 1)][0]);
 	close(exec->fd[exec->i][1]);
-	err = check_type(cmd_lst, &exec);
-	if (err != 0)
-		return (err);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
 		exec_builtin(lst, cmd_lst);
 		return (0);
 	}
+	err = check_type(cmd_lst, &exec);
+	if (err != 0)
+		return (err);
 	return (exec_child(cmd_lst, exec));
 }
 
