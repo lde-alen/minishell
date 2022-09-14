@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 06:14:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/14 05:15:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,8 @@ static void	ft_join_echo(t_cmd *cmd_lst, int i, int flag)
 		free(str);
 }
 
-size_t	loop_str(t_cmd *cmd_lst, size_t i, size_t j)
+size_t	loop_str(t_cmd *cmd_lst, size_t i, size_t j, size_t flag)
 {
-	size_t	flag;
-
-	flag = 0;
 	if (cmd_lst->argument[i][j] == '-' && cmd_lst->argument[i][j + 1])
 	{
 		j++;
@@ -48,7 +45,7 @@ size_t	loop_str(t_cmd *cmd_lst, size_t i, size_t j)
 			return (1);
 		}
 		else
-			flag = 1;
+			return (2);
 	}
 	else
 	{
@@ -62,15 +59,21 @@ void	ft_echo(t_cmd *cmd_lst)
 {
 	size_t	i;
 	size_t	j;
+	size_t	ret;
+	size_t	flag;
 
 	i = 1;
+	flag = 0;
 	if (!cmd_lst->argument[i])
 		ft_putendl_fd("", 1);
 	while (cmd_lst->argument[i])
 	{
 		j = 0;
-		if (loop_str(cmd_lst, i, j) == 1)
+		ret = loop_str(cmd_lst, i, j, flag);
+		if (ret == 1)
 			return ;
+		else if (ret == 2)
+			flag = 1;
 		i++;
 	}
 }

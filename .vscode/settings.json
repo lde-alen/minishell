@@ -8,7 +8,8 @@
 		"stddef.h": "c",
 		"ioctl.h": "c",
 		"stdlib.h": "c",
-		"random": "c"
+		"random": "c",
+		"fcntl.h": "c"
 	},
 	"git.mergeEditor": false,
 }

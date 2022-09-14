@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/10 14:16:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/13 15:49:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,54 @@ void	append_out(t_env *lst, t_cmd *cmd_lst)
 	redirect(lst, cmd_lst, flag, status);
 }
 
-void	here_doc(t_env *lst, t_cmd *cmd_lst)
+void	here_doc(t_lex *lex)
 {
 	int		file;
-	int		status;
-	char	*str;
 	char	*file_name;
+	char	*str;
+	size_t	i;
 
 	file_name = "store.txt";
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	str = "";
-	// signal(SIGINT, sig_handler);
-	while (ft_strcmp(str, cmd_lst->argument[2]) != 0)
+	i = 0;
+	while (i < lex->cmd->redir->flag_len)
 	{
-		str = readline("> ");
-		if (ft_strcmp(str, cmd_lst->argument[2]) != 0)
-			ft_putendl_fd(str, file);
+		if (lex->cmd->redir->file[i] != NOTHING)
+		{
+			while (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
+			{
+				str = readline("> ");
+				if (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
+					ft_putendl_fd(str, file);
+			}
+			lex->cmd->redir->file[i] = NOTHING;
+		}
+		i++;
 	}
 	close(file);
-	status = STDIN_FILENO;
-	exec(lst, cmd_lst, status, file_name);
 	unlink(file_name);
 }
+
+// void	here_doc(t_env *lst, t_cmd *cmd_lst)
+// {
+// 	int		file;
+// 	int		status;
+// 	char	*str;
+// 	char	*file_name;
+
+// 	file_name = "store.txt";
+// 	file = open(file_name, O_CREAT | O_RDWR, 0777);
+// 	str = "";
+// 	// signal(SIGINT, sig_handler);
+// 	while (ft_strcmp(str, cmd_lst->argument[2]) != 0)
+// 	{
+// 		str = readline("> ");
+// 		if (ft_strcmp(str, cmd_lst->argument[2]) != 0)
+// 			ft_putendl_fd(str, file);
+// 	}
+// 	close(file);
+// 	status = STDIN_FILENO;
+// 	exec(lst, cmd_lst, status, file_name);
+// 	unlink(file_name);
+// }
