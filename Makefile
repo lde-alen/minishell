@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/12 20:33:18 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/14 14:21:22 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,7 +125,7 @@ fclean		:		clean
 					$(RM) $(LIBFT_DIR)/$(LIBFT_NAME)
 					$(MAKE) fclean -C $(LIBFT_DIR)
 
-make v		:		all clean
+make v		:		re
 					valgrind --leak-check=full --show-leak-kinds=all --suppressions=file.sup ./minishell
 
 re			:		fclean all

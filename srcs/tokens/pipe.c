@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 04:20:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:25:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,34 +46,49 @@ void	check_redir(t_lex *lex, size_t len)
 	lex->cmd->redir->flag[len] = NOTHING;
 }
 
+size_t	check_delimiter(t_lex *lex)
+{
+	size_t i;
+
+	i = 0;
+	while (i < lex->cmd->redir->flag_len)
+	{
+		ft_printf("file: %s\n", lex->cmd->redir->file[i]);
+		if (lex->cmd->redir->flag[i] != NOTHING)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	redir(t_lex *lex)
 {
 	size_t	i;
 	size_t	len;
 
 	i = 0;
-	if (lex->cmd->redir->flag_len > 0)
+	len = lex->cmd->redir->flag_len;
+	while (lex->cmd->redir->flag[len] == DL_REDIR)
+		len--;
+	while (i <= len)
 	{
-		len = lex->cmd->redir->flag_len - 1;
-		while (lex->cmd->redir->flag[len] == DL_REDIR)
-			len--;
-		while (i < len)
+		// ft_printf("flag before: %s\n", lex->cmd->redir->flag[i]);
+		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
-			if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
-			{
-				open_file(lex->cmd, O_TRUNC | O_CREAT);
-				lex->cmd->redir->flag[i] = NOTHING;
-			}
-			else if (lex->cmd->redir->flag[i] == R_REDIR)
-			{
-				open_file(lex->cmd, O_TRUNC);
-				lex->cmd->redir->flag[i] = NOTHING;
-			}
-			i++;
+			open_file(lex->cmd, O_TRUNC | O_CREAT);
+			lex->cmd->redir->flag[i] = NOTHING;
 		}
-		here_doc(lex);
-		check_redir(lex, len);
+		else if (lex->cmd->redir->flag[i] == R_REDIR)
+		{
+			open_file(lex->cmd, O_TRUNC);
+			lex->cmd->redir->flag[i] = NOTHING;
+		}
+		// ft_printf("flag after: %s\n", lex->cmd->redir->flag[i]);
+		i++;
 	}
+	if (check_delimiter(lex) == 1)
+		here_doc(lex);
+	check_redir(lex, len);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
@@ -94,7 +109,8 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		perror("fork");
 	else if (exec->id[0] == 0)
 	{
-		// redir(lex);
+		if (lex->cmd->redir->flag_len > 0)
+			redir(lex);
 		ret = main_child2(lex->cmd, exec);
 		free_child(exec, lex);
 		exit (ret);

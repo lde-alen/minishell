@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 15:49:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:11:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,24 @@ void	append_out(t_env *lst, t_cmd *cmd_lst)
 	redirect(lst, cmd_lst, flag, status);
 }
 
+size_t	get_last_delimiter(t_lex *lex)
+{
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = lex->cmd->redir->flag_len;
+	while (lex->cmd->redir->flag[len] != DL_REDIR)
+		len--;
+	return (len - 1);
+}
+
 void	here_doc(t_lex *lex)
 {
 	int		file;
 	char	*file_name;
 	char	*str;
+	int		status;
 	size_t	i;
 
 	file_name = "store.txt";
@@ -61,14 +74,19 @@ void	here_doc(t_lex *lex)
 			while (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
 			{
 				str = readline("> ");
-				if (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
-					ft_putendl_fd(str, file);
+				if (i == get_last_delimiter(lex))
+				{
+					if (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
+						ft_putendl_fd(str, file);
+				}
 			}
 			lex->cmd->redir->file[i] = NOTHING;
 		}
 		i++;
 	}
 	close(file);
+	status = STDIN_FILENO;
+	exec(lex->env, lex->cmd, status, file_name);
 	unlink(file_name);
 }
 

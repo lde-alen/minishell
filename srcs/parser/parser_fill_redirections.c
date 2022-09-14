@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 20:48:40 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:25:10 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

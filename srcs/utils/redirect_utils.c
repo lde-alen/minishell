@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 15:51:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/14 16:43:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	open_file(t_cmd *cmd_lst, int flag)
 	file = open(cmd_lst->argument[2], flag, 0777);
 	if (file < 0)
 	{
-		perror("file");
+		perror("minishell");
 		return ;
 	}
 }
