@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 18:11:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:08:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,12 @@ void	append_out(t_env *lst, t_cmd *cmd_lst)
 
 size_t	get_last_delimiter(t_lex *lex)
 {
-	size_t	i;
 	size_t	len;
 
-	i = 0;
 	len = lex->cmd->redir->flag_len;
 	while (lex->cmd->redir->flag[len] != DL_REDIR)
 		len--;
-	return (len - 1);
+	return (len);
 }
 
 void	here_doc(t_lex *lex)
@@ -69,12 +67,12 @@ void	here_doc(t_lex *lex)
 	i = 0;
 	while (i < lex->cmd->redir->flag_len)
 	{
-		if (lex->cmd->redir->file[i] != NOTHING)
+		if (lex->cmd->redir->flag[i] != NOTHING)
 		{
 			while (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
 			{
 				str = readline("> ");
-				if (i == get_last_delimiter(lex))
+				if (get_last_delimiter(lex) == i)
 				{
 					if (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
 						ft_putendl_fd(str, file);

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 16:43:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:59:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, char *file_name)
 {
-	char	**params;
+	// char	**params;
 	int		file;
 
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
-	params = (char **)malloc(sizeof(char *) * (get_args_len(cmd_lst) + 1));
-	params[0] = cmd_lst->command;
-	params[1] = NULL;
+	// params = (char **)malloc(sizeof(char *) * (get_args_len(cmd_lst) + 1));
+	// params[0] = cmd_lst->command;
+	// params[1] = NULL;
 	dup2(file, status);
 	close(file);
-	execve(path, params, lst_to_char(&lst));
+	execve(path, cmd_lst->argument, lst_to_char(&lst));
 	ft_printf("failed\n");
 	exit(0);
 }
@@ -62,12 +62,12 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
 	exec(lst, cmd_lst, status, cmd_lst->argument[2]);
 }
 
-void	open_file(t_cmd *cmd_lst, int flag)
+void	open_file(char *str, int flag)
 {
 	int		file;
 
 	//0777 needed for append redirect
-	file = open(cmd_lst->argument[2], flag, 0777);
+	file = open(str, flag, 0777);
 	if (file < 0)
 	{
 		perror("minishell");

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 18:25:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/14 15:00:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ size_t	check_delimiter(t_lex *lex)
 	i = 0;
 	while (i < lex->cmd->redir->flag_len)
 	{
-		ft_printf("file: %s\n", lex->cmd->redir->file[i]);
 		if (lex->cmd->redir->flag[i] != NOTHING)
 			return (1);
 		i++;
@@ -70,20 +69,18 @@ void	redir(t_lex *lex)
 	len = lex->cmd->redir->flag_len;
 	while (lex->cmd->redir->flag[len] == DL_REDIR)
 		len--;
-	while (i <= len)
+	while (i < len)
 	{
-		// ft_printf("flag before: %s\n", lex->cmd->redir->flag[i]);
 		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
-			open_file(lex->cmd, O_TRUNC | O_CREAT);
+			open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
 			lex->cmd->redir->flag[i] = NOTHING;
 		}
 		else if (lex->cmd->redir->flag[i] == R_REDIR)
 		{
-			open_file(lex->cmd, O_TRUNC);
+			open_file(lex->cmd->redir->file[i], O_TRUNC);
 			lex->cmd->redir->flag[i] = NOTHING;
 		}
-		// ft_printf("flag after: %s\n", lex->cmd->redir->flag[i]);
 		i++;
 	}
 	if (check_delimiter(lex) == 1)
