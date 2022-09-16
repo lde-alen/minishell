@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 15:00:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:16:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 	}
 }
 
-void	check_redir(t_lex *lex, size_t len)
-{
-	if (lex->cmd->redir->flag[len] == R_REDIR)
-		redirect_out(lex->env, lex->cmd);
-	else if (lex->cmd->redir->flag[len] == L_REDIR)
-		redirect_in(lex->env, lex->cmd);
-	else if (lex->cmd->redir->flag[len] == DR_REDIR)
-		append_out(lex->env, lex->cmd);
-	lex->cmd->redir->flag[len] = NOTHING;
-}
+// void	check_redir(t_lex *lex, size_t len)
+// {
+// 	if (lex->cmd->redir->flag[len] == R_REDIR)
+// 		redirect_out(lex->env, lex->cmd);
+// 	else if (lex->cmd->redir->flag[len] == L_REDIR)
+// 		redirect_in(lex->env, lex->cmd);
+// 	else if (lex->cmd->redir->flag[len] == DR_REDIR)
+// 		append_out(lex->env, lex->cmd);
+// 	lex->cmd->redir->flag[len] = NOTHING;
+// }
 
 size_t	check_delimiter(t_lex *lex)
 {
@@ -62,30 +62,31 @@ size_t	check_delimiter(t_lex *lex)
 
 void	redir(t_lex *lex)
 {
-	size_t	i;
-	size_t	len;
+	ssize_t	i;
+	ssize_t	len;
 
 	i = 0;
 	len = lex->cmd->redir->flag_len;
-	while (lex->cmd->redir->flag[len] == DL_REDIR)
+	while (lex->cmd->redir->flag[len - 1] == DL_REDIR)
 		len--;
-	while (i < len)
+	while (i < (len - 1))
 	{
 		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
-			open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
+			// open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
 			lex->cmd->redir->flag[i] = NOTHING;
 		}
-		else if (lex->cmd->redir->flag[i] == R_REDIR)
+		else if (lex->cmd->redir->flag[i] == L_REDIR)
 		{
-			open_file(lex->cmd->redir->file[i], O_TRUNC);
+			// open_file(lex->cmd->redir->file[i], O_TRUNC);
 			lex->cmd->redir->flag[i] = NOTHING;
 		}
 		i++;
 	}
+	//dup stdout to file(if exists)
 	if (check_delimiter(lex) == 1)
 		here_doc(lex);
-	check_redir(lex, len);
+	// check_redir(lex, len);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
@@ -106,11 +107,15 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		perror("fork");
 	else if (exec->id[0] == 0)
 	{
-		if (lex->cmd->redir->flag_len > 0)
+		if (lex->cmd->redir->flag_len >= 1)
 			redir(lex);
-		ret = main_child2(lex->cmd, exec);
-		free_child(exec, lex);
-		exit (ret);
+		else
+		{
+			ret = main_child2(lex->cmd, exec);
+			free_child(exec, lex);
+			exit (ret);
+		}
+		exit(0);
 	}
 	free(exec->path);
 	free_env_kid(exec->env_kid);

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 14:59:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/16 12:06:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, char *file_name)
 {
-	// char	**params;
 	int		file;
 
+	int file2 = open("store.txt", O_RDONLY, 0777);
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
-	// params = (char **)malloc(sizeof(char *) * (get_args_len(cmd_lst) + 1));
-	// params[0] = cmd_lst->command;
-	// params[1] = NULL;
+	dup2(file2, STDIN_FILENO);
 	dup2(file, status);
 	close(file);
+	close(file2);
 	execve(path, cmd_lst->argument, lst_to_char(&lst));
 	ft_printf("failed\n");
 	exit(0);
@@ -47,19 +46,19 @@ void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file)
 }	
 
 //basis for all redirections
-void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status)
+void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status, size_t i)
 {
 	int		file;
 
 	//0777 needed for append redirect
-	file = open(cmd_lst->argument[2], flag, 0777);
+	file = open(cmd_lst->redir->file[i], flag, 0777);
 	if (file < 0)
 	{
 		perror("file");
 		return ;
 	}
 	//replace with exec_sys()
-	exec(lst, cmd_lst, status, cmd_lst->argument[2]);
+	exec(lst, cmd_lst, status, cmd_lst->redir->file[i]);
 }
 
 void	open_file(char *str, int flag)
