@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/16 12:30:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 14:20:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ size_t	get_last_delimiter(t_lex *lex)
 	return (len);
 }
 
-void	check_redir_type(t_lex *lex)
+size_t	check_redir_type(t_lex *lex)
 {
 	size_t	i;
 
@@ -66,16 +66,20 @@ void	check_redir_type(t_lex *lex)
 		redirect_in(lex->env, lex->cmd, i);
 	else if (lex->cmd->redir->flag[i] == DR_REDIR)
 		append_out(lex->env, lex->cmd, i);
+	else
+		return (1);
+	return (0);
 }
 
-void	here_doc(t_lex *lex)
+void	here_doc(t_lex *lex, t_exec *exec)
 {
 	int		file;
 	char	*file_name;
 	char	*str;
-	// int		status;
+	int		status;
 	size_t	i;
 
+	(void)exec;
 	file_name = "store.txt";
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	i = 0;
@@ -90,14 +94,16 @@ void	here_doc(t_lex *lex)
 				if (get_last_delimiter(lex) == i
 					&& ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
 					ft_putendl_fd(str, file);
-			}
+			} 
+			lex->cmd->redir->flag[i] = NOTHING;
 		}
 		i++;
 	}
 	close(file);
-	// status = STDIN_FILENO;
-	check_redir_type(lex);
-	// exec(lex->env, lex->cmd, status, file_name);
+	status = STDIN_FILENO;
+	if (check_redir_type(lex) == 1)
+		exec_tok(lex->env, lex->cmd, status, NULL, 0);
+		// main_child2(lex->cmd, exec);
 	unlink(file_name);
 	i = 0;
 	while (i < lex->cmd->redir->flag_len)
@@ -107,26 +113,3 @@ void	here_doc(t_lex *lex)
 		i++;
 	}
 }
-
-// void	here_doc(t_env *lst, t_cmd *cmd_lst)
-// {
-// 	int		file;
-// 	int		status;
-// 	char	*str;
-// 	char	*file_name;
-
-// 	file_name = "store.txt";
-// 	file = open(file_name, O_CREAT | O_RDWR, 0777);
-// 	str = "";
-// 	// signal(SIGINT, sig_handler);
-// 	while (ft_strcmp(str, cmd_lst->argument[2]) != 0)
-// 	{
-// 		str = readline("> ");
-// 		if (ft_strcmp(str, cmd_lst->argument[2]) != 0)
-// 			ft_putendl_fd(str, file);
-// 	}
-// 	close(file);
-// 	status = STDIN_FILENO;
-// 	exec(lst, cmd_lst, status, file_name);
-// 	unlink(file_name);
-// }

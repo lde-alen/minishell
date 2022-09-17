@@ -6,28 +6,32 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/16 12:06:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 14:20:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, char *file_name)
+static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *path, char *file_name, int flag)
 {
 	int		file;
+	int		file2;
 
-	int file2 = open("store.txt", O_RDONLY, 0777);
-	file = open(file_name, O_CREAT | O_RDWR, 0777);
+	if (file_name)
+	{
+		file = open_file(file_name, flag);
+		dup2(file, status);
+		close(file);
+	}
+	file2 = open_file("store.txt", O_RDONLY);
 	dup2(file2, STDIN_FILENO);
-	dup2(file, status);
-	close(file);
 	close(file2);
 	execve(path, cmd_lst->argument, lst_to_char(&lst));
 	ft_printf("failed\n");
 	exit(0);
 }
 
-void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file)
+void	exec_tok(t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag)
 {
 	char	*path;
 	int		id;
@@ -39,7 +43,7 @@ void	exec(t_env *lst, t_cmd *cmd_lst, int status, char *file)
 		if (id < 0)
 			ft_putendl_fd("Fork failed", 2);
 		else if (id == 0)
-			child(lst, cmd_lst, status, path, file);
+			child(lst, cmd_lst, status, path, file, flag);
 		waitpid(-1, NULL, 0);
 	}
 	free(path);
@@ -58,10 +62,10 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status, size_t i)
 		return ;
 	}
 	//replace with exec_sys()
-	exec(lst, cmd_lst, status, cmd_lst->redir->file[i]);
+	exec_tok(lst, cmd_lst, status, cmd_lst->redir->file[i], flag);
 }
 
-void	open_file(char *str, int flag)
+int	open_file(char *str, int flag)
 {
 	int		file;
 
@@ -70,6 +74,7 @@ void	open_file(char *str, int flag)
 	if (file < 0)
 	{
 		perror("minishell");
-		return ;
+		return (-1);
 	}
+	return (file);
 }

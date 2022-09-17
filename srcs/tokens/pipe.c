@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 13:28:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 14:11:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ size_t	check_delimiter(t_lex *lex)
 	return (0);
 }
 
-void	redir(t_lex *lex)
+void	redir(t_lex *lex, t_exec *exec)
 {
 	ssize_t	i;
 	ssize_t	len;
@@ -85,7 +85,7 @@ void	redir(t_lex *lex)
 	}
 	//dup stdout to file(if exists)
 	if (check_delimiter(lex) == 1)
-		here_doc(lex);
+		here_doc(lex, exec);
 	// check_redir(lex, len);
 }
 
@@ -108,7 +108,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	else if (exec->id[0] == 0)
 	{
 		if (lex->cmd->redir->flag_len >= 1)
-			redir(lex);
+			redir(lex, exec);
 		else
 		{
 			ret = main_child2(lex->cmd, exec);

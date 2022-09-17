@@ -1,0 +1,92 @@
+total 288
+drwxr-xr-x  124 asanthos  2021_abudhabi    4216 Sep 17 13:29 Libft
+-rw-r--r--    1 asanthos  2021_abudhabi    3372 Sep 14 14:21 Makefile
+-rw-r--r--    1 asanthos  2021_abudhabi     135 Sep 14 12:11 README.md
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 15 11:08 a
+drwxr-xr-x    6 asanthos  2021_abudhabi     204 Sep 14 12:11 assets
+-rw-r--r--    1 asanthos  2021_abudhabi    1156 Sep 17 13:49 beep
+-rwxr-xr-x    1 asanthos  2021_abudhabi    1227 Sep 17 13:54 boop
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 17 13:27 cat
+-rwxr-xr-x    1 asanthos  2021_abudhabi     201 Sep 14 12:11 file.sup
+-rw-r--r--    1 asanthos  2021_abudhabi       0 Sep 17 13:27 file2
+-rw-r--r--    1 asanthos  2021_abudhabi      10 Sep 17 13:27 file3
+-rwxr-xr-x    1 asanthos  2021_abudhabi       6 Sep 17 13:27 file4
+drwxr-xr-x    4 asanthos  2021_abudhabi     136 Sep 17 13:27 includes
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 17 13:27 lala
+-rwxr-xr-x    1 asanthos  2021_abudhabi  114096 Sep 17 13:53 minishell
+drwxr-xr-x   11 asanthos  2021_abudhabi     374 Sep 17 13:29 srcs
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 17 13:54 store.txt
+-rwxr-xr-x    1 asanthos  2021_abudhabi     109 Sep 17 13:29 test
+Libft
+Makefile
+README.md
+a
+assets
+beep
+boop
+cat
+file.sup
+file2
+file3
+file4
+includes
+lala
+minishell
+srcs
+store.txt
+test
+total 288
+drwxr-xr-x  124 asanthos  2021_abudhabi    4216 Sep 17 13:29 Libft
+-rw-r--r--    1 asanthos  2021_abudhabi    3372 Sep 14 14:21 Makefile
+-rw-r--r--    1 asanthos  2021_abudhabi     135 Sep 14 12:11 README.md
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 15 11:08 a
+drwxr-xr-x    6 asanthos  2021_abudhabi     204 Sep 14 12:11 assets
+-rw-r--r--    1 asanthos  2021_abudhabi    1156 Sep 17 13:49 beep
+-rwxr-xr-x    1 asanthos  2021_abudhabi    1346 Sep 17 13:56 boop
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 17 13:27 cat
+-rwxr-xr-x    1 asanthos  2021_abudhabi     201 Sep 14 12:11 file.sup
+-rw-r--r--    1 asanthos  2021_abudhabi       0 Sep 17 13:27 file2
+-rw-r--r--    1 asanthos  2021_abudhabi      10 Sep 17 13:27 file3
+-rwxr-xr-x    1 asanthos  2021_abudhabi       6 Sep 17 13:27 file4
+drwxr-xr-x    4 asanthos  2021_abudhabi     136 Sep 17 13:27 includes
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 17 13:27 lala
+-rwxr-xr-x    1 asanthos  2021_abudhabi  114096 Sep 17 13:56 minishell
+drwxr-xr-x   11 asanthos  2021_abudhabi     374 Sep 17 13:29 srcs
+-rwxr-xr-x    1 asanthos  2021_abudhabi       0 Sep 17 13:56 store.txt
+-rwxr-xr-x    1 asanthos  2021_abudhabi     109 Sep 17 13:29 test
+Libft
+Makefile
+README.md
+a
+assets
+beep
+boop
+cat
+file.sup
+file2
+file3
+file4
+includes
+lala
+minishell
+srcs
+store.txt
+test
+Libft
+Makefile
+README.md
+a
+assets
+beep
+boop
+cat
+file.sup
+file2
+file3
+file4
+includes
+lala
+minishell
+srcs
+store.txt
+test
