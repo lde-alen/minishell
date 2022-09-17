@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 15:11:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:28:36 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *file_name, int f
 	file2 = open_file("store.txt", O_RDONLY);
 	dup2(file2, STDIN_FILENO);
 	close(file2);
-	main_child2(cmd_lst, exec);
+	main_child2(lst, cmd_lst, exec);
 }
 
 void	redirect(t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_exec *exec)

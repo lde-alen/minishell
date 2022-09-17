@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 19:05:27 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:25:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,44 +76,42 @@ void	redir(t_lex *lex, t_exec *exec)
 		}
 		i++;
 	}
-	//dup stdout to file(if exists)
 	if (check_delimiter(lex) == 1)
 		here_doc(lex, exec);
-	// check_redir(lex, len);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
-	size_t	ret;
+	// size_t	ret;
 
 	check_path(lex->cmd, &exec);
 	exec->path = check_access(lex->env, lex->cmd);
-	if (exec_builtin(lex->env, lex->cmd) == 0)
-	{
-		exec->flag = 2;
-		free(exec->path);
-		free_cmd(&lex->cmd);
-		return ;
-	}
-	exec->env_kid = lst_to_char(&lex->env);
-	exec->id[0] = fork();
-	if (exec->id[0] < 0)
-		perror("fork");
-	else if (exec->id[0] == 0)
-	{
+	// if (exec_builtin(lex->env, lex->cmd) == 0)
+	// {
+	// 	exec->flag = 2;
+	// 	free(exec->path);
+	// 	free_cmd(&lex->cmd);
+	// 	return ;
+	// }
+	// exec->env_kid = lst_to_char(&lex->env);
+	// exec->id[0] = fork();
+	// if (exec->id[0] < 0)
+	// 	perror("fork");
+	// else if (exec->id[0] == 0)
+	// {
 		if (lex->cmd->redir->flag_len >= 1)
 			redir(lex, exec);
-		else
-		{
-			ret = main_child2(lex->cmd, exec);
-			free_child(exec, lex);
-			exit (ret);
-		}
-		exit(0);
-	}
-	free(exec->path);
-	free_env_kid(exec->env_kid);
-	free_cmd(&lex->cmd);
+	// 	else
+	// 	{
+	// 		ret = main_child2(lex->cmd, exec);
+	// 		free_child(exec, lex);
+	// 		exit (ret);
+	// 	}
+	// 	exit(0);
+	// }
+	// free(exec->path);
+	// free_env_kid(exec->env_kid);
+	// free_cmd(&lex->cmd);
 }
 
 void	loop_lst(t_lex *lex, t_exec *exec)

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 16:22:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:30:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,19 @@ size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)
 	return (0);
 }
 
-size_t	main_child2(t_cmd *cmd_lst, t_exec *exec)
+size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	size_t	err;
 
 	err = check_type(cmd_lst, &exec);
-
 	if (err != 0)
 		return (err);
+	if (exec->flag == 1)
+	{
+		exec->flag = 2;
+		exec_builtin(lst, cmd_lst);
+		return (0);
+	}
 	return (exec_child(cmd_lst, exec));
 }
 

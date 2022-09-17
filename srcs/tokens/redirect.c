@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 18:55:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:09:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	redirect_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
 	flag = O_TRUNC | O_CREAT | O_WRONLY;
 	status = STDOUT_FILENO;
 	redirect(lst, cmd_lst, status, cmd_lst->redir->file[i], flag, exec);
-	// exec(lst, cmd_lst, status, cmd_lst->argument[2]);
 }
 
 void	append_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
