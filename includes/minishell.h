@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 14:19:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:09:47 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,14 +194,13 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 /**
  * EXECUTING FUNCTIONS
  */
-void	exec_fsys(t_lex *lex);
+void	exec_sys(t_lex *lex);
 void	main_child(t_env *lst, t_cmd *cmd_lst, char *path);
 char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
 char	**lst_to_char(t_env **lst);
 
-void	redirect(t_env *lst, t_cmd *cmd_lst, int flag, int status, size_t i);
-void	exec_tok(t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag);
+void	redirect(t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_exec *exec);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst);
@@ -218,9 +217,9 @@ size_t	main_child2(t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_lex *lex, t_exec *exec);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 
-void	redirect_in(t_env *lst, t_cmd *cmd_lst, size_t i);
-void	redirect_out(t_env *lst, t_cmd *cmd_lst, size_t i);
-void	append_out(t_env *lst, t_cmd *cmd_lst, size_t i);
+void	redirect_in(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
+void	redirect_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
+void	append_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
 void	here_doc(t_lex *lex, t_exec *exec);
 int		open_file(char *str, int flag);
 

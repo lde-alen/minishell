@@ -6,41 +6,41 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 14:20:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 15:08:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	redirect_in(t_env *lst, t_cmd *cmd_lst, size_t i)
+void	redirect_in(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
 {
 	int	flag;
 	int	status;
 
 	flag = O_RDONLY;
 	status = STDIN_FILENO;
-	redirect(lst, cmd_lst, flag, status, i);
+	redirect(lst, cmd_lst, status, cmd_lst->redir->file[i], flag, exec);
 }
 
-void	redirect_out(t_env *lst, t_cmd *cmd_lst, size_t i)
+void	redirect_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
 {
 	int	flag;
 	int	status;
 
 	flag = O_TRUNC | O_CREAT | O_WRONLY;
 	status = STDOUT_FILENO;
-	redirect(lst, cmd_lst, flag, status, i);
+	redirect(lst, cmd_lst, status, cmd_lst->redir->file[i], flag, exec);
 	// exec(lst, cmd_lst, status, cmd_lst->argument[2]);
 }
 
-void	append_out(t_env *lst, t_cmd *cmd_lst, size_t i)
+void	append_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
 {
 	int	flag;
 	int	status;
 
 	flag = O_APPEND | O_WRONLY | O_CREAT;
 	status = STDOUT_FILENO;
-	redirect(lst, cmd_lst, flag, status, i);
+	redirect(lst, cmd_lst, status, cmd_lst->redir->file[i], flag, exec);
 }
 
 size_t	get_last_delimiter(t_lex *lex)
@@ -53,7 +53,7 @@ size_t	get_last_delimiter(t_lex *lex)
 	return (len);
 }
 
-size_t	check_redir_type(t_lex *lex)
+size_t	check_redir_type(t_lex *lex, t_exec *exec)
 {
 	size_t	i;
 
@@ -61,11 +61,11 @@ size_t	check_redir_type(t_lex *lex)
 	while (lex->cmd->redir->flag[i] == NOTHING)
 		i++;
 	if (lex->cmd->redir->flag[i] == R_REDIR)
-		redirect_out(lex->env, lex->cmd, i);
+		redirect_out(lex->env, lex->cmd, i, exec);
 	else if (lex->cmd->redir->flag[i] == L_REDIR)
-		redirect_in(lex->env, lex->cmd, i);
+		redirect_in(lex->env, lex->cmd, i, exec);
 	else if (lex->cmd->redir->flag[i] == DR_REDIR)
-		append_out(lex->env, lex->cmd, i);
+		append_out(lex->env, lex->cmd, i, exec);
 	else
 		return (1);
 	return (0);
@@ -101,8 +101,8 @@ void	here_doc(t_lex *lex, t_exec *exec)
 	}
 	close(file);
 	status = STDIN_FILENO;
-	if (check_redir_type(lex) == 1)
-		exec_tok(lex->env, lex->cmd, status, NULL, 0);
+	if (check_redir_type(lex, exec) == 1)
+		redirect(lex->env, lex->cmd, status, NULL, 0, exec);
 		// main_child2(lex->cmd, exec);
 	unlink(file_name);
 	i = 0;
