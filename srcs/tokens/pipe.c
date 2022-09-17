@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 18:53:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:05:27 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	redir(t_lex *lex, t_exec *exec)
 	len = lex->cmd->redir->flag_len;
 	while (lex->cmd->redir->flag[len - 1] == DL_REDIR)
 		len--;
-	while (i < (len - 1))
+	while (i <= (len - 1))
 	{
 		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
