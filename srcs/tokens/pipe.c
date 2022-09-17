@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 16:47:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:53:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,13 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 	exec->i = 0;
 	exec->flag = 0;
 	exec->len = get_cmd_len(lex->cmd);
-	ft_printf("Len here: %d\n command here: %s\n", exec->len, lex->cmd->command);
-	check_path(lex->cmd, &exec);
 	if (exec->len > 1)
 		loop_lst(lex, exec);
 	else if (exec->len == 1 && lex->cmd->command)
-	{
-		ft_printf("am i here\n");
 		exec_alone(lex, exec);
-	}
 	else
 	{
-		ft_printf("me here\n");
+		exec->flag = 2;
 		redir(lex, exec);
 	}
 	if (exec->flag != 2)
@@ -43,17 +38,6 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		}
 	}
 }
-
-// void	check_redir(t_lex *lex, size_t len)
-// {
-// 	if (lex->cmd->redir->flag[len] == R_REDIR)
-// 		redirect_out(lex->env, lex->cmd);
-// 	else if (lex->cmd->redir->flag[len] == L_REDIR)
-// 		redirect_in(lex->env, lex->cmd);
-// 	else if (lex->cmd->redir->flag[len] == DR_REDIR)
-// 		append_out(lex->env, lex->cmd);
-// 	lex->cmd->redir->flag[len] = NOTHING;
-// }
 
 size_t	check_delimiter(t_lex *lex)
 {
@@ -82,13 +66,13 @@ void	redir(t_lex *lex, t_exec *exec)
 	{
 		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
-			// open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
-			lex->cmd->redir->flag[i] = NOTHING;
+			if (open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT) == -1)
+				return ;
 		}
 		else if (lex->cmd->redir->flag[i] == L_REDIR)
 		{
-			// open_file(lex->cmd->redir->file[i], O_TRUNC);
-			lex->cmd->redir->flag[i] = NOTHING;
+			if (open_file(lex->cmd->redir->file[i], O_TRUNC) == -1)
+				return ;
 		}
 		i++;
 	}
@@ -102,6 +86,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
 
+	check_path(lex->cmd, &exec);
 	exec->path = check_access(lex->env, lex->cmd);
 	if (exec_builtin(lex->env, lex->cmd) == 0)
 	{
@@ -133,6 +118,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 
 void	loop_lst(t_lex *lex, t_exec *exec)
 {
+	check_path(lex->cmd, &exec);
 	while (lex->cmd != NULL)
 	{
 		pipe_exec(lex, exec);

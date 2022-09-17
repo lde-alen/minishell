@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 16:41:57 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:55:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ size_t	check_redir_type(t_lex *lex, t_exec *exec)
 	size_t	i;
 
 	i = 0;
-	while (lex->cmd->redir->flag[i] == NOTHING)
+	while (lex->cmd->redir->flag[i] == NOTHING || lex->cmd->redir->flag[i] == DL_REDIR)
 		i++;
 	if (lex->cmd->redir->flag[i] == R_REDIR)
 		redirect_out(lex->env, lex->cmd, i, exec);
@@ -79,7 +79,6 @@ void	here_doc(t_lex *lex, t_exec *exec)
 	int		status;
 	size_t	i;
 
-	(void)exec;
 	file_name = "store.txt";
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	i = 0;
@@ -95,27 +94,12 @@ void	here_doc(t_lex *lex, t_exec *exec)
 					&& ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
 					ft_putendl_fd(str, file);
 			} 
-			lex->cmd->redir->flag[i] = NOTHING;
 		}
 		i++;
 	}
 	close(file);
 	status = STDIN_FILENO;
-	ft_printf("COmmand: %s\n", lex->cmd->command);
 	if (check_redir_type(lex, exec) == 1 && lex->cmd->command)
 		redirect(lex->env, lex->cmd, status, NULL, 0, exec);
-		// main_child2(lex->cmd, exec);
 	unlink(file_name);
-	i = 0;
-	while (i < lex->cmd->redir->flag_len)
-	{
-		ft_printf("here %d %d\n", i, lex->cmd->redir->flag_len);
-		if (lex->cmd->redir->flag[i] != DL_REDIR && get_last_delimiter(lex) == 0)
-		{
-			ft_printf("BOOP\n");
-			open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
-		}
-		i++;
-		ft_printf("%d\n", i);
-	}
 }
