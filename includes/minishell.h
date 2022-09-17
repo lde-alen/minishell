@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 19:29:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:34:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_lex
 /**
  * Teaching kinds how to manipulate tools
  */
-ssize_t	get_expand_len(char *name, t_env *env);
+ssize_t	get_expand_len(char *name, t_env *env, int flag);
 char	*get_env_value(t_env *env, char *name);
 char	*ft_append_char(char *name, char c);
 void	ft_fill_expand(char *str, t_lex *lex);

@@ -10,6 +10,7 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/minishell",
 			"args": [],
+<<<<<<< HEAD
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
@@ -36,5 +37,14 @@
             ],
 
         }
+=======
+			"stopAtEntry": false,
+			"cwd": "${fileDirname}",
+			"environment": [],
+			"externalConsole": true,
+			"MIMode": "lldb",
+			"preLaunchTask": "Build"
+		}
+>>>>>>> merge
     ]
 }
