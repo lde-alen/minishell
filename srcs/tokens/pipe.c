@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 19:25:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 19:42:47 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,36 +82,40 @@ void	redir(t_lex *lex, t_exec *exec)
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
-	// size_t	ret;
+	size_t	ret;
 
 	check_path(lex->cmd, &exec);
 	exec->path = check_access(lex->env, lex->cmd);
-	// if (exec_builtin(lex->env, lex->cmd) == 0)
-	// {
-	// 	exec->flag = 2;
-	// 	free(exec->path);
-	// 	free_cmd(&lex->cmd);
-	// 	return ;
-	// }
-	// exec->env_kid = lst_to_char(&lex->env);
-	// exec->id[0] = fork();
-	// if (exec->id[0] < 0)
-	// 	perror("fork");
-	// else if (exec->id[0] == 0)
-	// {
-		if (lex->cmd->redir->flag_len >= 1)
-			redir(lex, exec);
-	// 	else
-	// 	{
-	// 		ret = main_child2(lex->cmd, exec);
-	// 		free_child(exec, lex);
-	// 		exit (ret);
-	// 	}
-	// 	exit(0);
-	// }
-	// free(exec->path);
-	// free_env_kid(exec->env_kid);
-	// free_cmd(&lex->cmd);
+	if (lex->cmd->redir->flag_len >= 1)
+	{
+		ft_printf("here?\n");
+		redir(lex, exec);
+	}
+	else
+	{
+		ft_printf("here\n");
+		// if (exec_builtin(lex->env, lex->cmd) == 0)
+		// {
+		// 	exec->flag = 2;
+		// 	free(exec->path);
+		// 	free_cmd(&lex->cmd);
+		// 	return ;
+		// }
+		exec->env_kid = lst_to_char(&lex->env);
+		exec->id[0] = fork();
+		if (exec->id[0] < 0)
+			perror("fork");
+		else if (exec->id[0] == 0)
+		{
+			ret = main_child2(lex->env, lex->cmd, exec);
+			free_child(exec, lex);
+			exit (ret);
+			exit(0);
+		}
+		free(exec->path);
+		free_env_kid(exec->env_kid);
+		free_cmd(&lex->cmd);
+	}
 }
 
 void	loop_lst(t_lex *lex, t_exec *exec)
