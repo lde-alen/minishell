@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 15:09:47 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 16:43:38 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ void	redirect_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
 void	append_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
 void	here_doc(t_lex *lex, t_exec *exec);
 int		open_file(char *str, int flag);
+void	redir(t_lex *lex, t_exec *exec);
 
 /**
  * FREE FUNCTONS

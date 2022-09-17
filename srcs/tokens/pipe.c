@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 14:11:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 16:47:22 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,20 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 	exec->i = 0;
 	exec->flag = 0;
 	exec->len = get_cmd_len(lex->cmd);
+	ft_printf("Len here: %d\n command here: %s\n", exec->len, lex->cmd->command);
 	check_path(lex->cmd, &exec);
 	if (exec->len > 1)
 		loop_lst(lex, exec);
-	else
+	else if (exec->len == 1 && lex->cmd->command)
+	{
+		ft_printf("am i here\n");
 		exec_alone(lex, exec);
+	}
+	else
+	{
+		ft_printf("me here\n");
+		redir(lex, exec);
+	}
 	if (exec->flag != 2)
 	{
 		exec->i = 0;
