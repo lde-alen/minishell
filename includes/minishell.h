@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/13 15:51:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 16:56:20 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_lex
 /**
  * Teaching kinds how to manipulate tools
  */
-ssize_t	get_expand_len(char *name, t_env *env);
+ssize_t	get_expand_len(char *name, t_env *env, int flag);
 char	*get_env_value(t_env *env, char *name);
 char	*ft_append_char(char *name, char c);
 void	ft_fill_expand(char *str, t_lex *lex);

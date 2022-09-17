@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 06:51:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 17:00:52 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,23 @@ char	*get_env_value(t_env *env, char *name)
 	return (NULL);
 }
 
-ssize_t	get_expand_len(char *name, t_env *env)
+ssize_t	get_expand_len(char *name, t_env *env, int flag)
 {
 	ssize_t	len;
 	size_t	len_name;
 	size_t	len_value;
 
 	len = 0;
-	len_name = ft_strlen(name);
-	len_value = ft_strlen(get_env_value(env, name + 1));
+	if (flag == 1)
+	{
+		len_name = ft_strlen(name);
+		len_value = ft_strlen(ft_itoa(g_exit));
+	}
+	else
+	{
+		len_name = ft_strlen(name);
+		len_value = ft_strlen(get_env_value(env, name + 1));
+	}
 	if (len_value == 0)
 		return (0);
 	len = len_value - len_name;

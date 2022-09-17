@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/30 09:34:20 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 04:13:16 by asanthos         ###   ########.fr       */
+/*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
+/*   Updated: 2022/09/17 17:19:26 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	parser_stage3(t_lex *lex)
 
 	i = 0;
 	lex->cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	lex->cmd->redir = NULL;
+	lex->cmd->next = NULL;
 	if (!lex->cmd)
 	{
 		free (lex->sh->tmp_str);
@@ -76,7 +78,7 @@ int	parser_stage2(char *str, t_lex *lex)
 }
 
 /*
-
+	this checks for invalid synthaxes and returns 1 for errors
 */
 int	parser_stage1(char *str, t_lex *lex)
 {
@@ -86,6 +88,8 @@ int	parser_stage1(char *str, t_lex *lex)
 	lex->sh->i = 0;
 	lex->sh->euro = 0;
 	lex->sh->expand_len = 0;
+	while (str[lex->sh->i] == ' ')
+		lex->sh->i++;
 	while (lex->sh->i < ft_strlen(str) && ret == false)
 	{
 		lex->sh->sq = 0;
