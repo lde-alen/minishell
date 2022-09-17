@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 19:42:47 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/17 11:56:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,10 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 
 	check_path(lex->cmd, &exec);
 	exec->path = check_access(lex->env, lex->cmd);
-	if (lex->cmd->redir->flag_len >= 1)
-	{
-		ft_printf("here?\n");
+	if (lex->cmd->redir)
 		redir(lex, exec);
-	}
 	else
 	{
-		ft_printf("here\n");
 		// if (exec_builtin(lex->env, lex->cmd) == 0)
 		// {
 		// 	exec->flag = 2;
