@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:33 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 12:01:51 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/18 19:50:52 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	check_p(char *str, t_lex *lex)
 			return (1);
 		}
 		if (!(str[lex->sh->i] > ' ' && str[lex->sh->i] <= '~')
-			|| str[lex->sh->i] == '>' || str[lex->sh->i] == '<'
 			|| str[lex->sh->i] == '|')
 		{
 			ft_putstr_fd("ERROR PIPE\n", 2);
