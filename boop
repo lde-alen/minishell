@@ -1,0 +1,49 @@
+assets
+beep
+bitch
+boop
+cat
+f1
+f2
+f3
+f4
+file2
+file3
+file4
+file.sup
+includes
+lala
+Libft
+Makefile
+minishell
+README.md
+srcs
+store.txt
+test
+test_my_ass
+   4096 Sep 13 03:54 assets
+-rw-r--r-- 1 asanthos asanthos    169 Sep 18 10:10 beep
+-rwxr-xr-x 1 asanthos asanthos     48 Sep 18 08:57 bitch
+-rwxr-xr-x 1 asanthos asanthos      0 Sep 18 12:50 boop
+-rwxr-xr-x 1 asanthos asanthos      0 Sep 18 11:48 cat
+-rwxr-xr-x 1 asanthos asanthos     48 Sep 17 11:41 f1
+-rwxr-xr-x 1 asanthos asanthos      0 Sep 17 11:03 f2
+-rwxr-xr-x 1 asanthos asanthos    129 Sep 17 11:03 f3
+-rwxr-xr-x 1 asanthos asanthos    129 Sep 17 11:03 f4
+-rw-r--r-- 1 asanthos asanthos      0 Sep 16 12:10 file2
+-rw-r--r-- 1 asanthos asanthos     10 Sep 16 12:25 file3
+-rwxr-xr-x 1 asanthos asanthos      6 Sep 16 12:27 file4
+-rwxr-xr-x 1 asanthos asanthos    201 Sep 13 03:54 file.sup
+drwxr-xr-x 8 asanthos asanthos   4096 Sep 18 10:48 .git
+-rw-r--r-- 1 asanthos asanthos    439 Sep 13 03:54 .gitignore
+drwxr-xr-x 2 asanthos asanthos   4096 Sep 18 08:57 includes
+-rwxr-xr-x 1 asanthos asanthos      0 Sep 15 07:24 lala
+drwxr-xr-x 2 asanthos asanthos   4096 Sep 18 12:50 Libft
+-rw-r--r-- 1 asanthos asanthos   3372 Sep 14 11:19 Makefile
+-rwxr-xr-x 1 asanthos asanthos 428032 Sep 18 12:50 minishell
+-rw-r--r-- 1 asanthos asanthos    135 Sep 13 03:54 README.md
+drwxr-xr-x 7 asanthos asanthos   4096 Sep 18 12:50 srcs
+-rwxr-xr-x 1 asanthos asanthos      0 Sep 18 12:50 store.txt
+-rwxr-xr-x 1 asanthos asanthos    109 Sep 17 08:49 test
+-rwxr-xr-x 1 asanthos asanthos      0 Sep 17 11:41 test_my_ass
+drwxr-xr-x 2 asanthos asanthos   4096 Sep 17 11:41 .vscode
