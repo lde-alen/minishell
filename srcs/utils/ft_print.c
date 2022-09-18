@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:31:56 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 20:30:23 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:10:08 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_print_char_arr(char **array)
 	i = 0;
 	while (array[i])
 	{
-		ft_printf("%s\n", array[i]);
+		ft_printf("Array[%d]=%s\n", i, array[i]);
 		i++;
 	}
 }

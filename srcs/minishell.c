@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 17:02:32 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:31:34 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,14 @@ int	minishell(char **env)
 		str = readline("\e[0;37m|🐼| \e[1;35mminishell\e[0;37m$\e[0m ");
 		if (str)
 		{
-			if (ft_strlen(str) > 1)
+			if (ft_strlen(str) >= 1)
 			{
 				add_history(str);
 				if (ft_parse(str, lex) == 0)
+				{
+					ft_print_char_arr(lex->cmd->argument);
 					exec_cmd(lex);
+				}
 			}
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/13 00:03:50 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:35:35 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	ft_fill_arg(t_lex *lex)
 	tmp = ft_calloc(1, sizeof(char));
 	i = ft_fill_first_arg(lex, i, tmp);
 	args = ft_args_to_str(lex);
+	ft_printf("args=%s\n", args);
 	lex->cmd->argument = ft_split(args, ' ');
 	free(lex->cmd->command);
 	free(args);
