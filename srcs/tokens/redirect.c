@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/18 16:52:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/18 10:37:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ size_t	check_redir_type(t_lex *lex, t_exec *exec)
 	size_t	i;
 
 	i = 0;
-	while (lex->cmd->redir->flag[i] == NOTHING || lex->cmd->redir->flag[i] == DL_REDIR)
+	while (i < lex->cmd->redir->flag_len && (lex->cmd->redir->flag[i] == NOTHING || lex->cmd->redir->flag[i] == DL_REDIR))
 		i++;
 	if (lex->cmd->redir->flag[i] == R_REDIR)
 		redirect_out(lex, lex->env, lex->cmd, i, exec);

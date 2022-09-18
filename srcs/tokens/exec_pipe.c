@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/18 09:54:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/18 10:45:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,59 +88,59 @@ size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 
 size_t	first_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	// size_t	err;
+	size_t	err;
 
-	(void)lst;
-	(void)cmd_lst;
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2");
 	close(exec->fd[exec->i][1]);
 	if (lex->cmd->redir)
 		redir(lex, exec);
+	else
+	{
+		if (exec->flag == 1)
+		{
+			exec->flag = 2;
+			exec_builtin(lst, cmd_lst);
+			return (0);
+		}
+		err = check_type(cmd_lst, &exec);
+		if (err != 0)
+			return (err);
+		return (exec_child(cmd_lst, exec));
+	}
 	return (0);
-	// if (exec->flag == 1)
-	// {
-	// 	exec->flag = 2;
-	// 	exec_builtin(lst, cmd_lst);
-	// 	return (0);
-	// }
-	// err = check_type(cmd_lst, &exec);
-	// if (err != 0)
-	// 	return (err);
-	// return (exec_child(cmd_lst, exec));
 }
 
 size_t	last_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	// size_t	err;
+	size_t	err;
 
-	(void)lst;
-	(void)cmd_lst;
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
 	if (lex->cmd->redir)
 		redir(lex, exec);
+	else
+	{
+		if (exec->flag == 1)
+		{
+			exec->flag = 2;
+			exec_builtin(lst, cmd_lst);
+			return (0);
+		}
+		err = check_type(cmd_lst, &exec);
+		if (err != 0)
+			return (err);
+		return (exec_child(cmd_lst, exec));
+	}
 	return (0);
-	// if (exec->flag == 1)
-	// {
-	// 	exec->flag = 2;
-	// 	exec_builtin(lst, cmd_lst);
-	// 	return (0);
-	// }
-	// err = check_type(cmd_lst, &exec);
-	// if (err != 0)
-	// 	return (err);
-	// return (exec_child(cmd_lst, exec));
 }
 
 size_t	mid_kid(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
-	// size_t	err;
+	size_t	err;
 
-	(void)lst;
-	(void)cmd_lst;
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2_Mid1");
@@ -150,17 +150,20 @@ size_t	mid_kid(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	close(exec->fd[exec->i][1]);
 	if (lex->cmd->redir)
 		redir(lex, exec);
+	else
+	{
+		if (exec->flag == 1)
+		{
+			exec->flag = 2;
+			exec_builtin(lst, cmd_lst);
+			return (0);
+		}
+		err = check_type(cmd_lst, &exec);
+		if (err != 0)
+			return (err);
+		return (exec_child(cmd_lst, exec));
+	}
 	return (0);
-	// if (exec->flag == 1)
-	// {
-	// 	exec->flag = 2;
-	// 	exec_builtin(lst, cmd_lst);
-	// 	return (0);
-	// }
-	// err = check_type(cmd_lst, &exec);
-	// if (err != 0)
-	// 	return (err);
-	// return (exec_child(cmd_lst, exec));
 }
 
 void	 check_pos(t_lex *lex, t_exec *exec)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check_redirection.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 16:37:31 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/18 10:18:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 */
 int	check_redirections(char *str, t_lex *lex)
 {
-	ssize_t	i;
+	size_t	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
 		if (str[i] == ' ')
 		{
@@ -96,6 +96,7 @@ int	check_redirections(char *str, t_lex *lex)
 				ft_check_expand(str, lex);
 			i--;
 		}
+		i++;
 	}
 	return (0);
 }
