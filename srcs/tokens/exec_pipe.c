@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 19:30:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:54:05 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	return (exec_child(cmd_lst, exec));
 }
 
-static	size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	size_t	err;
 
@@ -106,7 +106,7 @@ static	size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	return (exec_child(cmd_lst, exec));
 }
 
-static	size_t	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+size_t	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	size_t	err;
 
@@ -125,7 +125,7 @@ static	size_t	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	return (exec_child(cmd_lst, exec));
 }
 
-static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 {
 	size_t	err;
 
@@ -148,16 +148,18 @@ static	size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	return (exec_child(cmd_lst, exec));
 }
 
-void	check_pos(t_lex *lex, t_exec *exec)
+void	 check_pos(t_lex *lex, t_exec *exec)
 {
-	size_t	ret;
+	// size_t	ret;
 
-	if (exec->i == 0)
-		ret = first_child(lex->env, lex->cmd, exec);
-	else if (exec->i + 1 == exec->len)
-		ret = last_child(lex->env, lex->cmd, exec);
-	else
-		ret = mid_kid(lex->env, lex->cmd, exec);
-	free_child(exec, lex);
-	exit(ret);
+	if (lex->cmd->redir)
+		redir(lex, exec);
+	// if (exec->i == 0)
+	// 	ret = first_child(lex->env, lex->cmd, exec);
+	// else if (exec->i + 1 == exec->len) 
+	// 	ret = last_child(lex->env, lex->cmd, exec);
+	// else
+	// 	ret = mid_kid(lex->env, lex->cmd, exec);
+	// free_child(exec, lex);
+	// exit(ret);
 }

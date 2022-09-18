@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 19:34:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:54:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,7 +200,7 @@ char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
 char	**lst_to_char(t_env **lst);
 
-void	redirect(t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_exec *exec);
+void	redirect(t_lex *lex, t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_exec *exec);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst);
@@ -216,10 +216,13 @@ size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
 size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_lex *lex, t_exec *exec);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
+size_t	first_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
+size_t	last_child(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
+size_t	mid_kid(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 
-void	redirect_in(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
-void	redirect_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
-void	append_out(t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
+void	redirect_in(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
+void	redirect_out(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
+void	append_out(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
 void	here_doc(t_lex *lex, t_exec *exec);
 int		open_file(char *str, int flag);
 void	redir(t_lex *lex, t_exec *exec);

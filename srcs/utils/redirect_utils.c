@@ -6,16 +6,17 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 19:28:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:50:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *file_name, int flag, t_exec *exec)
+static void	child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, int status, char *file_name, int flag, t_exec *exec)
 {
 	int		file;
 	int		file2;
+	size_t	ret;
 
 	(void)lst;
 	if (file_name)
@@ -27,10 +28,21 @@ static void	child(t_env *lst, t_cmd *cmd_lst, int status, char *file_name, int f
 	file2 = open_file("store.txt", O_RDONLY);
 	dup2(file2, STDIN_FILENO);
 	close(file2);
+	if (exec->len > 1)
+	{
+		if (exec->i == 0)
+		ret = first_child(lex->env, lex->cmd, exec);
+		else if (exec->i + 1 == exec->len) 
+			ret = last_child(lex->env, lex->cmd, exec);
+		else
+			ret = mid_kid(lex->env, lex->cmd, exec);
+		free_child(exec, lex);
+		exit(ret);
+	}
 	main_child2(lst, cmd_lst, exec);
 }
 
-void	redirect(t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_exec *exec)
+void	redirect(t_lex *lex, t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_exec *exec)
 {
 	int		id;
 
@@ -41,7 +53,7 @@ void	redirect(t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_ex
 		if (id < 0)
 			ft_putendl_fd("Fork failed", 2);
 		else if (id == 0)
-			child(lst, cmd_lst, status, file, flag, exec);
+			child(lex, lst, cmd_lst, status, file, flag, exec);
 		waitpid(-1, NULL, 0);
 	}
 	free(exec->path);
