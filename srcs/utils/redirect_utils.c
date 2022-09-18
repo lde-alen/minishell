@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/18 16:50:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/18 09:50:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ static void	child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, int status, char *file
 {
 	int		file;
 	int		file2;
-	size_t	ret;
+	// size_t	ret;
 
 	(void)lst;
+	(void)lex;
 	if (file_name)
 	{
 		file = open_file(file_name, flag);
@@ -28,17 +29,17 @@ static void	child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, int status, char *file
 	file2 = open_file("store.txt", O_RDONLY);
 	dup2(file2, STDIN_FILENO);
 	close(file2);
-	if (exec->len > 1)
-	{
-		if (exec->i == 0)
-		ret = first_child(lex->env, lex->cmd, exec);
-		else if (exec->i + 1 == exec->len) 
-			ret = last_child(lex->env, lex->cmd, exec);
-		else
-			ret = mid_kid(lex->env, lex->cmd, exec);
-		free_child(exec, lex);
-		exit(ret);
-	}
+	// if (exec->len > 1)
+	// {
+	// 	if (exec->i == 0)
+	// 	ret = first_child(lex->env, lex->cmd, exec);
+	// 	else if (exec->i + 1 == exec->len) 
+	// 		ret = last_child(lex->env, lex->cmd, exec);
+	// 	else
+	// 		ret = mid_kid(lex->env, lex->cmd, exec);
+	// 	free_child(exec, lex);
+	// 	exit(ret);
+	// }
 	main_child2(lst, cmd_lst, exec);
 }
 
