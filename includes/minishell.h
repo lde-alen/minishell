@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/19 17:14:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 04:12:51 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ typedef struct s_redir
 	char		**file;
 	size_t		*flag;
 	size_t		flag_len;
-	size_t		left_r;
-	size_t		right_r;
-	size_t		left_dr;
-	size_t		right_dr;
+	ssize_t		left_r;
+	ssize_t		right_r;
+	ssize_t		left_dr;
+	ssize_t		right_dr;
 	char		*file_in;
 	char		*file_out;
 	int			flag_in;
@@ -234,7 +234,7 @@ void	append_out(t_lex *lex, char *file);
 void	here_doc(t_lex *lex, t_exec *exec);
 int		open_file(char *str, int flag);
 void	redir(t_lex *lex, t_exec *exec);
-size_t	find_redir_in(t_lex *lex, size_t type);
+ssize_t	find_redir_in(t_lex *lex, size_t type);
 
 /**
  * FREE FUNCTONS

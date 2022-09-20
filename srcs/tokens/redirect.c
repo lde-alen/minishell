@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/19 17:36:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 04:12:55 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,18 @@ void	check_redir_type(t_lex *lex, t_exec *exec)
 	// return (0);
 }
 
-size_t	find_redir_in(t_lex *lex, size_t type)
+ssize_t	find_redir_in(t_lex *lex, size_t type)
 {
-	while (lex->cmd->redir->flag_len)
+	int	i;
+
+	i = lex->cmd->redir->flag_len;
+	while (i >= 0)
 	{
-		if (lex->cmd->redir->flag[lex->cmd->redir->flag_len - 1] == type)
-			return (lex->cmd->redir->flag_len - 1);
-		lex->cmd->redir->flag_len--;
+		if (lex->cmd->redir->flag[i - 1] == type)
+			return (i - 1);
+		i--;
 	}
-	return (0);
+	return (-1);
 }
 
 void	here_doc(t_lex *lex, t_exec *exec)
