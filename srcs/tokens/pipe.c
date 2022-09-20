@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/18 10:27:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:30:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,40 @@ size_t	check_delimiter(t_lex *lex)
 
 void	redir(t_lex *lex, t_exec *exec)
 {
-	ssize_t	i;
-	ssize_t	len;
+	size_t	i;
+	size_t	len;
+	ssize_t	right;
+	ssize_t	left;
 
 	i = 0;
 	len = lex->cmd->redir->flag_len;
+	lex->cmd->redir->left_r = find_redir_in(lex, L_REDIR);
+	lex->cmd->redir->left_dr = find_redir_in(lex, DL_REDIR);
+	lex->cmd->redir->right_r = find_redir_in(lex, R_REDIR);
+	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
+	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
+	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
 	while (i < len && lex->cmd->redir->flag[len - 1] == DL_REDIR)
 		len--;
-	while (i < len)
+	while (i < len && (i + 1) != len)
 	{
 		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
-			if (open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT) == -1)
-				return ;
+			if ((right < 0 && i != lex->cmd->redir->right_r)
+				|| (right > 0 && i != lex->cmd->redir->right_dr))
+				open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
+			// lex->cmd->redir->flag[i] = NOTHING;
 		}
 		else if (lex->cmd->redir->flag[i] == L_REDIR)
 		{
-			if (open_file(lex->cmd->redir->file[i], O_TRUNC) == -1)
-				return ;
+			// if (find_redir_in(lex, L_REDIR) != lex->cmd->redir->file[i])
+				// lex->cmd->redir->flag[i] = NOTHING;
+			if (left < 0 && i != lex->cmd->redir->left_r)
+				open_file(lex->cmd->redir->file[i], O_TRUNC);
 		}
 		i++;
 	}
-	if (check_delimiter(lex) == 1)
+	// if (check_delimiter(lex) == 1)
 		here_doc(lex, exec);
 }
 

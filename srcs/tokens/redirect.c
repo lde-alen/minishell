@@ -6,40 +6,28 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/18 12:50:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:36:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	redirect_in(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
+void	redirect_in(t_lex *lex, char *file)
 {
-	int	flag;
-	int	status;
-
-	flag = O_RDONLY;
-	status = STDIN_FILENO;
-	redirect(lex, lst, cmd_lst, status, cmd_lst->redir->file[i], flag, exec);
+	lex->cmd->redir->flag_in = O_RDONLY;
+	lex->cmd->redir->file_in = file;
 }
 
-void	redirect_out(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
+void	redirect_out(t_lex *lex, char *file)
 {
-	int	flag;
-	int	status;
-
-	flag = O_TRUNC | O_CREAT | O_WRONLY;
-	status = STDOUT_FILENO;
-	redirect(lex, lst, cmd_lst, status, cmd_lst->redir->file[i], flag, exec);
+	lex->cmd->redir->flag_out = O_TRUNC | O_CREAT | O_WRONLY;
+	lex->cmd->redir->file_out = file;
 }
 
-void	append_out(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec)
+void	append_out(t_lex *lex, char *file)
 {
-	int	flag;
-	int	status;
-
-	flag = O_APPEND | O_WRONLY | O_CREAT;
-	status = STDOUT_FILENO;
-	redirect(lex, lst, cmd_lst, status, cmd_lst->redir->file[i], flag, exec);
+	lex->cmd->redir->flag_out = O_APPEND | O_WRONLY | O_CREAT;
+	lex->cmd->redir->file_out = file;
 }
 
 size_t	get_last_delimiter(t_lex *lex)
@@ -52,26 +40,54 @@ size_t	get_last_delimiter(t_lex *lex)
 	return (len);
 }
 
-size_t	check_redir_type(t_lex *lex, t_exec *exec)
+void	check_redir_type(t_lex *lex, t_exec *exec)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < lex->cmd->redir->flag_len && (lex->cmd->redir->flag[i] == NOTHING || lex->cmd->redir->flag[i] == DL_REDIR))
-		i++;
-	if (i < lex->cmd->redir->flag_len)
-	{
-		if (lex->cmd->redir->flag[i] == R_REDIR)
-			redirect_out(lex, lex->env, lex->cmd, i, exec);
-		else if (lex->cmd->redir->flag[i] == L_REDIR)
-			redirect_in(lex, lex->env, lex->cmd, i, exec);
-		else if (lex->cmd->redir->flag[i] == DR_REDIR)
-			append_out(lex, lex->env, lex->cmd, i, exec);
-		else
-			return (1);
-	}
+	if (lex->cmd->redir->left_r > lex->cmd->redir->left_dr)
+		redirect_in(lex, lex->cmd->redir->file[lex->cmd->redir->left_r]);
+	else if (lex->cmd->redir->left_dr > lex->cmd->redir->left_r)
+		redirect_in(lex, "store.txt");
 	else
-		return (1);
+		redirect_in(lex, NULL);
+	if (lex->cmd->redir->right_r > lex->cmd->redir->right_dr)
+		redirect_out(lex, lex->cmd->redir->file[lex->cmd->redir->right_r]);
+	else if (lex->cmd->redir->right_dr > lex->cmd->redir->right_r)
+		append_out(lex, lex->cmd->redir->file[lex->cmd->redir->right_dr]);
+	else
+		redirect_out(lex, NULL);
+	redirect(lex, exec);
+
+
+
+
+
+	// while (i < lex->cmd->redir->flag_len && (lex->cmd->redir->flag[i] == NOTHING || lex->cmd->redir->flag[i] == DL_REDIR))
+	// 	i++;
+	// ft_printf("File here: %s\n", lex->cmd->redir->file[i]);
+	// if (i < lex->cmd->redir->flag_len)
+	// {
+	// 	if (lex->cmd->redir->flag[i] == R_REDIR)
+	// 		redirect_out(lex, lex->env, lex->cmd, i, exec);
+	// 	else if (lex->cmd->redir->flag[i] == L_REDIR)
+	// 		redirect_in(lex, lex->env, lex->cmd, i, exec);
+	// 	else if (lex->cmd->redir->flag[i] == DR_REDIR)
+	// 		append_out(lex, lex->env, lex->cmd, i, exec);
+	// 	else
+	// 		return (1);
+		
+	// }
+	// else
+	// 	return (1);
+	// return (0);
+}
+
+size_t	find_redir_in(t_lex *lex, size_t type)
+{
+	while (lex->cmd->redir->flag_len)
+	{
+		if (lex->cmd->redir->flag[lex->cmd->redir->flag_len - 1] == type)
+			return (lex->cmd->redir->flag_len - 1);
+		lex->cmd->redir->flag_len--;
+	}
 	return (0);
 }
 
@@ -80,7 +96,7 @@ void	here_doc(t_lex *lex, t_exec *exec)
 	int		file;
 	char	*file_name;
 	char	*str;
-	int		status;
+	// int		status;
 	size_t	i;
 
 	file_name = "store.txt";
@@ -102,8 +118,9 @@ void	here_doc(t_lex *lex, t_exec *exec)
 		i++;
 	}
 	close(file);
-	status = STDIN_FILENO;
-	if (check_redir_type(lex, exec) == 1 && lex->cmd->command)
-		redirect(lex, lex->env, lex->cmd, status, NULL, 0, exec);
+	// status = STDIN_FILENO;
+	check_redir_type(lex, exec);
+	// if (check_redir_type(lex, exec) == 1 && lex->cmd->command)
+	// 	redirect(lex, lex->env, lex->cmd, status, NULL, 0, exec);
 	unlink(file_name);
 }

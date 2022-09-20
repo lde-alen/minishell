@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/18 09:49:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:14:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef struct s_redir
 	char		**file;
 	size_t		*flag;
 	size_t		flag_len;
+	size_t		left_r;
+	size_t		right_r;
+	size_t		left_dr;
+	size_t		right_dr;
+	char		*file_in;
+	char		*file_out;
+	int			flag_in;
+	int			flag_out;
 }	t_redir;
 
 typedef struct s_cmd
@@ -200,7 +208,7 @@ char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
 char	**lst_to_char(t_env **lst);
 
-void	redirect(t_lex *lex, t_env *lst, t_cmd *cmd_lst, int status, char *file, int flag, t_exec *exec);
+void	redirect(t_lex *lex, t_exec *exec);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
 size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst);
@@ -220,12 +228,13 @@ size_t	first_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 size_t	last_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 size_t	mid_kid(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 
-void	redirect_in(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
-void	redirect_out(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
-void	append_out(t_lex *lex, t_env *lst, t_cmd *cmd_lst, size_t i, t_exec *exec);
+void	redirect_in(t_lex *lex, char *file);
+void	redirect_out(t_lex *lex, char *file);
+void	append_out(t_lex *lex, char *file);
 void	here_doc(t_lex *lex, t_exec *exec);
 int		open_file(char *str, int flag);
 void	redir(t_lex *lex, t_exec *exec);
+size_t	find_redir_in(t_lex *lex, size_t type);
 
 /**
  * FREE FUNCTONS
