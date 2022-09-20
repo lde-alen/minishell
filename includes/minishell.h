@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/20 04:12:51 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 05:52:07 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,9 +224,9 @@ size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
 size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
 void	check_pos(t_lex *lex, t_exec *exec);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
-size_t	first_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec);
-size_t	last_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec);
-size_t	mid_kid(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec);
+size_t	first_child(t_lex *lex, t_exec *exec);
+size_t	last_child(t_lex *lex, t_exec *exec);
+size_t	mid_kid(t_lex *lex, t_exec *exec);
 
 void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 11:50:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 06:29:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ void	ft_fill_redir(t_lex *lex)
 
 	count = ft_count_redir(lex->cmd->command);
 	if (count == 0)
+	{
+		lex->cmd->redir = NULL;
 		return ;
+	}
 	else
 	{
 		lex->cmd->redir = (t_redir *)malloc(sizeof(t_redir));

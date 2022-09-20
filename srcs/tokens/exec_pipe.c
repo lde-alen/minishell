@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/18 10:45:01 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 06:30:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)
 	ft_printf("Errno: %d\n", errno);	
 	if (ret < 0)
 	{
-		perror("Minishel");
+		perror("Minishell");
 		if (errno == 2)
 		{
 			g_exit = 127;
@@ -86,10 +86,8 @@ size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	return (exec_child(cmd_lst, exec));
 }
 
-size_t	first_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+size_t	first_child(t_lex *lex, t_exec *exec)
 {
-	size_t	err;
-
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2");
@@ -97,50 +95,24 @@ size_t	first_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (lex->cmd->redir)
 		redir(lex, exec);
 	else
-	{
-		if (exec->flag == 1)
-		{
-			exec->flag = 2;
-			exec_builtin(lst, cmd_lst);
-			return (0);
-		}
-		err = check_type(cmd_lst, &exec);
-		if (err != 0)
-			return (err);
-		return (exec_child(cmd_lst, exec));
-	}
+		return (main_child2(lex->env, lex->cmd, exec));
 	return (0);
 }
 
-size_t	last_child(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+size_t	last_child(t_lex *lex, t_exec *exec)
 {
-	size_t	err;
-
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
 	if (lex->cmd->redir)
 		redir(lex, exec);
 	else
-	{
-		if (exec->flag == 1)
-		{
-			exec->flag = 2;
-			exec_builtin(lst, cmd_lst);
-			return (0);
-		}
-		err = check_type(cmd_lst, &exec);
-		if (err != 0)
-			return (err);
-		return (exec_child(cmd_lst, exec));
-	}
+		return (main_child2(lex->env, lex->cmd, exec));
 	return (0);
 }
 
-size_t	mid_kid(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
+size_t	mid_kid(t_lex *lex, t_exec *exec)
 {
-	size_t	err;
-
 	close(exec->fd[exec->i][0]);
 	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
 		perror("dup2_Mid1");
@@ -151,18 +123,7 @@ size_t	mid_kid(t_lex *lex, t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	if (lex->cmd->redir)
 		redir(lex, exec);
 	else
-	{
-		if (exec->flag == 1)
-		{
-			exec->flag = 2;
-			exec_builtin(lst, cmd_lst);
-			return (0);
-		}
-		err = check_type(cmd_lst, &exec);
-		if (err != 0)
-			return (err);
-		return (exec_child(cmd_lst, exec));
-	}
+		return (main_child2(lex->env, lex->cmd, exec));
 	return (0);
 }
 
@@ -170,17 +131,12 @@ void	 check_pos(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
 
-	// if (lex->cmd->redir)
-	// 	redir(lex, exec);
-	// else
-	// {
-		if (exec->i == 0)
-			ret = first_child(lex, lex->env, lex->cmd, exec);
-		else if (exec->i + 1 == exec->len) 
-			ret = last_child(lex, lex->env, lex->cmd, exec);
-		else
-			ret = mid_kid(lex, lex->env, lex->cmd, exec);
-		free_child(exec, lex);
-		exit(ret);
-	// }
+	if (exec->i == 0)
+		ret = first_child(lex, exec);
+	else if (exec->i + 1 == exec->len) 
+		ret = last_child(lex, exec);
+	else
+		ret = mid_kid(lex, exec);
+	free_child(exec, lex);
+	exit(ret);
 }
