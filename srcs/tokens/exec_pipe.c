@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/20 06:30:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 17:40:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,22 @@ size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec)
 	return (exec_child(cmd_lst, exec));
 }
 
+t_bool	check_here_doc(t_lex *lex)
+{
+	t_bool	bool;
+	size_t	i;
+
+	i = 0;
+	bool = false;
+	while (i < lex->cmd->redir->flag_len)
+	{
+		if (lex->cmd->redir->flag[i] == DL_REDIR)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 size_t	first_child(t_lex *lex, t_exec *exec)
 {
 	close(exec->fd[exec->i][0]);
@@ -114,8 +130,11 @@ size_t	last_child(t_lex *lex, t_exec *exec)
 size_t	mid_kid(t_lex *lex, t_exec *exec)
 {
 	close(exec->fd[exec->i][0]);
-	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
-		perror("dup2_Mid1");
+	if (check_here_doc(lex) == false)
+	{
+		if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
+			perror("dup2_Mid1");
+	}
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2_mid2");
 	close(exec->fd[(exec->i - 1)][0]);
