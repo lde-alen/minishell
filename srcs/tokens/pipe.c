@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/20 04:13:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 04:52:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,23 @@ void	redir(t_lex *lex, t_exec *exec)
 	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
 	while (i < len && lex->cmd->redir->flag[len - 1] == DL_REDIR)
 		len--;
-	while (i < len && (i + 1) != len)
+	while (i <= len)
 	{
 		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
-			if ((right < -1 && i != lex->cmd->redir->right_r)
+			if (((right < -1 && i != lex->cmd->redir->right_r)
 				|| (right > -1 && i != lex->cmd->redir->right_dr))
+				|| !lex->cmd->command)
 				open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
-			// lex->cmd->redir->flag[i] = NOTHING;
 		}
 		else if (lex->cmd->redir->flag[i] == L_REDIR)
 		{
-			// if (find_redir_in(lex, L_REDIR) != lex->cmd->redir->file[i])
-				// lex->cmd->redir->flag[i] = NOTHING;
-			if (left < -1 && i != lex->cmd->redir->left_r)
+			if ((left < -1 && i != lex->cmd->redir->left_r) || !lex->cmd->command)
 				open_file(lex->cmd->redir->file[i], O_TRUNC);
 		}
 		i++;
 	}
-	// if (check_delimiter(lex) == 1)
-		here_doc(lex, exec);
+	here_doc(lex, exec);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)

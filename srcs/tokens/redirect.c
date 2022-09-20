@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/20 04:12:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/20 05:02:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,6 @@ void	check_redir_type(t_lex *lex, t_exec *exec)
 	else
 		redirect_out(lex, NULL);
 	redirect(lex, exec);
-
-
-
-
-
-	// while (i < lex->cmd->redir->flag_len && (lex->cmd->redir->flag[i] == NOTHING || lex->cmd->redir->flag[i] == DL_REDIR))
-	// 	i++;
-	// ft_printf("File here: %s\n", lex->cmd->redir->file[i]);
-	// if (i < lex->cmd->redir->flag_len)
-	// {
-	// 	if (lex->cmd->redir->flag[i] == R_REDIR)
-	// 		redirect_out(lex, lex->env, lex->cmd, i, exec);
-	// 	else if (lex->cmd->redir->flag[i] == L_REDIR)
-	// 		redirect_in(lex, lex->env, lex->cmd, i, exec);
-	// 	else if (lex->cmd->redir->flag[i] == DR_REDIR)
-	// 		append_out(lex, lex->env, lex->cmd, i, exec);
-	// 	else
-	// 		return (1);
-		
-	// }
-	// else
-	// 	return (1);
-	// return (0);
 }
 
 ssize_t	find_redir_in(t_lex *lex, size_t type)
@@ -99,7 +76,6 @@ void	here_doc(t_lex *lex, t_exec *exec)
 	int		file;
 	char	*file_name;
 	char	*str;
-	// int		status;
 	size_t	i;
 
 	file_name = "store.txt";
@@ -121,9 +97,6 @@ void	here_doc(t_lex *lex, t_exec *exec)
 		i++;
 	}
 	close(file);
-	// status = STDIN_FILENO;
 	check_redir_type(lex, exec);
-	// if (check_redir_type(lex, exec) == 1 && lex->cmd->command)
-	// 	redirect(lex, lex->env, lex->cmd, status, NULL, 0, exec);
 	unlink(file_name);
 }
