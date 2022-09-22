@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/22 03:23:19 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:01:17 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,16 @@ void	redir(t_lex *lex, t_exec *exec)
 		}
 		i++;
 	}
-	here_doc(lex, exec);
+	check_redir_type(lex, exec);
+	unlink(lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)]);
+	// here_doc(lex, exec);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
 
+	here_doc(lex, exec);
 	check_path(lex->cmd, &exec);
 	exec->path = check_access(lex->env, lex->cmd);
 	if (lex->cmd->redir)
@@ -118,7 +121,17 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 
 void	loop_lst(t_lex *lex, t_exec *exec)
 {
+	t_cmd	*tmp;
+
 	check_path(lex->cmd, &exec);
+	tmp = lex->cmd;
+	while (lex->cmd != NULL)
+	{
+		if (lex->cmd->redir)
+			here_doc(lex, exec);
+		lex->cmd = lex->cmd->next;
+	}
+	lex->cmd = tmp;
 	while (lex->cmd != NULL)
 	{
 		pipe_exec(lex, exec);

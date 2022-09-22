@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/20 10:07:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/22 18:53:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	check_redir_type(t_lex *lex, t_exec *exec)
 	if (lex->cmd->redir->left_r > lex->cmd->redir->left_dr)
 		redirect_in(lex, lex->cmd->redir->file[lex->cmd->redir->left_r]);
 	else if (lex->cmd->redir->left_dr > lex->cmd->redir->left_r)
-		redirect_in(lex, "store.txt");
+		redirect_in(lex,lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)]);
 	else
 		redirect_in(lex, NULL);
 	if (lex->cmd->redir->right_r > lex->cmd->redir->right_dr)
@@ -73,12 +73,14 @@ ssize_t	find_redir_in(t_lex *lex, size_t type)
 
 void	here_doc(t_lex *lex, t_exec *exec)
 {
+	(void)exec;
 	int		file;
 	char	*file_name;
 	char	*str;
 	size_t	i;
 
-	file_name = "store.txt";
+	file_name = lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)];
+	ft_printf("%s\n", lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)]);
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	i = 0;
 	while (i < lex->cmd->redir->flag_len)
@@ -97,6 +99,6 @@ void	here_doc(t_lex *lex, t_exec *exec)
 		i++;
 	}
 	close(file);
-	check_redir_type(lex, exec);
-	unlink(file_name);
+	// check_redir_type(lex, exec);
+	// unlink(file_name);
 }

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/21 05:52:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/22 18:47:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ void	here_doc(t_lex *lex, t_exec *exec);
 int		open_file(char *str, int flag);
 void	redir(t_lex *lex, t_exec *exec);
 ssize_t	find_redir_in(t_lex *lex, size_t type);
+void	check_redir_type(t_lex *lex, t_exec *exec);
 
 /**
  * FREE FUNCTONS
