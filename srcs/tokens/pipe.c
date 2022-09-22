@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/22 19:01:17 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:06:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
 
-	here_doc(lex, exec);
+	if (lex->cmd->redir)
+		here_doc(lex, exec);
 	check_path(lex->cmd, &exec);
 	exec->path = check_access(lex->env, lex->cmd);
 	if (lex->cmd->redir)

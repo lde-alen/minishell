@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/22 18:53:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:05:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	here_doc(t_lex *lex, t_exec *exec)
 	size_t	i;
 
 	file_name = lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)];
-	ft_printf("%s\n", lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)]);
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	i = 0;
 	while (i < lex->cmd->redir->flag_len)
