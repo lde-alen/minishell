@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 17:19:26 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:20:53 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	parser_stage2(char *str, t_lex *lex)
 		lex->sh->i++;
 		lex->sh->j++;
 	}
+	ft_printf("End of stage2: %s\n", lex->sh->tmp_str);
 	return (0);
 }
 
