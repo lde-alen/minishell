@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/20 17:34:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/21 05:52:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_exec
 	size_t	i;
 	char	*path;
 	char	**env_kid;
+	int		dup_in;
 }	t_exec;
 
 typedef enum e_boolean
