@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 21:56:54 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:50:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,11 @@ size_t	check_builtin(t_cmd *cmd_lst)
 
 void	check_path(t_cmd *cmd_lst, t_exec **exec)
 {
-	if (check_builtin(cmd_lst) == 1)
-		(*exec)->flag = 1;
+	if (cmd_lst->command)
+	{
+		if (check_builtin(cmd_lst) == 1)
+			(*exec)->flag = 1;
+	}
 }
 
 void	pipe_arr(t_exec *exec)

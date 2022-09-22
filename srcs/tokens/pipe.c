@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/22 19:06:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:50:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,10 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 void	pipe_exec(t_lex *lex, t_exec *exec)
 {
 	exec->env_kid = lst_to_char(&lex->env);
-	exec->path = check_access(lex->env, lex->cmd);
+	if (lex->cmd->argument)
+		exec->path = check_access(lex->env, lex->cmd);
+	else
+		exec->path = NULL;
 	if ((exec->i + 1) != exec->len)
 		pipe_arr(exec);
 	exec->id[exec->i] = fork();
