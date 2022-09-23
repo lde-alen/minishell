@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/22 20:03:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:47:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	if ((ft_strchr(cmd_lst->command, '/') == 0 && (*exec)->path == NULL)
 		|| (!cmd_lst->command))
 	{
-		ft_printf("HEREREER\n");
 		err_msg(cmd_lst, "", "command not found");
 		g_exit = 127;
 		return (g_exit);
@@ -98,7 +97,6 @@ t_bool	check_here_doc(t_lex *lex)
 			return (true);
 		i++;
 	}
-	ft_printf("here\n");
 	return (false);
 }
 
@@ -118,11 +116,8 @@ size_t	first_child(t_lex *lex, t_exec *exec)
 
 size_t	last_child(t_lex *lex, t_exec *exec)
 {
-	if ((lex->cmd->redir && check_here_doc(lex) == false) || !lex->cmd->redir)
-	{
-		if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
-			perror("dup2ME");
-	}
+	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
+		perror("dup2ME");
 	close(exec->fd[(exec->i - 1)][0]);
 	if (lex->cmd->redir)
 	{
@@ -135,11 +130,8 @@ size_t	last_child(t_lex *lex, t_exec *exec)
 size_t	mid_kid(t_lex *lex, t_exec *exec)
 {
 	close(exec->fd[exec->i][0]);
-	if ((lex->cmd->redir && check_here_doc(lex) == false) || !lex->cmd->redir)
-	{
-		if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
-			perror("dup2_Mid1");
-	}
+	if (dup2(exec->fd[(exec->i - 1)][0], STDIN_FILENO) < 0)
+		perror("dup2_Mid1");
 	if (dup2(exec->fd[exec->i][1], STDOUT_FILENO) < 0)
 		perror("dup2_mid2");
 	close(exec->fd[(exec->i - 1)][0]);
