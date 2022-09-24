@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/22 20:03:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/24 00:59:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,8 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 	exec->len = get_cmd_len(lex->cmd);
 	if (exec->len > 1)
 		loop_lst(lex, exec);
-	else if (exec->len == 1 && lex->cmd->command)
+	else if (exec->len == 1)
 		exec_alone(lex, exec);
-	else
-	{
-		exec->flag = 2;
-		redir(lex, exec);
-	}
 	if (exec->flag != 2)
 	{
 		exec->i = 0;
@@ -88,7 +83,6 @@ void	redir(t_lex *lex, t_exec *exec)
 	}
 	check_redir_type(lex, exec);
 	unlink(lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)]);
-	// here_doc(lex, exec);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
@@ -98,7 +92,8 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	if (lex->cmd->redir)
 		here_doc(lex, exec);
 	check_path(lex->cmd, &exec);
-	exec->path = check_access(lex->env, lex->cmd);
+	if (lex->cmd->command)
+		exec->path = check_access(lex->env, lex->cmd);
 	if (lex->cmd->redir)
 		redir(lex, exec);
 	else
