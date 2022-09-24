@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/22 19:05:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/24 04:05:27 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,4 @@ void	here_doc(t_lex *lex, t_exec *exec)
 		i++;
 	}
 	close(file);
-	// check_redir_type(lex, exec);
-	// unlink(file_name);
 }
