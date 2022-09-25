@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/17 17:00:52 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/25 20:38:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	*ft_expand(t_env *lst, char *str)
 			return (lst->value);
 		lst = lst->next;
 	}
+	if (ft_strcmp(lst->name, ft_strchr(str, str[1])) == 0)
+		return (lst->value);
 	lst = tmp;
 	return (NULL);
 }
