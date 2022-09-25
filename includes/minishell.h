@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/22 18:47:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/25 18:58:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ void	print_list_env(t_env *head, t_cmd *cmd_lst);
 void	print_lst(t_env *lst);
 
 char	*get_pwd(void);
-t_env	*search_pwd(t_env *lst);
+t_env	*search_env(t_env *lst, char *str);
 
 int		get_args_len(t_cmd *cmd_lst);
 int		get_len(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:31:56 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/18 17:10:08 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/25 18:58:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	check_args(t_env *head, t_cmd *cmd)
 			ft_putendl_fd("usage: pwd [-L | -P]", 2);
 		}
 		else
-			ft_putendl_fd(search_pwd(head)->value, 1);
+			ft_putendl_fd(search_env(head, "PWD")->value, 1);
 	}
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/24 04:08:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/25 18:55:36 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 
 size_t	check_delimiter(t_lex *lex)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < lex->cmd->redir->flag_len)
