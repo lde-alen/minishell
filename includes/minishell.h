@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/25 18:58:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:35:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_redir
 	char		*file_out;
 	int			flag_in;
 	int			flag_out;
+	int			*fd_red;
 }	t_redir;
 
 typedef struct s_cmd
