@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/26 08:08:32 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/26 16:44:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,57 @@ ssize_t	find_redir_in(t_lex *lex, size_t type)
 	return (-1);
 }
 
+size_t	count_redir(t_lex *lex)
+{
+	size_t	i;
+	size_t	checker;
+
+	checker = 0;
+	while (i < lex->cmd->redir->flag_len)
+	{
+		if (lex->cmd->redir->flag[i] == DL_REDIR)
+			checker++;
+		i++;
+	}
+	return (checker);
+}
+
+void	fill_doc_arr(t_lex *lex, char *str)
+{
+	char	**split_arr;
+	int		i;
+	int		j;
+
+	if (str == NULL)
+		return ;
+	else
+	{
+		i = 0;
+		j = 0;
+		lex->cmd->redir->doc_arr = (char **)malloc(sizeof(char *) * count_redir(lex) + 1);
+		while (i < lex->cmd->redir->flag_len)
+		{
+			split_arr = ft_split(str, '\n');
+			if (lex->cmd->redir->flag[i] == DL_REDIR)
+			{
+				split_arr = ft_split(str, lex->cmd->redir->file[i]);
+				lex->cmd->redir->doc_arr[j] = ft_strdup(split_arr[0]);
+				free(split_arr);
+				j++;
+			}
+			i++;
+		}
+		lex->cmd->redir->doc_arr[j] = NULL;
+		// split_arr = ft_split(str, '\n');
+		i = 0;
+		while (lex->cmd->redir->doc_arr[i])
+		{
+			ft_printf("split_arr: %s\n", lex->cmd->redir->doc_arr[i]);
+			i++;
+		}
+	}
+}
+
 void	here_doc(t_lex *lex, t_exec *exec)
 {
 	(void)exec;
@@ -91,10 +142,8 @@ void	here_doc(t_lex *lex, t_exec *exec)
 			while (ft_strcmp(store, lex->cmd->redir->file[i]) != 0)
 			{
 				store = readline("> ");
-				ft_printf("STORE: %s\n", store);
 				str = ft_strjoin(str, store);
-				str = ft_strjoin(str, " ");
-				ft_printf("STR: %s\n", str);
+				str = ft_strjoin(str, "\n");
 				if (get_last_delimiter(lex) == i
 					&& ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
 					ft_putendl_fd(str, file);
@@ -103,5 +152,6 @@ void	here_doc(t_lex *lex, t_exec *exec)
 		i++;
 	}
 	ft_printf("HERE: %s\n", str);
+	fill_doc_arr(lex, str);
 	close(file);
 }
