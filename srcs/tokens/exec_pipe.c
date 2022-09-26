@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/23 14:47:01 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:05:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)
 	ft_printf("Errno: %d\n", errno);	
 	if (ret < 0)
 	{
-		perror("Minishell");
+		perror("minishell");
 		if (errno == 2)
 		{
 			g_exit = 127;

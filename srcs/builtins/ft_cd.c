@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/25 19:02:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:02:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,17 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	t_env	*pwd;
 	t_env	*store;
 	int		check;
+	char	*env_user;
 
 	pwd = search_env(lst, "PWD");
 	check = 0;
 	if (!cmd->argument[1])
 	{
-		chdir("/Desktop");
-		chdir("../");
+		if (search_env(lst, "USER") != NULL)
+		{
+			env_user = ft_strjoin("/Users/", ft_strdup(search_env(lst, "USER")->value));
+			chdir(env_user);
+		}
 	}
 	else
 		check = chdir(cmd->argument[1]);
