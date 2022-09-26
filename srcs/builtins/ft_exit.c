@@ -51,44 +51,61 @@ void	exit_error(t_cmd *cmd_lst)
 	ft_putendl_fd(" numeric argument required", 2);
 }
 
-void	check_valid(t_cmd *cmd_lst)
+void	check_valid(t_cmd *cmd_lst, size_t i)
 {
-	if (((ft_atol(cmd_lst->argument[1]) > 9223372036854775807)
-			&& (cmd_lst->argument[1][0] == '+'
-			|| cmd_lst->argument[1][0] != '-'))
-		|| ((ft_atol(cmd_lst->argument[1])
+	char	*tmp;
+
+	if (((ft_atol(cmd_lst->argument[i]) > 9223372036854775807)
+			&& (cmd_lst->argument[i][0] == '+'
+			|| cmd_lst->argument[i][0] != '-'))
+		|| ((ft_atol(cmd_lst->argument[i])
 			< ft_atol("-9223372036854775808"))
-		&& cmd_lst->argument[1][0] == '-'))
+		&& cmd_lst->argument[i][0] == '-'))
 	{
-		ft_putendl_fd("exit", 1);
+		ft_putendl_fd("exit", i);
 		exit_error(cmd_lst);
 		exit(255);
 	}
 	else
 	{
-		free(cmd_lst->argument[1]);
-		cmd_lst->argument[1] = ft_strdup(ft_ltoa(ft_atol(cmd_lst->argument[1]) % 256));
+		tmp = ft_strdup(ft_ltoa(ft_atol(cmd_lst->argument[i]) % 256));
+		free(cmd_lst->argument[i]);
+		cmd_lst->argument[i] = ft_strdup(tmp);
+		ft_printf("Command: %s\n", cmd_lst->argument[i]);
+		free(tmp);
 	}
 }
 
 void	ft_exit(t_cmd *cmd_lst)
 {
+	int	flag;
+
+	flag = 0;
 	if (cmd_lst->argument[1])
 	{
 		if (check_str_exit(cmd_lst->argument[1]) == 0)
-		{
-			check_valid(cmd_lst);
-		}
+			check_valid(cmd_lst, 1);
 		else
 		{
-			ft_putendl_fd("exit", 1);
-			exit_error(cmd_lst);
-			exit(255);
+			if (ft_strcmp(cmd_lst->argument[1], "--") == 0)
+			{
+				flag = 1;
+				check_valid(cmd_lst, 2);
+			}
+			else	
+			{
+				ft_putendl_fd("exit", 1);
+				exit_error(cmd_lst);
+				exit(255);
+			}
 		}
 	}
 	ft_putendl_fd("exit", 1);
-	if (cmd_lst->argument[1])
+	ft_printf("BOOP ARG: %s\n", cmd_lst->argument[1]);
+	if (cmd_lst->argument[1] && flag == 0)
 		exit(ft_atol(cmd_lst->argument[1]));
+	if (cmd_lst->argument[2] && flag == 1)
+		exit(ft_atol(cmd_lst->argument[2]));
 	else
 		exit(0);
 }

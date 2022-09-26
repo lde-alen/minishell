@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 05:26:13 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/30 16:37:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/26 13:49:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ size_t	ft_atol(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 		res = (res * 10) + (str[i++] - '0');
+	ft_printf("what's neg: %d\n", neg);
 	return (res * neg);
 }
