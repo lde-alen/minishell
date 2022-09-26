@@ -71,7 +71,6 @@ void	check_valid(t_cmd *cmd_lst, size_t i)
 		tmp = ft_strdup(ft_ltoa(ft_atol(cmd_lst->argument[i]) % 256));
 		free(cmd_lst->argument[i]);
 		cmd_lst->argument[i] = ft_strdup(tmp);
-		ft_printf("Command: %s\n", cmd_lst->argument[i]);
 		free(tmp);
 	}
 }
@@ -101,7 +100,6 @@ void	ft_exit(t_cmd *cmd_lst)
 		}
 	}
 	ft_putendl_fd("exit", 1);
-	ft_printf("BOOP ARG: %s\n", cmd_lst->argument[1]);
 	if (cmd_lst->argument[1] && flag == 0)
 		exit(ft_atol(cmd_lst->argument[1]));
 	if (cmd_lst->argument[2] && flag == 1)
