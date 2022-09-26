@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/24 04:05:27 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/26 08:08:32 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,24 @@ void	here_doc(t_lex *lex, t_exec *exec)
 	int		file;
 	char	*file_name;
 	char	*str;
+	char	*store;
 	size_t	i;
 
 	file_name = lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)];
 	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	i = 0;
+	str = ft_strdup("");
 	while (i < lex->cmd->redir->flag_len)
 	{
 		if (lex->cmd->redir->flag[i] == DL_REDIR)
 		{
-			str = "";
-			while (ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
+			while (ft_strcmp(store, lex->cmd->redir->file[i]) != 0)
 			{
-				str = readline("> ");
+				store = readline("> ");
+				ft_printf("STORE: %s\n", store);
+				str = ft_strjoin(str, store);
+				str = ft_strjoin(str, " ");
+				ft_printf("STR: %s\n", str);
 				if (get_last_delimiter(lex) == i
 					&& ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
 					ft_putendl_fd(str, file);
@@ -97,5 +102,6 @@ void	here_doc(t_lex *lex, t_exec *exec)
 		}
 		i++;
 	}
+	ft_printf("HERE: %s\n", str);
 	close(file);
 }
