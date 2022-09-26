@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:44:13 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/04 15:08:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/26 06:06:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ char	*ft_ltoa(size_t n)
 	i = 1;
 	pow_ten = 1;
 	sign = 0;
-	++sign;
+	if ((n / -n) == 1)
+		++sign;
 	while (n / pow_ten / 10 && i++)
 		pow_ten *= 10;
 	str = ft_calloc(i + sign + 1, 1);
 	if (!str)
 		return (NULL);
 	i = 0;
-	if (sign)
+	if (sign == 1)
 		str[i++] = '-';
 	while (pow_ten)
 	{
