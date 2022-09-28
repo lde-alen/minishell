@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/19 09:20:19 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/12 20:31:43 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/09/28 06:56:49 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,8 @@ SRCS		= 	ft_bzero.c				\
 				ft_lstclear.c			\
 				ft_lstiter.c			\
 				ft_lstmap.c				\
+				ft_atol.c				\
+				ft_ltoa.c				\
 
 CC			=	gcc
 LIB			=	ar rcs

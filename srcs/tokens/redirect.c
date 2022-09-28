@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/27 12:56:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 06:24:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,23 @@ void	check_redir_type(t_lex *lex, t_exec *exec)
 	if (lex->cmd->redir->left_r > lex->cmd->redir->left_dr)
 		redirect_in(lex, lex->cmd->redir->file[lex->cmd->redir->left_r]);
 	else if (lex->cmd->redir->left_dr > lex->cmd->redir->left_r)
-		redirect_in(lex, lex->cmd->redir->doc_arr[lex->cmd->redir->left_dr]);
+	{
+		lex->cmd->redir->fd = (int *)malloc(sizeof(int) * 2);
+		pipe(lex->cmd->redir->fd);
+		int id = fork();
+		if (id == 0)
+		{
+			dup2(lex->cmd->redir->fd[1], STDOUT_FILENO);
+			close(lex->cmd->redir->fd[1]);
+			close(lex->cmd->redir->fd[0]);
+			ft_putendl_fd(lex->cmd->redir->doc_arr[lex->cmd->redir->left_dr], 1);
+			exit(0);
+		}
+		wait(NULL);
+		close(lex->cmd->redir->fd[1]);
+		lex->cmd->redir->file_in = NULL;
+		lex->cmd->redir->flag_in = -1;
+	}
 	else
 		redirect_in(lex, NULL);
 	if (lex->cmd->redir->right_r > lex->cmd->redir->right_dr)
@@ -62,7 +78,7 @@ ssize_t	find_redir_in(t_lex *lex, size_t type)
 	int	i;
 
 	i = lex->cmd->redir->flag_len;
-	while (i >= 0)
+	while (i > 0)
 	{
 		if (lex->cmd->redir->flag[i - 1] == type)
 			return (i - 1);
@@ -101,19 +117,22 @@ void	fill_doc_arr(t_lex *lex, char *str)
 		i = 0;
 		j = 0;
 		str_join = ft_strdup("");
-		lex->cmd->redir->doc_arr = (char **)malloc(sizeof(char *) * lex->cmd->redir->flag_len);
+		lex->cmd->redir->doc_arr = (char **)malloc(sizeof(char *) * (lex->cmd->redir->flag_len + 1));
 		split_arr = ft_split(str, '\n');
 		while (i < lex->cmd->redir->flag_len)
 		{
 			if (lex->cmd->redir->flag[i] == DL_REDIR)
 			{
-				while (split_arr[j] && split_arr[j] != lex->cmd->redir->file[i])
+				free(str_join);
+				str_join = ft_strdup("");
+				while (split_arr[j] && ft_strcmp(split_arr[j], lex->cmd->redir->file[i]) != 0)
 				{
 					str_join = ft_strjoin(str_join, split_arr[j]);
 					str_join = ft_strjoin(str_join, "\n");
 					j++;
 				}
-				lex->cmd->redir->doc_arr[i] = ft_strdup(str);
+				j++;
+				lex->cmd->redir->doc_arr[i] = ft_strdup(str_join);
 			}
 			else
 				lex->cmd->redir->doc_arr[i] = NULL;
@@ -125,15 +144,11 @@ void	fill_doc_arr(t_lex *lex, char *str)
 
 void	here_doc(t_lex *lex, t_exec *exec)
 {
-	int		file;
-	char	*file_name;
 	char	*str;
 	char	*store;
 	size_t	i;
 
 	(void)exec;
-	file_name = lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)];
-	file = open(file_name, O_CREAT | O_RDWR, 0777);
 	i = 0;
 	str = ft_strdup("");
 	store = ft_strdup("");
@@ -146,14 +161,9 @@ void	here_doc(t_lex *lex, t_exec *exec)
 				store = readline("> ");
 				str = ft_strjoin(str, store);
 				str = ft_strjoin(str, "\n");
-				if (get_last_delimiter(lex) == i
-					&& ft_strcmp(str, lex->cmd->redir->file[i]) != 0)
-					ft_putendl_fd(str, file);
 			}
 		}
 		i++;
 	}
-	ft_printf("HERE: %s\n", str);
 	fill_doc_arr(lex, str);
-	close(file);
 }

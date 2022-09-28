@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/25 18:55:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 06:23:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	redir(t_lex *lex, t_exec *exec)
 		i++;
 	}
 	check_redir_type(lex, exec);
-	unlink(lex->cmd->redir->file[find_redir_in(lex, DL_REDIR)]);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
