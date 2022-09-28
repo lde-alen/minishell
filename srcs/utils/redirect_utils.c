@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 09:05:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 09:16:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,18 @@ void	redirect(t_lex *lex, t_exec *exec)
 {
 	int		id;
 
-	exec->path = check_access(lex->env, lex->cmd);
-	if (exec->path != NULL)
+	if (lex->cmd->command)
 	{
-		id = fork();
-		if (id < 0)
-			ft_putendl_fd("Fork failed", 2);
-		else if (id == 0)
-			exit(child(lex, exec));
-		wait(NULL);
+		exec->path = check_access(lex->env, lex->cmd);
+		if (exec->path != NULL)
+		{
+			id = fork();
+			if (id < 0)
+				ft_putendl_fd("Fork failed", 2);
+			else if (id == 0)
+				exit(child(lex, exec));
+			wait(NULL);
+		}
 	}
 }
 
