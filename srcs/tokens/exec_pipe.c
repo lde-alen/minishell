@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/27 15:09:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 09:01:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,23 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	if ((*exec)->path == NULL)
 		(*exec)->path = ft_strdup(cmd_lst->command);
 	return (0);
+}
+
+void	dup_doc(t_lex *lex)
+{
+	lex->cmd->redir->fd = (int *)malloc(sizeof(int) * 2);
+	pipe(lex->cmd->redir->fd);
+	int id = fork();
+	if (id == 0)
+	{
+		dup2(lex->cmd->redir->fd[1], STDOUT_FILENO);
+		close(lex->cmd->redir->fd[1]);
+		close(lex->cmd->redir->fd[0]);
+		ft_putendl_fd(lex->cmd->redir->doc_arr[lex->cmd->redir->left_dr], 1);
+		exit(0);
+	}
+	wait(NULL);
+	close(lex->cmd->redir->fd[1]);
 }
 
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)

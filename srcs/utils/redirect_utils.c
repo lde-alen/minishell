@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 06:41:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 09:05:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,7 @@ void	redirect(t_lex *lex, t_exec *exec)
 		if (id < 0)
 			ft_putendl_fd("Fork failed", 2);
 		else if (id == 0)
-		{
-			//CHECK REDIR TYPE
 			exit(child(lex, exec));
-		}
 		wait(NULL);
 	}
 }
@@ -64,7 +61,6 @@ int	open_file(char *str, int flag)
 {
 	int		file;
 
-	//0777 needed for append redirect
 	file = open(str, flag, 0777);
 	if (file < 0)
 	{
