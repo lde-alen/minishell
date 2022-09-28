@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 06:24:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 07:10:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ size_t	get_last_delimiter(t_lex *lex)
 	return (len);
 }
 
-void	check_redir_type(t_lex *lex, t_exec *exec)
+void	check_redir_type(t_lex *lex)
 {
 	if (lex->cmd->redir->left_r > lex->cmd->redir->left_dr)
 		redirect_in(lex, lex->cmd->redir->file[lex->cmd->redir->left_r]);
@@ -70,7 +70,6 @@ void	check_redir_type(t_lex *lex, t_exec *exec)
 		append_out(lex, lex->cmd->redir->file[lex->cmd->redir->right_dr]);
 	else
 		redirect_out(lex, NULL);
-	redirect(lex, exec);
 }
 
 ssize_t	find_redir_in(t_lex *lex, size_t type)
@@ -142,13 +141,12 @@ void	fill_doc_arr(t_lex *lex, char *str)
 	}
 }
 
-void	here_doc(t_lex *lex, t_exec *exec)
+void	here_doc(t_lex *lex)
 {
 	char	*str;
 	char	*store;
 	size_t	i;
 
-	(void)exec;
 	i = 0;
 	str = ft_strdup("");
 	store = ft_strdup("");

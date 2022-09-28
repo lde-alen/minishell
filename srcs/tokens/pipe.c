@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 06:23:15 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 07:11:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	redir(t_lex *lex, t_exec *exec)
 		}
 		i++;
 	}
-	check_redir_type(lex, exec);
+	check_redir_type(lex);
+	redirect(lex, exec);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
@@ -89,7 +90,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	size_t	ret;
 
 	if (lex->cmd->redir)
-		here_doc(lex, exec);
+		here_doc(lex);
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
 		exec->path = check_access(lex->env, lex->cmd);
@@ -129,7 +130,7 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 	while (lex->cmd != NULL)
 	{
 		if (lex->cmd->redir)
-			here_doc(lex, exec);
+			here_doc(lex);
 		lex->cmd = lex->cmd->next;
 	}
 	lex->cmd = tmp;
