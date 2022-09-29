@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 04:54:57 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 15:51:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,18 @@ void	redir(t_lex *lex, t_exec *exec)
 			if (((right < -1 && i != lex->cmd->redir->right_r)
 				|| (right > -1 && i != lex->cmd->redir->right_dr))
 				|| !lex->cmd->command)
-				open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
+			{
+				if (open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT) == -1)
+					g_exit = 1;
+			}
 		}
 		else if (lex->cmd->redir->flag[i] == L_REDIR)
 		{
 			if ((left < -1 && i != lex->cmd->redir->left_r) || !lex->cmd->command)
-				open_file(lex->cmd->redir->file[i], O_TRUNC);
+			{
+				if (open_file(lex->cmd->redir->file[i], O_TRUNC) == -1)
+					g_exit = 1;
+			}
 		}
 		i++;
 	}
@@ -116,7 +122,6 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 			ret = main_child2(lex->env, lex->cmd, exec);
 			free_child(lex);
 			exit (ret);
-			exit(0);
 		}
 		free_env_kid(exec->env_kid);
 	}

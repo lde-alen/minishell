@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 15:32:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 15:40:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static size_t	child(t_lex *lex, t_exec *exec)
 	{
 		f_in = open_file(lex->cmd->redir->file_in, lex->cmd->redir->flag_in);
 		if (f_in < 0)
-			return (-1);
+		{
+			g_exit = 1;
+			return (1);
+		}
 		dup2(f_in, STDIN_FILENO);
 		close(f_in);
 	}
@@ -34,7 +37,10 @@ static size_t	child(t_lex *lex, t_exec *exec)
 	{
 		f_out = open_file(lex->cmd->redir->file_out, lex->cmd->redir->flag_out);
 		if (f_out < 0)
-			return (-1);
+		{
+			g_exit = 1;
+			return (1);
+		}
 		dup2(f_out, STDOUT_FILENO);
 		close(f_out);
 	}
@@ -56,9 +62,12 @@ void	redirect(t_lex *lex, t_exec *exec)
 		{
 			ret = child(lex, exec);
 			free_child(lex);
+			
 			exit(ret);
 		}
-		wait(NULL);
+		wait(&g_exit);
+		if (WIFEXITED(g_exit))
+			g_exit = WEXITSTATUS(g_exit);
 	}
 }
 
