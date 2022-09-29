@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/28 07:24:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 13:44:24 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_lex
 	t_env	*env;
 	t_sh	*sh;
 	t_cmd	*cmd;
+	t_exec	*exec;
 }	t_lex;
 
 /**
@@ -230,6 +231,7 @@ size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 size_t	first_child(t_lex *lex, t_exec *exec);
 size_t	last_child(t_lex *lex, t_exec *exec);
 size_t	mid_kid(t_lex *lex, t_exec *exec);
+void	dup_doc(t_lex *lex);
 
 void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);
@@ -250,8 +252,9 @@ void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
 void	free_exec(t_exec **exec);
 void	free_cmd_lst(t_cmd *cmd_lst);
-void	free_child(t_exec *exec, t_lex *lex);
+void	free_child(t_lex *lex);
 void	free_split_baqala(char **split_res, int i);
+void	free_redir(t_redir *redir);
 
 void	sig_handler(int val);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);
@@ -268,5 +271,6 @@ char	*ft_ltoa(size_t n);
 void	ft_env_init(t_env *lst);
 void	ft_cmd_init(t_cmd *cmd_lst);
 void	ft_exec_init(t_exec *exec);
+void	ft_redir_init(t_lex *lex);
 
 #endif

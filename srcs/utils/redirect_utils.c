@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 06:41:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 05:02:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,24 @@ static size_t	child(t_lex *lex, t_exec *exec)
 void	redirect(t_lex *lex, t_exec *exec)
 {
 	int		id;
+	size_t	ret;
 
-	exec->path = check_access(lex->env, lex->cmd);
-	if (exec->path != NULL)
+	ret = 0;
+	if (lex->cmd->command)
 	{
-		id = fork();
-		if (id < 0)
-			ft_putendl_fd("Fork failed", 2);
-		else if (id == 0)
+		if (exec->path != NULL)
 		{
-			//CHECK REDIR TYPE
-			exit(child(lex, exec));
+			id = fork();
+			if (id < 0)
+				ft_putendl_fd("Fork failed", 2);
+			else if (id == 0)
+			{
+				ret = child(lex, exec);
+				free_child(lex);
+				exit(ret);
+			}
+			wait(NULL);
 		}
-		wait(NULL);
 	}
 }
 
@@ -64,7 +69,6 @@ int	open_file(char *str, int flag)
 {
 	int		file;
 
-	//0777 needed for append redirect
 	file = open(str, flag, 0777);
 	if (file < 0)
 	{

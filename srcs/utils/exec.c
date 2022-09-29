@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 14:28:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/28 14:46:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,23 @@ size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst)
 
 void	exec_sys(t_lex *lex)
 {
-	t_exec	*exec;
-
-	exec = (t_exec *)malloc(sizeof(t_exec));
-	ft_exec_init(exec);
-	exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(lex->cmd));
-	exec->id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(lex->cmd) + 1));
-	while (exec->i < get_cmd_len(lex->cmd))
+	lex->exec = (t_exec *)malloc(sizeof(t_exec));
+	ft_exec_init(lex->exec);
+	lex->exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(lex->cmd));
+	lex->exec->id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(lex->cmd) + 1));
+	while (lex->exec->i < get_cmd_len(lex->cmd))
 	{
-		exec->fd[exec->i] = (int *)malloc(sizeof(int) * 2);
-		if (!exec || !exec->fd || !exec->id || !exec->fd[exec->i])
+		lex->exec->fd[lex->exec->i] = (int *)malloc(sizeof(int) * 2);
+		if (!lex->exec || !lex->exec->fd || !lex->exec->id || !lex->exec->fd[lex->exec->i])
 		{
 			free_cmd(&lex->cmd);
-			free_exec(&exec);
+			free_exec(&lex->exec);
 			return ;
 		}
-		exec->i++;
+		lex->exec->i++;
 	}
-	fork_arr(lex, exec);
-	free_exec(&exec);
+	fork_arr(lex, lex->exec);
+	free_exec(&lex->exec);
 }
 
 //PROTECT ALL MALLOCS
