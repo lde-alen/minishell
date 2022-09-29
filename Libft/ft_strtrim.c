@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.a    +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 03:21:39 by lde-alen          #+#    #+#             */
-/*   Updated: 2021/12/23 13:29:57 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/29 13:14:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!res)
 		return (NULL);
 	ft_strlcpy(res, s1, len + 1);
+	free((char *)s1);
 	return (res);
 }

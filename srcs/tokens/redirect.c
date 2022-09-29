@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 04:49:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 13:13:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void	fill_doc_arr(t_lex *lex, char *str)
 				while (split_arr[j] && ft_strcmp(split_arr[j], lex->cmd->redir->file[i]) != 0)
 				{
 					str_join = ft_strjoin(str_join, split_arr[j]);
-					if (get_last_delimiter(lex) != i)
-						str_join = ft_strjoin(str_join, "\n");
+					str_join = ft_strjoin(str_join, "\n");
 					j++;
 				}
 				j++;
+				str_join = ft_strtrim(str_join, "\n");
 				lex->cmd->redir->doc_arr[i] = ft_strdup(str_join);
 				free(str_join);
 			}
