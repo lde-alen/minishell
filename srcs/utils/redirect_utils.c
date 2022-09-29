@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 05:02:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 07:23:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	redirect(t_lex *lex, t_exec *exec)
 	size_t	ret;
 
 	ret = 0;
-	if (lex->cmd->command)
+	if (lex->cmd->argument[0])
 	{
-		if (exec->path != NULL)
-		{
+		// if (exec->path != NULL)
+		// {
 			id = fork();
 			if (id < 0)
 				ft_putendl_fd("Fork failed", 2);
@@ -61,7 +61,7 @@ void	redirect(t_lex *lex, t_exec *exec)
 				exit(ret);
 			}
 			wait(NULL);
-		}
+		// }
 	}
 }
 

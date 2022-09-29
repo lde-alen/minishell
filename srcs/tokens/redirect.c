@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 13:44:15 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 15:29:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,9 @@ void	here_doc(t_lex *lex)
 	ft_redir_init(lex);
 	i = 0;
 	str = ft_strdup("");
-	store = ft_strdup("");
 	while (i < lex->cmd->redir->flag_len)
 	{
+		store = ft_strdup("");
 		if (lex->cmd->redir->flag[i] == DL_REDIR)
 		{
 			while (ft_strcmp(store, lex->cmd->redir->file[i]) != 0)
