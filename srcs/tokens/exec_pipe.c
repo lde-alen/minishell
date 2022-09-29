@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 04:56:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 14:16:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	struct stat	path_stat;
 	int			stat_ch;
 
-	stat_ch = stat(cmd_lst->command, &path_stat);
+	ft_printf("here\n");
+	stat_ch = stat(cmd_lst->argument[0], &path_stat);
 	if (stat_ch == 0)
 	{
 		if (S_ISDIR(path_stat.st_mode))
 		{
-			if (ft_strchr(cmd_lst->command, '/') == 0)
+			if (ft_strchr(cmd_lst->argument[0], '/') == 0)
 			{
 				err_msg(cmd_lst, "", "command not found");
 				g_exit = 127;
@@ -35,8 +36,8 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 			return (g_exit);
 		}
 	}
-	if ((ft_strchr(cmd_lst->command, '/') == 0 && (*exec)->path == NULL)
-		|| (!cmd_lst->command))
+	if ((ft_strchr(cmd_lst->argument[0], '/') == 0 && (*exec)->path == NULL)
+		|| (!cmd_lst->argument[0]))
 	{
 		err_msg(cmd_lst, "", "command not found");
 		g_exit = 127;
