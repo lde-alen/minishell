@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 07:11:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 04:54:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	redir(t_lex *lex, t_exec *exec)
 	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
 	while (i < len && lex->cmd->redir->flag[len - 1] == DL_REDIR)
 		len--;
-	while (i <= len)
+	//changed i <= len to i < len
+	while (i < len)
 	{
 		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
@@ -89,13 +90,15 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
 
-	if (lex->cmd->redir)
-		here_doc(lex);
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
 		exec->path = check_access(lex->env, lex->cmd);
 	if (lex->cmd->redir)
+	{
+		here_doc(lex);
 		redir(lex, exec);
+		free_redir(lex->cmd->redir);
+	}
 	else
 	{
 		exec->env_kid = lst_to_char(&lex->env);
@@ -111,14 +114,15 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		else if (exec->id[0] == 0)
 		{
 			ret = main_child2(lex->env, lex->cmd, exec);
-			free_child(exec, lex);
+			free_child(lex);
 			exit (ret);
 			exit(0);
 		}
-		free(exec->path);
 		free_env_kid(exec->env_kid);
-		free_cmd(&lex->cmd);
 	}
+	if (exec->path)
+		free(exec->path);
+	free_cmd(&lex->cmd);
 }
 
 void	loop_lst(t_lex *lex, t_exec *exec)
@@ -139,7 +143,11 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 		pipe_exec(lex, exec);
 		exec->i++;
 		if (lex->cmd)
+		{
+			if (lex->cmd->redir)
+				free_redir(lex->cmd->redir);
 			free_cmd(&lex->cmd);
+		}
 		exec->flag = 0;
 		if (lex->cmd)
 			check_path(lex->cmd, &exec);

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 09:01:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 04:56:21 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	dup_doc(t_lex *lex)
 		close(lex->cmd->redir->fd[1]);
 		close(lex->cmd->redir->fd[0]);
 		ft_putendl_fd(lex->cmd->redir->doc_arr[lex->cmd->redir->left_dr], 1);
+		free_child(lex);
 		exit(0);
 	}
 	wait(NULL);
@@ -171,6 +172,6 @@ void	 check_pos(t_lex *lex, t_exec *exec)
 		ret = last_child(lex, exec);
 	else
 		ret = mid_kid(lex, exec);
-	free_child(exec, lex);
+	free_child(lex);
 	exit(ret);
 }

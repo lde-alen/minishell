@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/13 05:02:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 05:02:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,20 +104,55 @@ void	free_exec(t_exec **exec)
 	free(*exec);
 }
 
-void	free_child(t_exec *exec, t_lex *lex)
+void	free_redir(t_redir *redir)
 {
-	if (exec->env_kid)
-		free_env_kid(exec->env_kid);
-	if (exec->path)
-		free(exec->path);
-	if (exec)
-		free_exec(&exec);
-	if (lex->cmd)
+	size_t	i;
+
+	if (redir->file)
+	{
+		i = 0;
+		while (i < redir->flag_len)
+		{
+			free(redir->file[i]);
+			if (redir->doc_arr[i])
+				free(redir->doc_arr[i]);
+			i++;
+		}
+		free(redir->flag);
+		free(redir->file);
+		if (redir->doc_arr)
+		{
+			free(redir->doc_arr[i]);
+			free(redir->doc_arr);
+		}
+	}
+	if (redir->file_in)
+		free(redir->file_in);
+	if (redir->file_out)
+		free(redir->file_out);
+	if (redir->fd)
+		free(redir->fd);
+	free(redir);
+}
+
+void	free_child(t_lex *lex)
+{
+	if (lex->exec->env_kid)
+		free_env_kid(lex->exec->env_kid);
+	if (lex->exec->path)
+		free(lex->exec->path);
+	if (lex->exec)
+		free_exec(&lex->exec);
+	if (lex->env)
 		free_env_lst(lex->env);
-	while (lex->cmd != NULL)
+	while (lex->cmd)
 	{
 		if (lex->cmd)
+		{
+			if (lex->cmd->redir)
+				free_redir(lex->cmd->redir);
 			free_cmd(&lex->cmd);
+		}
 	}
 	if (lex)
 		free(lex);

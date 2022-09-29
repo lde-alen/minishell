@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 09:36:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 04:49:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	append_out(t_lex *lex, char *file)
 void	check_redir_type(t_lex *lex)
 {
 	if (lex->cmd->redir->left_r > lex->cmd->redir->left_dr)
-		redirect_in(lex, lex->cmd->redir->file[lex->cmd->redir->left_r]);
+		redirect_in(lex, ft_strdup(lex->cmd->redir->file[lex->cmd->redir->left_r]));
 	else if (lex->cmd->redir->left_dr > lex->cmd->redir->left_r)
 	{
 		dup_doc(lex);
@@ -43,9 +43,9 @@ void	check_redir_type(t_lex *lex)
 	else
 		redirect_in(lex, NULL);
 	if (lex->cmd->redir->right_r > lex->cmd->redir->right_dr)
-		redirect_out(lex, lex->cmd->redir->file[lex->cmd->redir->right_r]);
+		redirect_out(lex, ft_strdup(lex->cmd->redir->file[lex->cmd->redir->right_r]));
 	else if (lex->cmd->redir->right_dr > lex->cmd->redir->right_r)
-		append_out(lex, lex->cmd->redir->file[lex->cmd->redir->right_dr]);
+		append_out(lex, ft_strdup(lex->cmd->redir->file[lex->cmd->redir->right_dr]));
 	else
 		redirect_out(lex, NULL);
 }
@@ -87,14 +87,12 @@ void	fill_doc_arr(t_lex *lex, char *str)
 	{
 		i = 0;
 		j = 0;
-		str_join = ft_strdup("");
 		lex->cmd->redir->doc_arr = (char **)malloc(sizeof(char *) * (lex->cmd->redir->flag_len + 1));
 		split_arr = ft_split(str, '\n');
 		while (i < lex->cmd->redir->flag_len)
 		{
 			if (lex->cmd->redir->flag[i] == DL_REDIR)
 			{
-				free(str_join);
 				str_join = ft_strdup("");
 				while (split_arr[j] && ft_strcmp(split_arr[j], lex->cmd->redir->file[i]) != 0)
 				{
@@ -105,12 +103,14 @@ void	fill_doc_arr(t_lex *lex, char *str)
 				}
 				j++;
 				lex->cmd->redir->doc_arr[i] = ft_strdup(str_join);
+				free(str_join);
 			}
 			else
 				lex->cmd->redir->doc_arr[i] = NULL;
 			i++;
 		}
 		lex->cmd->redir->doc_arr[i] = NULL;
+		free_split(split_arr);
 	}
 }
 
@@ -120,6 +120,7 @@ void	here_doc(t_lex *lex)
 	char	*store;
 	size_t	i;
 
+	ft_redir_init(lex);
 	i = 0;
 	str = ft_strdup("");
 	store = ft_strdup("");
@@ -129,6 +130,7 @@ void	here_doc(t_lex *lex)
 		{
 			while (ft_strcmp(store, lex->cmd->redir->file[i]) != 0)
 			{
+				free(store);
 				store = readline("> ");
 				str = ft_strjoin(str, store);
 				str = ft_strjoin(str, "\n");
@@ -136,5 +138,7 @@ void	here_doc(t_lex *lex)
 		}
 		i++;
 	}
+	free(store);
 	fill_doc_arr(lex, str);
+	free(str);
 }

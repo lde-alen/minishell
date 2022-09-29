@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 17:12:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 20:22:23 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/09/28 14:58:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,18 @@ void	ft_exec_init(t_exec *exec)
 	exec->i = 0;
 	exec->path = NULL;
 	exec->env_kid = NULL;
+}
+
+void	ft_redir_init(t_lex *lex)
+{
+	lex->cmd->redir->left_r = 0;
+	lex->cmd->redir->right_r = 0;
+	lex->cmd->redir->left_dr = 0;
+	lex->cmd->redir->right_dr = 0;
+	lex->cmd->redir->file_in = NULL;
+	lex->cmd->redir->file_out = NULL;
+	lex->cmd->redir->flag_in = 0;
+	lex->cmd->redir->flag_out = 0;
+	lex->cmd->redir->doc_arr = NULL;
+	lex->cmd->redir->fd = 0;
 }
