@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 14:16:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 06:53:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	struct stat	path_stat;
 	int			stat_ch;
 
-	ft_printf("here\n");
 	stat_ch = stat(cmd_lst->argument[0], &path_stat);
 	if (stat_ch == 0)
 	{
@@ -53,6 +52,8 @@ void	dup_doc(t_lex *lex)
 	lex->cmd->redir->fd = (int *)malloc(sizeof(int) * 2);
 	pipe(lex->cmd->redir->fd);
 	int id = fork();
+	if (id < 0)
+		perror("dead");
 	if (id == 0)
 	{
 		dup2(lex->cmd->redir->fd[1], STDOUT_FILENO);
@@ -62,7 +63,7 @@ void	dup_doc(t_lex *lex)
 		free_child(lex);
 		exit(0);
 	}
-	wait(NULL);
+	wait(&g_exit);
 	close(lex->cmd->redir->fd[1]);
 }
 
