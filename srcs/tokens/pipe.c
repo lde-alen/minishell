@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 15:49:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/30 16:36:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,32 +92,38 @@ void	redir(t_lex *lex)
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
-	char	*val;
-	int		shl_val;
+	// char	*val;
+	// int		shl_val;
 
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
 	{
 		exec->path = check_access(lex->env, lex->cmd);
-		if (ft_strcmp(exec->path, "./minishell") == 0)
-		{
-			ft_printf("BOOP\n");
-			val = search_env(lex->env, "SHLVL")->value;
-			shl_val = ft_atoi(val);
-			free(val);
-			if (shl_val < 0)
-				val = ft_strdup("0");
-			else if (shl_val <= 999)
-				val = ft_itoa(shl_val + 1);
-			else if (shl_val == 1000)
-				val = NULL;
-			else
-			{
-				err_msg(lex->cmd, "warning", "shell level too high, resetting to 1");
-				val = ft_strdup("1");
-			}
-		}
-
+		// ft_printf("PATH: %s\n", exec->path);
+		// if (exec->path != NULL && ft_strcmp(exec->path, "./minishell") == 0)
+		// {
+		// 	ft_printf("BOOP\n");
+		// 	val = search_env(lex->env, "SHLVL")->value;
+		// 	ft_printf("Current val: %s\n", val);
+		// 	shl_val = ft_atoi(val);
+		// 	ft_printf("%d\n", shl_val);
+		// 	free(val);
+		// 	if (shl_val < 0)
+		// 		val = ft_strdup("0");
+		// 	else if (shl_val < 999)
+		// 		val = ft_itoa(shl_val + 1);
+		// 	else if (shl_val == 999)
+		// 	{
+		// 		ft_printf("boop\n");
+		// 		search_env(lex->env, "SHLVL")->value = NULL;
+		// 		val = NULL;
+		// 	}
+		// 	else
+		// 	{
+		// 		err_msg(lex->cmd, "warning", "shell level too high, resetting to 1");
+		// 		val = ft_strdup("1");
+		// 	}
+		// }
 	}
 	if (lex->cmd->redir)
 	{

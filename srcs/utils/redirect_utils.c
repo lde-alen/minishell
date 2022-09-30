@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 14:26:01 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/30 16:40:10 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,15 @@ int	open_file(t_lex *lex, char *str, int flag)
 		i++;
 	if (str[0] == '/')
 	{
-		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
-			err_msg(lex->cmd, str, "Permission denied");
-		else if (lex->cmd->redir->flag[i] == L_REDIR)
-			err_msg(lex->cmd, str, "No such file or directory");
-		g_exit = 1;
-		return (-1);
+		if (access(str, F_OK) != 0)
+		{
+			if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
+				err_msg(lex->cmd, str, "Permission denied");
+			else if (lex->cmd->redir->flag[i] == L_REDIR)
+				err_msg(lex->cmd, str, "No such file or directory");
+			g_exit = 1;
+			return (-1);
+		}
 	}
 	file = open(str, flag, 0777);
 	if (file < 0)
