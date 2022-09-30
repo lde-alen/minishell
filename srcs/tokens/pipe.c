@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 11:15:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/30 12:14:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 			if (exec->path)
 				free(exec->path);
 			return ;
-		}
+		} 
 		exec->id[0] = fork();
 		if (exec->id[0] < 0)
 			perror("fork");
@@ -125,6 +125,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 			free_child(lex);
 			exit (ret);
 		}
+		free_env_kid(exec->env_kid);
 	}
 	if (exec->path)
 		free(exec->path);
