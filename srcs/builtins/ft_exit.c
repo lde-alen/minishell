@@ -104,15 +104,18 @@ void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
 	ft_putendl_fd("exit", 1);
 	if (cmd_lst->argument[1] && flag == 0)
 	{
-		ret = ft_atol(cmd_lst->argument[1]);
-		free_child(lex);
-		exit(ret);
-	}
-	if (cmd_lst->argument[2] && flag == 1)
-	{
-		ret = ft_atol(cmd_lst->argument[2]);
-		free_child(lex);
-		exit(ret);
+		if (flag == 0)
+		{
+			ret = ft_atol(cmd_lst->argument[1]);
+			free_child(lex);
+			exit(ret);
+		}
+		else if (cmd_lst->argument[2] && flag == 1)
+		{
+			ret = ft_atol(cmd_lst->argument[2]);
+			free_child(lex);
+			exit(ret);
+		}
 	}
 	else
 	{
