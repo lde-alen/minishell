@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 09:22:47 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/30 20:14:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,35 @@ size_t	check_delimiter(t_lex *lex)
 	return (0);
 }
 
+// void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left)
+// {
+// 	size_t	i;
+// 	size_t	len;
+
+// 	i = -1;
+// 	while (++i < len && lex->cmd->redir->flag[len - 1] == DL_REDIR)
+// 		len--;
+// 	while (i < len)
+// 	{
+// 		if ((lex->cmd->redir->flag[i] == R_REDIR
+// 				&& i != find_redir_in(lex, R_REDIR))
+// 			|| lex->cmd->redir->flag[i] == DR_REDIR)
+// 		{
+// 			if (((right < -1 && i != lex->cmd->redir->right_r)
+// 					|| (right > -1 && i != lex->cmd->redir->right_dr))
+// 				|| !lex->cmd->command)
+// 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
+// 		}
+// 		else if (lex->cmd->redir->flag[i] == L_REDIR
+// 			&& i != find_redir_in(lex, L_REDIR))
+// 		{
+// 			if ((left < -1 && i != lex->cmd->redir->left_r)
+// 				|| !lex->cmd->command)
+// 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
+// 		}
+// 	}
+// }
+
 void	redir(t_lex *lex)
 {
 	ssize_t	i;
@@ -71,16 +100,20 @@ void	redir(t_lex *lex)
 	//changed i <= len to i < len
 	while (i < len)
 	{
-		if ((lex->cmd->redir->flag[i] == R_REDIR && i != find_redir_in(lex, R_REDIR)) || lex->cmd->redir->flag[i] == DR_REDIR)
+		if ((lex->cmd->redir->flag[i] == R_REDIR
+				&& i != find_redir_in(lex, R_REDIR))
+			|| lex->cmd->redir->flag[i] == DR_REDIR)
 		{
 			if (((right < -1 && i != lex->cmd->redir->right_r)
-				|| (right > -1 && i != lex->cmd->redir->right_dr))
+					|| (right > -1 && i != lex->cmd->redir->right_dr))
 				|| !lex->cmd->command)
 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
 		}
-		else if (lex->cmd->redir->flag[i] == L_REDIR && i != find_redir_in(lex, L_REDIR))
+		else if (lex->cmd->redir->flag[i] == L_REDIR
+			&& i != find_redir_in(lex, L_REDIR))
 		{
-			if ((left < -1 && i != lex->cmd->redir->left_r) || !lex->cmd->command)
+			if ((left < -1 && i != lex->cmd->redir->left_r)
+				|| !lex->cmd->command)
 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
 		}
 		i++;
@@ -99,7 +132,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	if (lex->cmd->command)
 	{
 		exec->path = check_access(lex->env, lex->cmd);
-		if (exec->path != NULL && ft_strcmp(exec->path, "./minishell") == 0)
+		if (exec->path != NULL && ft_strcmp(exec->path, "./minishell") == 0 && search_env(lex->env, "SHLVL") != NULL)
 		{
 			val = search_env(lex->env, "SHLVL")->value;
 			if (!val)
@@ -138,7 +171,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 			if (exec->path)
 				free(exec->path);
 			return ;
-		} 
+		}
 		exec->id[0] = fork();
 		if (exec->id[0] < 0)
 			perror("fork");

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 14:52:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/30 19:12:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,13 @@ void	exec_sys(t_lex *lex)
 	lex->exec = (t_exec *)malloc(sizeof(t_exec));
 	ft_exec_init(lex->exec);
 	lex->exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(lex->cmd));
-	lex->exec->id = (ssize_t *)malloc(sizeof(ssize_t) * (get_cmd_len(lex->cmd) + 1));
+	lex->exec->id = (ssize_t *)malloc(sizeof(ssize_t)
+			* (get_cmd_len(lex->cmd) + 1));
 	while (lex->exec->i < get_cmd_len(lex->cmd))
 	{
 		lex->exec->fd[lex->exec->i] = (int *)malloc(sizeof(int) * 2);
-		if (!lex->exec || !lex->exec->fd || !lex->exec->id || !lex->exec->fd[lex->exec->i])
+		if (!lex->exec || !lex->exec->fd || !lex->exec->id
+			|| !lex->exec->fd[lex->exec->i])
 		{
 			free_cmd(&lex->cmd);
 			free_exec(&lex->exec);
