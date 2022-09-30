@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 13:13:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/30 14:26:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void	 check_pos(t_lex *lex, t_exec *exec)
 
 	if (exec->i == 0)
 		ret = first_child(lex, exec);
-	else if (exec->i + 1 == exec->len) 
+	else if (exec->i + 1 == exec->len)
 		ret = last_child(lex, exec);
 	else
 		ret = mid_kid(lex, exec);
