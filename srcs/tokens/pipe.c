@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 12:14:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/30 14:06:36 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		{
 			wait(&g_exit);
 			if (WIFEXITED(g_exit))
+			{
+				ft_printf("G_exit: %d\n", g_exit);
 				g_exit = WEXITSTATUS(g_exit);
+			}
 			exec->i++;
 		}
 	}
@@ -68,21 +71,17 @@ void	redir(t_lex *lex)
 	//changed i <= len to i < len
 	while (i < len)
 	{
-		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
+		if ((lex->cmd->redir->flag[i] == R_REDIR && i != find_redir_in(lex, R_REDIR)) || lex->cmd->redir->flag[i] == DR_REDIR)
 		{
 			if (((right < -1 && i != lex->cmd->redir->right_r)
 				|| (right > -1 && i != lex->cmd->redir->right_dr))
 				|| !lex->cmd->command)
-			{
-				open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
-			}
+				open_file(lex, lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
 		}
-		else if (lex->cmd->redir->flag[i] == L_REDIR)
+		else if (lex->cmd->redir->flag[i] == L_REDIR && i != find_redir_in(lex, L_REDIR))
 		{
 			if ((left < -1 && i != lex->cmd->redir->left_r) || !lex->cmd->command)
-			{
-				open_file(lex->cmd->redir->file[i], O_TRUNC);
-			}
+				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
 		}
 		i++;
 	}
@@ -123,7 +122,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		{
 			ret = main_child2(lex);
 			free_child(lex);
-			exit (ret);
+			exit(ret);
 		}
 		free_env_kid(exec->env_kid);
 	}
