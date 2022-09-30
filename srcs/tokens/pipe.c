@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 15:51:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 14:56:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ size_t	check_delimiter(t_lex *lex)
 	return (0);
 }
 
-void	redir(t_lex *lex, t_exec *exec)
+void	redir(t_lex *lex)
 {
 	ssize_t	i;
 	ssize_t	len;
@@ -74,22 +74,20 @@ void	redir(t_lex *lex, t_exec *exec)
 				|| (right > -1 && i != lex->cmd->redir->right_dr))
 				|| !lex->cmd->command)
 			{
-				if (open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT) == -1)
-					g_exit = 1;
+				open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
 			}
 		}
 		else if (lex->cmd->redir->flag[i] == L_REDIR)
 		{
 			if ((left < -1 && i != lex->cmd->redir->left_r) || !lex->cmd->command)
 			{
-				if (open_file(lex->cmd->redir->file[i], O_TRUNC) == -1)
-					g_exit = 1;
+				open_file(lex->cmd->redir->file[i], O_TRUNC);
 			}
 		}
 		i++;
 	}
 	check_redir_type(lex);
-	redirect(lex, exec);
+	redirect(lex);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
@@ -102,7 +100,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	if (lex->cmd->redir)
 	{
 		here_doc(lex);
-		redir(lex, exec);
+		redir(lex);
 		free_redir(lex->cmd->redir);
 	}
 	else
@@ -111,7 +109,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		if (exec->flag == 1)
 		{
 			exec->flag = 2;
-			exec_builtin(lex->env, lex->cmd);
+			exec_builtin(lex);
 			return ;
 		}
 		exec->id[0] = fork();
@@ -119,7 +117,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 			perror("fork");
 		else if (exec->id[0] == 0)
 		{
-			ret = main_child2(lex->env, lex->cmd, exec);
+			ret = main_child2(lex);
 			free_child(lex);
 			exit (ret);
 		}

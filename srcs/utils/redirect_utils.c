@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 15:40:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/09/29 14:54:35 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	child(t_lex *lex, t_exec *exec)
+static size_t	child(t_lex *lex)
 {
 	int	f_in;
 	int	f_out;
@@ -44,10 +44,10 @@ static size_t	child(t_lex *lex, t_exec *exec)
 		dup2(f_out, STDOUT_FILENO);
 		close(f_out);
 	}
-	return (main_child2(lex->env, lex->cmd, exec));
+	return (main_child2(lex));
 }
 
-void	redirect(t_lex *lex, t_exec *exec)
+void	redirect(t_lex *lex)
 {
 	int		id;
 	size_t	ret;
@@ -60,9 +60,8 @@ void	redirect(t_lex *lex, t_exec *exec)
 			ft_putendl_fd("Fork failed", 2);
 		else if (id == 0)
 		{
-			ret = child(lex, exec);
+			ret = child(lex);
 			free_child(lex);
-			
 			exit(ret);
 		}
 		wait(&g_exit);
@@ -78,8 +77,9 @@ int	open_file(char *str, int flag)
 	file = open(str, flag, 0777);
 	if (file < 0)
 	{
-		perror("minishell");
+		exit_stat(errno);
 		return (-1);
 	}
+	g_exit = 0;
 	return (file);
 }
