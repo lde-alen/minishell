@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 12:46:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 16:04:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,35 @@ void	set_shlvl(t_lex *lex, t_exec *exec)
 			}
 		}
 	}
+}
+
+t_bool	check_here_doc(t_lex *lex)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < lex->cmd->redir->flag_len)
+	{
+		if (lex->cmd->redir->flag[i] == DL_REDIR)
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+size_t	exit_stat(int err)
+{
+	perror("minishell");
+	ft_printf("Errno: %d\n", err);
+	if (errno == 2)
+	{
+		g_exit = 127;
+		return (g_exit);
+	}
+	else if (errno == 13 || errno == 20)
+	{
+		g_exit = 126;
+		return (g_exit);
+	}
+	return (0);
 }
