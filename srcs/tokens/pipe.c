@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 04:03:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:15:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,36 +98,69 @@ void	redir(t_lex *lex)
 	redirect(lex);
 }
 
-void	exec_alone(t_lex *lex, t_exec *exec)
+void	set_shlvl(t_lex *lex, t_exec *exec)
 {
-	size_t	ret;
 	char	*val;
 	int		shl_val;
 
+	if (exec->path != NULL && ft_strcmp(exec->path, "./minishell")
+		== 0 && search_env(lex->env, "SHLVL") != NULL)
+	{
+		val = search_env(lex->env, "SHLVL")->value;
+		if (!val)
+			val = ft_strdup("1");
+		else
+		{
+			shl_val = ft_atoi(val);
+			free(val);
+			if (shl_val < 0)
+				val = ft_strdup("0");
+			else if (shl_val < 999)
+				val = ft_itoa(shl_val + 1);
+			else
+			{
+				err_msg(lex->cmd, "warning",
+					"shell level too high, resetting to 1");
+				val = ft_strdup("1");
+			}
+		}
+	}
+}
+
+void	fork_alone(t_lex *lex, t_exec *exec)
+{
+	size_t	ret;
+
+	exec->env_kid = lst_to_char(&lex->env);
+	if (exec->flag == 1)
+	{
+		exec->flag = 2;
+		exec_builtin(lex);
+		free_cmd(&lex->cmd);
+		free_env_kid(exec->env_kid);
+		if (exec->path)
+			free(exec->path);
+		return ;
+	}
+	exec->id[0] = fork();
+	if (exec->id[0] < 0)
+		perror("fork");
+	else if (exec->id[0] == 0)
+	{
+		ret = main_child2(lex);
+		free_child(lex);
+		exit(ret);
+	}
+	free_env_kid(exec->env_kid);
+}
+
+void	exec_alone(t_lex *lex, t_exec *exec)
+{
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
 	{
 		exec->path = check_access(lex->env, lex->cmd);
-		if (exec->path != NULL && ft_strcmp(exec->path, "./minishell") == 0 && search_env(lex->env, "SHLVL") != NULL)
-		{
-			val = search_env(lex->env, "SHLVL")->value;
-			if (!val)
-				val = ft_strdup("1");
-			else
-			{
-				shl_val = ft_atoi(val);
-				free(val);
-				if (shl_val < 0)
-					val = ft_strdup("0");
-				else if (shl_val < 999)
-					val = ft_itoa(shl_val + 1);
-				else
-				{
-					err_msg(lex->cmd, "warning", "shell level too high, resetting to 1");
-					val = ft_strdup("1");
-				}
-			}
-		}
+		set_shlvl(lex, exec);
 	}
 	if (lex->cmd->redir)
 	{
@@ -136,29 +169,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		free_redir(lex->cmd->redir);
 	}
 	else
-	{
-		exec->env_kid = lst_to_char(&lex->env);
-		if (exec->flag == 1)
-		{
-			exec->flag = 2;
-			exec_builtin(lex);
-			free_cmd(&lex->cmd);
-			free_env_kid(exec->env_kid);
-			if (exec->path)
-				free(exec->path);
-			return ;
-		}
-		exec->id[0] = fork();
-		if (exec->id[0] < 0)
-			perror("fork");
-		else if (exec->id[0] == 0)
-		{
-			ret = main_child2(lex);
-			free_child(lex);
-			exit(ret);
-		}
-		free_env_kid(exec->env_kid);
-	}
+		fork_alone(lex, exec);
 	if (exec->path)
 		free(exec->path);
 	free_cmd(&lex->cmd);
