@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 03:58:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 04:27:22 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ ssize_t	dup_stdin(t_lex *lex, ssize_t *f_in)
 		if (dup2(*f_in, STDIN_FILENO) < 0 || *f_in < 0)
 		{
 			g_exit = 1;
-			perror("minishell");
 			return (1);
 		}
 		close(*f_in);
@@ -60,7 +59,9 @@ static size_t	child(t_lex *lex)
 	ssize_t	f_in;
 	ssize_t	f_out;
 
-	if (dup_stdin(lex, &f_in) == 1 || dup_stdout(lex, &f_out) == 1)
+	if (dup_stdin(lex, &f_in) == 1)
+		return (-1);
+	if (dup_stdout(lex, &f_out) == 1)
 		return (1);
 	return (main_child2(lex));
 }
