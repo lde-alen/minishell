@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 19:12:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 16:06:32 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,16 @@ size_t	exec_builtin(t_lex *lex)
 		ft_exit(lex, lex->cmd);
 	else
 		return (1);
+	return (0);
+}
+
+size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)
+{
+	int		ret;
+
+	ret = execve(exec->path, cmd_lst->argument, exec->env_kid);
+	if (ret < 0)
+		return (exit_stat(errno));
 	return (0);
 }
 

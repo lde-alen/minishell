@@ -9,7 +9,8 @@
 		"ioctl.h": "c",
 		"stdlib.h": "c",
 		"random": "c",
-		"fcntl.h": "c"
+		"fcntl.h": "c",
+		"locale": "c"
 	},
 	"git.mergeEditor": false,
 }

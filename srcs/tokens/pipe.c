@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 11:25:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 16:11:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,96 +37,41 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 	}
 }
 
-size_t	check_delimiter(t_lex *lex)
+size_t	fork_alone(t_lex *lex, t_exec *exec)
 {
-	size_t	i;
+	ssize_t	ret;
 
-	i = 0;
-	while (i < lex->cmd->redir->flag_len)
+	exec->env_kid = lst_to_char(&lex->env);
+	if (exec->flag == 1)
 	{
-		if (lex->cmd->redir->flag[i] != NOTHING)
-			return (1);
-		i++;
+		exec->flag = 2;
+		exec_builtin(lex);
+		free_cmd(&lex->cmd);
+		free_env_kid(exec->env_kid);
+		if (exec->path)
+			free(exec->path);
+		return (1);
 	}
+	exec->id[0] = fork();
+	if (exec->id[0] < 0)
+		perror("fork");
+	else if (exec->id[0] == 0)
+	{
+		ret = main_child2(lex);
+		free_child(lex);
+		exit(ret);
+	}
+	free_env_kid(exec->env_kid);
 	return (0);
-}
-
-void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
-{
-	ssize_t	i;
-
-	i = -1;
-	while (++i < *len && lex->cmd->redir->flag[*len - 1] == DL_REDIR)
-		(*len)--;
-	while (i++ < *len)
-	{
-		if ((lex->cmd->redir->flag[i] == R_REDIR
-				&& (i != find_redir_in(lex, R_REDIR) || !lex->cmd->command))
-			|| lex->cmd->redir->flag[i] == DR_REDIR)
-		{
-			if (((right < -1 && i != lex->cmd->redir->right_r)
-					|| (right > -1 && i != lex->cmd->redir->right_dr))
-				|| !lex->cmd->command)
-				open_file(lex, lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
-		}
-		else if (lex->cmd->redir->flag[i] == L_REDIR
-			&& (i != find_redir_in(lex, L_REDIR) || !lex->cmd->command))
-		{
-			if ((left < -1 && i != lex->cmd->redir->left_r)
-				|| !lex->cmd->command)
-				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
-		}
-	}
-}
-
-void	redir(t_lex *lex)
-{
-	ssize_t	len;
-	ssize_t	right;
-	ssize_t	left;
-
-	len = lex->cmd->redir->flag_len;
-	lex->cmd->redir->left_r = find_redir_in(lex, L_REDIR);
-	lex->cmd->redir->left_dr = find_redir_in(lex, DL_REDIR);
-	lex->cmd->redir->right_r = find_redir_in(lex, R_REDIR);
-	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
-	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
-	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
-	fopen_rem(lex, right, left, &len);
-	check_redir_type(lex);
-	redirect(lex);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
-	size_t	ret;
-	char	*val;
-	int		shl_val;
-
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
 	{
 		exec->path = check_access(lex->env, lex->cmd);
-		if (exec->path != NULL && ft_strcmp(exec->path, "./minishell") == 0 && search_env(lex->env, "SHLVL") != NULL)
-		{
-			val = search_env(lex->env, "SHLVL")->value;
-			if (!val)
-				val = ft_strdup("1");
-			else
-			{
-				shl_val = ft_atoi(val);
-				free(val);
-				if (shl_val < 0)
-					val = ft_strdup("0");
-				else if (shl_val < 999)
-					val = ft_itoa(shl_val + 1);
-				else
-				{
-					err_msg(lex->cmd, "warning", "shell level too high, resetting to 1");
-					val = ft_strdup("1");
-				}
-			}
-		}
+		set_shlvl(lex, exec);
 	}
 	if (lex->cmd->redir)
 	{
@@ -136,27 +81,8 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	else
 	{
-		exec->env_kid = lst_to_char(&lex->env);
-		if (exec->flag == 1)
-		{
-			exec->flag = 2;
-			exec_builtin(lex);
-			free_cmd(&lex->cmd);
-			free_env_kid(exec->env_kid);
-			if (exec->path)
-				free(exec->path);
+		if (fork_alone(lex, exec) == 1)
 			return ;
-		}
-		exec->id[0] = fork();
-		if (exec->id[0] < 0)
-			perror("fork");
-		else if (exec->id[0] == 0)
-		{
-			ret = main_child2(lex);
-			free_child(lex);
-			exit(ret);
-		}
-		free_env_kid(exec->env_kid);
 	}
 	if (exec->path)
 		free(exec->path);
