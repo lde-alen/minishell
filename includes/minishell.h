@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/30 14:06:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 11:53:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);
 void	append_out(t_lex *lex, char *file);
 void	here_doc(t_lex *lex);
-int		open_file(t_lex *lex, char *str, int flag);
+ssize_t	open_file(t_lex *lex, char *str, int flag);
 void	redir(t_lex *lex);
 ssize_t	find_redir_in(t_lex *lex, size_t type);
 void	check_redir_type(t_lex *lex);
