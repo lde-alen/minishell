@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 14:28:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 11:24:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,54 +51,14 @@ size_t	check_delimiter(t_lex *lex)
 	return (0);
 }
 
-// void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left)
-// {
-// 	size_t	i;
-// 	size_t	len;
-
-// 	i = -1;
-// 	while (++i < len && lex->cmd->redir->flag[len - 1] == DL_REDIR)
-// 		len--;
-// 	while (i < len)
-// 	{
-// 		if ((lex->cmd->redir->flag[i] == R_REDIR
-// 				&& i != find_redir_in(lex, R_REDIR))
-// 			|| lex->cmd->redir->flag[i] == DR_REDIR)
-// 		{
-// 			if (((right < -1 && i != lex->cmd->redir->right_r)
-// 					|| (right > -1 && i != lex->cmd->redir->right_dr))
-// 				|| !lex->cmd->command)
-// 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
-// 		}
-// 		else if (lex->cmd->redir->flag[i] == L_REDIR
-// 			&& i != find_redir_in(lex, L_REDIR))
-// 		{
-// 			if ((left < -1 && i != lex->cmd->redir->left_r)
-// 				|| !lex->cmd->command)
-// 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
-// 		}
-// 	}
-// }
-
-void	redir(t_lex *lex)
+void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
 {
 	ssize_t	i;
-	ssize_t	len;
-	ssize_t	right;
-	ssize_t	left;
 
-	i = 0;
-	len = lex->cmd->redir->flag_len;
-	lex->cmd->redir->left_r = find_redir_in(lex, L_REDIR);
-	lex->cmd->redir->left_dr = find_redir_in(lex, DL_REDIR);
-	lex->cmd->redir->right_r = find_redir_in(lex, R_REDIR);
-	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
-	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
-	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
-	while (i < len && lex->cmd->redir->flag[len - 1] == DL_REDIR)
-		len--;
-	//changed i <= len to i < len
-	while (i < len)
+	i = -1;
+	while (++i < *len && lex->cmd->redir->flag[*len - 1] == DL_REDIR)
+		(*len)--;
+	while (i++ < *len)
 	{
 		if ((lex->cmd->redir->flag[i] == R_REDIR
 				&& (i != find_redir_in(lex, R_REDIR) || !lex->cmd->command))
@@ -116,8 +76,23 @@ void	redir(t_lex *lex)
 				|| !lex->cmd->command)
 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
 		}
-		i++;
 	}
+}
+
+void	redir(t_lex *lex)
+{
+	ssize_t	len;
+	ssize_t	right;
+	ssize_t	left;
+
+	len = lex->cmd->redir->flag_len;
+	lex->cmd->redir->left_r = find_redir_in(lex, L_REDIR);
+	lex->cmd->redir->left_dr = find_redir_in(lex, DL_REDIR);
+	lex->cmd->redir->right_r = find_redir_in(lex, R_REDIR);
+	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
+	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
+	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
+	fopen_rem(lex, right, left, &len);
 	check_redir_type(lex);
 	redirect(lex);
 }
