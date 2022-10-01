@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/01 16:07:22 by asanthos         ###   ########.fr        #
+#    Updated: 2022/10/01 16:17:36 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ UTILS		=		len.c						\
 					f_open.c					\
 					add_utils.c					\
 					type.c						\
+					redir_flags.c				\
 
 PARS		=		parser.c					\
 					parser_fill.c				\

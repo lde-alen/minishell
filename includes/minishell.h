@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/01 16:12:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 16:18:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,7 @@ ssize_t	check_perm(t_lex *lex, char *str);
 t_bool	check_here_doc(t_lex *lex);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
+void	check_redir_type(t_lex *lex);
 
 /**
  * FREE FUNCTONS
