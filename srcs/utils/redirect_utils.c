@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 11:54:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 03:58:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-user_ssize_t	dup_stdin(t_lex *lex, ssize_t *f_in)
+ssize_t	dup_stdin(t_lex *lex, ssize_t *f_in)
 {
 	if (lex->cmd->redir->file_in != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 11:57:27 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 04:03:20 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
 {
 	ssize_t	i;
 
-	i = -1;
-	while (++i < *len && lex->cmd->redir->flag[*len - 1] == DL_REDIR)
+	i = 0;
+	while (i < *len && lex->cmd->redir->flag[*len - 1] == DL_REDIR)
 		(*len)--;
-	while (i++ < *len)
+	while (i < *len)
 	{
 		if ((lex->cmd->redir->flag[i] == R_REDIR
 				&& (i != find_redir_in(lex, R_REDIR) || !lex->cmd->command))
@@ -76,6 +76,7 @@ void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
 				|| !lex->cmd->command)
 				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
 		}
+		i++;
 	}
 }
 
