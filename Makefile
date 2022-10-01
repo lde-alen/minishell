@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/09/28 06:56:53 by asanthos         ###   ########.fr        #
+#    Updated: 2022/10/01 12:53:56 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,8 @@ UTILS		=		len.c						\
 					execute.c					\
 					ft_print.c					\
 					ft_utils.c					\
+					f_open.c					\
+					add_utils.c					\
 
 PARS		=		parser.c					\
 					parser_fill.c				\

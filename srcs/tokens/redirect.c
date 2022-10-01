@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 11:34:02 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:45:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,26 +106,6 @@ void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j)
 	lex->cmd->redir->doc_arr[i] = NULL;
 }
 
-void	fill_doc_arr(t_lex *lex, char *str)
-{
-	char	**split_arr;
-	char	*str_join;
-	size_t	j;
-
-	if (str == NULL)
-		return ;
-	else
-	{
-		j = 0;
-		str_join = NULL;
-		lex->cmd->redir->doc_arr = (char **)malloc(sizeof(char *)
-				* (lex->cmd->redir->flag_len + 1));
-		split_arr = ft_split(str, '\n');
-		arr_loop(lex, str_join, split_arr, j);
-		free_split(split_arr);
-	}
-}
-
 void	here_doc(t_lex *lex)
 {
 	char	*str;
@@ -153,4 +133,22 @@ void	here_doc(t_lex *lex)
 	}
 	fill_doc_arr(lex, str);
 	free(str);
+}
+
+void	redir(t_lex *lex)
+{
+	ssize_t	len;
+	ssize_t	right;
+	ssize_t	left;
+
+	len = lex->cmd->redir->flag_len;
+	lex->cmd->redir->left_r = find_redir_in(lex, L_REDIR);
+	lex->cmd->redir->left_dr = find_redir_in(lex, DL_REDIR);
+	lex->cmd->redir->right_r = find_redir_in(lex, R_REDIR);
+	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
+	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
+	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
+	fopen_rem(lex, right, left, &len);
+	check_redir_type(lex);
+	redirect(lex);
 }

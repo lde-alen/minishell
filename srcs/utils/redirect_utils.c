@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 04:27:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:44:36 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,21 +110,4 @@ ssize_t	check_perm(t_lex *lex, char *str)
 		}
 	}
 	return (0);
-}
-
-ssize_t	open_file(t_lex *lex, char *str, int flag)
-{
-	int		file;
-
-	if (check_perm(lex, str) == -1)
-		return (-1);
-	file = open(str, flag, 0777);
-	if (file < 0)
-	{
-		access(str, F_OK);
-		exit_stat(errno);
-		return (-1);
-	}
-	g_exit = 0;
-	return (file);
 }

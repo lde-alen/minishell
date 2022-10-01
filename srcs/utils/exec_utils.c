@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/25 19:03:27 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:29:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ char	*join_path(t_cmd *cmd_lst, char *path, char **env_path)
 	size_t	i;
 
 	i = 0;
-
 	while (env_path[i])
 	{
 		post_join = ft_strjoin(ft_strdup("/"), cmd_lst->command);
