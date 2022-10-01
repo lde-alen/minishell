@@ -6,7 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/09/29 13:44:24 by asanthos         ###   ########.fr       */
+=======
+/*   Updated: 2022/09/30 14:06:25 by asanthos         ###   ########.fr       */
+>>>>>>> alka
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +187,7 @@ void	ft_cd(t_cmd *cmd_lst, t_env *lst);
 void	ft_export(t_env *lst, t_cmd *cmd_lst);
 void	lonely_export(t_env *lst);
 void	div_env(char *str, t_env *lst);
-void	ft_exit(t_cmd *cmd_lst);
+void	ft_exit(t_lex *lex, t_cmd *cmd_lst);
 
 /**
  * UTILS
@@ -212,10 +216,10 @@ char	**get_path(t_env *lst);
 char	*check_access(t_env *lst, t_cmd *cmd_lst);
 char	**lst_to_char(t_env **lst);
 
-void	redirect(t_lex *lex, t_exec *exec);
+void	redirect(t_lex *lex);
 
 void	exec_pipe(t_env *lst, t_cmd *cmd_lst);
-size_t	exec_builtin(t_env *lst, t_cmd *cmd_lst);
+size_t	exec_builtin(t_lex *lex);
 void	exec_alone(t_lex *lex, t_exec *exec);
 void	pipe_exec(t_lex *lex, t_exec *exec);
 void	fork_arr(t_lex *lex, t_exec *exec);
@@ -225,20 +229,21 @@ void	close_pipes(t_exec *exec);
 size_t	check_builtin(t_cmd *cmd_lst);
 void	check_path(t_cmd *cmd_lst, t_exec **exec);
 size_t	check_all_path(t_env *lst, t_cmd *cmd_lst);
-size_t	main_child2(t_env *lst, t_cmd *cmd_lst, t_exec *exec);
+size_t	main_child2(t_lex *lex);
 void	check_pos(t_lex *lex, t_exec *exec);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 size_t	first_child(t_lex *lex, t_exec *exec);
 size_t	last_child(t_lex *lex, t_exec *exec);
 size_t	mid_kid(t_lex *lex, t_exec *exec);
 void	dup_doc(t_lex *lex);
+size_t	exit_stat(int err);
 
 void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);
 void	append_out(t_lex *lex, char *file);
 void	here_doc(t_lex *lex);
-int		open_file(char *str, int flag);
-void	redir(t_lex *lex, t_exec *exec);
+int		open_file(t_lex *lex, char *str, int flag);
+void	redir(t_lex *lex);
 ssize_t	find_redir_in(t_lex *lex, size_t type);
 void	check_redir_type(t_lex *lex);
 

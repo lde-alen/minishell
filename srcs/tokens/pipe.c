@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 16:04:19 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/01 11:25:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		{
 			wait(&g_exit);
 			if (WIFEXITED(g_exit))
+			{
+				ft_printf("G_exit: %d\n", g_exit);
 				g_exit = WEXITSTATUS(g_exit);
+			}
 			exec->i++;
 		}
 	}
@@ -48,14 +51,40 @@ size_t	check_delimiter(t_lex *lex)
 	return (0);
 }
 
-void	redir(t_lex *lex, t_exec *exec)
+void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
 {
 	ssize_t	i;
+
+	i = -1;
+	while (++i < *len && lex->cmd->redir->flag[*len - 1] == DL_REDIR)
+		(*len)--;
+	while (i++ < *len)
+	{
+		if ((lex->cmd->redir->flag[i] == R_REDIR
+				&& (i != find_redir_in(lex, R_REDIR) || !lex->cmd->command))
+			|| lex->cmd->redir->flag[i] == DR_REDIR)
+		{
+			if (((right < -1 && i != lex->cmd->redir->right_r)
+					|| (right > -1 && i != lex->cmd->redir->right_dr))
+				|| !lex->cmd->command)
+				open_file(lex, lex->cmd->redir->file[i], O_TRUNC | O_CREAT);
+		}
+		else if (lex->cmd->redir->flag[i] == L_REDIR
+			&& (i != find_redir_in(lex, L_REDIR) || !lex->cmd->command))
+		{
+			if ((left < -1 && i != lex->cmd->redir->left_r)
+				|| !lex->cmd->command)
+				open_file(lex, lex->cmd->redir->file[i], O_TRUNC);
+		}
+	}
+}
+
+void	redir(t_lex *lex)
+{
 	ssize_t	len;
 	ssize_t	right;
 	ssize_t	left;
 
-	i = 0;
 	len = lex->cmd->redir->flag_len;
 	lex->cmd->redir->left_r = find_redir_in(lex, L_REDIR);
 	lex->cmd->redir->left_dr = find_redir_in(lex, DL_REDIR);
@@ -63,46 +92,46 @@ void	redir(t_lex *lex, t_exec *exec)
 	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
 	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
 	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
-	while (i < len && lex->cmd->redir->flag[len - 1] == DL_REDIR)
-		len--;
-	//changed i <= len to i < len
-	while (i < len)
-	{
-		if (lex->cmd->redir->flag[i] == R_REDIR || lex->cmd->redir->flag[i] == DR_REDIR)
-		{
-			if (((right < -1 && i != lex->cmd->redir->right_r)
-				|| (right > -1 && i != lex->cmd->redir->right_dr))
-				|| !lex->cmd->command)
-			{
-				if (open_file(lex->cmd->redir->file[i], O_TRUNC | O_CREAT) == -1)
-					g_exit = 1;
-			}
-		}
-		else if (lex->cmd->redir->flag[i] == L_REDIR)
-		{
-			if ((left < -1 && i != lex->cmd->redir->left_r) || !lex->cmd->command)
-			{
-				if (open_file(lex->cmd->redir->file[i], O_TRUNC) == -1)
-					g_exit = 1;
-			}
-		}
-		i++;
-	}
+	fopen_rem(lex, right, left, &len);
 	check_redir_type(lex);
-	redirect(lex, exec);
+	redirect(lex);
 }
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
 	size_t	ret;
+	char	*val;
+	int		shl_val;
 
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
+	{
 		exec->path = check_access(lex->env, lex->cmd);
+		if (exec->path != NULL && ft_strcmp(exec->path, "./minishell") == 0 && search_env(lex->env, "SHLVL") != NULL)
+		{
+			val = search_env(lex->env, "SHLVL")->value;
+			if (!val)
+				val = ft_strdup("1");
+			else
+			{
+				shl_val = ft_atoi(val);
+				free(val);
+				if (shl_val < 0)
+					val = ft_strdup("0");
+				else if (shl_val < 999)
+					val = ft_itoa(shl_val + 1);
+				else
+				{
+					err_msg(lex->cmd, "warning", "shell level too high, resetting to 1");
+					val = ft_strdup("1");
+				}
+			}
+		}
+	}
 	if (lex->cmd->redir)
 	{
 		here_doc(lex);
-		redir(lex, exec);
+		redir(lex);
 		free_redir(lex->cmd->redir);
 	}
 	else
@@ -111,7 +140,11 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		if (exec->flag == 1)
 		{
 			exec->flag = 2;
-			exec_builtin(lex->env, lex->cmd);
+			exec_builtin(lex);
+			free_cmd(&lex->cmd);
+			free_env_kid(exec->env_kid);
+			if (exec->path)
+				free(exec->path);
 			return ;
 		}
 		exec->id[0] = fork();
@@ -119,9 +152,9 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 			perror("fork");
 		else if (exec->id[0] == 0)
 		{
-			ret = main_child2(lex->env, lex->cmd, exec);
+			ret = main_child2(lex);
 			free_child(lex);
-			exit (ret);
+			exit(ret);
 		}
 		free_env_kid(exec->env_kid);
 	}
