@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 16:30:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:00:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 	{
 		exec->flag = 2;
 		exec_builtin(lex);
-		free_cmd(&lex->cmd);
+		free_cmd(lex, &lex->cmd);
 		free_env_kid(exec->env_kid);
 		if (exec->path)
 			free(exec->path);
@@ -75,9 +75,19 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (lex->cmd->redir)
 	{
-		here_doc(lex);
-		redir(lex);
-		free_redir(lex->cmd->redir);
+		ft_redir_init(lex);
+		int id = fork();
+		if (id == 0)
+		{
+			here_doc(lex);
+			redir(lex);
+			// free_redir(lex->cmd->redir);
+			free_child(lex);
+			exit(0);
+		}
+		signal(SIGINT, SIG_IGN);
+		wait(NULL);
+		signal(SIGINT, sig_handler);
 	}
 	else
 	{
@@ -86,7 +96,9 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (exec->path)
 		free(exec->path);
-	free_cmd(&lex->cmd);
+	free_cmd(lex, &lex->cmd);
+	lex->cmd = NULL;
+	init_null(lex);
 }
 
 void	loop_lst(t_lex *lex, t_exec *exec)
@@ -108,9 +120,9 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 		exec->i++;
 		if (lex->cmd)
 		{
-			if (lex->cmd->redir)
-				free_redir(lex->cmd->redir);
-			free_cmd(&lex->cmd);
+			// if (lex->cmd->redir)
+			// 	free_redir(lex, lex->cmd->redir);
+			free_cmd(lex, &lex->cmd);
 		}
 		exec->flag = 0;
 		if (lex->cmd)

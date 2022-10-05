@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/18 16:31:34 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:34:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,16 @@ int	minishell(char **env)
 		}
 		else
 		{
-			free_env_lst(lex->env);
-			free (lex);
+			if (lex->cmd)
+			{
+				if (lex->cmd->redir)
+					free_child(lex);
+			}
+			else
+			{
+				free_env_lst(lex->env);
+				free (lex);
+			}
 			exit(0);
 		}
 	}

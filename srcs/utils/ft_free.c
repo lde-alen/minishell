@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 05:02:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:06:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,15 @@ void	free_env_lst(t_env *lst)
 	free (lst);
 }
 
-void	free_cmd(t_cmd **cmd_lst)
+void	free_cmd(t_lex *lex, t_cmd **cmd_lst)
 {
 	t_cmd	*tmp;
 	int		i;
 
 	i = 0;
 	tmp = *cmd_lst;
+	if ((*cmd_lst)->redir)
+		free_redir(lex, (*cmd_lst)->redir);
 	while ((*cmd_lst)->argument[i])
 	{
 		free((*cmd_lst)->argument[i]);
@@ -104,27 +106,31 @@ void	free_exec(t_exec **exec)
 	free(*exec);
 }
 
-void	free_redir(t_redir *redir)
+void	free_redir(t_lex *lex, t_redir *redir)
 {
+	(void)lex;
 	size_t	i;
 
 	if (redir->file)
 	{
+		// if (lex->cmd->redir->flag[get_last_delimiter(lex)] != DL_REDIR)
+		// {
 		i = 0;
 		while (i < redir->flag_len)
 		{
 			free(redir->file[i]);
-			if (redir->doc_arr[i])
+			if (redir->doc_arr)
+			{
 				free(redir->doc_arr[i]);
+				redir->doc_arr[i] = NULL;
+				free(redir->doc_arr);
+				redir->doc_arr = NULL;
+			}
 			i++;
 		}
 		free(redir->flag);
 		free(redir->file);
-		if (redir->doc_arr)
-		{
-			free(redir->doc_arr[i]);
-			free(redir->doc_arr);
-		}
+		// }
 	}
 	if (redir->file_in)
 		free(redir->file_in);
@@ -133,6 +139,13 @@ void	free_redir(t_redir *redir)
 	if (redir->fd)
 		free(redir->fd);
 	free(redir);
+	redir = NULL;
+}
+
+void	init_null(t_lex *lex)
+{
+	lex->exec->env_kid = NULL;
+	lex->exec->path = NULL;
 }
 
 void	free_child(t_lex *lex)
@@ -147,12 +160,9 @@ void	free_child(t_lex *lex)
 		free_env_lst(lex->env);
 	while (lex->cmd)
 	{
+		ft_printf("KAHJKSAND\n");
 		if (lex->cmd)
-		{
-			if (lex->cmd->redir)
-				free_redir(lex->cmd->redir);
-			free_cmd(&lex->cmd);
-		}
+			free_cmd(lex, &lex->cmd);
 	}
 	if (lex)
 		free(lex);
