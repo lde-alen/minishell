@@ -6,11 +6,23 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 11:46:03 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:23:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	wait_stat(void)
+{
+	signal(SIGINT, SIG_IGN);
+	wait(&g_exit);
+	signal(SIGINT, sig_handler);
+	if (WIFEXITED(g_exit))
+	{
+		ft_printf("G_exit: %d\n", g_exit);
+		g_exit = WEXITSTATUS(g_exit);
+	}
+}
 
 void	fork_arr(t_lex *lex, t_exec *exec)
 {
@@ -36,14 +48,7 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		exec->i = 0;
 		while ((exec->i + 1) <= exec->len)
 		{
-			signal(SIGINT, SIG_IGN);
-			wait(&g_exit);
-			signal(SIGINT, sig_handler);
-			if (WIFEXITED(g_exit))
-			{
-				ft_printf("G_exit: %d\n", g_exit);
-				g_exit = WEXITSTATUS(g_exit);
-			}
+			wait_stat();
 			exec->i++;
 		}
 	}
@@ -81,6 +86,8 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
+	int	id;
+
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
 	{
@@ -89,19 +96,15 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (lex->cmd->redir)
 	{
-		// ft_redir_init(lex);
-		int id = fork();
+		id = fork();
 		if (id == 0)
 		{
-			here_doc(lex);
+			here_doc(lex, lex->cmd);
 			redir(lex);
-			// free_redir(lex->cmd->redir);
 			free_child(lex);
 			exit(0);
 		}
-		signal(SIGINT, SIG_IGN);
-		wait(NULL);
-		signal(SIGINT, sig_handler);
+		wait_stat();
 	}
 	else
 	{
@@ -110,8 +113,6 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (exec->path)
 		free(exec->path);
-	// free_cmd(lex, &lex->cmd);
-	// lex->cmd = NULL;
 	init_null(lex);
 }
 
@@ -128,10 +129,7 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 		while (lex->cmd != NULL)
 		{
 			if (lex->cmd->redir)
-			{
-				// ft_redir_init(lex);
-				here_doc(lex);
-			}
+				here_doc(lex, tmp);
 			lex->cmd = lex->cmd->next;
 		}
 		lex->cmd = tmp;
@@ -149,8 +147,6 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 		free_child(lex);
 		exit(0);
 	}
-	// while (lex->cmd)
-	// 	free_cmd(lex, &lex->cmd);
 }
 
 void	pipe_exec(t_lex *lex, t_exec *exec)
@@ -179,10 +175,8 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 	close_pipes(exec);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
+	wait_stat();
 	if (exec->path)
 		free(exec->path);
-	signal(SIGINT, SIG_IGN);
-	wait(NULL);
-	signal(SIGINT, sig_handler);
 	init_null(lex);
 }

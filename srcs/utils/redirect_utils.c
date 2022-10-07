@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 12:44:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:06:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,7 @@ void	redirect(t_lex *lex)
 			free_child(lex);
 			exit(ret);
 		}
-		wait(&g_exit);
-		if (WIFEXITED(g_exit))
-			g_exit = WEXITSTATUS(g_exit);
+		wait_stat();
 	}
 }
 

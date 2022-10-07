@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 10:25:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:27:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	sig(int val)
 	}
 }
 
-void	free_file(t_redir *redir)
+void	free_file(t_lex *lex, t_cmd *tmp, t_redir *redir)
 {
 	size_t	i;
 
@@ -88,9 +88,6 @@ void	free_file(t_redir *redir)
 	{
 		free(redir->file[i]);
 		redir->file[i] = NULL;
-		// if (redir->doc_arr[i])
-		// 	free(redir->doc_arr[i]);
-		// redir->doc_arr[i] = NULL;
 		i++;
 	}
 	free(redir->file);
@@ -99,9 +96,11 @@ void	free_file(t_redir *redir)
 	redir->flag = 0;
 	if (redir->str || ft_strcmp(redir->str, "") == 0)
 		free(redir->str);
+	while (tmp)
+		free_cmd(lex, &tmp);
 }
 
-void	here_doc(t_lex *lex)
+void	here_doc(t_lex *lex, t_cmd *tmp)
 {
 	char	*store;
 	size_t	i;
@@ -119,7 +118,8 @@ void	here_doc(t_lex *lex)
 				if (g_exit == -69)
 				{
 					free(store);
-					free_file(lex->cmd->redir);
+					free_file(lex, tmp, lex->cmd->redir);
+					lex->cmd = NULL;
 					free_child(lex);
 					g_exit = 130;
 					exit(130);
@@ -129,7 +129,8 @@ void	here_doc(t_lex *lex)
 				if (!store)
 				{
 					free(store);
-					free_file(lex->cmd->redir);
+					free_file(lex, tmp, lex->cmd->redir);
+					lex->cmd = NULL;
 					free_child(lex);
 					exit(0);
 				}

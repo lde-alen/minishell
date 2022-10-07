@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/05 11:59:23 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 12:22:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,7 +238,7 @@ size_t	exit_stat(int err);
 void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);
 void	append_out(t_lex *lex, char *file);
-void	here_doc(t_lex *lex);
+void	here_doc(t_lex *lex, t_cmd *tmp);
 ssize_t	open_file(t_lex *lex, char *str, int flag);
 void	redir(t_lex *lex);
 ssize_t	find_redir_in(t_lex *lex, size_t type);
@@ -253,6 +253,7 @@ size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 void	check_redir_type(t_lex *lex);
 size_t	get_last_delimiter(t_lex *lex);
+void	wait_stat(void);
 
 /**
  * FREE FUNCTONS
