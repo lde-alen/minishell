@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 12:23:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:01:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,10 @@ void	wait_stat(void)
 	wait(&g_exit);
 	signal(SIGINT, sig_handler);
 	if (WIFEXITED(g_exit))
-	{
-		ft_printf("G_exit: %d\n", g_exit);
 		g_exit = WEXITSTATUS(g_exit);
-	}
 }
 
-void	fork_arr(t_lex *lex, t_exec *exec)
+void	init_pre_exec(t_lex *lex, t_exec *exec)
 {
 	t_cmd	*tmp;
 
@@ -39,6 +36,11 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		lex->cmd = lex->cmd->next;
 	}
 	lex->cmd = tmp;
+}
+
+void	fork_arr(t_lex *lex, t_exec *exec)
+{
+	init_pre_exec(lex, exec);
 	if (exec->len > 1)
 		loop_lst(lex, exec);
 	else if (exec->len == 1)
