@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/05 14:57:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 10:25:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,9 @@ size_t	get_last_delimiter(t_lex *lex)
 {
 	ssize_t	len;
 
-	ft_printf("FLAG_LEN: %d\n", lex->cmd->redir->flag_len);
 	len = lex->cmd->redir->flag_len - 1;
 	while (len >= 0)
 	{
-		ft_printf("len: %d\n", len);
 		if (lex->cmd->redir->flag[len] != DL_REDIR)
 			return (len);
 		len--;
@@ -108,7 +106,6 @@ void	here_doc(t_lex *lex)
 	char	*store;
 	size_t	i;
 
-	// ft_redir_init(lex);
 	i = 0;
 	lex->cmd->redir->str = ft_strdup("");
 	signal(SIGINT, sig);

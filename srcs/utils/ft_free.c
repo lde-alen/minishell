@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/05 15:45:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:39:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@ void	free_redir(t_lex *lex, t_redir *redir)
 			}
 			i++;
 		}
-		free(redir->flag);
-		free(redir->file);
 	}
+	free(redir->flag);
+	free(redir->file);
 	if (redir->doc_arr)
 		free(redir->doc_arr);
 	redir->doc_arr = NULL;

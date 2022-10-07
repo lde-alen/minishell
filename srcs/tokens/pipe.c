@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 09:28:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 11:46:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,19 @@
 
 void	fork_arr(t_lex *lex, t_exec *exec)
 {
+	t_cmd	*tmp;
+
 	exec->i = 0;
 	exec->flag = 0;
 	exec->len = get_cmd_len(lex->cmd);
+	tmp = lex->cmd;
+	while (lex->cmd)
+	{
+		if (lex->cmd->redir)
+			ft_redir_init(lex);
+		lex->cmd = lex->cmd->next;
+	}
+	lex->cmd = tmp;
 	if (exec->len > 1)
 		loop_lst(lex, exec);
 	else if (exec->len == 1)
@@ -37,6 +47,8 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 			exec->i++;
 		}
 	}
+	while (lex->cmd)
+		free_cmd(lex, &lex->cmd);
 }
 
 size_t	fork_alone(t_lex *lex, t_exec *exec)
@@ -77,7 +89,7 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (lex->cmd->redir)
 	{
-		ft_redir_init(lex);
+		// ft_redir_init(lex);
 		int id = fork();
 		if (id == 0)
 		{
@@ -98,71 +110,47 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (exec->path)
 		free(exec->path);
-	free_cmd(lex, &lex->cmd);
-	lex->cmd = NULL;
+	// free_cmd(lex, &lex->cmd);
+	// lex->cmd = NULL;
 	init_null(lex);
 }
 
 void	loop_lst(t_lex *lex, t_exec *exec)
 {
 	t_cmd	*tmp;
+	int		id;
 
 	check_path(lex->cmd, &exec);
 	tmp = lex->cmd;
-	if (lex->cmd->redir)
+	id = fork();
+	if (id == 0)
 	{
-		int id = fork();
-		if (id == 0)
+		while (lex->cmd != NULL)
 		{
-			while (lex->cmd != NULL)
+			if (lex->cmd->redir)
 			{
-				if (lex->cmd->redir)
-				{
-					ft_redir_init(lex);
-					here_doc(lex);
-				}
-				lex->cmd = lex->cmd->next;
+				// ft_redir_init(lex);
+				here_doc(lex);
 			}
-			lex->cmd = tmp;
-			while (lex->cmd != NULL)
-			{
-				pipe_exec(lex, exec);
-				exec->i++;
-				if (lex->cmd)
-				{
-					// if (lex->cmd->redir)
-					// 	free_redir(lex, lex->cmd->reeddir);
-					free_cmd(lex, &lex->cmd);
-				}
-				exec->flag = 0;
-				if (lex->cmd && lex->cmd->argument)
-					check_path(lex->cmd, &exec);
-				init_null(lex);
-			}
-			free_child(lex);
-			exit(0);
+			lex->cmd = lex->cmd->next;
 		}
-		// signal(SIGINT, SIG_IGN);
-		// wait(NULL);
-		// signal(SIGINT, sig_handler);
-	}
-	else
-	{
+		lex->cmd = tmp;
 		while (lex->cmd != NULL)
 		{
 			pipe_exec(lex, exec);
 			exec->i++;
 			if (lex->cmd)
-			{
-				// if (lex->cmd->redir)
-				// 	free_redir(lex, lex->cmd->redir);
 				free_cmd(lex, &lex->cmd);
-			}
 			exec->flag = 0;
-			if (lex->cmd)
+			if (lex->cmd && lex->cmd->argument)
 				check_path(lex->cmd, &exec);
+			init_null(lex);
 		}
+		free_child(lex);
+		exit(0);
 	}
+	// while (lex->cmd)
+	// 	free_cmd(lex, &lex->cmd);
 }
 
 void	pipe_exec(t_lex *lex, t_exec *exec)
@@ -196,4 +184,5 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 	signal(SIGINT, SIG_IGN);
 	wait(NULL);
 	signal(SIGINT, sig_handler);
+	init_null(lex);
 }
