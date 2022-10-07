@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/05 14:00:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/07 09:28:55 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		exec->i = 0;
 		while ((exec->i + 1) <= exec->len)
 		{
+			signal(SIGINT, SIG_IGN);
 			wait(&g_exit);
+			signal(SIGINT, sig_handler);
 			if (WIFEXITED(g_exit))
 			{
 				ft_printf("G_exit: %d\n", g_exit);
@@ -107,26 +109,59 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 
 	check_path(lex->cmd, &exec);
 	tmp = lex->cmd;
-	while (lex->cmd != NULL)
+	if (lex->cmd->redir)
 	{
-		if (lex->cmd->redir)
-			here_doc(lex);
-		lex->cmd = lex->cmd->next;
-	}
-	lex->cmd = tmp;
-	while (lex->cmd != NULL)
-	{
-		pipe_exec(lex, exec);
-		exec->i++;
-		if (lex->cmd)
+		int id = fork();
+		if (id == 0)
 		{
-			// if (lex->cmd->redir)
-			// 	free_redir(lex, lex->cmd->redir);
-			free_cmd(lex, &lex->cmd);
+			while (lex->cmd != NULL)
+			{
+				if (lex->cmd->redir)
+				{
+					ft_redir_init(lex);
+					here_doc(lex);
+				}
+				lex->cmd = lex->cmd->next;
+			}
+			lex->cmd = tmp;
+			while (lex->cmd != NULL)
+			{
+				pipe_exec(lex, exec);
+				exec->i++;
+				if (lex->cmd)
+				{
+					// if (lex->cmd->redir)
+					// 	free_redir(lex, lex->cmd->reeddir);
+					free_cmd(lex, &lex->cmd);
+				}
+				exec->flag = 0;
+				if (lex->cmd && lex->cmd->argument)
+					check_path(lex->cmd, &exec);
+				init_null(lex);
+			}
+			free_child(lex);
+			exit(0);
 		}
-		exec->flag = 0;
-		if (lex->cmd)
-			check_path(lex->cmd, &exec);
+		// signal(SIGINT, SIG_IGN);
+		// wait(NULL);
+		// signal(SIGINT, sig_handler);
+	}
+	else
+	{
+		while (lex->cmd != NULL)
+		{
+			pipe_exec(lex, exec);
+			exec->i++;
+			if (lex->cmd)
+			{
+				// if (lex->cmd->redir)
+				// 	free_redir(lex, lex->cmd->redir);
+				free_cmd(lex, &lex->cmd);
+			}
+			exec->flag = 0;
+			if (lex->cmd)
+				check_path(lex->cmd, &exec);
+		}
 	}
 }
 
@@ -134,7 +169,12 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 {
 	exec->env_kid = lst_to_char(&lex->env);
 	if (lex->cmd->argument)
-		exec->path = check_access(lex->env, lex->cmd);
+	{
+		if (lex->cmd->argument[0])
+			exec->path = check_access(lex->env, lex->cmd);
+		else
+			exec->path = NULL;
+	}
 	else
 		exec->path = NULL;
 	if ((exec->i + 1) != exec->len)
@@ -153,4 +193,7 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 		free_env_kid(exec->env_kid);
 	if (exec->path)
 		free(exec->path);
+	signal(SIGINT, SIG_IGN);
+	wait(NULL);
+	signal(SIGINT, sig_handler);
 }

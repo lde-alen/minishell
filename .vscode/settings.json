@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+		"sstream": "c",
+		"typeinfo": "c",
+		"libft.h": "c",
+		"minishell.h": "c",
+		"readline.h": "c",
+		"stddef.h": "c",
+		"ioctl.h": "c",
+		"stdlib.h": "c",
+		"random": "c",
+		"fcntl.h": "c",
+		"locale": "c"
+	},
+	"git.mergeEditor": false,
+}

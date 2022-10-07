@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/05 13:43:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/05 14:57:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	free_file(t_redir *redir)
 		redir->file[i] = NULL;
 		// if (redir->doc_arr[i])
 		// 	free(redir->doc_arr[i]);
+		// redir->doc_arr[i] = NULL;
 		i++;
 	}
 	free(redir->file);
@@ -145,7 +146,6 @@ void	here_doc(t_lex *lex)
 	fill_doc_arr(lex, lex->cmd->redir->str);
 	free(lex->cmd->redir->str);
 }
-
 
 void	redir(t_lex *lex)
 {
