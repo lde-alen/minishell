@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/08 07:28:10 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:57:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,11 @@ int	minishell(char **env)
 		else
 		{
 			if (lex->cmd)
-			{
 				if (lex->cmd->redir)
 					free_child(lex);
-			}
-			else
-			{
-				free(lex->cmd);
-				free_env_lst(lex->env);
-				free (lex);
-			}
+			free(lex->cmd);
+			free_env_lst(lex->env);
+			free (lex);
 			exit(0);
 		}
 	}
