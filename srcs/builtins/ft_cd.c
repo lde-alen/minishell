@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/26 15:02:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 14:57:16 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,39 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 	free(buff);
 }
 
+static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
+{
+	char	*store;
+	char	*store_curr;
+
+	if (!cmd->argument[1] || ft_strcmp(cmd->argument[1], "~") == 0)
+	{
+		if (search_env(lst, "USER") != NULL)
+		{
+			*env_user = ft_strjoin(ft_strdup("/Users/"),
+					search_env(lst, "USER")->value);
+			chdir(*env_user);
+		}
+	}
+	else if (ft_strcmp(cmd->argument[1], "-") == 0)
+	{
+		if (search_env(lst, "OLDPWD") != NULL)
+		{
+			store = ft_strdup(search_env(lst, "OLDPWD")->value);
+			store_curr = ft_strdup(search_env(lst, "PWD")->value);
+			free(search_env(lst, "PWD")->value);
+			free(search_env(lst, "OLDPWD")->value);
+			search_env(lst, "PWD")->value = ft_strdup(store_curr);
+			search_env(lst, "OLDPWD")->value = ft_strdup(store);
+			chdir(store);
+			free(store);
+			free(store_curr);
+		}
+	}
+	else
+		*check = chdir(cmd->argument[1]);
+}
+
 void	ft_cd(t_cmd *cmd, t_env *lst)
 {
 	t_env	*pwd;
@@ -78,16 +111,7 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 
 	pwd = search_env(lst, "PWD");
 	check = 0;
-	if (!cmd->argument[1])
-	{
-		if (search_env(lst, "USER") != NULL)
-		{
-			env_user = ft_strjoin("/Users/", ft_strdup(search_env(lst, "USER")->value));
-			chdir(env_user);
-		}
-	}
-	else
-		check = chdir(cmd->argument[1]);
+	set_check_val(cmd, lst, &check, &env_user);
 	if (check < 0)
 	{
 		if (access(cmd->argument[1], F_OK | X_OK) == 0)

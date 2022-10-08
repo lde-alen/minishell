@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 12:27:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 13:12:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,37 @@ void	free_file(t_lex *lex, t_cmd *tmp, t_redir *redir)
 		free_cmd(lex, &tmp);
 }
 
+void	free_sig(t_lex *lex, t_cmd *tmp, char *store)
+{
+	free(store);
+	free_file(lex, tmp, lex->cmd->redir);
+	lex->cmd = NULL;
+	free_child(lex);
+}
+
+void	delim_loop(t_lex *lex, t_cmd *tmp, char **store, size_t i)
+{
+	while (ft_strcmp(*store, lex->cmd->redir->file[i]) != 0)
+	{
+		if (g_exit == -69)
+		{
+			free_sig(lex, tmp, *store);
+			g_exit = 130;
+			exit(g_exit);
+		}
+		free(*store);
+		*store = readline("> ");
+		if (!*store)
+		{
+			free_sig(lex, tmp, *store);
+			g_exit = 0;
+			exit(g_exit);
+		}
+		lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, *store);
+		lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, "\n");
+	}
+}
+
 void	here_doc(t_lex *lex, t_cmd *tmp)
 {
 	char	*store;
@@ -112,32 +143,7 @@ void	here_doc(t_lex *lex, t_cmd *tmp)
 	{
 		store = ft_strdup("");
 		if (lex->cmd->redir->flag[i] == DL_REDIR)
-		{
-			while (ft_strcmp(store, lex->cmd->redir->file[i]) != 0)
-			{
-				if (g_exit == -69)
-				{
-					free(store);
-					free_file(lex, tmp, lex->cmd->redir);
-					lex->cmd = NULL;
-					free_child(lex);
-					g_exit = 130;
-					exit(130);
-				}
-				free(store);
-				store = readline("> ");
-				if (!store)
-				{
-					free(store);
-					free_file(lex, tmp, lex->cmd->redir);
-					lex->cmd = NULL;
-					free_child(lex);
-					exit(0);
-				}
-				lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, store);
-				lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, "\n");
-			}
-		}
+			delim_loop(lex, tmp, &store, i);
 		free(store);
 		i++;
 	}
