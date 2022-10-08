@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/07 12:22:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 11:29:22 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ typedef struct s_sh
 typedef struct s_exec
 {
 	int		**fd;
+	int		fork_id;
+	ssize_t	ret;
 	ssize_t	*id;
 	size_t	flag;
 	size_t	len;

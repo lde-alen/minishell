@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 15:01:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:08:32 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
-	int	id;
-
 	check_path(lex->cmd, &exec);
 	if (lex->cmd->command)
 	{
@@ -98,13 +96,14 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (lex->cmd->redir)
 	{
-		id = fork();
-		if (id == 0)
+		exec->fork_id = fork();
+		if (exec->fork_id == 0)
 		{
 			here_doc(lex, lex->cmd);
 			redir(lex);
 			free_child(lex);
-			exit(0);
+			//fix exit code
+			exit(g_exit);
 		}
 		wait_stat();
 	}

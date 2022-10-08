@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 17:12:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/28 14:58:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 11:29:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_exec_init(t_exec *exec)
 	exec->i = 0;
 	exec->path = NULL;
 	exec->env_kid = NULL;
+	exec->fork_id = 0;
+	exec->ret = 0;
 }
 
 void	ft_redir_init(t_lex *lex)

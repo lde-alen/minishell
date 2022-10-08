@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 12:07:03 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 11:35:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	dup_doc(t_lex *lex)
 	pipe(lex->cmd->redir->fd);
 	id = fork();
 	if (id < 0)
-		perror("dead");
+		perror("minishell");
 	if (id == 0)
 	{
 		dup2(lex->cmd->redir->fd[1], STDOUT_FILENO);

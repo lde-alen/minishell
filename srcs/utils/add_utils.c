@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 16:59:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:35:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ size_t	exit_stat(int err)
 {
 	perror("minishell");
 	ft_printf("Errno: %d\n", err);
-	if (errno == 2)
+	if (err == 2)
 	{
-		g_exit = 127;
+		g_exit = 1;
 		return (g_exit);
 	}
-	else if (errno == 13 || errno == 20)
+	else if (err == 13 || err == 20)
 	{
 		g_exit = 126;
 		return (g_exit);
