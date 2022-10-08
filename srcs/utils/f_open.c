@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:43:23 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 12:45:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 16:08:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	fill_doc_arr(t_lex *lex, char *str)
 		if (!lex->cmd->redir->doc_arr)
 		{
 			free_child(lex);
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		split_arr = ft_split(str, '\n');
 		arr_loop(lex, str_join, split_arr, j);

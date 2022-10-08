@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 14:57:16 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 20:42:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,34 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 	free(buff);
 }
 
+void	cd_dash(t_cmd *cmd, t_env *lst, char **store, char **store_curr)
+{
+	ssize_t	ret;
+
+	if (!search_env(lst, "OLDPWD")->value)
+	{
+		err_msg(cmd, "cd", "OLDPWD not set");
+		g_exit = 1;
+	}
+	else
+	{
+		*store = ft_strdup(search_env(lst, "OLDPWD")->value);
+		ret = chdir(*store);
+		if (ret < 0)
+			exit_stat(errno);
+		else
+		{
+			*store_curr = ft_strdup(search_env(lst, "PWD")->value);
+			free(search_env(lst, "PWD")->value);
+			free(search_env(lst, "OLDPWD")->value);
+			search_env(lst, "PWD")->value = ft_strdup(*store_curr);
+			search_env(lst, "OLDPWD")->value = ft_strdup(*store);
+			free(*store);
+			free(*store_curr);
+		}
+	}
+}
+
 static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 {
 	char	*store;
@@ -86,16 +114,11 @@ static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 	else if (ft_strcmp(cmd->argument[1], "-") == 0)
 	{
 		if (search_env(lst, "OLDPWD") != NULL)
+			cd_dash(cmd, lst, &store, &store_curr);
+		else
 		{
-			store = ft_strdup(search_env(lst, "OLDPWD")->value);
-			store_curr = ft_strdup(search_env(lst, "PWD")->value);
-			free(search_env(lst, "PWD")->value);
-			free(search_env(lst, "OLDPWD")->value);
-			search_env(lst, "PWD")->value = ft_strdup(store_curr);
-			search_env(lst, "OLDPWD")->value = ft_strdup(store);
-			chdir(store);
-			free(store);
-			free(store_curr);
+			err_msg(cmd, "cd", "OLDPWD not set");
+			g_exit = 1;
 		}
 	}
 	else
