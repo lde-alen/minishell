@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/03 12:57:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 21:31:26 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,9 @@ void	check_valid(t_cmd **cmd_lst, size_t i)
 	}
 }
 
-void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
+void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 {
-	int		flag;
-	size_t	ret;
-
-	flag = 0;
+	*flag = 0;
 	if (cmd_lst->argument[1])
 	{
 		if (check_str_exit(cmd_lst->argument[1]) == 0)
@@ -89,10 +86,14 @@ void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
 		{
 			if (ft_strcmp(cmd_lst->argument[1], "--") == 0)
 			{
-				flag = 1;
-				check_valid(&cmd_lst, 2);
+				if (cmd_lst->argument[2])
+				{
+					*flag = 1;
+					ft_printf("here\n");
+					check_valid(&cmd_lst, 2);
+				}
 			}
-			else	
+			else
 			{
 				ft_putendl_fd("exit", 1);
 				exit_error(cmd_lst);
@@ -101,6 +102,14 @@ void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
 			}
 		}
 	}
+}
+
+void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
+{
+	int		flag;
+	size_t	ret;
+
+	check_exit_val(lex, cmd_lst, &flag);
 	ft_putendl_fd("exit", 1);
 	if (cmd_lst->argument[1] && flag == 0)
 	{
