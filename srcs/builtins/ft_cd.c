@@ -6,27 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 20:42:23 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 20:51:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_env	*search_env(t_env *lst, char *str)
-{
-	t_env	*tmp;
-
-	tmp = lst;
-	while (tmp->next != lst)
-	{
-		if (ft_strcmp(tmp->name, str) == 0)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	if (ft_strcmp(tmp->name, str) == 0)
-		return (tmp);
-	return (NULL);
-}
 
 t_env	*search_oldpwd(t_env *lst)
 {

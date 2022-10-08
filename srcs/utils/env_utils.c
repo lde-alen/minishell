@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:08:44 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 16:07:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 20:52:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,20 @@ t_env	*push_env(t_env *lst, char *env_name, char *env_value)
 	else
 		add_to_lst(&lst, &temp_node, &new_node);
 	return (lst);
+}
+
+t_env	*search_env(t_env *lst, char *str)
+{
+	t_env	*tmp;
+
+	tmp = lst;
+	while (tmp->next != lst)
+	{
+		if (ft_strcmp(tmp->name, str) == 0)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	if (ft_strcmp(tmp->name, str) == 0)
+		return (tmp);
+	return (NULL);
 }
