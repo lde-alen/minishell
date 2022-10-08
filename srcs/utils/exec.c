@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 12:42:01 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 07:16:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ size_t	exec_child(t_cmd *cmd_lst, t_exec *exec)
 
 void	exec_sys(t_lex *lex)
 {
+	if (!lex->cmd)
+		return ;
 	lex->exec = (t_exec *)malloc(sizeof(t_exec));
 	ft_exec_init(lex->exec);
 	lex->exec->fd = (int **)malloc(sizeof(int *) * get_cmd_len(lex->cmd));
