@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/08 11:29:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:52:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,17 @@ typedef struct s_sh
 
 typedef struct s_exec
 {
+	char	**env_kid;
+	char	*path;
 	int		**fd;
 	int		fork_id;
+	int		dup_in;
 	ssize_t	ret;
 	ssize_t	*id;
 	size_t	flag;
 	size_t	len;
 	size_t	i;
-	char	*path;
-	char	**env_kid;
-	int		dup_in;
+	t_cmd	*tmp;
 }	t_exec;
 
 typedef enum e_boolean

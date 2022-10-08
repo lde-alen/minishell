@@ -10,7 +10,8 @@
 		"stdlib.h": "c",
 		"random": "c",
 		"fcntl.h": "c",
-		"locale": "c"
+		"locale": "c",
+		"__locale": "c"
 	},
 	"git.mergeEditor": false,
 }

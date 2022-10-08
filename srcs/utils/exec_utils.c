@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 12:29:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:46:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char	**lst_to_char(t_env **lst)
 	i = 0;
 	tmp = *lst;
 	env = (char **)malloc(sizeof(char *) * (get_lst_len(*lst) + 1));
+	if (!env)
+		exit(0);
 	while (tmp->next != *lst)
 	{
 		env[i] = ft_strdup(tmp->name);

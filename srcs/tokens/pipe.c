@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 12:08:32 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 13:00:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,16 +102,13 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 			here_doc(lex, lex->cmd);
 			redir(lex);
 			free_child(lex);
-			//fix exit code
 			exit(g_exit);
 		}
 		wait_stat();
 	}
 	else
-	{
 		if (fork_alone(lex, exec) == 1)
 			return ;
-	}
 	if (exec->path)
 		free(exec->path);
 	init_null(lex);
@@ -119,22 +116,19 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 
 void	loop_lst(t_lex *lex, t_exec *exec)
 {
-	t_cmd	*tmp;
-	int		id;
-
 	check_path(lex->cmd, &exec);
-	tmp = lex->cmd;
-	id = fork();
-	if (id == 0)
+	exec->tmp = lex->cmd;
+	exec->fork_id = fork();
+	if (exec->fork_id == 0)
 	{
-		while (lex->cmd != NULL)
+		while (lex->cmd)
 		{
 			if (lex->cmd->redir)
-				here_doc(lex, tmp);
+				here_doc(lex, exec->tmp);
 			lex->cmd = lex->cmd->next;
 		}
-		lex->cmd = tmp;
-		while (lex->cmd != NULL)
+		lex->cmd = exec->tmp;
+		while (lex->cmd)
 		{
 			pipe_exec(lex, exec);
 			exec->i++;
@@ -143,16 +137,14 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 			exec->flag = 0;
 			if (lex->cmd && lex->cmd->argument)
 				check_path(lex->cmd, &exec);
-			init_null(lex);
 		}
 		free_child(lex);
-		exit(0);
+		exit(g_exit);
 	}
 }
 
-void	pipe_exec(t_lex *lex, t_exec *exec)
+void	set_path(t_lex *lex, t_exec *exec)
 {
-	exec->env_kid = lst_to_char(&lex->env);
 	if (lex->cmd->argument)
 	{
 		if (lex->cmd->argument[0])
@@ -162,6 +154,12 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 	}
 	else
 		exec->path = NULL;
+}
+
+void	pipe_exec(t_lex *lex, t_exec *exec)
+{
+	exec->env_kid = lst_to_char(&lex->env);
+	set_path(lex, exec);
 	if ((exec->i + 1) != exec->len)
 		pipe_arr(exec);
 	exec->id[exec->i] = fork();

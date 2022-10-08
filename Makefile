@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/01 16:17:36 by asanthos         ###   ########.fr        #
+#    Updated: 2022/10/08 12:41:27 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ UTILS		=		len.c						\
 					cmd_list.c					\
 					ft_free.c					\
 					error.c						\
-					execute.c					\
 					ft_print.c					\
 					ft_utils.c					\
 					f_open.c					\

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/05 12:00:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:42:01 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	exec_sys(t_lex *lex)
 		{
 			free_cmd(lex, &lex->cmd);
 			free_exec(&lex->exec);
-			return ;
+			exit(0);
 		}
 		lex->exec->i++;
 	}

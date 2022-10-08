@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/08 12:38:02 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:40:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	minishell(char **env)
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, SIG_IGN);
 	lex = (t_lex *)malloc(sizeof(t_lex));
+	if (!lex)
+	{
+		free_child(lex);
+		exit(0);
+	}
 	ft_memset(&lex->env, 0, sizeof(t_env *));
 	lex->env = ft_env(env);
 	while (42)
@@ -43,7 +48,7 @@ int	minishell(char **env)
 				if (ft_parse(str, lex) == 0)
 				{
 					ft_print_char_arr(lex->cmd->argument);
-					exec_cmd(lex);
+					exec_sys(lex);
 				}
 			}
 		}
