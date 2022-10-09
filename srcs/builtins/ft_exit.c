@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 21:31:26 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:43:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,6 @@ int	check_str_exit(char *arg)
 	return (0);
 }
 
-void	exit_error(t_cmd *cmd_lst)
-{
-	ft_putstr_fd("bash: exit: ", 2);
-	ft_putstr_fd(cmd_lst->argument[1], 2);
-	ft_putendl_fd(" numeric argument required", 2);
-}
-
 void	check_valid(t_cmd **cmd_lst, size_t i)
 {
 	char	*tmp;
@@ -63,7 +56,7 @@ void	check_valid(t_cmd **cmd_lst, size_t i)
 		&& (*cmd_lst)->argument[i][0] == '-'))
 	{
 		ft_putendl_fd("exit", i);
-		exit_error(*cmd_lst);
+		err_msg(*cmd_lst, "exit", "numeric argument required");
 		exit(255);
 	}
 	else
@@ -96,7 +89,7 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 			else
 			{
 				ft_putendl_fd("exit", 1);
-				exit_error(cmd_lst);
+				err_msg(cmd_lst, "exit", "numeric argument required");
 				free_child(lex);
 				exit(255);
 			}
