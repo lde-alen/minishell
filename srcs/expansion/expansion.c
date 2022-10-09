@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/30 16:50:14 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:35:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*get_env_value(t_env *env, char *name)
 			return (tmp->value);
 		tmp = tmp->next;
 	}
+	if (ft_strcmp(tmp->name, name) == 0)
+		return (tmp->value);
 	return (NULL);
 }
 
