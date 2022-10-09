@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 14:21:07 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:44:22 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 				if (cmd_lst->argument[2])
 				{
 					*flag = 1;
-					ft_printf("here\n");
 					check_valid(&cmd_lst, 2);
 				}
 			}

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 14:21:36 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 21:53:11 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static size_t	child(t_lex *lex)
 	ssize_t	f_out;
 
 	if (dup_stdin(lex, &f_in) == 1)
-		return (-1);
+		return (1);
 	if (dup_stdout(lex, &f_out) == 1)
 		return (1);
 	return (main_child2(lex));

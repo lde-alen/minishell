@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:43:23 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 16:08:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:47:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ ssize_t	open_file(t_lex *lex, char *str, int flag)
 	file = open(str, flag, 0777);
 	if (file < 0)
 	{
-		ft_printf("here\n");
 		access(str, F_OK);
 		exit_stat(errno);
 		return (-1);
