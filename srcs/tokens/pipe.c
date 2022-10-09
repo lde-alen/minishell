@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 04:16:10 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:49:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		}
 	}
 	while (lex->cmd)
-		free_cmd(lex, &lex->cmd);
+		free_cmd(&lex->cmd);
 }
 
 size_t	fork_alone(t_lex *lex, t_exec *exec)
@@ -41,7 +41,7 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 	{
 		exec->flag = 2;
 		exec_builtin(lex);
-		free_cmd(lex, &lex->cmd);
+		free_cmd(&lex->cmd);
 		free_env_kid(exec->env_kid);
 		if (exec->path)
 			free(exec->path);
@@ -107,7 +107,7 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 			pipe_exec(lex, exec);
 			exec->i++;
 			if (lex->cmd)
-				free_cmd(lex, &lex->cmd);
+				free_cmd(&lex->cmd);
 			exec->flag = 0;
 			if (lex->cmd && lex->cmd->argument)
 				check_path(lex->cmd, &exec);

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 04:18:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:49:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_env_lst(t_env *lst)
 	free (lst);
 }
 
-void	free_cmd(t_lex *lex, t_cmd **cmd_lst)
+void	free_cmd(t_cmd **cmd_lst)
 {
 	t_cmd	*tmp;
 	int		i;
@@ -41,7 +41,7 @@ void	free_cmd(t_lex *lex, t_cmd **cmd_lst)
 	i = 0;
 	tmp = *cmd_lst;
 	if ((*cmd_lst)->redir)
-		free_redir(lex, (*cmd_lst)->redir);
+		free_redir((*cmd_lst)->redir);
 	while ((*cmd_lst)->argument[i])
 	{
 		free((*cmd_lst)->argument[i]);
@@ -67,25 +67,9 @@ void	free_exec(t_exec **exec)
 	free(*exec);
 }
 
-void	free_redir(t_lex *lex, t_redir *redir)
+void	free_redir(t_redir *redir)
 {
-	(void)lex;
-	size_t	i;
-
-	if (redir->file)
-	{
-		i = 0;
-		while (i < redir->flag_len)
-		{
-			free(redir->file[i]);
-			if (redir->doc_arr)
-			{
-				free(redir->doc_arr[i]);
-				redir->doc_arr[i] = NULL;
-			}
-			i++;
-		}
-	}
+	free_file_redir(redir);
 	free(redir->flag);
 	free(redir->file);
 	if (redir->doc_arr)
@@ -101,12 +85,6 @@ void	free_redir(t_lex *lex, t_redir *redir)
 	redir = NULL;
 }
 
-void	init_null(t_lex *lex)
-{
-	lex->exec->env_kid = NULL;
-	lex->exec->path = NULL;
-}
-
 void	free_child(t_lex *lex)
 {
 	if (lex->exec->env_kid)
@@ -120,7 +98,7 @@ void	free_child(t_lex *lex)
 	while (lex->cmd)
 	{
 		if (lex->cmd)
-			free_cmd(lex, &lex->cmd);
+			free_cmd(&lex->cmd);
 	}
 	if (lex)
 		free(lex);

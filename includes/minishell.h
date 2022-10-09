@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 04:15:47 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:48:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,7 +263,7 @@ void	set_path(t_lex *lex, t_exec *exec);
  * FREE FUNCTONS
  */
 void	lst_free(t_cmd *cmd_lst, t_env *lst);
-void	free_cmd(t_lex *lex, t_cmd **cmd_lst);
+void	free_cmd(t_cmd **cmd_lst);
 void	free_env_lst(t_env *lst);
 void	free_split(char **split_res);
 void	free_env_kid(char **env_kid);
@@ -271,7 +271,8 @@ void	free_exec(t_exec **exec);
 void	free_cmd_lst(t_cmd *cmd_lst);
 void	free_child(t_lex *lex);
 void	free_split_baqala(char **split_res, int i);
-void	free_redir(t_lex *lex, t_redir *redir);
+void	free_redir(t_redir *redir);
+void	free_file_redir(t_redir *redir);
 
 void	sig_handler(int val);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);

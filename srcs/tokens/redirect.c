@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 13:12:50 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:50:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	sig(int val)
 	}
 }
 
-void	free_file(t_lex *lex, t_cmd *tmp, t_redir *redir)
+void	free_file(t_cmd *tmp, t_redir *redir)
 {
 	size_t	i;
 
@@ -97,13 +97,13 @@ void	free_file(t_lex *lex, t_cmd *tmp, t_redir *redir)
 	if (redir->str || ft_strcmp(redir->str, "") == 0)
 		free(redir->str);
 	while (tmp)
-		free_cmd(lex, &tmp);
+		free_cmd(&tmp);
 }
 
 void	free_sig(t_lex *lex, t_cmd *tmp, char *store)
 {
 	free(store);
-	free_file(lex, tmp, lex->cmd->redir);
+	free_file(tmp, lex->cmd->redir);
 	lex->cmd = NULL;
 	free_child(lex);
 }

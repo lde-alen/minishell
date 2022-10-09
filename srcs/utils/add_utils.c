@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 04:16:14 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:44:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,10 @@ void	wait_stat(void)
 	signal(SIGINT, sig_handler);
 	if (WIFEXITED(g_exit))
 		g_exit = WEXITSTATUS(g_exit);
+}
+
+void	init_null(t_lex *lex)
+{
+	lex->exec->env_kid = NULL;
+	lex->exec->path = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:25:51 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 16:05:44 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:49:36 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	exec_sys(t_lex *lex)
 			|| !lex->exec->fd[lex->exec->i])
 		{
 			free_env_lst(lex->env);
-			free_cmd(lex, &lex->cmd);
+			free_cmd(&lex->cmd);
 			free_exec(&lex->exec);
 			exit(EXIT_FAILURE);
 		}

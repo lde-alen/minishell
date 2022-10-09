@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 04:17:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 04:18:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:47:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,24 @@ void	free_env_kid(char **env_kid)
 	}
 	free(env_kid[i]);
 	free(env_kid);
+}
+
+void	free_file_redir(t_redir *redir)
+{
+	size_t	i;
+
+	if (redir->file)
+	{
+		i = 0;
+		while (i < redir->flag_len)
+		{
+			free(redir->file[i]);
+			if (redir->doc_arr)
+			{
+				free(redir->doc_arr[i]);
+				redir->doc_arr[i] = NULL;
+			}
+			i++;
+		}
+	}
 }
