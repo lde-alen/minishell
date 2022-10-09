@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 13:50:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:14:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ ssize_t	find_redir_in(t_lex *lex, size_t type)
 		i--;
 	}
 	return (-1);
-}
-
-size_t	get_last_delimiter(t_lex *lex)
-{
-	ssize_t	len;
-
-	len = lex->cmd->redir->flag_len - 1;
-	while (len >= 0)
-	{
-		if (lex->cmd->redir->flag[len] != DL_REDIR)
-			return (len);
-		len--;
-	}
-	return (0);
 }
 
 void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j)
@@ -67,45 +53,6 @@ void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j)
 		i++;
 	}
 	lex->cmd->redir->doc_arr[i] = NULL;
-}
-
-void	sig(int val)
-{
-	if (val == SIGINT)
-	{
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_on_new_line();
-		g_exit = -69;
-	}
-}
-
-void	free_file(t_cmd *tmp, t_redir *redir)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < redir->flag_len)
-	{
-		free(redir->file[i]);
-		redir->file[i] = NULL;
-		i++;
-	}
-	free(redir->file);
-	redir->file = NULL;
-	free(redir->flag);
-	redir->flag = 0;
-	if (redir->str || ft_strcmp(redir->str, "") == 0)
-		free(redir->str);
-	while (tmp)
-		free_cmd(&tmp);
-}
-
-void	free_sig(t_lex *lex, t_cmd *tmp, char *store)
-{
-	free(store);
-	free_file(tmp, lex->cmd->redir);
-	lex->cmd = NULL;
-	free_child(lex);
 }
 
 void	delim_loop(t_lex *lex, t_cmd *tmp, char **store, size_t i)

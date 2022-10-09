@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 13:48:45 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:15:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,6 @@ t_bool	check_here_doc(t_lex *lex);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 void	check_redir_type(t_lex *lex);
-size_t	get_last_delimiter(t_lex *lex);
 void	wait_stat(void);
 void	set_path(t_lex *lex, t_exec *exec);
 
@@ -273,8 +272,11 @@ void	free_child(t_lex *lex);
 void	free_split_baqala(char **split_res, int i);
 void	free_redir(t_redir *redir);
 void	free_file_redir(t_redir *redir);
+void	free_file(t_cmd *tmp, t_redir *redir);
 
 void	sig_handler(int val);
+void	sig(int val);
+void	free_sig(t_lex *lex, t_cmd *tmp, char *store);
 void	err_msg(t_cmd *cmd_lst, char *val, char *err);
 
 /**
