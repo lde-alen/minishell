@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/29 19:31:56 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/25 18:58:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:19:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	check_args(t_env *head, t_cmd *cmd)
 	else
 	{
 		g_exit = 127;
-		err_msg(cmd, cmd->argument[1], ": No such file or directory");
+		err_msg(cmd->argument[1], ": No such file or directory");
 	}
 }
 

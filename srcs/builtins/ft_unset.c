@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 13:17:32 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:19:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	loop_arg(t_cmd *cmd)
 		{
 			if (cmd->argument[i][j] == '=')
 			{
-				err_msg(cmd, cmd->argument[i], ": not a valid identifier");
+				err_msg(cmd->argument[i], ": not a valid identifier");
 				g_exit = 1;
 				return (1);
 			}
@@ -53,7 +53,7 @@ int	loop_arg(t_cmd *cmd)
 	}
 	val = check_validity(cmd);
 	if (val != NULL)
-		err_msg(cmd, val, ": not a valid identifier");
+		err_msg(val, ": not a valid identifier");
 	return (0);
 }
 

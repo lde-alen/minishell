@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 20:51:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:20:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 	free(buff);
 }
 
-void	cd_dash(t_cmd *cmd, t_env *lst, char **store, char **store_curr)
+void	cd_dash(t_env *lst, char **store, char **store_curr)
 {
 	ssize_t	ret;
 
 	if (!search_env(lst, "OLDPWD")->value)
 	{
-		err_msg(cmd, "cd", "OLDPWD not set");
+		err_msg("cd", "OLDPWD not set");
 		g_exit = 1;
 	}
 	else
@@ -98,10 +98,10 @@ static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 	else if (ft_strcmp(cmd->argument[1], "-") == 0)
 	{
 		if (search_env(lst, "OLDPWD") != NULL)
-			cd_dash(cmd, lst, &store, &store_curr);
+			cd_dash(lst, &store, &store_curr);
 		else
 		{
-			err_msg(cmd, "cd", "OLDPWD not set");
+			err_msg("cd", "OLDPWD not set");
 			g_exit = 1;
 		}
 	}
@@ -122,9 +122,9 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	if (check < 0)
 	{
 		if (access(cmd->argument[1], F_OK | X_OK) == 0)
-			err_msg(cmd, cmd->argument[1], ": Permission denied");
+			err_msg(cmd->argument[1], ": Permission denied");
 		else
-			err_msg(cmd, cmd->argument[1], ": No such file or directory");
+			err_msg(cmd->argument[1], ": No such file or directory");
 		g_exit = 1;
 	}
 	store = search_oldpwd(lst);

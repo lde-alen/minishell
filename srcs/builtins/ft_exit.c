@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 13:43:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:21:07 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	check_valid(t_cmd **cmd_lst, size_t i)
 		&& (*cmd_lst)->argument[i][0] == '-'))
 	{
 		ft_putendl_fd("exit", i);
-		err_msg(*cmd_lst, "exit", "numeric argument required");
+		err_msg("exit", "numeric argument required");
 		exit(255);
 	}
 	else
@@ -89,7 +89,7 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 			else
 			{
 				ft_putendl_fd("exit", 1);
-				err_msg(cmd_lst, "exit", "numeric argument required");
+				err_msg("exit", "numeric argument required");
 				free_child(lex);
 				exit(255);
 			}

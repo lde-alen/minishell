@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 14:15:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:18:15 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ void	free_file(t_cmd *tmp, t_redir *redir);
 void	sig_handler(int val);
 void	sig(int val);
 void	free_sig(t_lex *lex, t_cmd *tmp, char *store);
-void	err_msg(t_cmd *cmd_lst, char *val, char *err);
+void	err_msg(char *val, char *err);
 
 /**
  * ERROR FUNCTONS

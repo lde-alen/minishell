@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:07:01 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 16:09:05 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:20:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ ssize_t	check_stat(t_cmd *cmd_lst)
 		{
 			if (ft_strchr(cmd_lst->argument[0], '/') == 0)
 			{
-				err_msg(cmd_lst, "", "command not found");
+				err_msg("", "command not found");
 				g_exit = 127;
 			}
 			else
 			{
-				err_msg(cmd_lst, "", "is a directory");
+				err_msg("", "is a directory");
 				g_exit = 126;
 			}
 			return (g_exit);
@@ -48,7 +48,7 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	if ((ft_strchr(cmd_lst->argument[0], '/') == 0 && (*exec)->path == NULL)
 		|| (!cmd_lst->argument[0]))
 	{
-		err_msg(cmd_lst, "", "command not found");
+		err_msg("", "command not found");
 		g_exit = 127;
 		return (g_exit);
 	}

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 13:44:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:21:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	set_shlvl(t_lex *lex, t_exec *exec)
 			search_env(lex->env, "SHLVL")->value = NULL;
 		else
 		{
-			err_msg(lex->cmd, "warning",
-				"shell level too high, resetting to 1");
+			err_msg("warning", "shell level too high, resetting to 1");
 			search_env(lex->env, "SHLVL")->value = ft_strdup("1");
 		}
 	}
