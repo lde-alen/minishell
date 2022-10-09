@@ -6,30 +6,14 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:43:38 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/02 14:53:03 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:47:14 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../../includes/libft.h"
 
-char	*ft_append(char *str, char c)
-{
-	char	*tmp;
-	char	*src2;
-	size_t	len_str;
-
-	len_str = ft_strlen(str) + 2;
-	tmp = (char *)malloc(sizeof(char) * len_str);
-	src2 = (char *)malloc(sizeof(char) * 2);
-	src2[0] = c;
-	src2[1] = '\0';
-	tmp = ft_strjoin(str, src2);
-	free (src2);
-	return (tmp);
-}
-
-ssize_t	sizeaz(char *str, char c)
+static ssize_t	sizeaz(char *str, char c)
 {
 	ssize_t	i;
 	size_t	size;
@@ -48,7 +32,7 @@ ssize_t	sizeaz(char *str, char c)
 		if (str[i] == '\'')
 		{
 			i++;
-			while (str[i] != '"')
+			while (str[i] != '\'')
 				i++;
 			i++;
 		}
@@ -58,45 +42,85 @@ ssize_t	sizeaz(char *str, char c)
 	return (size);
 }
 
-char	**splitaz(char *str, char c)
+static int	fill_tab(char const *s, char c, char **tab)
 {
-	size_t	len;
 	size_t	i;
-	char	**tab;
+	size_t	len;
 
-	len = sizeaz(str, c);
 	i = 0;
-	ft_printf("The Initial Input is:\n%s\n", str);
-	ft_printf("The number of rows are:\n%d\n", len);
-	tab = (char **)malloc(sizeof(char) * len);
-	if (!tab)
-		return (NULL);
-	while (len)
+	while (*s)
 	{
-		while (*str)
+		len = 0;
+		while (*s != c && *s && s)
 		{
-			tab[i] = (char *)ft_calloc(1, sizeof(char));
-			tab[i] = ft_append(tab[i], *str);
-			str++;
+			if (*s == '"')
+			{
+				s++;
+				len++;
+				while (*s != '"')
+				{
+					s++;
+					len++;
+				}
+				s++;
+				len++;
+			}
+			if (*s == '\'')
+			{
+				s++;
+				len++;
+				while (*s != '\'')
+				{
+					s++;
+					len++;
+				}
+				s++;
+				len++;
+			}
+			len++;
+			s++;
 		}
-		i++;
-		len--;
+		tab[i] = (char *)malloc(len + 1);
+		if (!tab[i])
+		{
+			while (i)
+				free(tab[--i]);
+			free(tab);
+			return (1);
+		}
+		ft_strlcpy(tab[i++], s - len, len + 1);
+		while (*s == c && *s)
+			s++;
 	}
 	tab[i] = NULL;
+	return (0);
+}
+
+char	**splitaz(char *str, char c)
+{
+	char	**tab;
+
+	if (!str)
+		return (NULL);
+	tab = (char **)malloc(sizeof(char *) * (sizeaz(str, c) + 1));
+	if (!tab)
+		return (NULL);
+	if (fill_tab(str, c, tab))
+		return (NULL);
 	return (tab);
 }
 
-int	main(int ac, char **av)
-{
-	size_t	i;
-	char	**tab;
+// int	main(void)
+// {
+// 	size_t	i;
+// 	char	**tab;
 
-	i = 0;
-	tab = splitaz("echo \"test1 | test 2 | test 3\" | ls", '|');
-	while (tab[i])
-	{
-		ft_printf("tab[%d] = %s\n", i, tab[i]);
-		i++;
-	}
-	return (1);
-}
+// 	i = 0;
+// 	tab = splitaz("echo \"karim |  amin | lucas\" | ls", '|');
+// 	while (tab[i])
+// 	{
+// 		ft_printf("tab[%d] = %s\n", i, tab[i]);
+// 		i++;
+// 	}
+// 	return (1);
+// }

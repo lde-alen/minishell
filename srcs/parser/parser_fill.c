@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/18 17:35:35 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:26:43 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,13 @@ char	*ft_args_to_str(t_lex *lex)
 			while (lex->cmd->command[i] == ' ')
 				i++;
 			while ((lex->cmd->command[i] != ' ' && lex->cmd->command[i] != '>'
-					&& lex->cmd->command[i] != '<'
-					&& lex->cmd->command[i] != '|')
-				&& lex->cmd->command[i])
+					&& lex->cmd->command[i] != '<' && lex->cmd->command[i]))
 					i++;
 		}
 		while (lex->cmd->command[i] == ' ')
 			i++;
 		while (lex->cmd->command[i] != ' ' && lex->cmd->command[i] != '>'
-			&& lex->cmd->command[i] != '<' && lex->cmd->command[i] != '|'
-			&& lex->cmd->command[i])
+			&& lex->cmd->command[i] != '<' && lex->cmd->command[i])
 		{
 			ft_append_back(&tmp, lex->cmd->command[i]);
 			i++;
@@ -107,7 +104,7 @@ void	ft_fill_arg(t_lex *lex)
 	i = ft_fill_first_arg(lex, i, tmp);
 	args = ft_args_to_str(lex);
 	ft_printf("args=%s\n", args);
-	lex->cmd->argument = ft_split(args, ' ');
+	lex->cmd->argument = splitaz(args, ' ');
 	free(lex->cmd->command);
 	free(args);
 	lex->cmd->command = lex->cmd ->argument[0];

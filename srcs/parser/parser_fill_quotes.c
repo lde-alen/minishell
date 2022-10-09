@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 13:02:04 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/12 12:03:13 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:54:57 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	check_fill_quotes(char *str, char quote, t_lex *lex)
 {
 	if (quote == '"')
 		lex->sh->dq = 1;
-	lex->sh->i++;
-	while (str[lex->sh->i] != quote && lex->sh->i < ft_strlen(str))
+	while (lex->sh->i <= ft_strlen(str))
 	{
 		if (str[lex->sh->i] == '$' && lex->sh->dq == 1)
 			ft_fill_expand(str, lex);

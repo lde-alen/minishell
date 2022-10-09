@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/01 16:29:32 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 15:32:50 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,5 +282,6 @@ void	ft_env_init(t_env *lst);
 void	ft_cmd_init(t_cmd *cmd_lst);
 void	ft_exec_init(t_exec *exec);
 void	ft_redir_init(t_lex *lex);
+char	**splitaz(char *str, char c);
 
 #endif

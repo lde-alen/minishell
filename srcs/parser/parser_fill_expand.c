@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/17 17:01:31 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/09 18:32:00 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_fill_expand(char *str, t_lex *lex)
 			lex->sh->i++;
 	else if (str[lex->sh->i] == '?')
 	{
-		ft_printf("Basbousssiiiiiiii onnii chan\n");
 		name = ft_append_char(name, str[lex->sh->i]);
 		lex->sh->expand_len += get_expand_len(name, lex->env, 1);
 		lex->sh->j += ft_strlen(ft_itoa(g_exit));
@@ -31,7 +30,6 @@ void	ft_fill_expand(char *str, t_lex *lex)
 	}
 	else
 	{
-
 		while (str[lex->sh->i] && str[lex->sh->i] != '$'
 			&& ft_isalnum(str[lex->sh->i]) == 1)
 		{

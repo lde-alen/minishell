@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
+#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/01 16:17:36 by asanthos         ###   ########.fr        #
+#    Updated: 2022/10/09 15:33:29 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ PARS		=		parser.c					\
 					parser_fill_expand.c		\
 					parser_fill_quotes.c		\
 					parser_fill_redirections.c	\
+					splitaz.c					\
 
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
