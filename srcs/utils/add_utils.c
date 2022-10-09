@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 12:35:15 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 04:16:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,13 @@ size_t	exit_stat(int err)
 		return (g_exit);
 	}
 	return (0);
+}
+
+void	wait_stat(void)
+{
+	signal(SIGINT, SIG_IGN);
+	wait(&g_exit);
+	signal(SIGINT, sig_handler);
+	if (WIFEXITED(g_exit))
+		g_exit = WEXITSTATUS(g_exit);
 }

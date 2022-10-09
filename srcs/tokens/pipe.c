@@ -6,37 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 13:00:58 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 04:16:10 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	wait_stat(void)
-{
-	signal(SIGINT, SIG_IGN);
-	wait(&g_exit);
-	signal(SIGINT, sig_handler);
-	if (WIFEXITED(g_exit))
-		g_exit = WEXITSTATUS(g_exit);
-}
-
-void	init_pre_exec(t_lex *lex, t_exec *exec)
-{
-	t_cmd	*tmp;
-
-	exec->i = 0;
-	exec->flag = 0;
-	exec->len = get_cmd_len(lex->cmd);
-	tmp = lex->cmd;
-	while (lex->cmd)
-	{
-		if (lex->cmd->redir)
-			ft_redir_init(lex);
-		lex->cmd = lex->cmd->next;
-	}
-	lex->cmd = tmp;
-}
 
 void	fork_arr(t_lex *lex, t_exec *exec)
 {
@@ -141,19 +115,6 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 		free_child(lex);
 		exit(g_exit);
 	}
-}
-
-void	set_path(t_lex *lex, t_exec *exec)
-{
-	if (lex->cmd->argument)
-	{
-		if (lex->cmd->argument[0])
-			exec->path = check_access(lex->env, lex->cmd);
-		else
-			exec->path = NULL;
-	}
-	else
-		exec->path = NULL;
 }
 
 void	pipe_exec(t_lex *lex, t_exec *exec)

@@ -6,36 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/07 11:39:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 04:18:09 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_split(char **split_res)
-{
-	int	i;
-
-	i = 0;
-	while (split_res[i])
-	{
-		if (split_res[i])
-			free(split_res[i]);
-		i++;
-	}
-	free(split_res);
-}
-
-void	free_split_baqala(char **split_res, int i)
-{
-	while (split_res[i])
-	{
-		if (split_res[i])
-			free(split_res[i]);
-		i++;
-	}
-	free(split_res);
-}
 
 void	free_env_lst(t_env *lst)
 {
@@ -77,20 +52,6 @@ void	free_cmd(t_lex *lex, t_cmd **cmd_lst)
 	if (cmd_lst)
 		(*cmd_lst) = ((*cmd_lst))->next;
 	free(tmp);
-}
-
-void	free_env_kid(char **env_kid)
-{
-	int	i;
-
-	i = 0;
-	while (env_kid[i])
-	{
-		free(env_kid[i]);
-		i++;
-	}
-	free(env_kid[i]);
-	free(env_kid);
 }
 
 void	free_exec(t_exec **exec)

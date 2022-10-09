@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 16:09:51 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 04:14:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,17 @@ char	**lst_to_char(t_env **lst)
 	env[i] = ft_strjoin(env[i], tmp->value);
 	env[i + 1] = NULL;
 	return (env);
+}
+
+void	set_path(t_lex *lex, t_exec *exec)
+{
+	if (lex->cmd->argument)
+	{
+		if (lex->cmd->argument[0])
+			exec->path = check_access(lex->env, lex->cmd);
+		else
+			exec->path = NULL;
+	}
+	else
+		exec->path = NULL;
 }

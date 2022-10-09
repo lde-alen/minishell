@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 17:12:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 12:52:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 04:15:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,21 @@ void	ft_redir_init(t_lex *lex)
 	lex->cmd->redir->flag_out = 0;
 	lex->cmd->redir->doc_arr = NULL;
 	lex->cmd->redir->fd = 0;
+}
+
+void	init_pre_exec(t_lex *lex, t_exec *exec)
+{
+	t_cmd	*tmp;
+
+	exec->i = 0;
+	exec->flag = 0;
+	exec->len = get_cmd_len(lex->cmd);
+	tmp = lex->cmd;
+	while (lex->cmd)
+	{
+		if (lex->cmd->redir)
+			ft_redir_init(lex);
+		lex->cmd = lex->cmd->next;
+	}
+	lex->cmd = tmp;
 }

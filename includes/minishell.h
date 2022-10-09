@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/08 19:35:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 04:15:47 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 void	check_redir_type(t_lex *lex);
 size_t	get_last_delimiter(t_lex *lex);
 void	wait_stat(void);
+void	set_path(t_lex *lex, t_exec *exec);
 
 /**
  * FREE FUNCTONS
@@ -289,5 +290,6 @@ void	ft_cmd_init(t_cmd *cmd_lst);
 void	ft_exec_init(t_exec *exec);
 void	ft_redir_init(t_lex *lex);
 void	init_null(t_lex *lex);
+void	init_pre_exec(t_lex *lex, t_exec *exec);
 
 #endif
