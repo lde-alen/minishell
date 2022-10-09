@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 13:49:23 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:39:16 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,16 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 {
 	ssize_t	ret;
 
-	exec->env_kid = lst_to_char(&lex->env);
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
 		exec_builtin(lex);
 		free_cmd(&lex->cmd);
-		free_env_kid(exec->env_kid);
 		if (exec->path)
 			free(exec->path);
 		return (1);
 	}
+	exec->env_kid = lst_to_char(&lex->env);
 	exec->id[0] = fork();
 	if (exec->id[0] < 0)
 		perror("fork");

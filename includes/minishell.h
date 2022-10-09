@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 14:18:15 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 15:10:30 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ void	ft_echo(t_cmd *cmd_lst);
 void	div_env(char *str, t_env *lst);
 t_env	*check_exist(t_env *lst, char *str);
 t_env	*check_stack(t_env *new_node, t_env *lst);
-void	join_str(t_cmd *cmd_lst, char **len, int i, t_env **check);
+void	join_str(t_cmd *cmd_lst, int i, t_env **check);
 void	get_sub(char **store, char *str, char **env_name, char **env_value);
 
 void	ft_pwd(t_env *lst);

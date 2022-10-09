@@ -6,19 +6,19 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 13:12:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 15:09:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
+static void	check_val(t_env *lst, t_cmd *cmd_lst, int i)
 {
 	t_env	*check;
 
 	check = check_exist(lst, cmd_lst->argument[i]);
 	if (check != NULL)
-		join_str(cmd_lst, &len, i, &check);
+		join_str(cmd_lst, i, &check);
 	else
 		div_env(cmd_lst->argument[i], lst);
 }
@@ -72,12 +72,10 @@ char	*check_validity(t_cmd *cmd_lst)
 void	ft_export(t_env *lst, t_cmd *cmd_lst)
 {
 	int		i;
-	char	*len;
 	char	*val;
 	t_env	*check;
 
 	i = 1;
-	len = NULL;
 	val = check_validity(cmd_lst);
 	if (val != NULL)
 		export_error(val);
@@ -92,7 +90,7 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 					div_env(cmd_lst->argument[i], lst);
 			}
 			else
-				check_val(lst, cmd_lst, len, i);
+				check_val(lst, cmd_lst, i);
 			i++;
 		}
 	}
