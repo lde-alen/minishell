@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 18:35:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:41:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ ssize_t	get_expand_len(char *name, t_env *env, int flag)
 	ssize_t	len;
 	size_t	len_name;
 	size_t	len_value;
+	char	*exit_len;
 
 	len = 0;
 	if (flag == 1)
 	{
 		len_name = ft_strlen(name);
-		len_value = ft_strlen(ft_itoa(g_exit));
+		exit_len = ft_itoa(g_exit);
+		len_value = ft_strlen(exit_len);
+		if (exit_len)
+			free(exit_len);
 	}
 	else
 	{
