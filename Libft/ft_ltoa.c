@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 12:44:13 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/26 06:06:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:04:23 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_ltoa(size_t n)
+char	*ft_ltoa(ssize_t n)
 {
 	size_t			i;
 	char			*str;

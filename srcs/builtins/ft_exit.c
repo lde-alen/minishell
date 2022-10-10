@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 18:44:22 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:09:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_str_exit(char *arg)
 	return (0);
 }
 
-void	check_valid(t_cmd **cmd_lst, size_t i)
+void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 {
 	char	*tmp;
 
@@ -57,6 +57,7 @@ void	check_valid(t_cmd **cmd_lst, size_t i)
 	{
 		ft_putendl_fd("exit", i);
 		err_msg("exit", "numeric argument required");
+		free_child(lex);
 		exit(255);
 	}
 	else
@@ -64,6 +65,7 @@ void	check_valid(t_cmd **cmd_lst, size_t i)
 		tmp = ft_ltoa(ft_atol((*cmd_lst)->argument[i]) % 256);
 		free((*cmd_lst)->argument[i]);
 		(*cmd_lst)->argument[i] = ft_strdup(tmp);
+		free_child(lex);
 		free(tmp);
 	}
 }
@@ -74,7 +76,7 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 	if (cmd_lst->argument[1])
 	{
 		if (check_str_exit(cmd_lst->argument[1]) == 0)
-			check_valid(&cmd_lst, 1);
+			check_valid(lex, &cmd_lst, 1);
 		else
 		{
 			if (ft_strcmp(cmd_lst->argument[1], "--") == 0)
@@ -82,7 +84,7 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 				if (cmd_lst->argument[2])
 				{
 					*flag = 1;
-					check_valid(&cmd_lst, 2);
+					check_valid(lex, &cmd_lst, 2);
 				}
 			}
 			else

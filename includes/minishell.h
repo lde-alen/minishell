@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 15:10:30 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:05:47 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,10 +283,6 @@ void	err_msg(char *val, char *err);
  * ERROR FUNCTONS
  */
 void	export_error(char *val);
-
-int		ft_strcmp(const char *s1, const char *s2);
-size_t	ft_atol(const char *str);
-char	*ft_ltoa(size_t n);
 
 void	ft_env_init(t_env *lst);
 void	ft_cmd_init(t_cmd *cmd_lst);
