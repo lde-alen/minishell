@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 19:07:43 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:48:11 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ int	parser_stage2(char *str, t_lex *lex)
 	while (lex->sh->i < ft_strlen(str))
 	{
 		if (str[lex->sh->i] == '\'' || str[lex->sh->i] == '"')
-		{
 			check_fill_quotes(str, str[lex->sh->i], lex);
-		}
 		else if (str[lex->sh->i] == '$')
 			ft_fill_expand(str, lex);
 		else
@@ -116,8 +114,6 @@ int	parser_stage1(char *str, t_lex *lex)
 
 int	ft_parse(char *str, t_lex *lex)
 {
-	size_t	i;
-
 	if (!str)
 		return (1);
 	lex->sh = (t_sh *)malloc(sizeof(t_sh));
@@ -128,17 +124,6 @@ int	ft_parse(char *str, t_lex *lex)
 		parser_stage2(str, lex);
 		parser_stage3(lex);
 		free(lex->sh);
-		while (lex->cmd)
-		{
-			i = 0;
-			ft_printf("Current command: %s\n", lex->cmd->command);
-			while (lex->cmd->argument[i])
-			{
-				ft_printf("argument[%d] = %s\n", i, lex->cmd->argument[i]);
-				i++;
-			}
-			lex->cmd = lex->cmd->next;
-		}
 		ft_printf("~~~~~~ End of Parsing succes. ~~~~~~\n\n");
 		return (0);
 	}
