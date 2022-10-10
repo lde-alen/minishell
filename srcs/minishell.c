@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 14:26:24 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 16:23:55 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	mini_loop(t_lex *lex, char *str)
 			add_history(str);
 			if (ft_parse(str, lex) == 0)
 			{
-				ft_print_char_arr(lex->cmd->argument);
+				// ft_print_char_arr(lex->cmd->argument);
 				if (lex->cmd->argument)
 					exec_sys(lex);
 			}

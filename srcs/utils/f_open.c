@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:43:23 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 18:47:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 17:55:51 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
 	i = 0;
 	while (i < *len && lex->cmd->redir->flag[*len - 1] == DL_REDIR)
 		(*len)--;
-	while (i < *len)
+	while (i < *len - 1)
 	{
 		if ((lex->cmd->redir->flag[i] == R_REDIR
 				&& (i != find_redir_in(lex, R_REDIR) || !lex->cmd->command))
