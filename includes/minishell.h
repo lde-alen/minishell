@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 15:32:50 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/10 23:11:19 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@
 # define L_REDIR	2
 # define DR_REDIR	3
 # define DL_REDIR	4
+
+# define D_QUOTE	14
+# define S_QUOTE	15
 
 /**
  * Defining your tools and refining them is the key
@@ -283,5 +286,7 @@ void	ft_cmd_init(t_cmd *cmd_lst);
 void	ft_exec_init(t_exec *exec);
 void	ft_redir_init(t_lex *lex);
 char	**splitaz(char *str, char c);
+
+void	trimaz(t_lex *lex);
 
 #endif

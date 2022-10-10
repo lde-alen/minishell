@@ -6,11 +6,12 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:43:38 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 19:47:14 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:10:29 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "minishell.h"
 #include "../../includes/libft.h"
 
 static ssize_t	sizeaz(char *str, char c)
@@ -22,17 +23,17 @@ static ssize_t	sizeaz(char *str, char c)
 	size = 1;
 	while (str[++i])
 	{
-		if (str[i] == '"')
+		if (str[i] == D_QUOTE)
 		{
 			i++;
-			while (str[i] != '"')
+			while (str[i] != D_QUOTE)
 				i++;
 			i++;
 		}
-		if (str[i] == '\'')
+		if (str[i] == S_QUOTE)
 		{
 			i++;
-			while (str[i] != '\'')
+			while (str[i] != S_QUOTE)
 				i++;
 			i++;
 		}
@@ -53,11 +54,11 @@ static int	fill_tab(char const *s, char c, char **tab)
 		len = 0;
 		while (*s != c && *s && s)
 		{
-			if (*s == '"')
+			if (*s == D_QUOTE)
 			{
 				s++;
 				len++;
-				while (*s != '"')
+				while (*s != D_QUOTE)
 				{
 					s++;
 					len++;
@@ -65,11 +66,11 @@ static int	fill_tab(char const *s, char c, char **tab)
 				s++;
 				len++;
 			}
-			if (*s == '\'')
+			if (*s == S_QUOTE)
 			{
 				s++;
 				len++;
-				while (*s != '\'')
+				while (*s != S_QUOTE)
 				{
 					s++;
 					len++;
