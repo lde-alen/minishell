@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/10 18:09:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:23:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 		tmp = ft_ltoa(ft_atol((*cmd_lst)->argument[i]) % 256);
 		free((*cmd_lst)->argument[i]);
 		(*cmd_lst)->argument[i] = ft_strdup(tmp);
-		free_child(lex);
 		free(tmp);
 	}
 }
