@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/10 18:23:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:51:05 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,15 @@ void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 {
 	char	*tmp;
 
+	if (ft_strcmp((*cmd_lst)->argument[1], "--") != 0)
+	{
+		if ((*cmd_lst)->argument[2])
+		{
+			err_msg("exit", "too many arguments");
+			free_child(lex);
+			exit(1);
+		}
+	}
 	if (((ft_atol((*cmd_lst)->argument[i]) > 9223372036854775807)
 			&& ((*cmd_lst)->argument[i][0] == '+'
 			|| (*cmd_lst)->argument[i][0] != '-'))
@@ -82,8 +91,17 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 			{
 				if (cmd_lst->argument[2])
 				{
-					*flag = 1;
-					check_valid(lex, &cmd_lst, 2);
+					if (!cmd_lst->argument[3])
+					{
+						*flag = 1;
+						check_valid(lex, &cmd_lst, 2);
+					}
+					else
+					{
+						err_msg("exit", "too many arguments");
+						free_child(lex);
+						exit(1);
+					}
 				}
 			}
 			else
