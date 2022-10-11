@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitaz.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:43:38 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 18:10:29 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:42:48 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,30 @@ static ssize_t	sizeaz(char *str, char c)
 	ssize_t	i;
 	size_t	size;
 
-	i = -1;
+	i = 0;
 	size = 1;
-	while (str[++i])
+	while (str[i])
 	{
 		if (str[i] == D_QUOTE)
 		{
 			i++;
-			while (str[i] != D_QUOTE)
+			while (str[i] && str[i] != D_QUOTE)
 				i++;
 			i++;
 		}
-		if (str[i] == S_QUOTE)
+		else if (str[i] == S_QUOTE)
 		{
 			i++;
-			while (str[i] != S_QUOTE)
+			while (str[i] && str[i] != S_QUOTE)
 				i++;
 			i++;
 		}
-		if (str[i] == c)
-			size++;
+		else
+		{
+			if (str[i] == c)
+				size++;
+			i++;
+		}
 	}
 	return (size);
 }
@@ -58,7 +62,7 @@ static int	fill_tab(char const *s, char c, char **tab)
 			{
 				s++;
 				len++;
-				while (*s != D_QUOTE)
+				while (*s && *s != D_QUOTE)
 				{
 					s++;
 					len++;
@@ -66,11 +70,11 @@ static int	fill_tab(char const *s, char c, char **tab)
 				s++;
 				len++;
 			}
-			if (*s == S_QUOTE)
+			else if (*s == S_QUOTE)
 			{
 				s++;
 				len++;
-				while (*s != S_QUOTE)
+				while (*s && *s != S_QUOTE)
 				{
 					s++;
 					len++;
@@ -78,8 +82,11 @@ static int	fill_tab(char const *s, char c, char **tab)
 				s++;
 				len++;
 			}
-			len++;
-			s++;
+			else
+			{
+				len++;
+				s++;
+			}
 		}
 		tab[i] = (char *)malloc(len + 1);
 		if (!tab[i])

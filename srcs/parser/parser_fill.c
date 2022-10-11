@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 18:50:03 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/11 20:33:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	*ft_args_to_str(t_lex *lex)
 	i = 0;
 	while (i < ft_strlen(lex->cmd->command))
 	{
-		while (lex->cmd->command[i] == ' ')
-			i++;
 		if (lex->cmd->command[i] == D_QUOTE)
 		{
 			ft_append_back(&tmp, lex->cmd->command[i]);
@@ -77,19 +75,17 @@ char	*ft_args_to_str(t_lex *lex)
 				i++;
 			while ((lex->cmd->command[i] != ' ' && lex->cmd->command[i] != '>'
 					&& lex->cmd->command[i] != '<' && lex->cmd->command[i]))
-					i++;
+				i++;
 		}
 		while (lex->cmd->command[i] == ' ')
 			i++;
-		while (lex->cmd->command[i] != ' ' && lex->cmd->command[i] != '>'
-			&& lex->cmd->command[i] != '<' && lex->cmd->command[i])
+		while (lex->cmd->command[i] != '>'
+			&& lex->cmd->command[i] != '<' && lex->cmd->command[i]
+			&& lex->cmd->command[i] != D_QUOTE && lex->cmd->command[i] != S_QUOTE)
 		{
 			ft_append_back(&tmp, lex->cmd->command[i]);
 			i++;
 		}
-		i--;
-		tmp = ft_strjoin(tmp, " ");
-		i++;
 	}
 	return (tmp);
 }

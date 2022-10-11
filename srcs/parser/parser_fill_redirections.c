@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 18:39:09 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:39:00 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,22 @@ size_t	ft_count_redir(char *str)
 				i++;
 			i++;
 		}
-		if (str[i] == S_QUOTE)
+		else if (str[i] == S_QUOTE)
 		{
 			i++;
 			while (str[i] != S_QUOTE)
 				i++;
 			i++;
 		}
-		if (str[i] == '>' || str[i] == '<')
+		else if (str[i] == '>' || str[i] == '<')
 		{
 			while (str[i] == '>' || str[i] == '<')
 				i++;
 			i--;
 			count++;
 		}
-		i++;
+		if (str[i])
+			i++;
 	}
 	return (count);
 }
