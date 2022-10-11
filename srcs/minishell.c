@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 16:23:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:47:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,90 @@ void	mini_loop(t_lex *lex, char *str)
 		free_env_lst(lex->env);
 		free (lex);
 		exit(0);
+	}
+}
+
+size_t	count_trim(char *str)
+{
+	size_t	i;
+	size_t	len;
+
+	len = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == D_QUOTE || str[i] == S_QUOTE)
+			i++;
+		len++;
+		i++;
+	}
+	return (len);
+}
+
+char	*ft_append_trim(char *name, char c)
+{
+	char	*str;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = ft_strlen(name) + 1;
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (i < len - 1)
+	{
+		str[i] = name[i];
+		i++;
+	}
+	str[i] = c;
+	str[i + 1] = '\0';
+	free(name);
+	return (str);
+}
+
+char	*fill_trim(char *str)
+{
+	size_t	i;
+	char	*tmp;
+
+	i = 0;
+	tmp = ft_strdup("");
+	while (str[i])
+	{
+		if (str[i] == D_QUOTE || str[i] == S_QUOTE)
+			i++;
+		tmp = ft_append_char(tmp, str[i]);
+		i++;
+	}
+	tmp = ft_append_char(tmp, '\0');
+	free (str);
+	return (tmp);
+}
+
+void	trimaz(t_lex *lex)
+{
+	t_cmd	*tmp;
+	size_t	i;
+	size_t	len;
+	char	*str;
+
+	len = 0;
+	tmp = lex->cmd;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->argument[i])
+		{
+			len = count_trim(tmp->argument[i]);
+			str = (char *)malloc(sizeof(char) * len + 1);
+			str = fill_trim(tmp->argument[i]);
+			tmp->argument[i] = ft_strdup(str);
+			i++;
+		}
+		free(tmp->command);
+		tmp->command = ft_strdup(tmp->argument[0]);
+		tmp = tmp->next;
 	}
 }
 

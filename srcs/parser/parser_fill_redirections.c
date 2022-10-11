@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/22 19:37:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/10 18:39:09 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ size_t	ft_count_redir(char *str)
 	count = 0;
 	while (str[i])
 	{
+		if (str[i] == D_QUOTE)
+		{
+			i++;
+			while (str[i] != D_QUOTE)
+				i++;
+			i++;
+		}
+		if (str[i] == S_QUOTE)
+		{
+			i++;
+			while (str[i] != S_QUOTE)
+				i++;
+			i++;
+		}
 		if (str[i] == '>' || str[i] == '<')
 		{
 			while (str[i] == '>' || str[i] == '<')
@@ -76,6 +90,20 @@ void	ft_fill_r_flags(t_lex *lex, size_t count)
 	ft_init2_file(lex);
 	while (lex->cmd->command[i])
 	{
+		if (lex->cmd->command[i] == D_QUOTE)
+		{
+			i++;
+			while (lex->cmd->command[i] != D_QUOTE)
+				i++;
+			i++;
+		}
+		if (lex->cmd->command[i] == S_QUOTE)
+		{
+			i++;
+			while (lex->cmd->command[i] != S_QUOTE)
+				i++;
+			i++;
+		}
 		if (lex->cmd->command[i] == '>' || lex->cmd->command[i] == '<')
 		{
 			i++;

@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/10 19:04:19 by asanthos         ###   ########.fr        #
+#    Updated: 2022/10/11 14:47:49 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ PARS		=		parser.c					\
 					parser_fill_expand.c		\
 					parser_fill_quotes.c		\
 					parser_fill_redirections.c	\
+					splitaz.c					\
 
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))

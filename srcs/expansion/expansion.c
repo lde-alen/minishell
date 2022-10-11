@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/10 13:41:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:46:30 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*get_env_value(t_env *env, char *name)
 	t_env	*tmp;
 
 	tmp = env;
-	while (tmp->next != env)
+	tmp = tmp->next;
+	while (tmp != env)
 	{
 		if (ft_strcmp(tmp->name, name) == 0)
 			return (tmp->value);

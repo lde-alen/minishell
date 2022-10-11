@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 13:45:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:46:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	ft_fill_expand(char *str, t_lex *lex)
 			lex->sh->i++;
 	else if (str[lex->sh->i] == '?')
 	{
-		ft_printf("Basbousssiiiiiiii onnii chan\n");
 		name = ft_append_char(name, str[lex->sh->i]);
 		lex->sh->expand_len += get_expand_len(name, lex->env, 1);
 		ascii_exit = ft_itoa(g_exit);
