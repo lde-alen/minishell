@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/11 19:50:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 20:02:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ char	*check_validity(t_cmd *cmd_lst)
 	size_t	i;
 
 	i = 0;
-	// while (cmd_lst->argument[i])
-	// {
+	while (cmd_lst->argument[i])
+	{
 		if (cmd_lst->argument[i][0] != '_'
 			&& (isalpha((cmd_lst->argument[i][0]))) == 0)
 		{
@@ -63,8 +63,32 @@ char	*check_validity(t_cmd *cmd_lst)
 		ret = check_str(cmd_lst, i);
 		if (ret != NULL)
 			return (ret);
-		// i++;
-	// }
+		i++;
+	}
+	g_exit = 0;
+	return (NULL);
+}
+
+char	*check_validity(t_cmd *cmd_lst)
+{
+	char	*ret;
+	size_t	i;
+
+	i = 0;
+	while (cmd_lst->argument[i])
+	{
+		if (cmd_lst->argument[i][0] != '_'
+			&& (isalpha((cmd_lst->argument[i][0]))) == 0)
+		{
+			g_exit = 1;
+			export_error(cmd_lst->argument[i]);
+			// return (cmd_lst->argument[i]);
+		}
+		ret = check_str(cmd_lst, i);
+		if (ret != NULL)
+			return (ret);
+		i++;
+	}
 	g_exit = 0;
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/13 14:54:57 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:50:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ void	trimaz(t_lex *lex)
 			free(str);
 			i++;
 		}
-		tmp->command = ft_strdup(tmp->argument[0]);
+		if (tmp->argument[0])
+			tmp->command = ft_strdup(tmp->argument[0]);
 		tmp = tmp->next;
 	}
 }

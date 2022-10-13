@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 14:20:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:57:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	int		check;
 	char	*env_user;
 
+	g_exit = 0;
 	pwd = search_env(lst, "PWD");
 	check = 0;
 	set_check_val(cmd, lst, &check, &env_user);

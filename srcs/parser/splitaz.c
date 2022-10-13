@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:43:38 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/13 15:09:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:44:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static ssize_t	sizeaz(char *str, char c)
 	size = 1;
 	while (str[i])
 	{
-		ft_printf("STR[i]: %c\n", str[i]);
 		if (str[i] == D_QUOTE)
 		{
 			i++;

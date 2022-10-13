@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/13 13:37:57 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:45:31 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ size_t	ft_count_redir(char *str)
 		}
 		else if (str[i] == '>' || str[i] == '<')
 		{
-			while (str[i] == '>' || str[i] == '<')
+			// while (str[i] == '>' || str[i] == '<')
 				i++;
-			i--;
+			// i--;
 			count++;
 		}
 		else
