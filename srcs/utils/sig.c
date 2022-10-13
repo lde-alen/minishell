@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 14:14:43 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/11 19:21:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:48:19 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sig_handler(int val)
 	if (val == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_on_new_line();
+		rl_redisplay();
 		g_exit = 130;
 	}
 }
@@ -27,7 +27,7 @@ void	sig(int val)
 	if (val == SIGINT)
 	{
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		rl_on_new_line();
+		rl_redisplay();
 		g_exit = -69;
 	}
 }

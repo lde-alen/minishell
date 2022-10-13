@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/11 19:39:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 13:37:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ size_t	ft_count_redir(char *str)
 		if (str[i] == D_QUOTE)
 		{
 			i++;
-			while (str[i] != D_QUOTE)
+			while (str[i] && str[i] != D_QUOTE)
 				i++;
 			i++;
 		}
 		else if (str[i] == S_QUOTE)
 		{
 			i++;
-			while (str[i] != S_QUOTE)
+			while (str[i] && str[i] != S_QUOTE)
 				i++;
 			i++;
 		}
@@ -42,7 +42,7 @@ size_t	ft_count_redir(char *str)
 			i--;
 			count++;
 		}
-		if (str[i])
+		else
 			i++;
 	}
 	return (count);
