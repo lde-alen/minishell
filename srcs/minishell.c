@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/13 14:36:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:54:57 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ size_t	count_trim(char *str)
 	{
 		if (str[i] == D_QUOTE || str[i] == S_QUOTE)
 			i++;
-		len++;
-		i++;
+		else
+		{
+			len++;
+			i++;
+		}
 	}
 	return (len);
 }
@@ -105,24 +108,19 @@ void	trimaz(t_lex *lex)
 {
 	t_cmd	*tmp;
 	size_t	i;
-	size_t	len;
 	char	*str;
 
-	len = 0;
 	tmp = lex->cmd;
 	while (tmp)
 	{
 		i = 0;
- 		while (tmp->argument[i])
+		while (tmp->argument[i])
 		{
-			len = count_trim(tmp->argument[i]);
-			str = (char *)malloc(sizeof(char) * len + 1);
- 			str = fill_trim(tmp->argument[i]);
+			str = fill_trim(tmp->argument[i]);
 			tmp->argument[i] = ft_strdup(str);
 			free(str);
 			i++;
 		}
-		free(tmp->command);
 		tmp->command = ft_strdup(tmp->argument[0]);
 		tmp = tmp->next;
 	}
