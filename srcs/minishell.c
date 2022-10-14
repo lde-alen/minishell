@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 15:21:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:31:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	mini_loop(t_lex *lex, char *str)
 			{
 				if (lex->cmd->argument)
 				{
-					if (!lex->cmd->command && !lex->cmd->next)
+					ft_printf("BOOOOPPP: %s\n", lex->cmd->command);
+					if (!lex->cmd->command && !lex->cmd->next && !lex->cmd->redir)
 					{
 						free_cmd(&lex->cmd);
 						return ;
