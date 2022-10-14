@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/11 20:33:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:04:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*ft_args_to_str(t_lex *lex)
 			}
 			ft_append_back(&tmp, lex->cmd->command[i]);
 			i++;
+			if (lex->cmd->command[i] == ' ')
+				ft_append_back(&tmp, lex->cmd->command[i]);
 		}
 		if (lex->cmd->command[i] == S_QUOTE)
 		{
@@ -65,6 +67,8 @@ char	*ft_args_to_str(t_lex *lex)
 			}
 			ft_append_back(&tmp, lex->cmd->command[i]);
 			i++;
+			if (lex->cmd->command[i] == ' ')
+				ft_append_back(&tmp, lex->cmd->command[i]);
 		}
 		if (lex->cmd->command[i] == '<' || lex->cmd->command[i] == '>')
 		{
@@ -87,6 +91,7 @@ char	*ft_args_to_str(t_lex *lex)
 			i++;
 		}
 	}
+	ft_printf("TMP: %s\n", tmp);
 	return (tmp);
 }
 

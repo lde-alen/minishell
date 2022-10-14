@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/13 18:57:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:20:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,6 @@ int		get_lst_len(t_env *lst);
 int		iter_diff(t_env *lst, t_env *new_node);
 size_t	get_cmd_len(t_cmd *cmd);
 
-char	*check_validity(t_cmd *cmd_lst);
 size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 
 /**
@@ -299,5 +298,6 @@ void	init_pre_exec(t_lex *lex, t_exec *exec);
 char	**splitaz(char *str, char c);
 
 void	trimaz(t_lex *lex);
+size_t	check_validity(char *str, int check);
 
 #endif

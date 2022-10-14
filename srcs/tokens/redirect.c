@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/13 16:54:07 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:23:12 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,9 @@ void	here_doc(t_lex *lex, t_cmd *tmp)
 	i = 0;
 	lex->cmd->redir->str = ft_strdup("");
 	signal(SIGINT, sig);
-	ft_printf("FLAG_LEN: %d\n", lex->cmd->redir->flag_len);
 	while (i < lex->cmd->redir->flag_len)
 	{
 		store = ft_strdup("");
-		ft_printf("FLAG: %d, I IS:, %d\n", lex->cmd->redir->flag[i], i);
 		if (lex->cmd->redir->flag[i] == DL_REDIR)
 			delim_loop(lex, tmp, &store, i);
 		free(store);

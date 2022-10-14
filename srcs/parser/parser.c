@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/13 15:00:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:01:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	parser_stage2(char *str, t_lex *lex)
 		lex->sh->i++;
 		lex->sh->j++;
 	}
-	// ft_printf("End of stage2: %s\n", lex->sh->tmp_str);
+	ft_printf("End of stage2: %s\n", lex->sh->tmp_str);
 	return (0);
 }
 

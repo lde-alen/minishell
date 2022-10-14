@@ -40,16 +40,18 @@ void	free_cmd(t_cmd **cmd_lst)
 
 	i = 0;
 	tmp = *cmd_lst;
-	if ((*cmd_lst)->redir)
-		free_redir((*cmd_lst)->redir);
-	while ((*cmd_lst)->argument[i])
+	if ((*cmd_lst)->argument)
 	{
+		if ((*cmd_lst)->redir)
+			free_redir((*cmd_lst)->redir);
+		while ((*cmd_lst)->argument[i])
+		{
+			free((*cmd_lst)->argument[i]);
+			i++;
+		}
 		free((*cmd_lst)->argument[i]);
-		i++;
+		free((*cmd_lst)->argument);
 	}
-	free((*cmd_lst)->argument[i]);
-	free((*cmd_lst)->argument);
-	free((*cmd_lst)->command);
 	if (cmd_lst)
 		(*cmd_lst) = ((*cmd_lst))->next;
 	free(tmp);
