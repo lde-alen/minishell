@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 17:15:18 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:56:14 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	ft_fill_expand(char *str, t_lex *lex)
 		}
 		else
 		{
-			printf("strrrr: %s\n", str);
 			while (str[lex->sh->i] && str[lex->sh->i] != '$'
 				&& ft_isalnum(str[lex->sh->i]) == 1)
 			{
 				name = ft_append_char(name, str[lex->sh->i]);
 				lex->sh->i++;
 			}
+			lex->sh->i--;
 			lex->sh->expand_len += get_expand_len(name, lex->env, 0);
 			lex->sh->j += (ft_strlen(get_env_value(lex->env, name)) - 1);
 			ft_strjustcat(lex->sh->tmp_str, get_env_value(lex->env, name));
