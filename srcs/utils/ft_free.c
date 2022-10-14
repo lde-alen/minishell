@@ -44,6 +44,8 @@ void	free_cmd(t_cmd **cmd_lst)
 	{
 		if ((*cmd_lst)->redir)
 			free_redir((*cmd_lst)->redir);
+		if ((*cmd_lst)->argument[0])
+			free((*cmd_lst)->command);
 		while ((*cmd_lst)->argument[i])
 		{
 			free((*cmd_lst)->argument[i]);

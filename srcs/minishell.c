@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 17:25:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:21:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	mini_loop(t_lex *lex, char *str)
 		free(lex->cmd);
 		free_env_lst(lex->env);
 		free (lex);
-		exit(0);
+		exit(g_exit);
 	}
 }
 
@@ -110,7 +110,6 @@ char	*fill_trim(char *str)
 	free (str);
 	return (tmp);
 }
-
 
 void	trimaz(t_lex *lex)
 {
