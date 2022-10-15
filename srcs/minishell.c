@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 18:28:31 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:12:02 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ void	trimaz(t_lex *lex)
 		{
 			if (tmp->redir->file)
 			{
-				while (i < lex->cmd->redir->flag_len)
+				while (i < tmp->redir->flag_len)
 				{
 					str = fill_trim(tmp->redir->file[i]);
 					tmp->redir->file[i] = ft_strdup(str);

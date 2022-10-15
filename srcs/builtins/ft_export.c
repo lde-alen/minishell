@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/14 16:21:09 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:57:45 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,17 @@ size_t	check_validity(char *str, int check)
 	if (str[0] != '_'
 		&& (isalpha((str[0]))) == 0)
 	{
-		g_exit = 1;
 		if (check == 1)
+		{
+			g_exit = 1;
 			export_error(str);
-		flag = 1;
+			flag = 1;
+		}
+		else if (check == 0 && ft_isdigit(str[0]) == 0)
+		{
+			g_exit = 1;
+			flag = 1;
+		}
 	}
 	ret = check_str(str);
 	if (ret != NULL)
