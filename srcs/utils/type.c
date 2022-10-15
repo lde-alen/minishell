@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:07:01 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 14:20:03 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 12:07:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	if (stat != 0)
 		return (stat);
 	if ((ft_strchr(cmd_lst->argument[0], '/') == 0 && (*exec)->path == NULL)
-		|| (!cmd_lst->argument[0]))
+		|| (!cmd_lst->argument[0]) || ft_strcmp(cmd_lst->argument[0], "") == 0)
 	{
 		err_msg("", "command not found");
 		g_exit = 127;
