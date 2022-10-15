@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 15:26:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:28:31 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,22 @@ void	trimaz(t_lex *lex)
 			free(str);
 			i++;
 		}
+		i = 0;
 		if (tmp->argument[0])
 			tmp->command = ft_strdup(tmp->argument[0]);
+		if (tmp->redir)
+		{
+			if (tmp->redir->file)
+			{
+				while (i < lex->cmd->redir->flag_len)
+				{
+					str = fill_trim(tmp->redir->file[i]);
+					tmp->redir->file[i] = ft_strdup(str);
+					free(str);
+					i++;
+				}
+			}
+		}
 		tmp = tmp->next;
 	}
 }

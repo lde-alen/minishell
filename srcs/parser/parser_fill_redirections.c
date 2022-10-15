@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_redirections.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 13:11:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:33:44 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	ft_fill_r_flags(t_lex *lex, size_t count)
 	j = 0;
 	lex->cmd->redir->flag_len = count;
 	lex->cmd->redir->flag = (size_t *)malloc(sizeof(size_t) * (count));
-	lex->cmd->redir->file = (char **)ft_calloc((count), sizeof(char *));
+	lex->cmd->redir->file = (char **)ft_calloc((count + 1), sizeof(char *));
 	ft_init2_file(lex);
 	while (lex->cmd->command[i])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 15:23:19 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:05:07 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	parser_stage2(char *str, t_lex *lex)
 		lex->sh->i++;
 		lex->sh->j++;
 	}
-	ft_printf("End of stage2: %s\n", lex->sh->tmp_str);
+	// ft_printf("End of stage2: %s\n", lex->sh->tmp_str);
 	return (0);
 }
 
@@ -125,10 +125,10 @@ int	ft_parse(char *str, t_lex *lex)
 		parser_stage2(str, lex);
 		parser_stage3(lex);
 		free(lex->sh);
-		ft_printf("~~~~~~ End of Parsing succes. ~~~~~~\n\n");
+		// ft_printf("~~~~~~ End of Parsing succes. ~~~~~~\n\n");
 		return (0);
 	}
 	free(lex->sh);
-	ft_printf("~~~~~~ End of Parsing with error. ~~~~~~\n\n");
+	// ft_printf("~~~~~~ End of Parsing with error. ~~~~~~\n\n");
 	return (1);
 }

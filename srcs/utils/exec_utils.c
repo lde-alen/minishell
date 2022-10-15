@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 04:14:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:44:20 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,14 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	char	**env_path;
 	char	*path;
 
-	if (access(cmd_lst->command, F_OK | X_OK) == 0
-		&& ft_strcmp(cmd_lst->command, "cat") != 0)
-	{
-		// if (access(cmd_lst->command, X_OK) == 0)
-		// 	return (cmd_lst->command);
-		return (ft_strdup(cmd_lst->command));
-	}
 	if (search_env(lst, "PATH") == NULL)
 		return (NULL);
 	env_path = get_path(lst);
 	path = NULL;
 	path = join_path(cmd_lst, path, env_path);
+	if (access(cmd_lst->command, F_OK | X_OK) == 0
+		&& ft_strcmp(cmd_lst->command, "cat") != 0)
+		return (ft_strdup(cmd_lst->command));
 	if (path != NULL)
 		return (path);
 	free(env_path);

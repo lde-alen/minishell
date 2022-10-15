@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 14:04:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:07:04 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*ft_args_to_str(t_lex *lex)
 			i++;
 		}
 	}
-	ft_printf("TMP: %s\n", tmp);
+	// ft_printf("TMP: %s\n", tmp);
 	return (tmp);
 }
 
@@ -128,7 +128,7 @@ void	ft_fill_arg(t_lex *lex)
 	tmp = ft_calloc(1, sizeof(char));
 	i = ft_fill_first_arg(lex, i, tmp);
 	args = ft_args_to_str(lex);
-	ft_printf("args=%s\n", args);
+	// ft_printf("args=%s\n", args);
 	lex->cmd->argument = splitaz(args, ' ');
 	free(lex->cmd->command);
 	free(args);
