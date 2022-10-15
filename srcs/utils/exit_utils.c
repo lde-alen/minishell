@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:03:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/13 12:27:51 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:32:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ void	check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag)
 			free_child(lex);
 			exit(1);
 		}
+	}
+}
+
+void	check_plus_minus(t_lex *lex, t_cmd **cmd_lst, size_t i)
+{
+	if (ft_strcmp((*cmd_lst)->argument[i], "+") == 0
+		|| ft_strcmp((*cmd_lst)->argument[i], "-") == 0)
+	{
+		ft_putendl_fd("exit", i);
+		err_msg("exit", "numeric argument required");
+		free_child(lex);
+		g_exit = 1;
+		exit(g_exit);
 	}
 }
 

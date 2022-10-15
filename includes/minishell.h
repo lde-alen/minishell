@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 16:20:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:32:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,5 +299,6 @@ char	**splitaz(char *str, char c);
 
 void	trimaz(t_lex *lex);
 size_t	check_validity(char *str, int check);
+void	check_plus_minus(t_lex *lex, t_cmd **cmd_lst, size_t i);
 
 #endif

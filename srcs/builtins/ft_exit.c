@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/15 13:57:47 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:32:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,28 @@ int	check_str_exit(char *arg)
 void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 {
 	char	*tmp;
-	ssize_t	ret;
 
-	tmp = NULL;
+	check_plus_minus(lex, cmd_lst, i);
 	check_special(lex, cmd_lst);
-	if ((((ft_atol((*cmd_lst)->argument[i]) > 9223372036854775807)
-				&& ((*cmd_lst)->argument[i][0] == '+'
-				|| (*cmd_lst)->argument[i][0] != '-'))
+	if (((ft_atol((*cmd_lst)->argument[i]) > 9223372036854775807)
+			&& ((*cmd_lst)->argument[i][0] == '+'
+			|| (*cmd_lst)->argument[i][0] != '-'))
 		|| ((ft_atol((*cmd_lst)->argument[i])
 			< ft_atol("-9223372036854775808"))
-			&& (*cmd_lst)->argument[i][0] == '-'))
-		&& (ft_atol((*cmd_lst)->argument[i]) != 0))
+		&& (*cmd_lst)->argument[i][0] == '-'))
 	{
 		ft_putendl_fd("exit", i);
 		err_msg("exit", "numeric argument required");
 		free_child(lex);
-		exit(255);
+		g_exit = 255;
+		exit(g_exit);
 	}
 	else
 	{
-		ret = ft_atol((*cmd_lst)->argument[i]);
-		if (ret != 0)
-		{
-			tmp = ft_ltoa(ret % 256);
-			free((*cmd_lst)->argument[i]);
-			(*cmd_lst)->argument[i] = ft_strdup(tmp);
-			free(tmp);
-		}
+		tmp = ft_ltoa(ft_atol((*cmd_lst)->argument[i]) % 256);
+		free((*cmd_lst)->argument[i]);
+		(*cmd_lst)->argument[i] = ft_strdup(tmp);
+		free(tmp);
 	}
 }
 
@@ -102,18 +97,25 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
 {
 	int		flag;
+	size_t	ret;
 
 	check_exit_val(lex, cmd_lst, &flag);
 	ft_putendl_fd("exit", 1);
-	if (!cmd_lst->argument[1])
-		g_exit = 0;
-	else if (cmd_lst->argument[1] && flag == 0)
-		g_exit = ft_atol(cmd_lst->argument[1]);
+	ret = 0;
+	if (cmd_lst->argument[1] && flag == 0)
+	{
+		if (flag == 0)
+		{
+			ret = ft_atol(cmd_lst->argument[1]);
+			free_child(lex);
+			exit(ret);
+		}
+	}
 	else
 	{
 		if (cmd_lst->argument[2])
-			g_exit = ft_atol(cmd_lst->argument[2]);
+			ret = ft_atol(cmd_lst->argument[2]);
+		free_child(lex);
+		exit(ret);
 	}
-	free_child(lex);
-	exit(g_exit);
 }
