@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 16:01:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 15:23:19 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	parser_stage3(t_lex *lex)
 
 	i = 0;
 	lex->cmd = (t_cmd *)malloc(sizeof(t_cmd));
+	lex->cmd->argument = NULL;
 	lex->cmd->redir = NULL;
 	lex->cmd->next = NULL;
 	if (!lex->cmd)

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 11:35:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 15:26:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@ void	mini_loop(t_lex *lex, char *str)
 			add_history(str);
 			if (ft_parse(str, lex) == 0)
 			{
-				if (lex->cmd->argument)
+				if (lex->cmd)
 				{
-					if (!lex->cmd->command && !lex->cmd->next && !lex->cmd->redir)
+					if (lex->cmd->argument)
 					{
-						free_cmd(&lex->cmd);
-						return ;
+						if (!lex->cmd->command && !lex->cmd->next
+							&& !lex->cmd->redir)
+						{
+							ft_printf("FREE INVALID\n");
+							while (lex->cmd)
+								free_cmd(&lex->cmd);
+							return ;
+						}
+						trimaz(lex);
+						exec_sys(lex);
 					}
-					trimaz(lex);
-				// ft_print_char_arr(lex->cmd->argument);
-					exec_sys(lex);
+					else
+						free_cmd(&lex->cmd);
 				}
 			}
 		}

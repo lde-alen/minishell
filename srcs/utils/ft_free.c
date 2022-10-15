@@ -42,9 +42,10 @@ void	free_cmd(t_cmd **cmd_lst)
 	tmp = *cmd_lst;
 	if ((*cmd_lst)->argument)
 	{
+		ft_printf("BOP\n");
 		if ((*cmd_lst)->redir)
 			free_redir((*cmd_lst)->redir);
-		if ((*cmd_lst)->argument[0])
+		if ((*cmd_lst)->command)
 			free((*cmd_lst)->command);
 		while ((*cmd_lst)->argument[i])
 		{
