@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/15 14:32:52 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/15 15:36:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 				ft_putendl_fd("exit", 1);
 				err_msg("exit", "numeric argument required");
 				free_child(lex);
-				exit(255);
+				g_exit = 255;
+				exit(g_exit);
 			}
 		}
 	}
@@ -97,25 +98,21 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
 {
 	int		flag;
-	size_t	ret;
 
 	check_exit_val(lex, cmd_lst, &flag);
 	ft_putendl_fd("exit", 1);
-	ret = 0;
-	if (cmd_lst->argument[1] && flag == 0)
+	if (!cmd_lst->argument[1])
+		g_exit = 0;
+	else if (cmd_lst->argument[1] && flag == 0)
 	{
 		if (flag == 0)
-		{
-			ret = ft_atol(cmd_lst->argument[1]);
-			free_child(lex);
-			exit(ret);
-		}
+			g_exit = ft_atol(cmd_lst->argument[1]);
 	}
 	else
 	{
 		if (cmd_lst->argument[2])
-			ret = ft_atol(cmd_lst->argument[2]);
-		free_child(lex);
-		exit(ret);
+			g_exit = ft_atol(cmd_lst->argument[2]);
 	}
+	free_child(lex);
+	exit(g_exit);
 }
