@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 22:11:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 00:15:50 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,12 @@ static size_t	child(t_lex *lex)
 	if (dup_stdout(lex, &f_out) == 1)
 		return (1);
 	if (lex->cmd->argument[0])
+	{
+		if (lex->cmd->redir && (!lex->cmd->command
+				|| ft_strcmp(lex->cmd->command, "") == 0))
+			return (0);
 		return (main_child2(lex));
+	}
 	return (0);
 }
 
