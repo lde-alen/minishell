@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/15 19:20:18 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/16 20:28:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,10 @@
 char	**get_path(t_env *lst)
 {
 	char	**env_path;
-	t_env	*tmp;
 
-	tmp = lst;
-	while (lst->next != tmp)
-	{
-		if (ft_strcmp(lst->name, "PATH") == 0)
-		{
-			env_path = ft_split(lst->value, ':');
-			return (env_path);
-		}
-		lst = lst->next;
-	}
+	env_path = ft_split(search_env(lst, "PATH")->value, ':');
+	if (env_path)
+		return (env_path);
 	return (NULL);
 }
 
@@ -38,6 +30,10 @@ char	*join_path(t_cmd *cmd_lst, char *path, char **env_path)
 	size_t	i;
 
 	i = 0;
+	if (!env_path)
+	{
+		return (NULL);
+	}
 	while (env_path[i])
 	{
 		post_join = ft_strjoin(ft_strdup("/"), cmd_lst->command);

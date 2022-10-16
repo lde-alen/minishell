@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/14 16:21:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:11:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	ch_equality(char *str, t_env *lst)
 {
 	t_env	*tmp2;
 
+	// ft_printf("STR: %s\n", str);
+	// ft_printf("Name: %s\n", lst->name);
 	if (ft_strcmp(str, lst->name) == 0)
 	{
 		tmp2 = lst;
@@ -60,13 +62,14 @@ void	ft_unset(t_env *lst, t_cmd *cmd_lst)
 		if (loop_arg(cmd_lst->argument[i]) == 0)
 		{
 			tmp = lst;
+			if (ch_equality(cmd_lst->argument[i], tmp) == 1)
+				break ;
 			while (tmp->next != lst)
 			{
 				if (ch_equality(cmd_lst->argument[i], tmp) == 1)
 					break ;
 				tmp = tmp->next;
 			}
-			ch_equality(cmd_lst->argument[i], tmp);
 		}
 		i++;
 	}
