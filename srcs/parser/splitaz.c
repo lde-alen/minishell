@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitaz.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:43:38 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/13 15:44:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:25:34 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static ssize_t	sizeaz(char *str, char c)
 {
-	ssize_t	i;
+	size_t	i;
 	size_t	size;
 
 	i = 0;
@@ -24,19 +24,9 @@ static ssize_t	sizeaz(char *str, char c)
 	while (str[i])
 	{
 		if (str[i] == D_QUOTE)
-		{
-			i++;
-			while (str[i] && str[i] != D_QUOTE)
-				i++;
-			i++;
-		}
+			quote_loop(str, &i, D_QUOTE);
 		else if (str[i] == S_QUOTE)
-		{
-			i++;
-			while (str[i] && str[i] != S_QUOTE)
-				i++;
-			i++;
-		}
+			quote_loop(str, &i, S_QUOTE);
 		else
 		{
 			if (str[i] == c)
@@ -57,45 +47,11 @@ static int	fill_tab(char const *s, char c, char **tab)
 	{
 		len = 0;
 		while (*s != c && *s && s)
-		{
-			if (*s == D_QUOTE)
-			{
-				s++;
-				len++;
-				while (*s && *s != D_QUOTE)
-				{
-					s++;
-					len++;
-				}
-				s++;
-				len++;
-			}
-			else if (*s == S_QUOTE)
-			{
-				s++;
-				len++;
-				while (*s && *s != S_QUOTE)
-				{
-					s++;
-					len++;
-				}
-				s++;
-				len++;
-			}
-			else
-			{
-				len++;
-				s++;
-			}
-		}
+			splitaz_loop(&s, &len);
 		tab[i] = (char *)malloc(len + 1);
 		if (!tab[i])
-		{
-			while (i)
-				free(tab[--i]);
-			free(tab);
-			return (1);
-		}
+			if (free_splitaz_tab(tab, &i))
+				return (1);
 		ft_strlcpy(tab[i++], s - len, len + 1);
 		while (*s == c && *s)
 			s++;
@@ -117,18 +73,3 @@ char	**splitaz(char *str, char c)
 		return (NULL);
 	return (tab);
 }
-
-// int	main(void)
-// {
-// 	size_t	i;
-// 	char	**tab;
-
-// 	i = 0;
-// 	tab = splitaz("echo \"karim |  amin | lucas\" | ls", '|');
-// 	while (tab[i])
-// 	{
-// 		ft_printf("tab[%d] = %s\n", i, tab[i]);
-// 		i++;
-// 	}
-// 	return (1);
-// }

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 17:05:07 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:15:34 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,36 +18,15 @@ int	parser_stage3(t_lex *lex)
 	char	**tab;
 	t_cmd	*tmp;
 
-	i = 0;
-	lex->cmd = (t_cmd *)malloc(sizeof(t_cmd));
-	lex->cmd->argument = NULL;
-	lex->cmd->redir = NULL;
-	lex->cmd->next = NULL;
-	if (!lex->cmd)
-	{
-		free (lex->sh->tmp_str);
+	stage3_init(&i, lex);
+	if (check_cmd(lex))
 		return (1);
-	}
 	tab = splitaz(lex->sh->tmp_str, '|');
 	free (lex->sh->tmp_str);
-	if (tab == NULL)
-	{
-		free (lex->sh->tmp_str);
+	if (check_tab(lex, tab))
 		return (1);
-	}
 	tmp = lex->cmd;
-	while (tab[i])
-	{
-		lex->cmd->command = ft_strdup(tab[i]);
-		ft_fill_redir(lex);
-		ft_fill_arg(lex);
-		if (tab[i + 1])
-		{
-			lex->cmd->next = (t_cmd *)malloc(sizeof(t_cmd));
-			lex->cmd = lex->cmd->next;
-		}
-		i++;
-	}
+	stage3_loop(lex, tab);
 	free_split(tab);
 	lex->cmd->next = NULL;
 	lex->cmd = tmp;
@@ -75,7 +54,6 @@ int	parser_stage2(char *str, t_lex *lex)
 		lex->sh->i++;
 		lex->sh->j++;
 	}
-	// ft_printf("End of stage2: %s\n", lex->sh->tmp_str);
 	return (0);
 }
 
@@ -86,10 +64,7 @@ int	parser_stage1(char *str, t_lex *lex)
 {
 	t_bool	ret;
 
-	ret = false;
-	lex->sh->i = 0;
-	lex->sh->euro = 0;
-	lex->sh->expand_len = 0;
+	stage1_init(&ret, lex);
 	while (str[lex->sh->i] == ' ')
 		lex->sh->i++;
 	while (lex->sh->i < ft_strlen(str) && ret == false)
@@ -125,10 +100,8 @@ int	ft_parse(char *str, t_lex *lex)
 		parser_stage2(str, lex);
 		parser_stage3(lex);
 		free(lex->sh);
-		// ft_printf("~~~~~~ End of Parsing succes. ~~~~~~\n\n");
 		return (0);
 	}
 	free(lex->sh);
-	// ft_printf("~~~~~~ End of Parsing with error. ~~~~~~\n\n");
 	return (1);
 }

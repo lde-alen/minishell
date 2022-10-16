@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 14:32:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:25:48 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,5 +300,28 @@ char	**splitaz(char *str, char c);
 void	trimaz(t_lex *lex);
 size_t	check_validity(char *str, int check);
 void	check_plus_minus(t_lex *lex, t_cmd **cmd_lst, size_t i);
+void	mini_loop(t_lex *lex, char *str);
+void	stage3_init(ssize_t *i, t_lex *lex);
+void	stage1_init(t_bool *ret, t_lex *lex);
+void	stage3_loop(t_lex *lex, char **tab);
+int		check_tab(t_lex *lex, char **tab);
+int		check_cmd(t_lex *lex);
+void	redir_d_quote_check(t_lex *lex, char *str, size_t *i);
+void	redir_s_quote_check(t_lex *lex, char *str, size_t *i);
+int		redir_r_redir(t_lex *lex, char *str, size_t *i);
+int		redir_l_redir(t_lex *lex, char *str, size_t *i);
+void	fill_ds_quote(char **tmp, size_t *i, t_lex *lex, int quote);
+void	util_fill_redir(t_lex *lex, size_t *i);
+void	question_assist(char **name, char *ascii_exit, t_lex *lex, char *str);
+void	special_c(t_lex *lex, char **name, char *str);
+void	setup_expand(t_lex *lex, char **name, char *str);
+void	fill_redir_d_redir_check(size_t *i, size_t *j, t_lex *lex);
+void	cmd_quote_loop(t_lex *lex, size_t *i, int quote);
+void	quote_loop(char *str, size_t *i, int quote);
+void	ft_fill_r_flags_init(size_t *i, size_t *j, t_lex *lex, size_t count);
+void	ft_get_file_name(char *str, t_lex *lex, size_t j);
+void	quote_len_loop(char const **s, size_t *len, int quote);
+int		free_splitaz_tab(char **tab, size_t *i);
+void	splitaz_loop(char const **s, size_t *len);
 
 #endif

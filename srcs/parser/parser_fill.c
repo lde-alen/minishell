@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 17:07:04 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:15:46 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,55 +43,22 @@ char	*ft_args_to_str(t_lex *lex)
 	while (i < ft_strlen(lex->cmd->command))
 	{
 		if (lex->cmd->command[i] == D_QUOTE)
-		{
-			ft_append_back(&tmp, lex->cmd->command[i]);
-			i++;
-			while (lex->cmd->command[i] != D_QUOTE)
-			{
-				ft_append_back(&tmp, lex->cmd->command[i]);
-				i++;
-			}
-			ft_append_back(&tmp, lex->cmd->command[i]);
-			i++;
-			if (lex->cmd->command[i] == ' ')
-				ft_append_back(&tmp, lex->cmd->command[i]);
-		}
+			fill_ds_quote(&tmp, &i, lex, D_QUOTE);
 		if (lex->cmd->command[i] == S_QUOTE)
-		{
-			ft_append_back(&tmp, lex->cmd->command[i]);
-			i++;
-			while (lex->cmd->command[i] != S_QUOTE)
-			{
-				ft_append_back(&tmp, lex->cmd->command[i]);
-				i++;
-			}
-			ft_append_back(&tmp, lex->cmd->command[i]);
-			i++;
-			if (lex->cmd->command[i] == ' ')
-				ft_append_back(&tmp, lex->cmd->command[i]);
-		}
+			fill_ds_quote(&tmp, &i, lex, S_QUOTE);
 		if (lex->cmd->command[i] == '<' || lex->cmd->command[i] == '>')
-		{
-			i++;
-			if (lex->cmd->command[i] == '<' || lex->cmd->command[i] == '>')
-				i++;
-			while (lex->cmd->command[i] == ' ')
-				i++;
-			while ((lex->cmd->command[i] != ' ' && lex->cmd->command[i] != '>'
-					&& lex->cmd->command[i] != '<' && lex->cmd->command[i]))
-				i++;
-		}
+			util_fill_redir(lex, &i);
 		while (lex->cmd->command[i] == ' ')
 			i++;
 		while (lex->cmd->command[i] != '>'
 			&& lex->cmd->command[i] != '<' && lex->cmd->command[i]
-			&& lex->cmd->command[i] != D_QUOTE && lex->cmd->command[i] != S_QUOTE)
+			&& lex->cmd->command[i] != D_QUOTE
+			&& lex->cmd->command[i] != S_QUOTE)
 		{
 			ft_append_back(&tmp, lex->cmd->command[i]);
 			i++;
 		}
 	}
-	// ft_printf("TMP: %s\n", tmp);
 	return (tmp);
 }
 
@@ -128,7 +95,6 @@ void	ft_fill_arg(t_lex *lex)
 	tmp = ft_calloc(1, sizeof(char));
 	i = ft_fill_first_arg(lex, i, tmp);
 	args = ft_args_to_str(lex);
-	// ft_printf("args=%s\n", args);
 	lex->cmd->argument = splitaz(args, ' ');
 	free(lex->cmd->command);
 	free(args);
