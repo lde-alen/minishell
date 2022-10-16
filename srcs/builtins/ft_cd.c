@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/13 15:57:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:16:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 	char	*buff;
 
 	buff = get_pwd();
-	store->value = ft_strdup(pwd->value);
+	if (store)
+		store->value = ft_strdup(pwd->value);
 	free(pwd->value);
 	if (!cmd->argument[1])
 		pwd->value = ft_strdup(buff);
