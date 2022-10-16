@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 16:15:56 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 16:34:39 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:41:44 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	fill_redir_d_redir_check(size_t *i, size_t *j, t_lex *lex)
 	}
 	else
 	{
-		i--;
+		(*i)--;
 		if (lex->cmd->command[*i] == '>')
 			lex->cmd->redir->flag[*j] = R_REDIR;
 		if (lex->cmd->command[*i] == '<')
