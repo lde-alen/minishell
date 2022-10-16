@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 19:57:23 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 20:53:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*check_str(char *str)
 	size_t	j;
 
 	j = 1;
-	while (str[j])
+	while (j < ft_strlen(str))
 	{
 		if (ft_isalnum(str[j]) == 0
 			&& (str[j] != '='))
@@ -52,10 +52,9 @@ size_t	check_validity(char *str, int check)
 
 	g_exit = 0;
 	flag = 0;
-	if (str[0] != '_'
-		&& (isalpha((str[0]))) == 0)
+	if (isalpha(str[0]) == 0)
 	{
-		if (check == 1)
+		if (check == 1 && str[0] != '_')
 		{
 			g_exit = 1;
 			export_error(str);
