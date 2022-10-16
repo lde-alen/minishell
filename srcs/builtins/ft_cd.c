@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 21:16:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 01:15:10 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	t_env	*store;
 	int		check;
 	char	*env_user;
+	struct stat	path_stat;
 
 	g_exit = 0;
 	pwd = search_env(lst, "PWD");
@@ -123,10 +124,13 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	set_check_val(cmd, lst, &check, &env_user);
 	if (check < 0)
 	{
-		if (access(cmd->argument[1], F_OK | X_OK) == 0)
+		if (stat(cmd->argument[1], &path_stat) == 0)
+		{
+			if (!S_ISDIR(path_stat.st_mode))
+				err_msg(cmd->argument[1], ": Not a directory");
+		}
+		else if (access(cmd->argument[1], F_OK | X_OK) != 0)
 			err_msg(cmd->argument[1], ": Permission denied");
-		else
-			err_msg(cmd->argument[1], ": No such file or directory");
 		g_exit = 1;
 	}
 	store = search_oldpwd(lst);
