@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 17:18:33 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:54:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ void	redir(t_lex *lex)
 	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
 	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
 	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
-	fopen_rem(lex, right, left, &len);
+	if (fopen_rem(lex, right, left, &len) == 1)
+		return ;
 	check_redir_type(lex);
 	redirect(lex);
 }
