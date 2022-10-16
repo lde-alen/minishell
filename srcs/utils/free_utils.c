@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 04:17:35 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/09 14:11:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:32:45 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,4 @@ void	free_file_redir(t_redir *redir)
 			i++;
 		}
 	}
-}
-
-void	free_file(t_cmd *tmp, t_redir *redir)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < redir->flag_len)
-	{
-		free(redir->file[i]);
-		redir->file[i] = NULL;
-		i++;
-	}
-	free(redir->file);
-	redir->file = NULL;
-	free(redir->flag);
-	redir->flag = 0;
-	if (redir->str || ft_strcmp(redir->str, "") == 0)
-		free(redir->str);
-	while (tmp)
-		free_cmd(&tmp);
 }

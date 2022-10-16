@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/22 19:37:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 16:15:58 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_redirections(char *str, t_lex *lex)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (i < ft_strlen(str))
 	{
 		if (str[i] == ' ')
 		{

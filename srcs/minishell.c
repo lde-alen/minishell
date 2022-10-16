@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 20:12:02 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/16 18:12:40 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	mini_loop(t_lex *lex, char *str)
 		if (lex->cmd)
 			if (lex->cmd->redir)
 				free_child(lex);
-		free(lex->cmd);
+		while (lex->cmd)
+			free(lex->cmd);
 		free_env_lst(lex->env);
 		free (lex);
 		exit(g_exit);

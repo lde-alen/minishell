@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/15 14:32:28 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 16:31:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,7 +246,7 @@ void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i);
 void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);
 void	append_out(t_lex *lex, char *file);
-void	here_doc(t_lex *lex, t_cmd *tmp);
+size_t	here_doc(t_lex *lex, t_cmd *tmp);
 ssize_t	open_file(t_lex *lex, char *str, int flag);
 void	redir(t_lex *lex);
 ssize_t	find_redir_in(t_lex *lex, size_t type);
@@ -281,7 +281,7 @@ void	free_file(t_cmd *tmp, t_redir *redir);
 
 void	sig_handler(int val);
 void	sig(int val);
-void	free_sig(t_lex *lex, t_cmd *tmp, char *store);
+void	free_sig(t_redir *redir, char *store);
 void	err_msg(char *val, char *err);
 
 /**

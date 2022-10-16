@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/14 13:23:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 17:18:33 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,30 +55,31 @@ void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j)
 	lex->cmd->redir->doc_arr[i] = NULL;
 }
 
-void	delim_loop(t_lex *lex, t_cmd *tmp, char **store, size_t i)
+size_t	delim_loop(t_lex *lex, t_cmd *tmp, char **store, size_t i)
 {
+	(void)tmp;
 	while (ft_strcmp(*store, lex->cmd->redir->file[i]) != 0)
 	{
 		if (g_exit == -69)
 		{
-			free_sig(lex, tmp, *store);
-			g_exit = 130;
-			exit(g_exit);
+			free_sig(lex->cmd->redir, *store);
+			return (1);
 		}
 		free(*store);
 		*store = readline("> ");
 		if (!*store)
 		{
-			free_sig(lex, tmp, *store);
-			g_exit = 0;
-			exit(g_exit);
+			free_sig(lex->cmd->redir, *store);
+			g_exit = -1;
+			return (1);
 		}
 		lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, *store);
 		lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, "\n");
 	}
+	return (0);
 }
 
-void	here_doc(t_lex *lex, t_cmd *tmp)
+size_t	here_doc(t_lex *lex, t_cmd *tmp)
 {
 	char	*store;
 	size_t	i;
@@ -90,12 +91,14 @@ void	here_doc(t_lex *lex, t_cmd *tmp)
 	{
 		store = ft_strdup("");
 		if (lex->cmd->redir->flag[i] == DL_REDIR)
-			delim_loop(lex, tmp, &store, i);
+			if (delim_loop(lex, tmp, &store, i) == 1)
+				return (1);
 		free(store);
 		i++;
 	}
 	fill_doc_arr(lex, lex->cmd->redir->str);
 	free(lex->cmd->redir->str);
+	return (0);
 }
 
 void	redir(t_lex *lex)

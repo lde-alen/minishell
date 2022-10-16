@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/15 15:13:35 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 18:34:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,20 @@ void	fork_arr(t_lex *lex, t_exec *exec)
 		loop_lst(lex, exec);
 	else if (exec->len == 1)
 		exec_alone(lex, exec);
-	if (exec->flag != 2)
+	if (g_exit == -69)
+		g_exit = 130;
+	else if (g_exit == -1)
+		g_exit = 0;
+	else
 	{
-		exec->i = 0;
-		while ((exec->i + 1) <= exec->len)
+		if (exec->flag != 2)
 		{
-			wait_stat();
-			exec->i++;
+			exec->i = 0;
+			while ((exec->i + 1) <= exec->len)
+			{
+				wait_stat();
+				exec->i++;
+			}
 		}
 	}
 	while (lex->cmd)
@@ -91,28 +98,28 @@ void	loop_lst(t_lex *lex, t_exec *exec)
 {
 	check_path(lex->cmd, &exec);
 	exec->tmp = lex->cmd;
-	exec->fork_id = fork();
-	if (exec->fork_id == 0)
+	while (lex->cmd)
 	{
-		while (lex->cmd)
+		if (lex->cmd->redir)
 		{
-			if (lex->cmd->redir)
-				here_doc(lex, exec->tmp);
-			lex->cmd = lex->cmd->next;
+			if (here_doc(lex, exec->tmp) == 1)
+			{
+				lex->cmd = exec->tmp;
+				return ;
+			}
 		}
-		lex->cmd = exec->tmp;
-		while (lex->cmd)
-		{
-			pipe_exec(lex, exec);
-			exec->i++;
-			if (lex->cmd)
-				free_cmd(&lex->cmd);
-			exec->flag = 0;
-			if (lex->cmd && lex->cmd->argument)
-				check_path(lex->cmd, &exec);
-		}
-		free_child(lex);
-		exit(g_exit);
+		lex->cmd = lex->cmd->next;
+	}
+	lex->cmd = exec->tmp;
+	while (lex->cmd)
+	{
+		pipe_exec(lex, exec);
+		exec->i++;
+		if (lex->cmd)
+			free_cmd(&lex->cmd);
+		exec->flag = 0;
+		if (lex->cmd && lex->cmd->argument)
+			check_path(lex->cmd, &exec);
 	}
 }
 
@@ -134,7 +141,7 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 	close_pipes(exec);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
-	wait_stat();
+	// wait_stat();
 	if (exec->path)
 		free(exec->path);
 	init_null(lex);
