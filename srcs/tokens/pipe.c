@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 20:43:12 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:03:21 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 	close_pipes(exec);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
-	// wait_stat();
 	if (exec->path)
 		free(exec->path);
 	init_null(lex);

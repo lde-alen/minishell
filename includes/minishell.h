@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 18:55:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:49:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,7 +251,7 @@ ssize_t	open_file(t_lex *lex, char *str, int flag);
 void	redir(t_lex *lex);
 ssize_t	find_redir_in(t_lex *lex, size_t type);
 void	check_redir_type(t_lex *lex);
-void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len);
+size_t	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len);
 void	set_shlvl(t_lex *lex, t_exec *exec);
 void	fill_doc_arr(t_lex *lex, char *str);
 void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j);

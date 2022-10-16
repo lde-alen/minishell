@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/13 13:10:14 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:11:29 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ size_t	dup_stdout(t_lex *lex, ssize_t *f_out)
 		if (dup2(*f_out, STDOUT_FILENO) < 0 || *f_out < 0)
 		{
 			g_exit = 1;
-			perror("minishell");
 			return (1);
 		}
 		close(*f_out);

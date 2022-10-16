@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/15 20:32:30 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:10:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_bool	check_here_doc(t_lex *lex)
 size_t	exit_stat(int err)
 {
 	perror("minishell");
-	ft_printf("Errno: %d\n", err);
 	if (err == 2)
 	{
 		g_exit = 1;
