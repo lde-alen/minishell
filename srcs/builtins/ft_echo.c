@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:17:32 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/14 05:15:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:08:18 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	ft_echo(t_cmd *cmd_lst)
 
 	i = 1;
 	flag = 0;
+	g_exit = 0;
 	if (!cmd_lst->argument[i])
 		ft_putendl_fd("", 1);
 	while (cmd_lst->argument[i])

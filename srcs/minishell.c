@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 23:43:24 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 15:59:56 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:42:36 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	minishell(char **env)
 	char	*str;
 
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sig_handler); // hawahd made a change,
 	lex = (t_lex *)malloc(sizeof(t_lex));
 	if (!lex)
 		exit(EXIT_FAILURE);

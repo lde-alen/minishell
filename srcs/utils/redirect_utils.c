@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 15:58:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:10:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	redirect(t_lex *lex)
 	ret = 0;
 	id = fork();
 	if (id < 0)
-		ft_putendl_fd("Fork failed", 2);
+		perror("minishell");
 	else if (id == 0)
 	{
 		ret = child(lex);

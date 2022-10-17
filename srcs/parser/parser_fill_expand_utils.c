@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 16:00:42 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 16:45:03 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:47:53 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	setup_expand(t_lex *lex, char **name, char *str)
 		lex->sh->i++;
 	}
 	lex->sh->i--;
-	lex->sh->expand_len += get_expand_len(*name, lex->env, 0);
+	if (*name && **name)
+		lex->sh->expand_len += get_expand_len(*name, lex->env, 0);
 	lex->sh->j += (ft_strlen(get_env_value(lex->env, *name)) - 1);
 	ft_strjustcat(lex->sh->tmp_str, get_env_value(lex->env, *name));
 }

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 16:43:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:14:16 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,6 @@ void	ft_fill_expand(char *str, t_lex *lex)
 	else if (str[lex->sh->i] == '?')
 		question_assist(&name, ascii_exit, lex, str);
 	else
-	{
-		if (check_validity(&str[lex->sh->i], 0) == 1)
-			special_c(lex, &name, str);
-		else
-			setup_expand(lex, &name, str);
-	}
+		setup_expand(lex, &name, str);
 	free (name);
 }

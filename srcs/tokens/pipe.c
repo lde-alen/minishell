@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 16:07:16 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 22:14:18 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,10 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 		return ;
 	}
 	else if (exec->id[exec->i] == 0)
+	{
+		signal(SIGQUIT, SIG_IGN);
 		check_pos(lex, exec);
+	}
 	close_pipes(exec);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
