@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trimz_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 13:41:35 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 15:58:34 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 01:59:51 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	checkz(char *str, t_lex *lex)
 				if (!lex->cmd->command && !lex->cmd->next
 					&& !lex->cmd->redir)
 				{
-					ft_printf("FREE INVALID\n");
 					while (lex->cmd)
 						free_cmd(&lex->cmd);
 					return ;

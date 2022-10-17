@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 01:44:09 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 02:11:43 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,19 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 	if (store)
 		store->value = ft_strdup(pwd->value);
 	free(pwd->value);
-	if (!cmd->argument[1])
-		pwd->value = ft_strdup(buff);
-	else
+	if (buff)
 	{
-		if (ft_strcmp(cmd->argument[1], "//") == 0)
-			pwd->value = ft_strdup("//");
-		else
+		if (!cmd->argument[1])
 			pwd->value = ft_strdup(buff);
+		else
+		{
+			if (ft_strcmp(cmd->argument[1], "//") == 0)
+				pwd->value = ft_strdup("//");
+			else
+				pwd->value = ft_strdup(buff);
+		}
+		free(buff);
 	}
-	free(buff);
 }
 
 void	cd_dash(t_env *lst, char **store, char **store_curr)
@@ -108,7 +111,7 @@ static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 	}
 	else
 	{
-		if (access(cmd->argument[1], F_OK | X_OK | R_OK | W_OK) == 0)
+		if (access(cmd->argument[1], F_OK | X_OK) == 0)
 			*check = chdir(cmd->argument[1]);
 	}
 }
