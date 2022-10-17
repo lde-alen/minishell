@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:46:25 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 16:05:40 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:59:38 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void	check_pos(t_lex *lex, t_exec *exec)
 	else
 		ret = mid_kid(lex, exec);
 	free_child(lex);
+	close_fd();
 	exit(ret);
 }

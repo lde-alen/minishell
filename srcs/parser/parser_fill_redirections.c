@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 18:39:09 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:28:12 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,41 +22,19 @@ size_t	ft_count_redir(char *str)
 	while (str[i])
 	{
 		if (str[i] == D_QUOTE)
-		{
-			i++;
-			while (str[i] != D_QUOTE)
-				i++;
-			i++;
-		}
-		if (str[i] == S_QUOTE)
-		{
-			i++;
-			while (str[i] != S_QUOTE)
-				i++;
-			i++;
-		}
-		if (str[i] == '>' || str[i] == '<')
+			quote_loop(str, &i, D_QUOTE);
+		else if (str[i] == S_QUOTE)
+			quote_loop(str, &i, S_QUOTE);
+		else if (str[i] == '>' || str[i] == '<')
 		{
 			while (str[i] == '>' || str[i] == '<')
 				i++;
-			i--;
 			count++;
 		}
-		i++;
+		else
+			i++;
 	}
 	return (count);
-}
-
-void	ft_init2_file(t_lex *lex)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < lex->cmd->redir->flag_len)
-	{
-		lex->cmd->redir->file[i] = (char *)ft_calloc(1, sizeof(char));
-		i++;
-	}
 }
 
 void	ft_get_file_name(char *str, t_lex *lex, size_t j)
@@ -82,52 +60,15 @@ void	ft_fill_r_flags(t_lex *lex, size_t count)
 	size_t	i;
 	size_t	j;
 
-	i = 0;
-	j = 0;
-	lex->cmd->redir->flag_len = count;
-	lex->cmd->redir->flag = (size_t *)malloc(sizeof(size_t) * (count));
-	lex->cmd->redir->file = (char **)ft_calloc((count), sizeof(char *));
-	ft_init2_file(lex);
-	while (lex->cmd->command[i])
+	ft_fill_r_flags_init(&i, &j, lex, count);
+	while (i < ft_strlen(lex->cmd->command))
 	{
 		if (lex->cmd->command[i] == D_QUOTE)
-		{
-			i++;
-			while (lex->cmd->command[i] != D_QUOTE)
-				i++;
-			i++;
-		}
-		if (lex->cmd->command[i] == S_QUOTE)
-		{
-			i++;
-			while (lex->cmd->command[i] != S_QUOTE)
-				i++;
-			i++;
-		}
-		if (lex->cmd->command[i] == '>' || lex->cmd->command[i] == '<')
-		{
-			i++;
-			if (lex->cmd->command[i] == '>')
-			{
-				lex->cmd->redir->flag[j] = DR_REDIR;
-				ft_get_file_name(lex->cmd->command + i, lex, j);
-			}
-			else if (lex->cmd->command[i] == '<')
-			{
-				lex->cmd->redir->flag[j] = DL_REDIR;
-				ft_get_file_name(lex->cmd->command + i, lex, j);
-			}
-			else
-			{
-				i--;
-				if (lex->cmd->command[i] == '>')
-					lex->cmd->redir->flag[j] = R_REDIR;
-				if (lex->cmd->command[i] == '<')
-					lex->cmd->redir->flag[j] = L_REDIR;
-				ft_get_file_name(lex->cmd->command + i, lex, j);
-			}
-			j++;
-		}
+			cmd_quote_loop(lex, &i, D_QUOTE);
+		else if (lex->cmd->command[i] == S_QUOTE)
+			cmd_quote_loop(lex, &i, S_QUOTE);
+		else if (lex->cmd->command[i] == '>' || lex->cmd->command[i] == '<')
+			fill_redir_d_redir_check(&i, &j, lex);
 		i++;
 	}
 }

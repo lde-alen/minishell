@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/03 12:57:59 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:13:20 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,12 @@ int	check_str_exit(char *arg)
 	return (0);
 }
 
-void	exit_error(t_cmd *cmd_lst)
-{
-	ft_putstr_fd("bash: exit: ", 2);
-	ft_putstr_fd(cmd_lst->argument[1], 2);
-	ft_putendl_fd(" numeric argument required", 2);
-}
-
-void	check_valid(t_cmd **cmd_lst, size_t i)
+void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 {
 	char	*tmp;
 
+	check_plus_minus(lex, cmd_lst, i);
+	check_special(lex, cmd_lst);
 	if (((ft_atol((*cmd_lst)->argument[i]) > 9223372036854775807)
 			&& ((*cmd_lst)->argument[i][0] == '+'
 			|| (*cmd_lst)->argument[i][0] != '-'))
@@ -63,8 +58,10 @@ void	check_valid(t_cmd **cmd_lst, size_t i)
 		&& (*cmd_lst)->argument[i][0] == '-'))
 	{
 		ft_putendl_fd("exit", i);
-		exit_error(*cmd_lst);
-		exit(255);
+		err_msg("exit", "numeric argument required");
+		free_child(lex);
+		g_exit = 255;
+		exit(g_exit);
 	}
 	else
 	{
@@ -75,51 +72,47 @@ void	check_valid(t_cmd **cmd_lst, size_t i)
 	}
 }
 
-void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
+void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 {
-	int		flag;
-	size_t	ret;
-
-	flag = 0;
+	*flag = 0;
 	if (cmd_lst->argument[1])
 	{
 		if (check_str_exit(cmd_lst->argument[1]) == 0)
-			check_valid(&cmd_lst, 1);
+			check_valid(lex, &cmd_lst, 1);
 		else
 		{
 			if (ft_strcmp(cmd_lst->argument[1], "--") == 0)
-			{
-				flag = 1;
-				check_valid(&cmd_lst, 2);
-			}
-			else	
+				check_sec_arg(lex, cmd_lst, flag);
+			else
 			{
 				ft_putendl_fd("exit", 1);
-				exit_error(cmd_lst);
+				err_msg("exit", "numeric argument required");
 				free_child(lex);
-				exit(255);
+				g_exit = 255;
+				exit(g_exit);
 			}
 		}
 	}
+}
+
+void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
+{
+	int		flag;
+
+	check_exit_val(lex, cmd_lst, &flag);
 	ft_putendl_fd("exit", 1);
-	if (cmd_lst->argument[1] && flag == 0)
+	if (!cmd_lst->argument[1])
+		g_exit = 0;
+	else if (cmd_lst->argument[1] && flag == 0)
 	{
 		if (flag == 0)
-		{
-			ret = ft_atol(cmd_lst->argument[1]);
-			free_child(lex);
-			exit(ret);
-		}
-		else if (cmd_lst->argument[2] && flag == 1)
-		{
-			ret = ft_atol(cmd_lst->argument[2]);
-			free_child(lex);
-			exit(ret);
-		}
+			g_exit = ft_atol(cmd_lst->argument[1]);
 	}
 	else
 	{
-		free_child(lex);
-		exit(0);
+		if (cmd_lst->argument[2])
+			g_exit = ft_atol(cmd_lst->argument[2]);
 	}
+	free_child(lex);
+	exit(g_exit);
 }

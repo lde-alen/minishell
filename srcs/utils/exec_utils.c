@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 12:29:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 13:42:23 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,10 @@
 char	**get_path(t_env *lst)
 {
 	char	**env_path;
-	t_env	*tmp;
 
-	tmp = lst;
-	while (lst->next != tmp)
-	{
-		if (ft_strcmp(lst->name, "PATH") == 0)
-		{
-			env_path = ft_split(lst->value, ':');
-			return (env_path);
-		}
-		lst = lst->next;
-	}
+	env_path = ft_split(search_env(lst, "PATH")->value, ':');
+	if (env_path)
+		return (env_path);
 	return (NULL);
 }
 
@@ -38,6 +30,10 @@ char	*join_path(t_cmd *cmd_lst, char *path, char **env_path)
 	size_t	i;
 
 	i = 0;
+	if (!env_path)
+	{
+		return (NULL);
+	}
 	while (env_path[i])
 	{
 		post_join = ft_strjoin(ft_strdup("/"), cmd_lst->command);
@@ -63,13 +59,6 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	char	**env_path;
 	char	*path;
 
-	if (access(cmd_lst->command, F_OK | X_OK) == 0
-		&& ft_strcmp(cmd_lst->command, "cat") != 0)
-	{
-		// if (access(cmd_lst->command, X_OK) == 0)
-		// 	return (cmd_lst->command);
-		return (ft_strdup(cmd_lst->command));
-	}
 	if (search_env(lst, "PATH") == NULL)
 		return (NULL);
 	env_path = get_path(lst);
@@ -77,6 +66,9 @@ char	*check_access(t_env *lst, t_cmd *cmd_lst)
 	path = join_path(cmd_lst, path, env_path);
 	if (path != NULL)
 		return (path);
+	if (access(cmd_lst->command, F_OK | X_OK) == 0
+		&& ft_strcmp(cmd_lst->command, "cat") != 0)
+		return (ft_strdup(cmd_lst->command));
 	free(env_path);
 	return (NULL);
 }
@@ -91,7 +83,9 @@ char	**lst_to_char(t_env **lst)
 	i = 0;
 	tmp = *lst;
 	env = (char **)malloc(sizeof(char *) * (get_lst_len(*lst) + 1));
-	while (tmp->next != *lst)
+	if (!env)
+		return (NULL);
+	while (tmp != *lst)
 	{
 		env[i] = ft_strdup(tmp->name);
 		env[i] = ft_strjoin(env[i], "=");
@@ -104,4 +98,17 @@ char	**lst_to_char(t_env **lst)
 	env[i] = ft_strjoin(env[i], tmp->value);
 	env[i + 1] = NULL;
 	return (env);
+}
+
+void	set_path(t_lex *lex, t_exec *exec)
+{
+	if (lex->cmd->argument)
+	{
+		if (lex->cmd->argument[0])
+			exec->path = check_access(lex->env, lex->cmd);
+		else
+			exec->path = NULL;
+	}
+	else
+		exec->path = NULL;
 }

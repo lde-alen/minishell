@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_fill_expand.c                               :+:      :+:    :+:   */
+/*   sig.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 18:14:16 by lde-alen         ###   ########.fr       */
+/*   Created: 2022/10/09 14:14:43 by asanthos          #+#    #+#             */
+/*   Updated: 2022/10/17 19:48:59 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_fill_expand(char *str, t_lex *lex)
+void	sig_handler(int val)
 {
-	char	*name;
-	char	*ascii_exit;
+	if (val == SIGINT)
+	{
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		g_exit = 130;
+	}
+}
 
-	ascii_exit = NULL;
-	name = ft_calloc(1, sizeof(char));
-	lex->sh->i++;
-	if ((ft_isdigit(str[lex->sh->i]) == 1)
-		&& (ft_isdigit(str[lex->sh->i + 1]) == 1))
-			lex->sh->i++;
-	else if (str[lex->sh->i] == '?')
-		question_assist(&name, ascii_exit, lex, str);
-	else
-		setup_expand(lex, &name, str);
-	free (name);
+void	sig(int val)
+{
+	if (val == SIGINT)
+	{
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_redisplay();
+		g_exit = -69;
+	}
+}
+
+void	free_sig(t_redir *redir, char *store)
+{
+	free(store);
+	if (redir->str || ft_strcmp(redir->str, "") == 0)
+		free(redir->str);
 }

@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:45:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 16:09:00 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:50:48 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	dup_doc(t_lex *lex)
 	pipe(lex->cmd->redir->fd);
 	id = fork();
 	if (id < 0)
-		perror("dead");
+		perror("minishell");
 	if (id == 0)
 	{
 		dup2(lex->cmd->redir->fd[1], STDOUT_FILENO);
@@ -30,7 +30,7 @@ void	dup_doc(t_lex *lex)
 		free_child(lex);
 		exit(0);
 	}
-	wait(&g_exit);
+	wait_stat();
 	close(lex->cmd->redir->fd[1]);
 }
 
@@ -42,13 +42,15 @@ size_t	main_child2(t_lex *lex)
 	{
 		lex->exec->flag = 2;
 		exec_builtin(lex);
-		return (0);
+		return (g_exit);
 	}
 	err = check_type(lex->cmd, &lex->exec);
 	if (err != 0)
 		return (err);
 	return (exec_child(lex->cmd, lex-> exec));
 }
+
+///RETURN VALUE FOR CHILDREN
 
 size_t	first_child(t_lex *lex, t_exec *exec)
 {
@@ -59,7 +61,7 @@ size_t	first_child(t_lex *lex, t_exec *exec)
 	if (lex->cmd->redir)
 	{
 		redir(lex);
-		return (0);
+		return (g_exit);
 	}
 	return (main_child2(lex));
 }
@@ -72,7 +74,7 @@ size_t	last_child(t_lex *lex, t_exec *exec)
 	if (lex->cmd->redir)
 	{
 		redir(lex);
-		return (0);
+		return (g_exit);
 	}
 	return (main_child2(lex));
 }

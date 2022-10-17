@@ -6,38 +6,38 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/31 13:12:37 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 20:53:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	check_val(t_env *lst, t_cmd *cmd_lst, char	*len, int i)
+static void	check_val(t_env *lst, t_cmd *cmd_lst, int i)
 {
 	t_env	*check;
 
 	check = check_exist(lst, cmd_lst->argument[i]);
 	if (check != NULL)
-		join_str(cmd_lst, &len, i, &check);
+		join_str(cmd_lst, i, &check);
 	else
 		div_env(cmd_lst->argument[i], lst);
 }
 
-static char	*check_str(t_cmd *cmd_lst, size_t i)
+static char	*check_str(char *str)
 {
 	size_t	j;
 
 	j = 1;
-	while (cmd_lst->argument[i][j])
+	while (j < ft_strlen(str))
 	{
-		if (ft_isalnum(cmd_lst->argument[i][j]) == 0
-			&& (cmd_lst->argument[i][j] != '='))
+		if (ft_isalnum(str[j]) == 0
+			&& (str[j] != '='))
 		{
-			if (cmd_lst->argument[i][j] == '+'
-				&& cmd_lst->argument[i][j + 1] != '=')
+			if (str[j] == '+'
+				&& str[j + 1] != '=')
 			{
 				g_exit = 1;
-				return (cmd_lst->argument[i]);
+				return (str);
 			}
 		}
 		j++;
@@ -45,45 +45,47 @@ static char	*check_str(t_cmd *cmd_lst, size_t i)
 	return (NULL);
 }
 
-//CHECK
-char	*check_validity(t_cmd *cmd_lst)
+size_t	check_validity(char *str, int check)
 {
 	char	*ret;
-	size_t	i;
+	size_t	flag;
 
-	i = 0;
-	while (cmd_lst->argument[i])
+	g_exit = 0;
+	flag = 0;
+	if (isalpha(str[0]) == 0)
 	{
-		if (cmd_lst->argument[i][0] != '_'
-			&& (isalpha((cmd_lst->argument[i][0]))) == 0)
+		if (check == 1 && str[0] != '_')
 		{
 			g_exit = 1;
-			return (cmd_lst->argument[i]);
+			export_error(str);
+			flag = 1;
 		}
-		ret = check_str(cmd_lst, i);
-		if (ret != NULL)
-			return (ret);
-		i++;
+		else if (check == 0 && ft_isdigit(str[0]) == 0)
+		{
+			g_exit = 1;
+			flag = 1;
+		}
 	}
-	g_exit = 0;
-	return (NULL);
+	ret = check_str(str);
+	if (ret != NULL)
+		flag = 1;
+	if (flag == 1)
+	{
+		g_exit = 1;
+		return (1);
+	}
+	return (0);
 }
 
 void	ft_export(t_env *lst, t_cmd *cmd_lst)
 {
 	int		i;
-	char	*len;
-	char	*val;
 	t_env	*check;
 
 	i = 1;
-	len = NULL;
-	val = check_validity(cmd_lst);
-	if (val != NULL)
-		export_error(val);
-	else
+	while (cmd_lst->argument[i])
 	{
-		while (cmd_lst->argument[i])
+		if (check_validity(cmd_lst->argument[i], 1) == 0)
 		{
 			if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
 			{
@@ -92,9 +94,9 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 					div_env(cmd_lst->argument[i], lst);
 			}
 			else
-				check_val(lst, cmd_lst, len, i);
-			i++;
+				check_val(lst, cmd_lst, i);
 		}
+		i++;
 	}
 }
 

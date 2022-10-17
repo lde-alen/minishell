@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 16:17:48 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 21:54:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,6 @@ ssize_t	find_redir_in(t_lex *lex, size_t type)
 		i--;
 	}
 	return (-1);
-}
-
-size_t	get_last_delimiter(t_lex *lex)
-{
-	size_t	len;
-
-	len = lex->cmd->redir->flag_len - 1;
-	while (lex->cmd->redir->flag[len] != DL_REDIR)
-		len--;
-	return (len);
 }
 
 void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j)
@@ -65,33 +55,50 @@ void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j)
 	lex->cmd->redir->doc_arr[i] = NULL;
 }
 
-void	here_doc(t_lex *lex)
+size_t	delim_loop(t_lex *lex, t_cmd *tmp, char **store, size_t i)
 {
-	char	*str;
+	(void)tmp;
+	while (ft_strcmp(*store, lex->cmd->redir->file[i]) != 0)
+	{
+		if (g_exit == -69)
+		{
+			free_sig(lex->cmd->redir, *store);
+			return (1);
+		}
+		free(*store);
+		*store = readline("> ");
+		if (!*store)
+		{
+			free_sig(lex->cmd->redir, *store);
+			g_exit = -1;
+			return (1);
+		}
+		lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, *store);
+		lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, "\n");
+	}
+	return (0);
+}
+
+size_t	here_doc(t_lex *lex, t_cmd *tmp)
+{
 	char	*store;
 	size_t	i;
 
-	ft_redir_init(lex);
 	i = 0;
-	str = ft_strdup("");
+	lex->cmd->redir->str = ft_strdup("");
+	signal(SIGINT, sig);
 	while (i < lex->cmd->redir->flag_len)
 	{
 		store = ft_strdup("");
 		if (lex->cmd->redir->flag[i] == DL_REDIR)
-		{
-			while (ft_strcmp(store, lex->cmd->redir->file[i]) != 0)
-			{
-				free(store);
-				store = readline("> ");
-				str = ft_strjoin(str, store);
-				str = ft_strjoin(str, "\n");
-			}
-		}
+			if (delim_loop(lex, tmp, &store, i) == 1)
+				return (1);
 		free(store);
 		i++;
 	}
-	fill_doc_arr(lex, str);
-	free(str);
+	fill_doc_arr(lex, lex->cmd->redir->str);
+	free(lex->cmd->redir->str);
+	return (0);
 }
 
 void	redir(t_lex *lex)
@@ -107,7 +114,8 @@ void	redir(t_lex *lex)
 	lex->cmd->redir->right_dr = find_redir_in(lex, DR_REDIR);
 	left = lex->cmd->redir->left_r - lex->cmd->redir->left_dr;
 	right = lex->cmd->redir->right_r - lex->cmd->redir->right_dr;
-	fopen_rem(lex, right, left, &len);
+	if (fopen_rem(lex, right, left, &len) == 1)
+		return ;
 	check_redir_type(lex);
 	redirect(lex);
 }

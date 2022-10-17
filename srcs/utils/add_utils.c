@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/01 16:59:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:10:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	set_shlvl(t_lex *lex, t_exec *exec)
 			search_env(lex->env, "SHLVL")->value = NULL;
 		else
 		{
-			err_msg(lex->cmd, "warning",
-				"shell level too high, resetting to 1");
+			err_msg("warning", "shell level too high, resetting to 1");
 			search_env(lex->env, "SHLVL")->value = ft_strdup("1");
 		}
 	}
@@ -57,16 +56,30 @@ t_bool	check_here_doc(t_lex *lex)
 size_t	exit_stat(int err)
 {
 	perror("minishell");
-	ft_printf("Errno: %d\n", err);
-	if (errno == 2)
+	if (err == 2)
 	{
-		g_exit = 127;
+		g_exit = 1;
 		return (g_exit);
 	}
-	else if (errno == 13 || errno == 20)
+	else if (err == 13 || err == 20)
 	{
 		g_exit = 126;
 		return (g_exit);
 	}
 	return (0);
+}
+
+void	wait_stat(void)
+{
+	signal(SIGINT, SIG_IGN);
+	wait(&g_exit);
+	signal(SIGINT, sig_handler);
+	if (WIFEXITED(g_exit))
+		g_exit = WEXITSTATUS(g_exit);
+}
+
+void	init_null(t_lex *lex)
+{
+	lex->exec->env_kid = NULL;
+	lex->exec->path = NULL;
 }

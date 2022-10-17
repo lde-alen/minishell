@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/26 15:02:29 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:25:02 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_env	*search_env(t_env *lst, char *str)
-{
-	t_env	*tmp;
-
-	tmp = lst;
-	while (tmp->next != lst)
-	{
-		if (ft_strcmp(tmp->name, str) == 0)
-			return (tmp);
-		tmp = tmp->next;
-	}
-	if (ft_strcmp(tmp->name, str) == 0)
-		return (tmp);
-	return (NULL);
-}
 
 t_env	*search_oldpwd(t_env *lst)
 {
@@ -55,7 +39,8 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 	char	*buff;
 
 	buff = get_pwd();
-	store->value = ft_strdup(pwd->value);
+	if (store)
+		store->value = ft_strdup(pwd->value);
 	free(pwd->value);
 	if (!cmd->argument[1])
 		pwd->value = ft_strdup(buff);
@@ -69,32 +54,91 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 	free(buff);
 }
 
+void	cd_dash(t_env *lst, char **store, char **store_curr)
+{
+	ssize_t	ret;
+
+	if (!search_env(lst, "OLDPWD")->value)
+	{
+		err_msg("cd", "OLDPWD not set");
+		g_exit = 1;
+	}
+	else
+	{
+		*store = ft_strdup(search_env(lst, "OLDPWD")->value);
+		ret = chdir(*store);
+		if (ret < 0)
+			exit_stat(errno);
+		else
+		{
+			*store_curr = ft_strdup(search_env(lst, "PWD")->value);
+			free(search_env(lst, "PWD")->value);
+			free(search_env(lst, "OLDPWD")->value);
+			search_env(lst, "PWD")->value = ft_strdup(*store_curr);
+			search_env(lst, "OLDPWD")->value = ft_strdup(*store);
+			free(*store);
+			free(*store_curr);
+		}
+	}
+}
+
+static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
+{
+	char	*store;
+	char	*store_curr;
+
+	if (!cmd->argument[1] || ft_strcmp(cmd->argument[1], "~") == 0)
+	{
+		if (search_env(lst, "USER") != NULL)
+		{
+			*env_user = ft_strjoin(ft_strdup("/Users/"),
+					search_env(lst, "USER")->value);
+			chdir(*env_user);
+		}
+	}
+	else if (ft_strcmp(cmd->argument[1], "-") == 0)
+	{
+		if (search_env(lst, "OLDPWD") != NULL)
+			cd_dash(lst, &store, &store_curr);
+		else
+		{
+			err_msg("cd", "OLDPWD not set");
+			g_exit = 1;
+		}
+	}
+	else
+	{
+		if (access(cmd->argument[1], F_OK | X_OK) == 0)
+			*check = chdir(cmd->argument[1]);
+	}
+}
+
 void	ft_cd(t_cmd *cmd, t_env *lst)
 {
 	t_env	*pwd;
 	t_env	*store;
 	int		check;
 	char	*env_user;
+	struct stat	path_stat;
 
+	g_exit = 0;
 	pwd = search_env(lst, "PWD");
-	check = 0;
-	if (!cmd->argument[1])
-	{
-		if (search_env(lst, "USER") != NULL)
-		{
-			env_user = ft_strjoin("/Users/", ft_strdup(search_env(lst, "USER")->value));
-			chdir(env_user);
-		}
-	}
-	else
-		check = chdir(cmd->argument[1]);
+	check = -1;
+	set_check_val(cmd, lst, &check, &env_user);
+	ft_printf("CHECK: %d\n", check);
 	if (check < 0)
 	{
-		if (access(cmd->argument[1], F_OK | X_OK) == 0)
-			err_msg(cmd, cmd->argument[1], ": Permission denied");
-		else
-			err_msg(cmd, cmd->argument[1], ": No such file or directory");
+		if (stat(cmd->argument[1], &path_stat) == 0)
+		{
+			if (!S_ISDIR(path_stat.st_mode))
+				err_msg(cmd->argument[1], ": Not a directory");
+		}
+		else if (access(cmd->argument[1], F_OK) != 0)
+			err_msg(cmd->argument[1], ": No such file or directory");
+		else if (access(cmd->argument[1], F_OK | X_OK) != 0)
+			err_msg(cmd->argument[1], ": Permission denied");
 		g_exit = 1;
+		return ;
 	}
 	store = search_oldpwd(lst);
 	if (!store)

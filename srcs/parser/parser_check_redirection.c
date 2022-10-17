@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 19:00:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/09/22 19:37:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/16 18:55:02 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,83 +19,25 @@ int	check_redirections(char *str, t_lex *lex)
 	size_t	i;
 
 	i = 0;
-	while (str[i])
+	while (i < ft_strlen(str))
 	{
 		if (str[i] == ' ')
-		{
 			while (str[i] && str[i] == ' ')
 				i++;
-		}
 		if (str[i] == '"')
-		{
-			lex->sh->dq = 1;
-			i++;
-			while (str[i] != '"' && str[i])
-			{
-				if (str[i] == '$')
-					ft_check_expand(str, lex);
-				i++;
-			}
-		}
+			redir_d_quote_check(lex, str, &i);
 		else if (str[i] == '\'')
-		{
-			lex->sh->sq = 1;
-			i++;
-			while (str[i] != '\'' && str[i])
-				i++;
-		}
+			redir_s_quote_check(lex, str, &i);
 		else if (str[i] == '>')
 		{
 			i++;
-			lex->sh->sr = 1;
-			while (str[i] == '>' && str[i])
-			{
-				lex->sh->sr++;
-				i++;
-			}
-			if (lex->sh->sr > 2)
-			{
-				ft_putstr_fd("ERROR REDIR\n", 2);
+			if (redir_r_redir(lex, str, &i))
 				return (1);
-			}
-			while (str[i] == ' ' && str[i])
-				i++;
-			if (!(str[i] > ' ' && str[i] <= '~')
-				|| str[i] == '<' || str[i] == '>' || str[i] == '|')
-			{
-				ft_putstr_fd("ERROR REDIR\n", 2);
-				return (1);
-			}
-			if (str[i] == '$')
-				ft_check_expand(str, lex);
 			i--;
 		}
 		else if (str[i] == '<')
-		{
-			i++;
-			lex->sh->sr = 1;
-			while (str[i] == '<' && str[i])
-			{
-				lex->sh->sr++;
-				i++;
-			}
-			if (lex->sh->sr > 2)
-			{
-				ft_putstr_fd("ERROR REDIR\n", 2);
+			if (redir_l_redir(lex, str, &i))
 				return (1);
-			}
-			while (str[i] == ' ' && str[i])
-				i++;
-			if (!(str[i] > ' ' && str[i] <= '~')
-				|| str[i] == '>' || str[i] == '<' || str[i] == '|')
-			{
-				ft_putstr_fd("ERROR REDIR\n", 2);
-				return (1);
-			}
-			if (str[i] == '$')
-				ft_check_expand(str, lex);
-			i--;
-		}
 		i++;
 	}
 	return (0);

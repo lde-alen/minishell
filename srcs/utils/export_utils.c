@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:11:19 by asanthos          #+#    #+#             */
-/*   Updated: 2022/08/26 12:46:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 15:15:13 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,21 @@ t_env	*check_stack(t_env *new_node, t_env *lst)
 	return (push_env(tmp, lst->name, lst->value));
 }
 
-void	join_str(t_cmd *cmd_lst, char **len, int i, t_env **check)
+void	join_str(t_cmd *cmd_lst, int i, t_env **check)
 {
 	char	*div;
 	char	*tmp;
+	char	*len;
 
-	*len = ft_strchr(cmd_lst->argument[i], '+');
+	len = ft_strchr(cmd_lst->argument[i], '+');
 	div = ft_strchr(cmd_lst->argument[i], '=');
-	if (*len != NULL && *len[1] == '=')
+	if (len != NULL && len[1] == '=')
 	{
 		if ((*check)->value != NULL)
 		{
 			tmp = ft_strdup((*check)->value);
 			free((*check)->value);
 			(*check)->value = ft_strjoin(tmp, ft_strchr(div, div[1]));
-			free(tmp);
 		}
 		else
 			(*check)->value = ft_strdup(ft_strchr(div, div[1]));

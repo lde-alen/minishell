@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 23:11:19 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:58:20 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_redir
 	int			flag_out;
 	char		**doc_arr;
 	int			*fd;
+	char		*str;
 }	t_redir;
 
 typedef struct s_cmd
@@ -101,14 +102,17 @@ typedef struct s_sh
 
 typedef struct s_exec
 {
+	char	**env_kid;
+	char	*path;
 	int		**fd;
+	int		fork_id;
+	int		dup_in;
+	ssize_t	ret;
 	ssize_t	*id;
 	size_t	flag;
 	size_t	len;
 	size_t	i;
-	char	*path;
-	char	**env_kid;
-	int		dup_in;
+	t_cmd	*tmp;
 }	t_exec;
 
 typedef enum e_boolean
@@ -177,7 +181,7 @@ void	ft_echo(t_cmd *cmd_lst);
 void	div_env(char *str, t_env *lst);
 t_env	*check_exist(t_env *lst, char *str);
 t_env	*check_stack(t_env *new_node, t_env *lst);
-void	join_str(t_cmd *cmd_lst, char **len, int i, t_env **check);
+void	join_str(t_cmd *cmd_lst, int i, t_env **check);
 void	get_sub(char **store, char *str, char **env_name, char **env_value);
 
 void	ft_pwd(t_env *lst);
@@ -203,7 +207,6 @@ int		get_lst_len(t_env *lst);
 int		iter_diff(t_env *lst, t_env *new_node);
 size_t	get_cmd_len(t_cmd *cmd);
 
-char	*check_validity(t_cmd *cmd_lst);
 size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 
 /**
@@ -236,16 +239,19 @@ size_t	last_child(t_lex *lex, t_exec *exec);
 size_t	mid_kid(t_lex *lex, t_exec *exec);
 void	dup_doc(t_lex *lex);
 size_t	exit_stat(int err);
+void	check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag);
+void	check_special(t_lex *lex, t_cmd **cmd_lst);
+void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i);
 
 void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);
 void	append_out(t_lex *lex, char *file);
-void	here_doc(t_lex *lex);
+size_t	here_doc(t_lex *lex, t_cmd *tmp);
 ssize_t	open_file(t_lex *lex, char *str, int flag);
 void	redir(t_lex *lex);
 ssize_t	find_redir_in(t_lex *lex, size_t type);
 void	check_redir_type(t_lex *lex);
-void	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len);
+size_t	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len);
 void	set_shlvl(t_lex *lex, t_exec *exec);
 void	fill_doc_arr(t_lex *lex, char *str);
 void	arr_loop(t_lex *lex, char *str_join, char **split_arr, size_t j);
@@ -254,6 +260,8 @@ t_bool	check_here_doc(t_lex *lex);
 size_t	exec_child(t_cmd *cmd_lst, t_exec *exec);
 size_t	check_type(t_cmd *cmd_lst, t_exec **exec);
 void	check_redir_type(t_lex *lex);
+void	wait_stat(void);
+void	set_path(t_lex *lex, t_exec *exec);
 
 /**
  * FREE FUNCTONS
@@ -268,25 +276,53 @@ void	free_cmd_lst(t_cmd *cmd_lst);
 void	free_child(t_lex *lex);
 void	free_split_baqala(char **split_res, int i);
 void	free_redir(t_redir *redir);
+void	free_file_redir(t_redir *redir);
+void	free_file(t_cmd *tmp, t_redir *redir);
 
 void	sig_handler(int val);
-void	err_msg(t_cmd *cmd_lst, char *val, char *err);
+void	sig(int val);
+void	free_sig(t_redir *redir, char *store);
+void	err_msg(char *val, char *err);
 
 /**
  * ERROR FUNCTONS
  */
 void	export_error(char *val);
 
-int		ft_strcmp(const char *s1, const char *s2);
-size_t	ft_atol(const char *str);
-char	*ft_ltoa(size_t n);
-
 void	ft_env_init(t_env *lst);
 void	ft_cmd_init(t_cmd *cmd_lst);
 void	ft_exec_init(t_exec *exec);
 void	ft_redir_init(t_lex *lex);
+void	init_null(t_lex *lex);
+void	init_pre_exec(t_lex *lex, t_exec *exec);
 char	**splitaz(char *str, char c);
 
 void	trimaz(t_lex *lex);
+size_t	check_validity(char *str, int check);
+void	check_plus_minus(t_lex *lex, t_cmd **cmd_lst, size_t i);
+void	mini_loop(t_lex *lex, char *str);
+void	stage3_init(ssize_t *i, t_lex *lex);
+void	stage1_init(t_bool *ret, t_lex *lex);
+void	stage3_loop(t_lex *lex, char **tab);
+int		check_tab(t_lex *lex, char **tab);
+int		check_cmd(t_lex *lex);
+void	redir_d_quote_check(t_lex *lex, char *str, size_t *i);
+void	redir_s_quote_check(t_lex *lex, char *str, size_t *i);
+int		redir_r_redir(t_lex *lex, char *str, size_t *i);
+int		redir_l_redir(t_lex *lex, char *str, size_t *i);
+void	fill_ds_quote(char **tmp, size_t *i, t_lex *lex, int quote);
+void	util_fill_redir(t_lex *lex, size_t *i);
+void	question_assist(char **name, char *ascii_exit, t_lex *lex, char *str);
+void	special_c(t_lex *lex, char **name, char *str);
+void	setup_expand(t_lex *lex, char **name, char *str);
+void	fill_redir_d_redir_check(size_t *i, size_t *j, t_lex *lex);
+void	cmd_quote_loop(t_lex *lex, size_t *i, int quote);
+void	quote_loop(char *str, size_t *i, int quote);
+void	ft_fill_r_flags_init(size_t *i, size_t *j, t_lex *lex, size_t count);
+void	ft_get_file_name(char *str, t_lex *lex, size_t j);
+void	quote_len_loop(char const **s, size_t *len, int quote);
+int		free_splitaz_tab(char **tab, size_t *i);
+void	splitaz_loop(char const **s, size_t *len);
+void	close_fd(void);
 
 #endif

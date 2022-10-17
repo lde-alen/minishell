@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 13:02:04 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/10 20:33:48 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:55:03 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	check_fill_quotes(char *str, char quote, t_lex *lex)
 		lex->sh->tmp_str[lex->sh->j] = S_QUOTE;
 	lex->sh->j++;
 	lex->sh->i++;
-	while (str[lex->sh->i] != quote)
+	while (str[lex->sh->i] != quote && str[lex->sh->i])
 	{
 		if (str[lex->sh->i] == '$' && lex->sh->dq == 1)
 			ft_fill_expand(str, lex);

@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
@@ -6,36 +6,11 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 19:52:17 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/29 05:02:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:49:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_split(char **split_res)
-{
-	int	i;
-
-	i = 0;
-	while (split_res[i])
-	{
-		if (split_res[i])
-			free(split_res[i]);
-		i++;
-	}
-	free(split_res);
-}
-
-void	free_split_baqala(char **split_res, int i)
-{
-	while (split_res[i])
-	{
-		if (split_res[i])
-			free(split_res[i]);
-		i++;
-	}
-	free(split_res);
-}
 
 void	free_env_lst(t_env *lst)
 {
@@ -65,30 +40,23 @@ void	free_cmd(t_cmd **cmd_lst)
 
 	i = 0;
 	tmp = *cmd_lst;
-	while ((*cmd_lst)->argument[i])
+	if ((*cmd_lst)->argument)
 	{
+		if ((*cmd_lst)->redir)
+			free_redir((*cmd_lst)->redir);
+		if ((*cmd_lst)->command)
+			free((*cmd_lst)->command);
+		while ((*cmd_lst)->argument[i])
+		{
+			free((*cmd_lst)->argument[i]);
+			i++;
+		}
 		free((*cmd_lst)->argument[i]);
-		i++;
+		free((*cmd_lst)->argument);
 	}
-	free((*cmd_lst)->argument[i]);
-	free((*cmd_lst)->argument);
 	if (cmd_lst)
 		(*cmd_lst) = ((*cmd_lst))->next;
 	free(tmp);
-}
-
-void	free_env_kid(char **env_kid)
-{
-	int	i;
-
-	i = 0;
-	while (env_kid[i])
-	{
-		free(env_kid[i]);
-		i++;
-	}
-	free(env_kid[i]);
-	free(env_kid);
 }
 
 void	free_exec(t_exec **exec)
@@ -106,26 +74,12 @@ void	free_exec(t_exec **exec)
 
 void	free_redir(t_redir *redir)
 {
-	size_t	i;
-
-	if (redir->file)
-	{
-		i = 0;
-		while (i < redir->flag_len)
-		{
-			free(redir->file[i]);
-			if (redir->doc_arr[i])
-				free(redir->doc_arr[i]);
-			i++;
-		}
-		free(redir->flag);
-		free(redir->file);
-		if (redir->doc_arr)
-		{
-			free(redir->doc_arr[i]);
-			free(redir->doc_arr);
-		}
-	}
+	free_file_redir(redir);
+	free(redir->flag);
+	free(redir->file);
+	if (redir->doc_arr)
+		free(redir->doc_arr);
+	redir->doc_arr = NULL;
 	if (redir->file_in)
 		free(redir->file_in);
 	if (redir->file_out)
@@ -133,6 +87,7 @@ void	free_redir(t_redir *redir)
 	if (redir->fd)
 		free(redir->fd);
 	free(redir);
+	redir = NULL;
 }
 
 void	free_child(t_lex *lex)
@@ -148,11 +103,7 @@ void	free_child(t_lex *lex)
 	while (lex->cmd)
 	{
 		if (lex->cmd)
-		{
-			if (lex->cmd->redir)
-				free_redir(lex->cmd->redir);
 			free_cmd(&lex->cmd);
-		}
 	}
 	if (lex)
 		free(lex);
