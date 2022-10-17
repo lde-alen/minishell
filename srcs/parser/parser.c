@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 18:56:09 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 00:28:47 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int	parser_stage2(char *str, t_lex *lex)
 				|| (str[lex->sh->i + 1] == '"' || str[lex->sh->i + 1] == '\''
 					|| str[lex->sh->i + 1] == '?')))
 			ft_fill_expand(str, lex);
-		else
-			lex->sh->tmp_str[lex->sh->j] = str[lex->sh->i];
+		lex->sh->tmp_str[lex->sh->j] = str[lex->sh->i];
 		lex->sh->i++;
 		lex->sh->j++;
 	}
