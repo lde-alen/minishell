@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 13:22:52 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 13:54:15 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ static size_t	child(t_lex *lex)
 		return (1);
 	if (lex->cmd->argument[0])
 	{
-		if (lex->cmd->redir && (!lex->cmd->command
-				|| ft_strcmp(lex->cmd->command, "") == 0))
+		if (lex->cmd->redir && (!lex->cmd->command))
 			return (0);
 		return (main_child2(lex));
 	}

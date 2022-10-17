@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 22:03:21 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 13:50:05 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 		exec->fork_id = fork();
 		if (exec->fork_id == 0)
 		{
-			here_doc(lex, lex->cmd);
+			if (here_doc(lex, lex->cmd) == 1)
+			{
+				free(exec->path);
+				return ;
+			}
 			redir(lex);
 			free_child(lex);
 			exit(g_exit);
