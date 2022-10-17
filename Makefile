@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/17 13:56:36 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/10/17 15:10:41 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -142,7 +142,7 @@ make vr		:		re
 					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all ./minishell
 
 make v		:		all
-					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all ./minishell
+					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
 
 
 re			:		fclean all

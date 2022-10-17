@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trimz_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 13:41:35 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 13:52:43 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:58:34 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,13 @@ static void	mini_free(t_lex *lex)
 	free (lex);
 }
 
+void	close_fd(void)
+{
+	close(STDOUT_FILENO);
+	close(STDIN_FILENO);
+	close(STDERR_FILENO);
+}
+
 void	mini_loop(t_lex *lex, char *str)
 {
 	if (str)
@@ -60,6 +67,7 @@ void	mini_loop(t_lex *lex, char *str)
 	else
 	{
 		mini_free(lex);
+		close_fd();
 		exit(g_exit);
 	}
 }

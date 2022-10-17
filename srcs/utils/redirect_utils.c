@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:07:34 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 13:54:15 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:58:42 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,12 @@ void	redirect(t_lex *lex)
 	{
 		ret = child(lex);
 		free_child(lex);
+		close_fd();
 		exit(ret);
 	}
 	wait_stat();
+	if (lex->cmd->redir->fd)
+		close(lex->cmd->redir->fd[0]);
 }
 
 ssize_t	check_perm(t_lex *lex, char *str)
