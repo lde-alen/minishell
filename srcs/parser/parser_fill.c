@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 22:31:23 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:15:17 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*ft_args_to_str(t_lex *lex)
 	i = 0;
 	while (i < ft_strlen(lex->cmd->command))
 	{
+		while (lex->cmd->command[i] == ' ' && lex->cmd->command[i])
+			i++;
 		if (lex->cmd->command[i] == D_QUOTE)
 			fill_ds_quote(&tmp, &i, lex, D_QUOTE);
 		if (lex->cmd->command[i] == S_QUOTE)
@@ -88,13 +90,19 @@ size_t	ft_count_args(char *args)
 void	ft_fill_arg(t_lex *lex)
 {
 	size_t	i;
+	size_t	j;
 	char	*args;
 	char	*tmp;
 
 	i = 0;
+	j = 0;
 	tmp = ft_calloc(1, sizeof(char));
 	i = ft_fill_first_arg(lex, i, tmp);
 	args = ft_args_to_str(lex);
+	// while (args[j] && args[j] == ' ')
+	// 	j++;
+	// if (j == ft_strlen(args))
+	// 	args = ft_strdup("");
 	lex->cmd->argument = splitaz(args, ' ');
 	free(lex->cmd->command);
 	free(args);
