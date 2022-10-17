@@ -6,7 +6,7 @@
 #    By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/17 15:10:41 by asanthos         ###   ########.fr        #
+#    Updated: 2022/10/17 16:01:40 by asanthos         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -138,12 +138,13 @@ fclean		:		clean
 					$(RM) $(LIBFT_DIR)/$(LIBFT_NAME)
 					$(MAKE) fclean -C $(LIBFT_DIR)
 
+make		:		all
+
 make vr		:		re
 					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all ./minishell
 
 make v		:		all
 					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all --track-fds=yes ./minishell
-
 
 re			:		fclean all
 
