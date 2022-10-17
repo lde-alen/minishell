@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/17 13:37:02 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/10/17 13:56:00 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -141,7 +141,7 @@ fclean		:		clean
 make v		:		re
 					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all ./minishell
 
-make d		:		all
+make vr		:		all
 					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all ./minishell
 
 
