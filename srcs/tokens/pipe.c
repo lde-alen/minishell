@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 01:34:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 01:51:23 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	}
 	if (lex->cmd->redir)
 	{
+		if (here_doc(lex, lex->cmd) == 1)
+		{
+			free(exec->path);
+			return ;
+		}
 		exec->fork_id = fork();
 		if (exec->fork_id == 0)
 		{
-			if (here_doc(lex, lex->cmd) == 1)
-			{
-				free(exec->path);
-				return ;
-			}
 			redir(lex);
 			free_child(lex);
 			exit(g_exit);
