@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 15:16:22 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:56:57 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ int	parser_stage2(char *str, t_lex *lex)
 	{
 		if (str[lex->sh->i] == '\'' || str[lex->sh->i] == '"')
 			check_fill_quotes(str, str[lex->sh->i], lex);
-		else if (str[lex->sh->i] == '$')
+		else if (str[lex->sh->i] == '$' && (ft_isalnum(str[lex->sh->i + 1])
+				|| (str[lex->sh->i + 1] == '"' || str[lex->sh->i + 1] == '\''
+					|| str[lex->sh->i + 1] == '?')))
 			ft_fill_expand(str, lex);
 		else
 			lex->sh->tmp_str[lex->sh->j] = str[lex->sh->i];

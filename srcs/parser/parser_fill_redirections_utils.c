@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 16:15:56 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 21:41:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:04:52 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	quote_loop(char *str, size_t *i, int quote)
 void	cmd_quote_loop(t_lex *lex, size_t *i, int quote)
 {
 	(*i)++;
-	while (lex->cmd->command[*i] != quote)
+	while (lex->cmd->command[*i] != quote && lex->cmd->command[*i])
 		(*i)++;
 	(*i)++;
 }
