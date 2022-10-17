@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 14:14:43 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 19:48:59 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 01:27:30 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sig_handler(int val)
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		g_exit = 130;
+		g_exit = 1;
 	}
 }
 
