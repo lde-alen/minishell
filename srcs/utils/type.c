@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:07:01 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/15 12:07:41 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:06:52 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,14 @@ size_t	check_type(t_cmd *cmd_lst, t_exec **exec)
 	if ((*exec)->path == NULL)
 		(*exec)->path = ft_strdup(cmd_lst->command);
 	return (0);
+}
+
+void	path_check(t_lex *lex, t_exec *exec)
+{
+	check_path(lex->cmd, &exec);
+	if (lex->cmd->command)
+	{
+		exec->path = check_access(lex->env, lex->cmd);
+		set_shlvl(lex, exec);
+	}
 }

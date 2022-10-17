@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 15:58:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:07:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,5 +324,6 @@ void	quote_len_loop(char const **s, size_t *len, int quote);
 int		free_splitaz_tab(char **tab, size_t *i);
 void	splitaz_loop(char const **s, size_t *len);
 void	close_fd(void);
+void	path_check(t_lex *lex, t_exec *exec);
 
 #endif

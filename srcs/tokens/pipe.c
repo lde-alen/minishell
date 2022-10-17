@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 15:59:50 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:07:16 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,7 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 
 void	exec_alone(t_lex *lex, t_exec *exec)
 {
-	check_path(lex->cmd, &exec);
-	if (lex->cmd->command)
-	{
-		exec->path = check_access(lex->env, lex->cmd);
-		set_shlvl(lex, exec);
-	}
+	path_check(lex, exec);
 	if (lex->cmd->redir)
 	{
 		exec->fork_id = fork();
