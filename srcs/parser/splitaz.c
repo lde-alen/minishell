@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:43:38 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 17:25:34 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/16 22:57:36 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	fill_tab(char const *s, char c, char **tab)
 	while (*s)
 	{
 		len = 0;
+		while (*s == c && *s)
+			s++;
 		while (*s != c && *s && s)
 			splitaz_loop(&s, &len);
 		tab[i] = (char *)malloc(len + 1);
