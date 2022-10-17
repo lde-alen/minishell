@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 17:59:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:28:12 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	ft_fill_r_flags(t_lex *lex, size_t count)
 	{
 		if (lex->cmd->command[i] == D_QUOTE)
 			cmd_quote_loop(lex, &i, D_QUOTE);
-		if (lex->cmd->command[i] == S_QUOTE)
+		else if (lex->cmd->command[i] == S_QUOTE)
 			cmd_quote_loop(lex, &i, S_QUOTE);
-		if (lex->cmd->command[i] == '>' || lex->cmd->command[i] == '<')
+		else if (lex->cmd->command[i] == '>' || lex->cmd->command[i] == '<')
 			fill_redir_d_redir_check(&i, &j, lex);
 		i++;
 	}

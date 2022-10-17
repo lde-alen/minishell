@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 09:34:20 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 17:56:57 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:56:09 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	parser_stage1(char *str, t_lex *lex)
 			ft_check_expand(str, lex);
 		lex->sh->i++;
 	}
-	lex->sh->input_len = lex->sh->i + lex->sh->expand_len;
+	lex->sh->input_len = lex->sh->i + lex->sh->expand_len + 1;
 	if (ret == false)
 		return (0);
 	else

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 13:55:06 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 18:04:26 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:20:33 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_tab(t_lex *lex, char **tab)
 
 void	stage3_loop(t_lex *lex, char **tab)
 {
-	ssize_t	i;
+	size_t	i;
 
 	i = 0;
 	while (tab[i])

@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 16:15:56 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 18:04:52 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:38:38 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_fill_r_flags_init(size_t *i, size_t *j, t_lex *lex, size_t count)
 	while (k < lex->cmd->redir->flag_len)
 	{
 		lex->cmd->redir->file[k] = (char *)ft_calloc(1, sizeof(char));
+		lex->cmd->redir->flag[k] = 0;
 		k++;
 	}
 }

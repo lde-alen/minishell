@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 18:59:05 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/09 16:06:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:58:20 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	check_quotes(char *str, char quote, t_lex *lex)
 			ft_putstr_fd("Error: Missing quote... RTFPDF.\n", 2);
 		if (quote == '"')
 			ft_putstr_fd("Error: missing dquote... RTFPDF\n", 2);
+		g_exit = 2;
 		return (1);
 	}
 	return (0);

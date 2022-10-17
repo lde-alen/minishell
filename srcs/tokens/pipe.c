@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 15:59:50 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:40:25 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,10 @@ void	pipe_exec(t_lex *lex, t_exec *exec)
 		return ;
 	}
 	else if (exec->id[exec->i] == 0)
+	{
+		signal(SIGQUIT, SIG_IGN);
 		check_pos(lex, exec);
+	}
 	close_pipes(exec);
 	if (exec->env_kid)
 		free_env_kid(exec->env_kid);
