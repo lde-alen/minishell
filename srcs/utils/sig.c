@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 14:14:43 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 15:01:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:07:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,4 @@ void	free_sig(t_redir *redir, char *store)
 	free(store);
 	if (redir->str || ft_strcmp(redir->str, "") == 0)
 		free(redir->str);
-	if (redir->doc_arr)
-	{
-		int i = 0;
-		while (redir->doc_arr[i])
-			free(redir->doc_arr[i]);
-		free(redir->doc_arr);
-	}
 }
