@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 01:46:42 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/19 03:30:47 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/19 03:42:54 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_dash_val(t_env *lst)
 	ssize_t	ret;
 
 	store_curr = ft_strdup(get_pwd());
+	ft_putendl_fd(store_curr, 1);
 	store = ft_strdup(search_env(lst, "OLDPWD")->value);
 	free(search_env(lst, "OLDPWD")->value);
 	search_env(lst, "OLDPWD")->value = ft_strdup(store_curr);
@@ -37,7 +38,6 @@ void	set_dash_val(t_env *lst)
 		free(store);
 	if (store_curr)
 		free(store_curr);
-	ft_putendl_fd(search_env(lst, "PWD")->value, 1);
 }
 
 void	set_err(t_cmd *cmd)
