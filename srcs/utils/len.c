@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   len.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:25:19 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/12 21:27:50 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/19 02:12:56 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_lst_len(t_env *env)
 
 	i = 0;
 	tmp = env;
-	while(env->next != tmp)
+	while (env->next != tmp)
 	{
 		i++;
 		env = env->next;

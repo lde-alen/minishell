@@ -6,11 +6,31 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:43:23 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 21:56:10 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 02:23:41 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+size_t	fopen_r(t_lex *lex, ssize_t right, ssize_t i)
+{
+	if (((right < -1 && i != lex->cmd->redir->right_r)
+			|| (right > -1 && i != lex->cmd->redir->right_dr))
+		|| !lex->cmd->command)
+		if (open_file(lex, lex->cmd->redir->file[i],
+				O_TRUNC | O_CREAT) == -1)
+			return (1);
+	return (0);
+}
+
+size_t	fopen_l(t_lex *lex, ssize_t left, ssize_t i)
+{
+	if ((left < -1 && i != lex->cmd->redir->left_r)
+		|| !lex->cmd->command)
+		if (open_file(lex, lex->cmd->redir->file[i], O_TRUNC) == -1)
+			return (1);
+	return (0);
+}
 
 size_t	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
 {
@@ -25,21 +45,13 @@ size_t	fopen_rem(t_lex *lex, ssize_t right, ssize_t left, ssize_t *len)
 				&& (i != find_redir_in(lex, R_REDIR) || !lex->cmd->command))
 			|| lex->cmd->redir->flag[i] == DR_REDIR)
 		{
-			if (((right < -1 && i != lex->cmd->redir->right_r)
-					|| (right > -1 && i != lex->cmd->redir->right_dr))
-				|| !lex->cmd->command)
-				if (open_file(lex, lex->cmd->redir->file[i],
-						O_TRUNC | O_CREAT) == -1)
-					return (1);
+			if (fopen_r(lex, right, i) == 1)
+				return (1);
 		}
 		else if (lex->cmd->redir->flag[i] == L_REDIR
 			&& (i != find_redir_in(lex, L_REDIR) || !lex->cmd->command))
-		{
-			if ((left < -1 && i != lex->cmd->redir->left_r)
-				|| !lex->cmd->command)
-				if (open_file(lex, lex->cmd->redir->file[i], O_TRUNC) == -1)
-					return (1);
-		}
+			if (fopen_l(lex, left, i) == 1)
+				return (1);
 		i++;
 	}
 	return (0);
