@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/19 01:18:46 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 01:47:43 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,45 +61,19 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 			free(buff);
 }
 
-void	cd_dash(t_env *lst, char **store, char **store_curr)
+void	cd_dash(t_env *lst)
 {
-	ssize_t	ret;
-
 	if (!search_env(lst, "OLDPWD")->value)
 	{
 		err_msg("cd", "OLDPWD not set");
 		g_exit = 1;
 	}
 	else
-	{
-		*store_curr = ft_strdup(get_pwd());
-		*store = ft_strdup(search_env(lst, "OLDPWD")->value);
-		free(search_env(lst, "OLDPWD")->value);
-		search_env(lst, "OLDPWD")->value = ft_strdup(*store_curr);
-		ret = chdir(*store);
-		if (ret < 0)
-			exit_stat(errno);
-		else
-		{
-			if (search_env(lst, "PWD"))
-			{
-				free(search_env(lst, "PWD")->value);
-				search_env(lst, "PWD")->value = ft_strdup(*store);
-			}
-		}
-		if (*store)
-			free(*store);
-		if (*store_curr)
-			free(*store_curr);
-		ft_putendl_fd(search_env(lst, "PWD")->value, 1);
-	}
+		set_dash_val(lst);
 }
 
 static int	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 {
-	char	*store;
-	char	*store_curr;
-
 	if (!cmd->argument[1] || ft_strcmp(cmd->argument[1], "~") == 0)
 	{
 		if (search_env(lst, "USER") != NULL)
@@ -112,7 +86,7 @@ static int	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 	else if (ft_strcmp(cmd->argument[1], "-") == 0)
 	{
 		if (search_env(lst, "OLDPWD") != NULL)
-			cd_dash(lst, &store, &store_curr);
+			cd_dash(lst);
 		else
 		{
 			err_msg("cd", "OLDPWD not set");
@@ -131,7 +105,6 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	t_env		*store;
 	int			check;
 	char		*env_user;
-	struct stat	path_stat;
 
 	g_exit = 0;
 	pwd = search_env(lst, "PWD");
@@ -140,15 +113,7 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 		return ;
 	if (check < 0)
 	{
-		if (stat(cmd->argument[1], &path_stat) == 0)
-		{
-			if (!S_ISDIR(path_stat.st_mode))
-				err_msg(cmd->argument[1], ": Not a directory");
-			else
-				err_msg(cmd->argument[1], ": Permission denied");
-		}
-		else if (access(cmd->argument[1], F_OK) != 0)
-			err_msg(cmd->argument[1], ": No such file or directory");
+		set_err(cmd);
 		g_exit = 1;
 		return ;
 	}

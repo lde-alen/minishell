@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 23:35:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 01:48:06 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,5 +330,7 @@ int		loop_arg(t_cmd *cmd);
 void	exit_msg(t_lex *lex);
 void	fill_quote_loop(char quote, t_lex *lex, char *str);
 void	args_to_init(char **tmp, size_t *i);
+void	set_dash_val(t_env *lst);
+void	set_err(t_cmd *cmd);
 
 #endif
