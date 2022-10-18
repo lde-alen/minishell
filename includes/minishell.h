@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 21:39:32 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:01:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,8 +239,8 @@ size_t	last_child(t_lex *lex, t_exec *exec);
 size_t	mid_kid(t_lex *lex, t_exec *exec);
 void	dup_doc(t_lex *lex);
 size_t	exit_stat(int err);
-void	check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag);
-void	check_special(t_lex *lex, t_cmd **cmd_lst);
+int		check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag);
+int		check_special(t_cmd **cmd_lst);
 int		check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i);
 
 void	redirect_in(t_lex *lex, char *file);

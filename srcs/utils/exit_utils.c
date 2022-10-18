@@ -6,13 +6,13 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:03:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/15 14:32:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:03:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag)
+int	check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag)
 {
 	if (cmd_lst->argument[2])
 	{
@@ -24,10 +24,11 @@ void	check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag)
 		else
 		{
 			err_msg("exit", "too many arguments");
-			free_child(lex);
-			exit(1);
+			g_exit = 1;
+			return (1);
 		}
 	}
+	return (0);
 }
 
 void	check_plus_minus(t_lex *lex, t_cmd **cmd_lst, size_t i)
@@ -43,15 +44,16 @@ void	check_plus_minus(t_lex *lex, t_cmd **cmd_lst, size_t i)
 	}
 }
 
-void	check_special(t_lex *lex, t_cmd **cmd_lst)
+int	check_special(t_cmd **cmd_lst)
 {
 	if (ft_strcmp((*cmd_lst)->argument[1], "--") != 0)
 	{
 		if ((*cmd_lst)->argument[2])
 		{
 			err_msg("exit", "too many arguments");
-			free_child(lex);
-			exit(1);
+			g_exit = 1;
+			return (1);
 		}
 	}
+	return (0);
 }
