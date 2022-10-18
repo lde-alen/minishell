@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 16:10:14 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 18:28:12 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:15:16 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	ft_count_redir(char *str)
 
 	i = 0;
 	count = 0;
-	while (str[i])
+	while (i < ft_strlen(str))
 	{
 		if (str[i] == D_QUOTE)
 			quote_loop(str, &i, D_QUOTE);

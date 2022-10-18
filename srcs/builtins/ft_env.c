@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 12:18:14 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/08 19:39:42 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:05:07 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ t_env	*ft_env(char **env)
 
 	i = 0;
 	lst = NULL;
+	env_value = NULL;
+	env_name = NULL;
+	div = NULL;
 	while (env[i])
 	{
 		env_name = ft_substr(env[i], 0,

@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/17 16:10:43 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/10/18 18:52:55 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -132,12 +132,10 @@ clean		:
 					$(RM) $(OBJS)
 					$(MAKE) clean -C $(LIBFT_DIR)
 
-
 fclean		:		clean
 					$(RM) $(NAME)
 					$(RM) $(LIBFT_DIR)/$(LIBFT_NAME)
 					$(MAKE) fclean -C $(LIBFT_DIR)
-
 
 vr			:		re
 					valgrind --suppressions=file.sup --leak-check=full --show-leak-kinds=all ./minishell

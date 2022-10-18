@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/19 10:31:03 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/08/27 12:11:44 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:58:23 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ size_t	ft_strlen(const char *s)
 	size_t	i;
 
 	i = 0;
-	if (!s)
+	if ((char *)s == NULL)
 		return (0);
-	while (s[i])
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }

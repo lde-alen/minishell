@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 13:43:38 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 18:46:31 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:45:40 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static ssize_t	sizeaz(char *str, char c)
 
 	i = 0;
 	size = 1;
-	while (str[i])
+	while (i < ft_strlen(str))
 	{
 		if (str[i] == D_QUOTE)
 			quote_loop(str, &i, D_QUOTE);

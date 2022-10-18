@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 10:08:44 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/11 20:00:30 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:35:06 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_env	*push_lst(t_env *new, t_env *lst, char *env_name, char *env_value)
 void	add_to_lst(t_env **lst, t_env **temp_node, t_env **new_node)
 {
 	*temp_node = *lst;
-	while ((*lst)->next != *temp_node)
+	while ((*lst)->next && (*lst)->next != *temp_node)
 		*lst = (*lst)->next;
 	(*lst)->next = *new_node;
 	(*new_node)->prev = *lst;

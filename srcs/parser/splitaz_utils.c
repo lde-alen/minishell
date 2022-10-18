@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 16:36:37 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/16 17:26:19 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:33:21 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void	quote_len_loop(char const **s, size_t *len, int quote)
 			(*s)++;
 			(*len)++;
 		}
-		(*s)++;
-		(*len)++;
+		if (**s)
+		{
+			(*s)++;
+			(*len)++;
+		}
 	}
 }
 
