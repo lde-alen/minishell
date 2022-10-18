@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 23:23:22 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:31:42 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,5 +327,6 @@ void	close_fd(void);
 void	path_check(t_lex *lex, t_exec *exec);
 void	handler_guy(int flag);
 void	fill_quote_loop(char quote, t_lex *lex, char *str);
+void	args_to_init(char **tmp, size_t *i);
 
 #endif
