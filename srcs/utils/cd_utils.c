@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 01:46:42 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/19 01:47:38 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 01:49:47 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	set_dash_val(t_env *lst)
 	store_curr = ft_strdup(get_pwd());
 	store = ft_strdup(search_env(lst, "OLDPWD")->value);
 	free(search_env(lst, "OLDPWD")->value);
-	search_env(lst, "OLDPWD")->value = ft_strdup(*store_curr);
+	search_env(lst, "OLDPWD")->value = ft_strdup(store_curr);
 	ret = chdir(store);
 	if (ret < 0)
 		exit_stat(errno);
