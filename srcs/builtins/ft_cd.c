@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/19 01:47:43 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 03:32:06 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 	}
 	else
 		*check = chdir(cmd->argument[1]);
-	return (1);
+	return (0);
 }
 
 void	ft_cd(t_cmd *cmd, t_env *lst)

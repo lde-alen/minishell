@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 01:46:42 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/19 01:49:47 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 03:30:47 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void	set_err(t_cmd *cmd)
 		else
 			err_msg(cmd->argument[1], ": Permission denied");
 	}
-	else if (access(cmd->argument[1], F_OK) != 0)
+	else
 		err_msg(cmd->argument[1], ": No such file or directory");
 }
