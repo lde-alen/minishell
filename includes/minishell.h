@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 14:51:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:23:22 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,5 +326,6 @@ void	splitaz_loop(char const **s, size_t *len);
 void	close_fd(void);
 void	path_check(t_lex *lex, t_exec *exec);
 void	handler_guy(int flag);
+void	fill_quote_loop(char quote, t_lex *lex, char *str);
 
 #endif

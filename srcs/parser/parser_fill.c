@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 18:03:25 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:26:35 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ char	*ft_args_to_str(t_lex *lex)
 	size_t	i;
 	char	*tmp;
 
-	tmp = (char *)ft_calloc(1, sizeof(char));
-	i = 0;
+	args_to_init(&tmp, &i);
 	while (i < ft_strlen(lex->cmd->command))
 	{
 		while (lex->cmd->command[i] == ' ' && lex->cmd->command[i])

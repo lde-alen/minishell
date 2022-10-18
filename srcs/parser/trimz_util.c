@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 13:41:35 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 01:59:51 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:05:53 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ static void	checkz(char *str, t_lex *lex)
 
 static void	mini_free(t_lex *lex)
 {
-	if (lex->cmd)
-		if (lex->cmd->redir)
-			free_child(lex);
-	free(lex->cmd);
+	if (lex)
+	{
+		if (lex->cmd)
+			if (lex->cmd->redir)
+				free_child(lex);
+		free(lex->cmd);
+	}
 	free_env_lst(lex->env);
 	free (lex);
 }

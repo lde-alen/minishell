@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 16:42:55 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:12:19 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,5 @@ void	ft_fill_expand(char *str, t_lex *lex)
 		setup_expand(lex, &name, str);
 		lex->sh->j++;
 	}
-	// lex->sh->i--;
-	// lex->sh->j++;// potential + pottentially add condition to when increment j
 	free (name);
 }

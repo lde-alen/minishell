@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 14:22:22 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 19:04:09 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:11:29 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	ft_pr_error(void)
 	ft_putstr_fd("ERROR REDIR\n", 2);
 	g_exit = 258;
 }
+
 void	redir_d_quote_check(t_lex *lex, char *str, size_t *i)
 {
 	lex->sh->dq = 1;
