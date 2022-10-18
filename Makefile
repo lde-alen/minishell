@@ -6,7 +6,7 @@
 #    By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/17 11:58:42 by lde-alen          #+#    #+#              #
-#    Updated: 2022/10/18 18:52:55 by lde-alen         ###   ########.fr        #
+#    Updated: 2022/10/18 23:19:20 by lde-alen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,7 @@ PARS		=		parser.c							\
 					trimz_util.c						\
 					parser_utils.c						\
 					redir_check_utils.c					\
+					parser_fill_quotes_utils.c			\
 
 
 SRCS_OBJ	=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
