@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 14:35:31 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:50:53 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,18 @@ void	exec_alone(t_lex *lex, t_exec *exec)
 	path_check(lex, exec);
 	if (lex->cmd->redir)
 	{
+		if (here_doc(lex, lex->cmd) == 1)
+		{
+			free(exec->path);
+			return ;
+		}
 		exec->fork_id = fork();
 		if (exec->fork_id == 0)
 		{
-			if (here_doc(lex, lex->cmd) == 1)
-			{
-				free(exec->path);
-				return ;
-			}
 			redir(lex);
 			free_child(lex);
 			exit(g_exit);
 		}
-		wait_stat();
 	}
 	else
 		if (fork_alone(lex, exec) == 1)

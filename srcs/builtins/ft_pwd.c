@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 09:27:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/09/25 18:58:39 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 02:08:51 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	ft_pwd(t_env *lst)
 		ft_putendl_fd("//", 1);
 	else
 		ft_putendl_fd(buff, 1);
-	free(buff);
+	if (buff)
+		free(buff);
 }
