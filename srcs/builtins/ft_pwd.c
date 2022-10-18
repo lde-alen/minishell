@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 09:27:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 02:08:51 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:59:52 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	ft_pwd(t_env *lst)
 
 	buff = NULL;
 	buff = get_pwd();
-	if (ft_strcmp(search_env(lst, "PWD")->value, "//") == 0)
+	if (search_env(lst, "PWD") && ft_strcmp(
+			search_env(lst, "PWD")->value, "//") == 0)
 		ft_putendl_fd("//", 1);
 	else
 		ft_putendl_fd(buff, 1);

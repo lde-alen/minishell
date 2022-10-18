@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 02:11:43 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/19 00:31:59 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 
 	buff = get_pwd();
 	if (store)
-		store->value = ft_strdup(pwd->value);
-	free(pwd->value);
-	if (buff)
+		store->value = ft_strdup(buff);
+	if (pwd && pwd->value)
+		free(pwd->value);
+	if (buff && pwd)
 	{
 		if (!cmd->argument[1])
 			pwd->value = ft_strdup(buff);
@@ -55,6 +56,8 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 		}
 		free(buff);
 	}
+	if (buff)
+		free(buff);
 }
 
 void	cd_dash(t_env *lst, char **store, char **store_curr)
@@ -113,6 +116,8 @@ static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 	{
 		if (access(cmd->argument[1], F_OK | X_OK) == 0)
 			*check = chdir(cmd->argument[1]);
+		else
+			*check = -1;
 	}
 }
 
@@ -126,7 +131,8 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 
 	g_exit = 0;
 	pwd = search_env(lst, "PWD");
-	check = -1;
+	check = 0;
+	ft_printf("CHECK: %d\n", check);
 	set_check_val(cmd, lst, &check, &env_user);
 	if (check < 0)
 	{
