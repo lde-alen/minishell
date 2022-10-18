@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 12:45:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 01:59:19 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:58:49 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,10 @@ void	wait_stat(void)
 	signal(SIGINT, sig_handler);
 	if (WIFEXITED(g_exit))
 		g_exit = WEXITSTATUS(g_exit);
+	if (W_EXITCODE(g_exit, SIGINT) == 514)
+		g_exit = 130;
+	else if (W_EXITCODE(g_exit, SIGQUIT) == 771)
+		g_exit = 131;
 }
 
 void	init_null(t_lex *lex)

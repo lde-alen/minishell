@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 14:50:53 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:59:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 		perror("fork");
 	else if (exec->id[0] == 0)
 	{
-		handler_guy(-10);
 		ret = main_child2(lex);
 		free_child(lex);
 		exit(ret);

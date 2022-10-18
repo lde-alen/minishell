@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:00:41 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 13:53:17 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:59:44 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	g_exit = 0;
 
 int	main(int ac, char **av, char **env)
 {
-	handler_guy(-3);
 	rl_catch_signals = 0;
 	if (ac == 1)
 	{
