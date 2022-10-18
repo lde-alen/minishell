@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 22:05:51 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:30:17 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ int	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 			< ft_atol("-9223372036854775808"))
 		&& (*cmd_lst)->argument[i][0] == '-'))
 	{
-		ft_putendl_fd("exit", i);
-		err_msg("exit", "numeric argument required");
-		free_child(lex);
+		exit_msg(lex);
 		g_exit = 255;
 		exit(g_exit);
 	}
@@ -93,9 +91,7 @@ int	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 			}
 			else
 			{
-				ft_putendl_fd("exit", 1);
-				err_msg("exit", "numeric argument required");
-				free_child(lex);
+				exit_msg(lex);
 				g_exit = 255;
 				exit(g_exit);
 			}

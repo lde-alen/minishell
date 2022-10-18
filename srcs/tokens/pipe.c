@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/30 05:25:02 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 21:55:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:23:28 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ size_t	fork_alone(t_lex *lex, t_exec *exec)
 	if (exec->flag == 1)
 	{
 		exec->flag = 2;
+		g_exit = 0;
 		exec_builtin(lex);
 		free_cmd(&lex->cmd);
 		if (exec->path)

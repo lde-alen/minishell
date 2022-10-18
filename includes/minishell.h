@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 22:01:49 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:30:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,7 +298,7 @@ void	init_pre_exec(t_lex *lex, t_exec *exec);
 char	**splitaz(char *str, char c);
 
 void	trimaz(t_lex *lex);
-size_t	check_validity(char *str, int check);
+size_t	check_validity(char *str);
 void	check_plus_minus(t_lex *lex, t_cmd **cmd_lst, size_t i);
 void	mini_loop(t_lex *lex, char *str);
 void	stage3_init(ssize_t *i, t_lex *lex);
@@ -327,5 +327,6 @@ void	close_fd(void);
 void	path_check(t_lex *lex, t_exec *exec);
 void	handler_guy(int flag);
 int		loop_arg(t_cmd *cmd);
+void	exit_msg(t_lex *lex);
 
 #endif

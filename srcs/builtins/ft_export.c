@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 21:52:54 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:24:16 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,41 +23,18 @@ static void	check_val(t_env *lst, t_cmd *cmd_lst, int i)
 		div_env(cmd_lst->argument[i], lst);
 }
 
-static char	*check_str(char *str)
+size_t	check_validity(char *str)
 {
-	size_t	j;
-
-	j = 1;
-	while (j < ft_strlen(str))
-	{
-		if (ft_isalnum(str[j]) == 0
-			&& (str[j] != '='))
-		{
-			if (str[j] == '+'
-				&& str[j + 1] != '=')
-			{
-				g_exit = 1;
-				return (str);
-			}
-		}
-		j++;
-	}
-	return (NULL);
-}
-
-size_t	check_validity(char *str, int check)
-{
-	char	*ret;
 	size_t	flag;
 	size_t	i;
 
-	(void)check;
-	g_exit = 0;
 	flag = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+		if ((str[i] == '+' && str[i + 1]) || str[i] == '=')
+			break ;
+		if (ft_isalpha(str[i]) == 0 && str[i] != '_')
 		{
 			if (i < 0 && ft_isdigit(str[i]))
 				break ;
@@ -66,9 +43,6 @@ size_t	check_validity(char *str, int check)
 		}
 		i++;
 	}
-	ret = check_str(str);
-	if (ret != NULL)
-		flag = 1;
 	if (flag == 1)
 	{
 		g_exit = 1;
@@ -83,18 +57,21 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	t_env	*check;
 
 	i = 1;
-	if (loop_arg(cmd_lst) == 1)
-		return ;
 	while (cmd_lst->argument[i])
 	{
-		if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
+		if (check_validity(cmd_lst->argument[i]) == 0)
 		{
-			check = check_exist(lst, cmd_lst->argument[i]);
-			if (check == NULL)
-				div_env(cmd_lst->argument[i], lst);
+			if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
+			{
+				check = check_exist(lst, cmd_lst->argument[i]);
+				if (check == NULL)
+					div_env(cmd_lst->argument[i], lst);
+			}
+			else
+				check_val(lst, cmd_lst, i);
 		}
 		else
-			check_val(lst, cmd_lst, i);
+			err_msg(cmd_lst->argument[i], "not a valid identifier");
 		i++;
 	}
 }

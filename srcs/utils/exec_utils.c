@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/31 09:45:55 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 13:42:23 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:50:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	**lst_to_char(t_env **lst)
 	env = (char **)malloc(sizeof(char *) * (get_lst_len(*lst) + 1));
 	if (!env)
 		return (NULL);
-	while (tmp != *lst)
+	while (tmp->next != *lst)
 	{
 		env[i] = ft_strdup(tmp->name);
 		env[i] = ft_strjoin(env[i], "=");
