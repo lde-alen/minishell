@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 23:30:17 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 03:15:39 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	check_str_exit(char *arg)
 
 int	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 {
-	char	*tmp;
-
 	check_plus_minus(lex, cmd_lst, i);
 	if (check_special(cmd_lst) == 1)
 		return (1);
@@ -63,12 +61,7 @@ int	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 		exit(g_exit);
 	}
 	else
-	{
-		tmp = ft_ltoa(ft_atol((*cmd_lst)->argument[i]) % 256);
-		free((*cmd_lst)->argument[i]);
-		(*cmd_lst)->argument[i] = ft_strdup(tmp);
-		free(tmp);
-	}
+		ft_check_valid_utils(lex, cmd_lst, i);
 	return (0);
 }
 

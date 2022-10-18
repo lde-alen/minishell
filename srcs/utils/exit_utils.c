@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 19:03:22 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 23:30:11 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 03:16:37 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,21 @@ void	exit_msg(t_lex *lex)
 	ft_putendl_fd("exit", 2);
 	err_msg("exit", "numeric argument required");
 	free_child(lex);
+}
+
+void	ft_check_valid_utils(t_lex *lex, t_cmd **cmd_lst, size_t i)
+{
+	char	*tmp;
+
+	if (ft_atol((*cmd_lst)->argument[i]) == 0
+		|| (*cmd_lst)->argument[i] == (void *) '\0')
+	{
+		exit_msg(lex);
+		g_exit = 255;
+		exit(g_exit);
+	}
+	tmp = ft_ltoa(ft_atol((*cmd_lst)->argument[i]) % 256);
+	free((*cmd_lst)->argument[i]);
+	(*cmd_lst)->argument[i] = ft_strdup(tmp);
+	free(tmp);
 }

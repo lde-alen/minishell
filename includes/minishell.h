@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/19 01:48:06 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/19 03:13:36 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,5 +332,6 @@ void	fill_quote_loop(char quote, t_lex *lex, char *str);
 void	args_to_init(char **tmp, size_t *i);
 void	set_dash_val(t_env *lst);
 void	set_err(t_cmd *cmd);
+void	ft_check_valid_utils(t_lex *lex, t_cmd **cmd_lst, size_t i);
 
 #endif
