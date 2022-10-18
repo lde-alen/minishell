@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_fill_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 13:02:04 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/14 19:55:03 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:35:06 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ void	check_fill_quotes(char *str, char quote, t_lex *lex)
 	lex->sh->i++;
 	while (str[lex->sh->i] != quote && str[lex->sh->i])
 	{
-		if (str[lex->sh->i] == '$' && lex->sh->dq == 1)
-			ft_fill_expand(str, lex);
+		if (str[lex->sh->i] == '$' && lex->sh->dq == 1
+			&& ((ft_isalnum(str[lex->sh->i + 1])
+					|| (str[lex->sh->i + 1] == '"'
+						|| str[lex->sh->i + 1] == '\''
+						|| str[lex->sh->i + 1] == '?'))))
+			ft_fill_expand(str, lex); //watchout j++
 		else
 		{
 			lex->sh->tmp_str[lex->sh->j] = str[lex->sh->i];
+			lex->sh->j++;
 		}
-		lex->sh->j++;
 		lex->sh->i++;
 	}
 	if (str[lex->sh->i] == quote && quote == '"')

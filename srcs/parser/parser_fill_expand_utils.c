@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 16:00:42 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 00:35:39 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:39:58 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	question_assist(char **name, char *ascii_exit, t_lex *lex, char *str)
 	ft_strjustcat(lex->sh->tmp_str, ascii_exit);
 	if (ascii_exit)
 		free(ascii_exit);
-	lex->sh->i++;
 }
 
 void	special_c(t_lex *lex, char **name, char *str)

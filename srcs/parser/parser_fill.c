@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 22:14:04 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 18:03:25 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ char	*ft_args_to_str(t_lex *lex)
 			util_fill_redir(lex, &i);
 		while (lex->cmd->command[i] == ' ' && lex->cmd->command[i + 1] == ' ')
 			i++;
-		while (lex->cmd->command[i] != '>'
-			&& lex->cmd->command[i] != '<' && lex->cmd->command[i]
-			&& lex->cmd->command[i] != D_QUOTE
+		while (lex->cmd->command[i] != '>' && lex->cmd->command[i] != '<'
+			&& lex->cmd->command[i] && lex->cmd->command[i] != D_QUOTE
 			&& lex->cmd->command[i] != S_QUOTE)
 		{
 			ft_append_back(&tmp, lex->cmd->command[i]);

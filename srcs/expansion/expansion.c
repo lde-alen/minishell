@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 09:48:07 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/17 17:39:03 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:37:48 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ ssize_t	get_expand_len(char *name, t_env *env, int flag)
 	if (len_value == 0)
 		return (0);
 	len = len_value - len_name;
-	return (len);
+	return (len); //potential +1
 }
 
 char	*ft_expand(t_env *lst, char *str)
