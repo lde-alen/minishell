@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 14:14:43 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 14:50:41 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:52:37 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	handler_guy(int flag)
 
 	if (flag == 0)
 	{
-		ft_putendl_fd(ft_itoa(value), 2);
 		if (value == -10)
 			g_exit = 130;
 		else
