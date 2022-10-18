@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 20:53:08 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:52:54 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,22 @@ size_t	check_validity(char *str, int check)
 {
 	char	*ret;
 	size_t	flag;
+	size_t	i;
 
+	(void)check;
 	g_exit = 0;
 	flag = 0;
-	if (isalpha(str[0]) == 0)
+	i = 0;
+	while (str[i])
 	{
-		if (check == 1 && str[0] != '_')
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
 		{
-			g_exit = 1;
-			export_error(str);
-			flag = 1;
-		}
-		else if (check == 0 && ft_isdigit(str[0]) == 0)
-		{
+			if (i < 0 && ft_isdigit(str[i]))
+				break ;
 			g_exit = 1;
 			flag = 1;
 		}
+		i++;
 	}
 	ret = check_str(str);
 	if (ret != NULL)
@@ -83,19 +83,18 @@ void	ft_export(t_env *lst, t_cmd *cmd_lst)
 	t_env	*check;
 
 	i = 1;
+	if (loop_arg(cmd_lst) == 1)
+		return ;
 	while (cmd_lst->argument[i])
 	{
-		if (check_validity(cmd_lst->argument[i], 1) == 0)
+		if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
 		{
-			if (ft_strchr(cmd_lst->argument[i], '=') == NULL)
-			{
-				check = check_exist(lst, cmd_lst->argument[i]);
-				if (check == NULL)
-					div_env(cmd_lst->argument[i], lst);
-			}
-			else
-				check_val(lst, cmd_lst, i);
+			check = check_exist(lst, cmd_lst->argument[i]);
+			if (check == NULL)
+				div_env(cmd_lst->argument[i], lst);
 		}
+		else
+			check_val(lst, cmd_lst, i);
 		i++;
 	}
 }

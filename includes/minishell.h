@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:25:16 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/18 14:51:13 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:39:32 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ void	dup_doc(t_lex *lex);
 size_t	exit_stat(int err);
 void	check_sec_arg(t_lex *lex, t_cmd *cmd_lst, int *flag);
 void	check_special(t_lex *lex, t_cmd **cmd_lst);
-void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i);
+int		check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i);
 
 void	redirect_in(t_lex *lex, char *file);
 void	redirect_out(t_lex *lex, char *file);
@@ -326,5 +326,6 @@ void	splitaz_loop(char const **s, size_t *len);
 void	close_fd(void);
 void	path_check(t_lex *lex, t_exec *exec);
 void	handler_guy(int flag);
+int		loop_arg(t_cmd *cmd);
 
 #endif

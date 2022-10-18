@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 03:41:57 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/16 14:13:20 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:15:08 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_str_exit(char *arg)
 	return (0);
 }
 
-void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
+int	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 {
 	char	*tmp;
 
@@ -59,9 +59,8 @@ void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 	{
 		ft_putendl_fd("exit", i);
 		err_msg("exit", "numeric argument required");
-		free_child(lex);
 		g_exit = 255;
-		exit(g_exit);
+		return (1);
 	}
 	else
 	{
@@ -70,15 +69,19 @@ void	check_valid(t_lex *lex, t_cmd **cmd_lst, size_t i)
 		(*cmd_lst)->argument[i] = ft_strdup(tmp);
 		free(tmp);
 	}
+	return (0);
 }
 
-void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
+int	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 {
 	*flag = 0;
 	if (cmd_lst->argument[1])
 	{
 		if (check_str_exit(cmd_lst->argument[1]) == 0)
-			check_valid(lex, &cmd_lst, 1);
+		{
+			if (check_valid(lex, &cmd_lst, 1) == 1)
+				return (1);
+		}
 		else
 		{
 			if (ft_strcmp(cmd_lst->argument[1], "--") == 0)
@@ -87,19 +90,20 @@ void	check_exit_val(t_lex *lex, t_cmd *cmd_lst, int *flag)
 			{
 				ft_putendl_fd("exit", 1);
 				err_msg("exit", "numeric argument required");
-				free_child(lex);
 				g_exit = 255;
-				exit(g_exit);
+				return (1);
 			}
 		}
 	}
+	return (0);
 }
 
 void	ft_exit(t_lex *lex, t_cmd *cmd_lst)
 {
 	int		flag;
 
-	check_exit_val(lex, cmd_lst, &flag);
+	if (check_exit_val(lex, cmd_lst, &flag) == 1)
+		return ;
 	ft_putendl_fd("exit", 1);
 	if (!cmd_lst->argument[1])
 		g_exit = 0;

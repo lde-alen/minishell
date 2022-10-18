@@ -29,7 +29,8 @@
 		"tuple": "c",
 		"type_traits": "c",
 		"vector": "c",
-		"atomic": "c"
+		"atomic": "c",
+		"cctype": "c"
 	},
 	"git.mergeEditor": false,
 }
