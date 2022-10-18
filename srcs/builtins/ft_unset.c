@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 06:20:37 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 23:17:55 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:58:39 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	ch_equality(char *str, t_env *lst)
 {
 	t_env	*tmp2;
 
+	ft_printf("STR: %s\n", str);
 	if (ft_strcmp(str, lst->name) == 0)
 	{
 		tmp2 = lst;

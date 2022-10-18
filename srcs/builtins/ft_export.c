@@ -6,7 +6,7 @@
 /*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:36:39 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 23:24:16 by asanthos         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:57:04 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ size_t	check_validity(char *str)
 			break ;
 		if (ft_isalpha(str[i]) == 0 && str[i] != '_')
 		{
-			if (i < 0 && ft_isdigit(str[i]))
+			if (i > 0 && ft_isdigit(str[i]))
 				break ;
 			g_exit = 1;
 			flag = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 04:13:06 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/19 00:31:59 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/19 01:18:46 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ void	change_dir(t_cmd *cmd, t_env *pwd, t_env *store)
 		}
 		free(buff);
 	}
-	if (buff)
-		free(buff);
+	else
+		if (buff)
+			free(buff);
 }
 
 void	cd_dash(t_env *lst, char **store, char **store_curr)
@@ -71,24 +72,30 @@ void	cd_dash(t_env *lst, char **store, char **store_curr)
 	}
 	else
 	{
+		*store_curr = ft_strdup(get_pwd());
 		*store = ft_strdup(search_env(lst, "OLDPWD")->value);
+		free(search_env(lst, "OLDPWD")->value);
+		search_env(lst, "OLDPWD")->value = ft_strdup(*store_curr);
 		ret = chdir(*store);
 		if (ret < 0)
 			exit_stat(errno);
 		else
 		{
-			*store_curr = ft_strdup(search_env(lst, "PWD")->value);
-			free(search_env(lst, "PWD")->value);
-			free(search_env(lst, "OLDPWD")->value);
-			search_env(lst, "PWD")->value = ft_strdup(*store_curr);
-			search_env(lst, "OLDPWD")->value = ft_strdup(*store);
-			free(*store);
-			free(*store_curr);
+			if (search_env(lst, "PWD"))
+			{
+				free(search_env(lst, "PWD")->value);
+				search_env(lst, "PWD")->value = ft_strdup(*store);
+			}
 		}
+		if (*store)
+			free(*store);
+		if (*store_curr)
+			free(*store_curr);
+		ft_putendl_fd(search_env(lst, "PWD")->value, 1);
 	}
 }
 
-static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
+static int	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 {
 	char	*store;
 	char	*store_curr;
@@ -111,14 +118,11 @@ static void	set_check_val(t_cmd *cmd, t_env *lst, int *check, char **env_user)
 			err_msg("cd", "OLDPWD not set");
 			g_exit = 1;
 		}
+		return (1);
 	}
 	else
-	{
-		if (access(cmd->argument[1], F_OK | X_OK) == 0)
-			*check = chdir(cmd->argument[1]);
-		else
-			*check = -1;
-	}
+		*check = chdir(cmd->argument[1]);
+	return (1);
 }
 
 void	ft_cd(t_cmd *cmd, t_env *lst)
@@ -132,8 +136,8 @@ void	ft_cd(t_cmd *cmd, t_env *lst)
 	g_exit = 0;
 	pwd = search_env(lst, "PWD");
 	check = 0;
-	ft_printf("CHECK: %d\n", check);
-	set_check_val(cmd, lst, &check, &env_user);
+	if (set_check_val(cmd, lst, &check, &env_user) == 1)
+		return ;
 	if (check < 0)
 	{
 		if (stat(cmd->argument[1], &path_stat) == 0)
