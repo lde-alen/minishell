@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 15:52:13 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 22:07:45 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:42:55 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,15 @@ void	ft_fill_expand(char *str, t_lex *lex)
 		&& (ft_isdigit(str[lex->sh->i + 1]) == 1))
 			lex->sh->i++;
 	else if (str[lex->sh->i] == '?')
+	{
 		question_assist(&name, ascii_exit, lex, str);
+	}
 	else
+	{
 		setup_expand(lex, &name, str);
+		lex->sh->j++;
+	}
+	// lex->sh->i--;
+	// lex->sh->j++;// potential + pottentially add condition to when increment j
 	free (name);
 }

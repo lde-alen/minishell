@@ -6,7 +6,7 @@
 /*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:25:21 by lde-alen          #+#    #+#             */
-/*   Updated: 2022/10/17 16:16:20 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 12:24:57 by lde-alen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ char	*ft_args_to_str(t_lex *lex)
 			util_fill_redir(lex, &i);
 		while (lex->cmd->command[i] == ' ' && lex->cmd->command[i + 1] == ' ')
 			i++;
-		while (lex->cmd->command[i] != '>'
-			&& lex->cmd->command[i] != '<' && lex->cmd->command[i]
-			&& lex->cmd->command[i] != D_QUOTE
+		while (lex->cmd->command[i] != '>' && lex->cmd->command[i] != '<'
+			&& lex->cmd->command[i] && lex->cmd->command[i] != D_QUOTE
 			&& lex->cmd->command[i] != S_QUOTE)
 		{
 			ft_append_back(&tmp, lex->cmd->command[i]);
