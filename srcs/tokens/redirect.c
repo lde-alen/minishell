@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-alen <lde-alen@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: asanthos <asanthos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 11:50:31 by asanthos          #+#    #+#             */
-/*   Updated: 2022/10/18 01:32:02 by lde-alen         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:50:59 by asanthos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ size_t	delim_loop(t_lex *lex, t_cmd *tmp, char **store, size_t i)
 		if (g_exit == -69)
 		{
 			free_sig(lex->cmd->redir, *store);
+			g_exit = 1;
 			return (1);
 		}
 		free(*store);
@@ -70,7 +71,7 @@ size_t	delim_loop(t_lex *lex, t_cmd *tmp, char **store, size_t i)
 		if (!*store)
 		{
 			free_sig(lex->cmd->redir, *store);
-			g_exit = -1;
+			g_exit = 0;
 			return (1);
 		}
 		lex->cmd->redir->str = ft_strjoin(lex->cmd->redir->str, *store);
